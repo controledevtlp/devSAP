@@ -1,0 +1,1499 @@
+<title>Portal SAP TLP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* Layout: single-page app, content-width cap 1100px, sidebar layout for manuals */
+:root {
+  --bg:       #0C1118;
+  --surf:     #161C25;
+  --surf2:    #1E2631;
+  --border:   rgba(200,220,255,.09);
+  --text:     #E8EEF6;
+  --muted:    #8895A7;
+  --accent:   #E8560A;
+  --yellow:   #F5A623;
+  --cci:      #1A6BB5;
+  --cci-l:    #5BAAD0;
+  --cci-g:    rgba(26,107,181,.13);
+  --campo:    #1B7A3E;
+  --campo-l:  #4CAF82;
+  --campo-g:  rgba(27,122,62,.13);
+  --r:        14px;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg:#F0F4FA; --surf:#FFFFFF; --surf2:#E8EEF8; --border:rgba(30,50,120,.1);
+    --text:#1A2233; --muted:#5A6A82; --accent:#D44E08; --yellow:#C07A10;
+    --cci:#1454A0; --cci-l:#1A6BB5; --cci-g:rgba(20,84,160,.09);
+    --campo:#166035; --campo-l:#1B7A3E; --campo-g:rgba(22,96,53,.09);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg:#F0F4FA; --surf:#FFFFFF; --surf2:#E8EEF8; --border:rgba(30,50,120,.1);
+  --text:#1A2233; --muted:#5A6A82; --accent:#D44E08; --yellow:#C07A10;
+  --cci:#1454A0; --cci-l:#1A6BB5; --cci-g:rgba(20,84,160,.09);
+  --campo:#166035; --campo-l:#1B7A3E; --campo-g:rgba(22,96,53,.09);
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding-inline: 0;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+/* ── GRID BG ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 52px 52px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── SITE HEADER ── */
+.hdr {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 40px;
+  background: rgba(12,17,24,.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .hdr { background: rgba(240,244,250,.88); }
+}
+:root[data-theme="light"] .hdr { background: rgba(240,244,250,.88); }
+
+.logo-wrap { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.logo-wrap:hover { opacity: .88; }
+
+.logo-svg { width: 44px; height: 44px; flex-shrink: 0; }
+
+.logo-text { display: flex; flex-direction: column; gap: 0; }
+.logo-name { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 1.25rem; letter-spacing: -.01em; color: var(--text); }
+.logo-tag  { font-size: .6rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+.hdr-nav { display: flex; gap: 4px; align-items: center; }
+.nav-btn {
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: color .2s, background .2s;
+  font-family: 'Inter', sans-serif;
+}
+.nav-btn:hover { color: var(--text); background: var(--surf2); }
+.nav-btn.active { color: var(--text); background: rgba(232,86,10,.12); }
+
+.theme-btn {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surf);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .9rem;
+  margin-left: 8px;
+  transition: color .2s, background .2s;
+}
+.theme-btn:hover { color: var(--text); }
+
+/* ── VIEWS ── */
+.view { position: relative; z-index: 1; display: none; }
+.view.active { display: block; }
+
+/* ── HOME ── */
+.hero {
+  text-align: center;
+  padding: 72px 24px 56px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center; gap: 8px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(232,86,10,.3);
+  background: rgba(232,86,10,.07);
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:.3} }
+
+.hero h1 {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.13;
+  letter-spacing: -.03em;
+  text-wrap: balance;
+  margin-bottom: 18px;
+}
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--accent), var(--yellow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero p {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ── CARDS GRID ── */
+.cards-wrap {
+  padding: 8px 40px 80px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.section-eyebrow {
+  text-align: center;
+  font-size: .7rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 22px;
+}
+
+.sector-card {
+  background: var(--surf);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s, border-color .3s;
+  animation: fadeUp .45s ease both;
+}
+.sector-card:nth-child(2) { animation-delay: .12s; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+
+.sector-card:hover { transform: translateY(-5px) scale(1.008); }
+.sector-card.cci:hover   { border-color: var(--cci);   box-shadow: 0 20px 56px rgba(26,107,181,.18); }
+.sector-card.campo:hover { border-color: var(--campo); box-shadow: 0 20px 56px rgba(27,122,62,.18); }
+
+.card-stripe { height: 4px; }
+.cci   .card-stripe { background: linear-gradient(90deg, var(--cci), var(--cci-l)); }
+.campo .card-stripe { background: linear-gradient(90deg, var(--campo), var(--campo-l)); }
+
+.card-body  { padding: 28px 28px 22px; }
+.card-icon  {
+  width: 52px; height: 52px;
+  border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 18px;
+  transition: transform .3s;
+}
+.sector-card:hover .card-icon { transform: scale(1.1) rotate(-5deg); }
+.cci   .card-icon { background: var(--cci-g); }
+.campo .card-icon { background: var(--campo-g); }
+
+.card-chip {
+  display: inline-block;
+  padding: 2px 9px; border-radius: 5px;
+  font-size: .68rem; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.cci   .card-chip { background: var(--cci-g);   color: var(--cci-l); }
+.campo .card-chip { background: var(--campo-g); color: var(--campo-l); }
+
+.card-title { font-family:'Sora',sans-serif; font-size:1.4rem; font-weight:800; line-height:1.2; margin-bottom:10px; letter-spacing:-.02em; }
+.card-desc  { font-size:.87rem; color:var(--muted); line-height:1.68; margin-bottom:22px; }
+.card-stats { display:flex; gap:22px; }
+.stat { display:flex; flex-direction:column; gap:1px; }
+.stat-n { font-size:1.2rem; font-weight:700; }
+.stat-l { font-size:.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
+.cci   .stat-n { color:var(--cci-l); }
+.campo .stat-n { color:var(--campo-l); }
+
+.card-foot {
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 14px 28px;
+  border-top: 1px solid var(--border);
+  font-size:.82rem; font-weight:600; color:var(--muted);
+  transition: background .2s;
+}
+.sector-card:hover .card-foot { background: rgba(255,255,255,.025); }
+.arrow-btn {
+  width:30px; height:30px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.9rem;
+  transition: transform .25s;
+}
+.sector-card:hover .arrow-btn { transform: translateX(4px); }
+.cci   .arrow-btn { background: var(--cci-g);   color:var(--cci-l); }
+.campo .arrow-btn { background: var(--campo-g); color:var(--campo-l); }
+
+/* ── SECTOR PAGE ── */
+.page-hdr {
+  padding: 48px 40px 36px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.breadcrumb {
+  display:flex; align-items:center; gap:6px;
+  font-size:.78rem; color:var(--muted);
+  margin-bottom:22px;
+}
+.breadcrumb a { cursor:pointer; transition:color .2s; }
+.breadcrumb a:hover { color:var(--text); }
+.bc-sep { color:var(--border); }
+
+.page-title {
+  font-family:'Sora',sans-serif;
+  font-size:clamp(1.5rem,3vw,2.2rem);
+  font-weight:800; letter-spacing:-.02em;
+  margin-bottom:8px;
+}
+.page-sub { font-size:.92rem; color:var(--muted); }
+
+.manuals-section { padding: 0 40px 80px; max-width:1100px; margin:0 auto; }
+.manuals-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:18px;
+}
+
+.manual-card {
+  background:var(--surf);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  overflow:hidden;
+  cursor:pointer;
+  transition: transform .25s, border-color .25s, box-shadow .25s;
+  animation: fadeUp .4s ease both;
+}
+.manual-card.locked { opacity:.42; pointer-events:none; }
+.manual-card:hover { transform:translateY(-3px); }
+.manual-card.cci-c:hover   { border-color:var(--cci);   box-shadow:0 12px 36px var(--cci-g); }
+.manual-card.campo-c:hover { border-color:var(--campo); box-shadow:0 12px 36px var(--campo-g); }
+
+.manual-thumb {
+  height:108px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:2.8rem;
+}
+.cci-c   .manual-thumb { background: linear-gradient(135deg,rgba(26,107,181,.18),rgba(91,170,208,.07)); }
+.campo-c .manual-thumb { background: linear-gradient(135deg,rgba(27,122,62,.18),rgba(76,175,130,.07)); }
+
+.manual-info { padding:18px 18px 14px; }
+.m-chip {
+  display:inline-block; padding:2px 8px; border-radius:5px;
+  font-size:.67rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  margin-bottom:8px;
+}
+.cci-c   .m-chip { background:var(--cci-g);   color:var(--cci-l); }
+.campo-c .m-chip { background:var(--campo-g); color:var(--campo-l); }
+
+.m-title { font-weight:700; font-size:.97rem; margin-bottom:5px; }
+.m-desc  { font-size:.8rem; color:var(--muted); line-height:1.6; }
+
+.manual-action {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 18px;
+  border-top:1px solid var(--border);
+  font-size:.8rem; font-weight:600; color:var(--muted);
+  transition:color .2s;
+}
+.manual-card:hover .manual-action { color:var(--text); }
+
+/* ── CONTENT PAGE ── */
+.content-wrap {
+  display:grid;
+  grid-template-columns:240px 1fr;
+  gap:28px;
+  padding:0 40px 80px;
+  max-width:1100px;
+  margin:0 auto;
+}
+
+.c-sidebar {
+  position:sticky;
+  top:calc(env(safe-area-inset-top, 0px) + 70px);
+  align-self:start;
+  background:var(--surf);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:18px;
+  max-height:calc(100vh - 110px);
+  overflow-y:auto;
+}
+.sb-label { font-size:.68rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.09em; margin-bottom:12px; }
+.sb-nav a {
+  display:flex; align-items:center; gap:8px;
+  padding:7px 9px; border-radius:8px;
+  font-size:.8rem; color:var(--muted);
+  transition:color .2s, background .2s;
+  margin-bottom:2px;
+  cursor:pointer;
+}
+.sb-nav a:hover, .sb-nav a.active { color:var(--text); background:rgba(232,86,10,.09); }
+.sb-idx {
+  width:20px; height:20px; border-radius:5px;
+  background:var(--surf2); font-size:.68rem; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+
+.c-main { min-width:0; }
+
+.c-section {
+  background:var(--surf);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:32px;
+  margin-bottom:20px;
+  scroll-margin-top:80px;
+  animation: fadeUp .4s ease both;
+}
+.c-section:nth-child(2){animation-delay:.05s}
+.c-section:nth-child(3){animation-delay:.1s}
+.c-section:nth-child(4){animation-delay:.12s}
+.c-section:nth-child(5){animation-delay:.14s}
+.c-section:nth-child(6){animation-delay:.16s}
+.c-section:nth-child(7){animation-delay:.18s}
+.c-section:nth-child(8){animation-delay:.20s}
+.c-section:nth-child(9){animation-delay:.22s}
+
+.c-section h2 {
+  font-family:'Sora',sans-serif;
+  font-size:1.15rem; font-weight:800;
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:16px;
+  letter-spacing:-.01em;
+}
+.s-icon {
+  width:30px; height:30px; border-radius:7px;
+  background:rgba(232,86,10,.12);
+  display:flex; align-items:center; justify-content:center;
+  font-size:.88rem; flex-shrink:0;
+}
+.c-section p { font-size:.88rem; color:var(--muted); line-height:1.78; margin-bottom:12px; }
+.c-section p:last-child { margin-bottom:0; }
+.c-section ul, .c-section ol { padding-left:18px; margin-bottom:12px; }
+.c-section li { font-size:.88rem; color:var(--muted); line-height:1.78; margin-bottom:3px; }
+.c-section strong { color:var(--text); font-weight:600; }
+.c-section h3 { font-size:.88rem; font-weight:700; color:var(--text); margin:18px 0 8px; }
+
+.ibox {
+  border-radius:9px; padding:13px 16px;
+  display:flex; gap:11px; font-size:.84rem;
+  line-height:1.65; margin:14px 0;
+}
+.ibox.info    { background:rgba(26,107,181,.1);  border-left:3px solid var(--cci); }
+.ibox.warn    { background:rgba(245,166,35,.1);  border-left:3px solid var(--yellow); }
+.ibox.ok      { background:rgba(27,122,62,.1);   border-left:3px solid var(--campo); }
+.ibox.danger  { background:rgba(220,50,50,.1);   border-left:3px solid #DC3232; }
+.ibox-ico     { font-size:1rem; flex-shrink:0; margin-top:1px; }
+.ibox p       { margin:0; color:var(--muted); }
+
+.data-tbl {
+  width:100%; border-collapse:collapse;
+  font-size:.84rem; margin:14px 0;
+  overflow-x:auto; display:block;
+}
+.data-tbl th {
+  background:rgba(232,86,10,.09);
+  color:var(--accent);
+  padding:9px 13px; text-align:left;
+  font-weight:700; font-size:.73rem;
+  text-transform:uppercase; letter-spacing:.05em;
+  white-space:nowrap;
+}
+.data-tbl td {
+  padding:9px 13px; color:var(--muted);
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+.data-tbl tr:last-child td { border-bottom:none; }
+.data-tbl tr:hover td { background:rgba(255,255,255,.02); color:var(--text); }
+
+.pill {
+  display:inline-block; padding:2px 9px; border-radius:5px;
+  font-size:.73rem; font-weight:700;
+}
+.pill.p1 { background:rgba(220,50,50,.18);  color:#F87171; }
+.pill.p2 { background:rgba(249,115,22,.18); color:#FB923C; }
+.pill.p3 { background:rgba(245,166,35,.18); color:var(--yellow); }
+.pill.p4 { background:rgba(26,107,181,.18); color:var(--cci-l); }
+.pill.p5 { background:rgba(139,148,158,.18);color:var(--muted); }
+.pill.alta  { background:rgba(220,50,50,.18);  color:#F87171; }
+.pill.media { background:rgba(245,166,35,.18); color:var(--yellow); }
+.pill.baixa { background:rgba(139,148,158,.18);color:var(--muted); }
+.pill.ok    { background:rgba(27,122,62,.18);  color:var(--campo-l); }
+
+.checklist { list-style:none; padding:0; }
+.checklist li {
+  display:flex; align-items:flex-start; gap:9px;
+  padding:8px 0; border-bottom:1px solid var(--border);
+  font-size:.87rem; color:var(--muted);
+}
+.checklist li:last-child { border-bottom:none; }
+.checklist li::before { content:'☐'; color:var(--accent); flex-shrink:0; }
+
+/* ── FOOTER ── */
+footer {
+  position:relative; z-index:1;
+  border-top:1px solid var(--border);
+  padding:20px 40px;
+  display:flex; align-items:center; justify-content:space-between;
+  font-size:.76rem; color:var(--muted);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width:720px) {
+  .hdr { padding:12px 18px; }
+  .logo-tag { display:none; }
+  .nav-btn span.full { display:none; }
+  .cards-wrap, .manuals-section, .page-hdr { padding-inline:18px; }
+  .content-wrap { grid-template-columns:1fr; padding-inline:18px; }
+  .c-sidebar { position:static; max-height:none; }
+  footer { flex-direction:column; gap:6px; text-align:center; }
+  .hero { padding:48px 18px 40px; }
+}
+@media (max-width:480px) {
+  .cards-grid { grid-template-columns:1fr; }
+}
+
+/* ── SCROLL REVEAL ── */
+.sr        { opacity:0; transform:translateY(30px);   transition:opacity .55s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.4,0,.2,1); }
+.sr-left   { opacity:0; transform:translateX(-30px);  transition:opacity .55s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.4,0,.2,1); }
+.sr-right  { opacity:0; transform:translateX(30px);   transition:opacity .55s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.4,0,.2,1); }
+.sr-scale  { opacity:0; transform:scale(.92);          transition:opacity .55s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.4,0,.2,1); }
+.sr.sr-in, .sr-left.sr-in, .sr-right.sr-in, .sr-scale.sr-in { opacity:1; transform:none; }
+
+/* ── ILLUSTRATION ── */
+.illus-wrap {
+  margin: 20px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surf2);
+}
+.illus-wrap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.illus-cap {
+  text-align: center;
+  font-size: .72rem;
+  color: var(--muted);
+  padding: 8px 12px 10px;
+  letter-spacing: .03em;
+}
+</style>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<header class="hdr">
+  <div class="logo-wrap" onclick="goTo('home')">
+    <svg class="logo-svg" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="lg1" x1="0" y1="44" x2="44" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#E8560A"/>
+          <stop offset="100%" stop-color="#F5A623"/>
+        </linearGradient>
+      </defs>
+      <polygon points="22,2 42,38 2,38" fill="url(#lg1)" opacity=".95"/>
+      <polygon points="22,10 36,34 8,34" fill="rgba(0,0,0,.22)"/>
+      <polygon points="22,14 32,32 12,32" fill="url(#lg1)" opacity=".7"/>
+      <text x="22" y="31" font-family="Arial" font-weight="900" font-size="11" fill="white" text-anchor="middle" letter-spacing="1">TLP</text>
+    </svg>
+    <div class="logo-text">
+      <span class="logo-name">TLP</span>
+      <span class="logo-tag">Conectados com o Futuro</span>
+    </div>
+  </div>
+  <nav class="hdr-nav">
+    <button class="nav-btn active" id="nb-home"  onclick="goTo('home')">Início</button>
+    <button class="nav-btn"        id="nb-cci"   onclick="goTo('cci')">CCI</button>
+    <button class="nav-btn"        id="nb-campo" onclick="goTo('campo')">Campo</button>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema">🌙</button>
+  </nav>
+</header>
+
+<!-- ═══════════════════ VIEW: HOME ═══════════════════ -->
+<div class="view active" id="v-home">
+  <section class="hero">
+    <div class="hero-badge"><span class="badge-dot"></span>Sistema de Apoio Profissional</div>
+    <h1>Bem-vindo ao<br><em>Portal SAP TLP</em></h1>
+    <p>Seu guia completo de procedimentos operacionais. Selecione o setor que deseja explorar.</p>
+  </section>
+
+  <div class="cards-wrap">
+    <p class="section-eyebrow">Setores disponíveis</p>
+    <div class="cards-grid">
+
+      <div class="sector-card cci" onclick="goTo('cci')">
+        <div class="card-stripe"></div>
+        <div class="card-body">
+          <div class="card-icon">📡</div>
+          <span class="card-chip">CCI</span>
+          <h2 class="card-title">Centro de Controle<br>e Inteligência</h2>
+          <p class="card-desc">Procedimentos, manuais técnicos e treinamentos do setor CCI. Conceitos de telecomunicações, ERBs, meios de transmissão e muito mais.</p>
+          <div class="card-stats">
+            <div class="stat"><span class="stat-n">1</span><span class="stat-l">Módulo</span></div>
+            <div class="stat"><span class="stat-n">27</span><span class="stat-l">Slides</span></div>
+            <div class="stat"><span class="stat-n">8</span><span class="stat-l">Tópicos</span></div>
+          </div>
+        </div>
+        <div class="card-foot">
+          <span>Explorar setor CCI</span>
+          <span class="arrow-btn">→</span>
+        </div>
+      </div>
+
+      <div class="sector-card campo" onclick="goTo('campo')">
+        <div class="card-stripe"></div>
+        <div class="card-body">
+          <div class="card-icon">🔧</div>
+          <span class="card-chip">Campo</span>
+          <h2 class="card-title">Operações<br>de Campo</h2>
+          <p class="card-desc">Guias de qualidade operacional, SLA de atendimento, prazos, franquias, suspensões e boas práticas para o técnico de campo.</p>
+          <div class="card-stats">
+            <div class="stat"><span class="stat-n">1</span><span class="stat-l">Treinamento</span></div>
+            <div class="stat"><span class="stat-n">18</span><span class="stat-l">Slides</span></div>
+            <div class="stat"><span class="stat-n">9</span><span class="stat-l">Módulos</span></div>
+          </div>
+        </div>
+        <div class="card-foot">
+          <span>Explorar setor Campo</span>
+          <span class="arrow-btn">→</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ VIEW: CCI LIST ═══════════════════ -->
+<div class="view" id="v-cci">
+  <div class="page-hdr">
+    <div class="breadcrumb">
+      <a onclick="goTo('home')">Início</a><span class="bc-sep">›</span><span>CCI</span>
+    </div>
+    <h1 class="page-title">📡 Centro de Controle e Inteligência</h1>
+    <p class="page-sub">Manuais técnicos, treinamentos e procedimentos do setor CCI.</p>
+  </div>
+  <div class="manuals-section">
+    <div class="manuals-grid">
+      <div class="manual-card cci-c" onclick="goTo('cci-mod1')">
+        <div class="manual-thumb">📡</div>
+        <div class="manual-info">
+          <span class="m-chip">Módulo I</span>
+          <h3 class="m-title">Introdução a Telecomunicações</h3>
+          <p class="m-desc">Conceitos fundamentais: ERBs, meios de transmissão, fibra óptica, satélites, centrais de comutação e evolução das redes celulares.</p>
+        </div>
+        <div class="manual-action"><span>Abrir manual</span><span>→</span></div>
+      </div>
+      <div class="manual-card cci-c locked">
+        <div class="manual-thumb">📶</div>
+        <div class="manual-info">
+          <span class="m-chip">Módulo II</span>
+          <h3 class="m-title">Em breve</h3>
+          <p class="m-desc">Próximo módulo em desenvolvimento.</p>
+        </div>
+        <div class="manual-action"><span>Em breve</span><span>🔒</span></div>
+      </div>
+      <div class="manual-card cci-c locked">
+        <div class="manual-thumb">🛰️</div>
+        <div class="manual-info">
+          <span class="m-chip">Módulo III</span>
+          <h3 class="m-title">Em breve</h3>
+          <p class="m-desc">Próximo módulo em desenvolvimento.</p>
+        </div>
+        <div class="manual-action"><span>Em breve</span><span>🔒</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ VIEW: CAMPO LIST ═══════════════════ -->
+<div class="view" id="v-campo">
+  <div class="page-hdr">
+    <div class="breadcrumb">
+      <a onclick="goTo('home')">Início</a><span class="bc-sep">›</span><span>Campo</span>
+    </div>
+    <h1 class="page-title">🔧 Operações de Campo</h1>
+    <p class="page-sub">Manuais de qualidade, SLA de atendimento e boas práticas para o técnico de campo.</p>
+  </div>
+  <div class="manuals-section">
+    <div class="manuals-grid">
+      <div class="manual-card campo-c" onclick="goTo('campo-qual')">
+        <div class="manual-thumb">📋</div>
+        <div class="manual-info">
+          <span class="m-chip">Qualidade Operacional</span>
+          <h3 class="m-title">SLA de Atendimento – Contrato TIM</h3>
+          <p class="m-desc">Guia completo sobre prazos, franquias, suspensões, tramitações e boas práticas para garantir excelência no atendimento.</p>
+        </div>
+        <div class="manual-action"><span>Abrir manual</span><span>→</span></div>
+      </div>
+      <div class="manual-card campo-c locked">
+        <div class="manual-thumb">🚗</div>
+        <div class="manual-info">
+          <span class="m-chip">Em Breve</span>
+          <h3 class="m-title">Procedimentos de Deslocamento</h3>
+          <p class="m-desc">Manual em desenvolvimento.</p>
+        </div>
+        <div class="manual-action"><span>Em breve</span><span>🔒</span></div>
+      </div>
+      <div class="manual-card campo-c locked">
+        <div class="manual-thumb">🛡️</div>
+        <div class="manual-info">
+          <span class="m-chip">Em Breve</span>
+          <h3 class="m-title">Saúde e Segurança do Trabalho</h3>
+          <p class="m-desc">Manual em desenvolvimento.</p>
+        </div>
+        <div class="manual-action"><span>Em breve</span><span>🔒</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ VIEW: CCI MÓDULO I ═══════════════════ -->
+<div class="view" id="v-cci-mod1">
+  <div class="page-hdr">
+    <div class="breadcrumb">
+      <a onclick="goTo('home')">Início</a><span class="bc-sep">›</span>
+      <a onclick="goTo('cci')">CCI</a><span class="bc-sep">›</span>
+      <span>Módulo I</span>
+    </div>
+    <h1 class="page-title">📡 Módulo I – Introdução a Telecomunicações</h1>
+    <p class="page-sub">Conceitos fundamentais para o entendimento da infraestrutura de telecomunicações.</p>
+  </div>
+
+  <div class="content-wrap">
+    <aside class="c-sidebar">
+      <p class="sb-label">Índice do Módulo</p>
+      <nav class="sb-nav">
+        <a onclick="scrollTo('m1-s1')"><span class="sb-idx">1</span>Conceitos Gerais</a>
+        <a onclick="scrollTo('m1-s2')"><span class="sb-idx">2</span>Evolução da Rede Celular</a>
+        <a onclick="scrollTo('m1-s3')"><span class="sb-idx">3</span>Estações Rádio Base</a>
+        <a onclick="scrollTo('m1-s4')"><span class="sb-idx">4</span>Meios de Transmissão</a>
+        <a onclick="scrollTo('m1-s5')"><span class="sb-idx">5</span>dB e dBm</a>
+        <a onclick="scrollTo('m1-s6')"><span class="sb-idx">6</span>Central de Comutação</a>
+        <a onclick="scrollTo('m1-s7')"><span class="sb-idx">7</span>Fibra Óptica</a>
+        <a onclick="scrollTo('m1-s8')"><span class="sb-idx">8</span>Satélites</a>
+      </nav>
+    </aside>
+    <main class="c-main">
+
+      <div class="c-section sr" id="m1-s1">
+        <h2><span class="s-icon">📖</span>1. Conceitos de Telecomunicações</h2>
+        <p>As telecomunicações surgiram quando o ser humano passou a buscar formas de comunicar informações à distância, superando os limites da voz e da visão direta. A evolução foi gradual e acompanhou avanços científicos, elétricos e eletrônicos.</p>
+        <div class="ibox info">
+          <span class="ibox-ico">💡</span>
+          <p><strong>Definição:</strong> Telecomunicação é toda transmissão, emissão ou recepção de sinais, escrita, imagens, sons ou informações de qualquer natureza por fio, radioeletricidade, meios ópticos ou outros sistemas eletromagnéticos.</p>
+        </div>
+        <p>A evolução das telecomunicações inclui marcos como a invenção do telégrafo, do telefone, do rádio e, mais recentemente, a internet e as redes móveis de alta velocidade.</p>
+      </div>
+
+      <div class="c-section sr" id="m1-s2">
+        <h2><span class="s-icon">📱</span>2. Evolução da Rede Celular</h2>
+        <p>As redes celulares evoluíram em gerações, cada uma com maior capacidade, velocidade e menor latência.</p>
+
+        <!-- SVG: 5G evolution bar chart -->
+        <div class="illus-wrap sr">
+          <svg viewBox="0 0 520 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Evolução das gerações celulares">
+            <defs>
+              <linearGradient id="g1g" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8895A7"/><stop offset="100%" stop-color="#5BAAD0"/></linearGradient>
+              <linearGradient id="g5g" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#E8560A"/><stop offset="100%" stop-color="#F5A623"/></linearGradient>
+            </defs>
+            <!-- bars -->
+            <rect x="28"  y="148" width="50" height="12" rx="3" fill="url(#g1g)" opacity=".5"/>
+            <rect x="113" y="136" width="50" height="24" rx="3" fill="url(#g1g)" opacity=".65"/>
+            <rect x="198" y="112" width="50" height="48" rx="3" fill="url(#g1g)" opacity=".8"/>
+            <rect x="283" y="76"  width="50" height="84" rx="3" fill="url(#g1g)"/>
+            <rect x="368" y="20"  width="50" height="140" rx="3" fill="url(#g5g)"/>
+            <!-- labels below -->
+            <text x="53"  y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#8895A7">1G</text>
+            <text x="138" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#8895A7">2G</text>
+            <text x="223" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#8895A7">3G</text>
+            <text x="308" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#8895A7">4G</text>
+            <text x="393" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="800" fill="#E8560A">5G</text>
+            <!-- speed labels -->
+            <text x="53"  y="143" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#5BAAD0">0.01M</text>
+            <text x="138" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#5BAAD0">0.3M</text>
+            <text x="223" y="106" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#5BAAD0">7M</text>
+            <text x="308" y="70"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#5BAAD0">100M</text>
+            <text x="393" y="14"  text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#F5A623">10 Gbps</text>
+            <!-- axis label -->
+            <text x="460" y="90" font-family="Inter,sans-serif" font-size="10" fill="#5A6A82" transform="rotate(-90,460,90)" text-anchor="middle">Velocidade</text>
+          </svg>
+          <p class="illus-cap">Evolução da velocidade por geração de rede celular</p>
+        </div>
+
+        <table class="data-tbl">
+          <thead><tr><th>Geração</th><th>Tecnologia</th><th>Características</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1G</strong></td><td>AMPS</td><td>Comunicação analógica de voz</td></tr>
+            <tr><td><strong>2G</strong></td><td>GSM / CDMA</td><td>Voz digital + SMS + dados básicos</td></tr>
+            <tr><td><strong>3G</strong></td><td>UMTS / WCDMA</td><td>Dados móveis, vídeo chamada</td></tr>
+            <tr><td><strong>4G</strong></td><td>LTE</td><td>Alta velocidade, streaming de vídeo</td></tr>
+            <tr><td><strong>5G</strong></td><td>NR (New Radio)</td><td>Ultra baixa latência, IoT massivo, 10+ Gbps</td></tr>
+          </tbody>
+        </table>
+        <div class="ibox warn">
+          <span class="ibox-ico">⚡</span>
+          <p>O <strong>5G</strong> representa uma revolução com latências abaixo de 1ms, possibilitando veículos autônomos, cirurgias remotas e cidades inteligentes.</p>
+        </div>
+      </div>
+
+      <div class="c-section sr" id="m1-s3">
+        <h2><span class="s-icon">🗼</span>3. Estações Rádio Base (ERBs)</h2>
+        <p>As Estações Rádio Base são o elo entre os dispositivos móveis dos usuários e a rede principal da operadora (core network). São instaladas em torres, prédios e postes e cobrem uma área chamada <strong>célula</strong>.</p>
+
+        <!-- SVG: ERB Tower diagram -->
+        <div class="illus-wrap sr-scale">
+          <svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama de ERB">
+            <!-- Tower structure -->
+            <line x1="200" y1="30" x2="180" y2="190" stroke="#5BAAD0" stroke-width="3" stroke-linecap="round"/>
+            <line x1="200" y1="30" x2="220" y2="190" stroke="#5BAAD0" stroke-width="3" stroke-linecap="round"/>
+            <line x1="180" y1="190" x2="220" y2="190" stroke="#5BAAD0" stroke-width="3"/>
+            <!-- Cross braces -->
+            <line x1="183" y1="160" x2="217" y2="160" stroke="#5BAAD0" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5"/>
+            <line x1="186" y1="130" x2="214" y2="130" stroke="#5BAAD0" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5"/>
+            <line x1="189" y1="100" x2="211" y2="100" stroke="#5BAAD0" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5"/>
+            <line x1="192" y1="70"  x2="208" y2="70"  stroke="#5BAAD0" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5"/>
+            <!-- Antennas at top -->
+            <rect x="190" y="18" width="8" height="20" rx="2" fill="#E8560A"/>
+            <rect x="200" y="15" width="8" height="23" rx="2" fill="#F5A623"/>
+            <rect x="210" y="18" width="8" height="20" rx="2" fill="#E8560A"/>
+            <!-- RRU boxes on tower -->
+            <rect x="183" y="75" width="14" height="22" rx="3" fill="#1A6BB5" opacity=".85"/>
+            <text x="190" y="89" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" font-weight="700" fill="white">RRU</text>
+            <rect x="203" y="75" width="14" height="22" rx="3" fill="#1A6BB5" opacity=".85"/>
+            <text x="210" y="89" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" font-weight="700" fill="white">RRH</text>
+            <!-- BBU cabinet at base -->
+            <rect x="178" y="192" width="44" height="22" rx="3" fill="#1E2631" stroke="#5BAAD0" stroke-width="1"/>
+            <text x="200" y="206" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#5BAAD0">BBU</text>
+
+            <!-- Cell coverage area (partial arc) -->
+            <path d="M 200,30 Q 350,90 380,190" stroke="#E8560A" stroke-width="1.5" stroke-dasharray="6,4" fill="none" opacity=".4"/>
+            <path d="M 200,30 Q 50,90 20,190"  stroke="#E8560A" stroke-width="1.5" stroke-dasharray="6,4" fill="none" opacity=".4"/>
+
+            <!-- Labels -->
+            <text x="230" y="28" font-family="Inter,sans-serif" font-size="10" fill="#E8560A" font-weight="600">Antenas</text>
+            <text x="230" y="86" font-family="Inter,sans-serif" font-size="10" fill="#5BAAD0" font-weight="600">RRU / RRH</text>
+            <text x="230" y="204" font-family="Inter,sans-serif" font-size="10" fill="#5BAAD0" font-weight="600">BBU</text>
+            <text x="360" y="185" font-family="Inter,sans-serif" font-size="9" fill="#E8560A" opacity=".7">Área de</text>
+            <text x="360" y="197" font-family="Inter,sans-serif" font-size="9" fill="#E8560A" opacity=".7">Cobertura</text>
+
+            <!-- Backhaul arrow -->
+            <line x1="222" y1="203" x2="300" y2="203" stroke="#4CAF82" stroke-width="2" marker-end="url(#arr)"/>
+            <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#4CAF82"/></marker></defs>
+            <text x="260" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#4CAF82" font-weight="600">Backhaul</text>
+            <text x="310" y="207" font-family="Inter,sans-serif" font-size="9" fill="#4CAF82">Core</text>
+          </svg>
+          <p class="illus-cap">Diagrama simplificado de uma Estação Rádio Base com seus componentes</p>
+        </div>
+
+        <p>A divisão do território em células permite o reuso de frequências e o aumento da capacidade total da rede.</p>
+        <h3>Componentes principais de uma ERB:</h3>
+        <ul>
+          <li><strong>Antenas:</strong> responsáveis pela cobertura de rádio no setor</li>
+          <li><strong>RRU / RRH:</strong> Unidade de Rádio Remota — processa e amplifica o sinal</li>
+          <li><strong>BBU:</strong> Unidade de Banda Base — processa dados digitais</li>
+          <li><strong>Backhaul:</strong> link que conecta a ERB ao core da rede (fibra, rádio ou satélite)</li>
+          <li><strong>Energia:</strong> retificadores, baterias e grupo gerador (GMG)</li>
+        </ul>
+        <div class="ibox ok">
+          <span class="ibox-ico">✅</span>
+          <p>A manutenção adequada de cada ERB é essencial para garantir a qualidade do sinal e o cumprimento dos SLAs contratuais.</p>
+        </div>
+      </div>
+
+      <div class="c-section sr" id="m1-s4">
+        <h2><span class="s-icon">🔗</span>4. Meios de Transmissão</h2>
+        <p><strong>Meio de Transmissão</strong> é o suporte físico ou o espaço por onde os sinais viajam entre dispositivos.</p>
+        <h3>🔵 Guiados (Conduzidos)</h3>
+        <ul>
+          <li><strong>Fibra Óptica:</strong> Pulsos de luz em filamentos de vidro/silica. Ideal para longas distâncias e alta velocidade — usada em backbones e cabos submarinos.</li>
+          <li><strong>Cabo Coaxial:</strong> Sinais elétricos em cobre com blindagem, usado em TV a cabo e distribuidores de sinal.</li>
+          <li><strong>Par Trançado:</strong> Dois fios de cobre entrelaçados, comum em redes locais (LAN). Sofre atenuação com a distância.</li>
+        </ul>
+        <h3>🔴 Não Guiados (Sem Fio)</h3>
+        <ul>
+          <li><strong>Rádio / Micro-ondas:</strong> Para backhaul de ERBs e links ponto a ponto de longa distância.</li>
+          <li><strong>Satélite:</strong> Cobre áreas remotas sem infraestrutura terrestre.</li>
+          <li><strong>Wi-Fi / Bluetooth:</strong> Curto alcance para ambientes locais.</li>
+        </ul>
+        <table class="data-tbl">
+          <thead><tr><th>Conceito</th><th>Definição</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Backbone</strong></td><td>Infraestrutura central das operadoras, transporta grandes volumes por longas distâncias</td></tr>
+            <tr><td><strong>Largura de Banda</strong></td><td>Quantidade de dados transmitidos por unidade de tempo (Mbps, Gbps)</td></tr>
+            <tr><td><strong>Latência</strong></td><td>Atraso na transmissão do sinal — crucial para aplicações em tempo real</td></tr>
+            <tr><td><strong>Atenuação</strong></td><td>Perda de potência do sinal ao longo do percurso</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="c-section sr" id="m1-s5">
+        <h2><span class="s-icon">📊</span>5. Conceito de dB e dBm</h2>
+        <h3>Decibel (dB)</h3>
+        <p>O decibel (dB) é o logaritmo da relação de duas potências, utilizado para indicar <strong>ganho</strong> ou <strong>perda (atenuação)</strong> de sinal.</p>
+        <div class="ibox info">
+          <span class="ibox-ico">📐</span>
+          <p><strong>Fórmula:</strong> dB = 10 × log₁₀ (P₂ / P₁) — onde P₁ e P₂ são as potências comparadas. Valores positivos = ganho; negativos = perda.</p>
+        </div>
+        <h3>dBm</h3>
+        <p>O dBm é o logaritmo da relação entre uma potência e <strong>1 mW</strong> (referência). Indica valores absolutos de potência de sinal.</p>
+        <table class="data-tbl">
+          <thead><tr><th>Valor dBm</th><th>Interpretação</th><th>Situação</th></tr></thead>
+          <tbody>
+            <tr><td>0 dBm</td><td>1 mW</td><td>Potência de referência</td></tr>
+            <tr><td>-50 dBm</td><td>Sinal excelente</td><td>Próximo à antena</td></tr>
+            <tr><td>-70 dBm</td><td>Sinal bom</td><td>Cobertura normal</td></tr>
+            <tr><td>-85 dBm</td><td>Sinal fraco</td><td>Borda de cobertura</td></tr>
+            <tr><td>-100 dBm</td><td>Sinal crítico</td><td>Sem cobertura efetiva</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="c-section sr" id="m1-s6">
+        <h2><span class="s-icon">📞</span>6. Central de Comutação</h2>
+        <p>A central de comutação interliga os assinantes de uma rede telefônica, criando circuitos de comunicação sob demanda, eliminando a necessidade de fios diretos entre cada par de usuários.</p>
+        <table class="data-tbl">
+          <thead><tr><th>Sistema</th><th>Descrição</th><th>Exemplo</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Centralizado</strong></td><td>Comutação em ponto central — reduz drasticamente a quantidade de pares de fio</td><td>Central telefônica moderna</td></tr>
+            <tr><td><strong>Descentralizado</strong></td><td>Cada assinante conectado diretamente: L = N×(N-1)/2 pares necessários</td><td>Inviável em escala</td></tr>
+          </tbody>
+        </table>
+        <div class="ibox warn">
+          <span class="ibox-ico">📌</span>
+          <p><strong>Exemplo:</strong> Para 1.000 assinantes sem central = <strong>499.500 pares de fios</strong>. Com central telefônica, o número cai para centenas de pares.</p>
+        </div>
+        <p>Marcos históricos: Primeira Central Telefônica em Estocolmo, Suécia (1883). No Brasil, a primeira central foi instalada em 1884.</p>
+      </div>
+
+      <div class="c-section sr" id="m1-s7">
+        <h2><span class="s-icon">💡</span>7. Fibra Óptica</h2>
+        <p>A fibra óptica transmite informação por <strong>pulsos de luz</strong> em filamentos de vidro ou plástico, usando o princípio de reflexão total interna. É o principal meio de transmissão de alta capacidade no mundo.</p>
+
+        <!-- SVG: Fiber optic types -->
+        <div class="illus-wrap sr-scale">
+          <svg viewBox="0 0 520 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tipos de fibra óptica e reflexão total interna">
+
+            <!-- Title labels for each fiber type -->
+            <text x="88"  y="18" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#5BAAD0">Step Index</text>
+            <text x="88"  y="28" text-anchor="middle" font-family="Inter,sans-serif" font-size="8"  fill="#8895A7">Multimodo</text>
+            <text x="262" y="18" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#4CAF82">Graded Index</text>
+            <text x="262" y="28" text-anchor="middle" font-family="Inter,sans-serif" font-size="8"  fill="#8895A7">Multimodo</text>
+            <text x="435" y="18" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#E8560A">Single Mode</text>
+            <text x="435" y="28" text-anchor="middle" font-family="Inter,sans-serif" font-size="8"  fill="#8895A7">Monomodo</text>
+
+            <!-- ── TYPE 1: Step Index Multimode ── -->
+            <!-- Jacket (outer) -->
+            <rect x="20" y="38" width="136" height="80" rx="8" fill="#1E2631" stroke="#8895A7" stroke-width="1" opacity=".7"/>
+            <!-- Cladding -->
+            <rect x="28" y="46" width="120" height="64" rx="5" fill="#1A3048"/>
+            <!-- Core (wide) -->
+            <rect x="36" y="54" width="104" height="48" rx="3" fill="#0D1F30"/>
+            <!-- Light rays: straight/bouncing sharp angles -->
+            <polyline points="36,62 70,78 104,62 138,78" fill="none" stroke="#5BAAD0" stroke-width="1.8" stroke-linecap="round" opacity=".9"/>
+            <polyline points="36,70 68,56 100,70 132,56" fill="none" stroke="#5BAAD0" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+            <polyline points="36,78 80,60 124,78" fill="none" stroke="#5BAAD0" stroke-width="1.2" stroke-linecap="round" opacity=".5"/>
+            <!-- Core label -->
+            <text x="88" y="82" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5BAAD0" opacity=".6">Núcleo ~62.5 µm</text>
+
+            <!-- Cross-section circle Step Index -->
+            <circle cx="88" cy="152" r="34" fill="#1E2631" stroke="#8895A7" stroke-width="1"/>
+            <circle cx="88" cy="152" r="26" fill="#1A3048"/>
+            <circle cx="88" cy="152" r="18" fill="#0D1F30"/>
+            <text x="88" y="156" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" fill="#5BAAD0">core</text>
+            <!-- Labels -->
+            <line x1="106" y1="144" x2="122" y2="136" stroke="#8895A7" stroke-width="0.8" opacity=".5"/>
+            <text x="124" y="134" font-family="Inter,sans-serif" font-size="7" fill="#8895A7">casca</text>
+            <line x1="114" y1="152" x2="126" y2="152" stroke="#8895A7" stroke-width="0.8" opacity=".5"/>
+            <text x="128" y="155" font-family="Inter,sans-serif" font-size="7" fill="#8895A7">jaqueta</text>
+
+            <!-- Stats -->
+            <text x="88" y="202" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5BAAD0">Até 100 Mbps / 2 km</text>
+            <text x="88" y="215" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#8895A7" opacity=".7">Alta dispersão modal</text>
+
+            <!-- ── TYPE 2: Graded Index Multimode ── -->
+            <rect x="194" y="38" width="136" height="80" rx="8" fill="#1E2631" stroke="#4CAF82" stroke-width="1" opacity=".7"/>
+            <rect x="202" y="46" width="120" height="64" rx="5" fill="#1A3048"/>
+            <rect x="210" y="54" width="104" height="48" rx="3" fill="#0D1F30"/>
+            <!-- Light rays: gently curved (graded index bends them) -->
+            <path d="M210,59 Q245,74 262,74 Q279,74 314,59" fill="none" stroke="#4CAF82" stroke-width="1.8" stroke-linecap="round" opacity=".9"/>
+            <path d="M210,73 Q235,63 262,62 Q289,63 314,73" fill="none" stroke="#4CAF82" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+            <path d="M210,79 Q240,69 262,68 Q284,69 314,79" fill="none" stroke="#4CAF82" stroke-width="1.2" stroke-linecap="round" opacity=".5"/>
+            <text x="262" y="82" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#4CAF82" opacity=".6">Núcleo ~50 µm</text>
+
+            <circle cx="262" cy="152" r="34" fill="#1E2631" stroke="#4CAF82" stroke-width="1"/>
+            <circle cx="262" cy="152" r="26" fill="#1A3048"/>
+            <!-- Gradient fill approximation with concentric circles -->
+            <circle cx="262" cy="152" r="22" fill="#122B1E" opacity=".5"/>
+            <circle cx="262" cy="152" r="16" fill="#0D1F30"/>
+            <circle cx="262" cy="152" r="10" fill="#163326" opacity=".8"/>
+            <text x="262" y="156" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" fill="#4CAF82">core</text>
+            <text x="262" y="202" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#4CAF82">1 Gbps / 550 m</text>
+            <text x="262" y="215" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#8895A7" opacity=".7">Menor dispersão modal</text>
+
+            <!-- ── TYPE 3: Single Mode ── -->
+            <rect x="367" y="38" width="136" height="80" rx="8" fill="#1E2631" stroke="#E8560A" stroke-width="1" opacity=".7"/>
+            <rect x="375" y="46" width="120" height="64" rx="5" fill="#1A3048"/>
+            <!-- Very thin core -->
+            <rect x="383" y="63" width="104" height="14" rx="2" fill="#0D1F30"/>
+            <!-- Single straight light ray -->
+            <line x1="383" y1="70" x2="487" y2="70" stroke="#F5A623" stroke-width="2" stroke-linecap="round" opacity=".95"/>
+            <!-- Glow effect -->
+            <line x1="383" y1="70" x2="487" y2="70" stroke="#E8560A" stroke-width="5" stroke-linecap="round" opacity=".2"/>
+            <text x="435" y="83" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#E8560A" opacity=".7">Núcleo ~9 µm</text>
+
+            <circle cx="435" cy="152" r="34" fill="#1E2631" stroke="#E8560A" stroke-width="1"/>
+            <circle cx="435" cy="152" r="26" fill="#1A3048"/>
+            <circle cx="435" cy="152" r="4" fill="#E8560A" opacity=".9"/>
+            <circle cx="435" cy="152" r="7" fill="#E8560A" opacity=".2"/>
+            <text x="435" y="202" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#E8560A">10+ Gbps / 100+ km</text>
+            <text x="435" y="215" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#8895A7" opacity=".7">Um único modo de luz</text>
+
+            <!-- Bottom legend: principle of TIR -->
+            <line x1="20" y1="232" x2="500" y2="232" stroke="#8895A7" stroke-width="0.5" opacity=".3"/>
+            <text x="260" y="247" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#8895A7" opacity=".7">Princípio: reflexão total interna mantém a luz confinada no núcleo em todos os tipos</text>
+          </svg>
+          <p class="illus-cap">Corte transversal e propagação da luz nos três tipos de fibra óptica</p>
+        </div>
+
+        <h3>Tipos de Fibra</h3>
+        <ul>
+          <li><strong>Multimodo de índice degrau (Step Index):</strong> Núcleo com índice de refração constante. Primeira a ser aplicada, mais simples de fabricar. Alta dispersão — menor largura de banda.</li>
+          <li><strong>Multimodo de índice gradual (Graded Index):</strong> Índice de refração diminui do centro à casca, reduzindo dispersão. Usada em LANs:
+            <ul>
+              <li>Até 2 km — 100 Mbps</li>
+              <li>Até 550 m — 1 Gbps (fibra 50/125)</li>
+              <li>Até 300 m — 10 Gbps</li>
+            </ul>
+          </li>
+          <li><strong>Monomodo (Single Mode):</strong> Núcleo estreito (~9 µm), único modo de propagação. Altíssima capacidade e distâncias de centenas de km. Usada em backbones e cabos submarinos.</li>
+        </ul>
+        <div class="ibox ok">
+          <span class="ibox-ico">🌐</span>
+          <p>Cabos de fibra óptica submarinos conectam continentes, transportando a maior parte do tráfego de internet mundial com capacidades de Terabits por segundo.</p>
+        </div>
+      </div>
+
+      <div class="c-section sr" id="m1-s8">
+        <h2><span class="s-icon">🛰️</span>8. Satélites Artificiais</h2>
+        <p>Satélites permitem comunicações superando barreiras geográficas. São classificados por altitude de órbita:</p>
+
+        <!-- SVG: Satellite orbits -->
+        <div class="illus-wrap sr">
+          <svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Órbitas satelitais">
+            <!-- Earth -->
+            <circle cx="260" cy="110" r="28" fill="#1A6BB5" opacity=".85"/>
+            <circle cx="260" cy="110" r="28" fill="none" stroke="#5BAAD0" stroke-width="1.5" opacity=".4"/>
+            <text x="260" y="115" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="white">Terra</text>
+
+            <!-- LEO orbit -->
+            <ellipse cx="260" cy="110" rx="60" ry="42" fill="none" stroke="#4CAF82" stroke-width="1.5" stroke-dasharray="5,3" opacity=".7"/>
+            <!-- LEO satellite -->
+            <circle cx="316" cy="84" r="5" fill="#4CAF82"/>
+            <line x1="316" y1="79" x2="316" y2="68" stroke="#4CAF82" stroke-width="1.5"/>
+            <line x1="308" y1="84" x2="297" y2="84" stroke="#4CAF82" stroke-width="1.5"/>
+            <line x1="324" y1="84" x2="335" y2="84" stroke="#4CAF82" stroke-width="1.5"/>
+            <text x="340" y="70" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#4CAF82">LEO</text>
+            <text x="340" y="81" font-family="Inter,sans-serif" font-size="8" fill="#4CAF82" opacity=".8">~800 km</text>
+
+            <!-- MEO orbit -->
+            <ellipse cx="260" cy="110" rx="105" ry="72" fill="none" stroke="#F5A623" stroke-width="1.5" stroke-dasharray="7,4" opacity=".6"/>
+            <!-- MEO satellite -->
+            <circle cx="362" cy="66" r="5" fill="#F5A623"/>
+            <line x1="362" y1="61" x2="362" y2="50" stroke="#F5A623" stroke-width="1.5"/>
+            <line x1="354" y1="66" x2="343" y2="66" stroke="#F5A623" stroke-width="1.5"/>
+            <line x1="370" y1="66" x2="381" y2="66" stroke="#F5A623" stroke-width="1.5"/>
+            <text x="386" y="52" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#F5A623">MEO</text>
+            <text x="386" y="63" font-family="Inter,sans-serif" font-size="8" fill="#F5A623" opacity=".8">~20.000 km</text>
+
+            <!-- GEO orbit -->
+            <ellipse cx="260" cy="110" rx="155" ry="100" fill="none" stroke="#E8560A" stroke-width="1.5" stroke-dasharray="9,5" opacity=".55"/>
+            <!-- GEO satellite -->
+            <circle cx="413" cy="57" r="6" fill="#E8560A"/>
+            <line x1="413" y1="51" x2="413" y2="38" stroke="#E8560A" stroke-width="1.5"/>
+            <line x1="404" y1="57" x2="390" y2="57" stroke="#E8560A" stroke-width="1.5"/>
+            <line x1="422" y1="57" x2="436" y2="57" stroke="#E8560A" stroke-width="1.5"/>
+            <text x="438" y="34" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#E8560A">GEO</text>
+            <text x="438" y="46" font-family="Inter,sans-serif" font-size="8" fill="#E8560A" opacity=".8">~35.786 km</text>
+
+            <!-- Legend -->
+            <circle cx="30" cy="30" r="4" fill="#4CAF82"/><text x="40" y="34" font-family="Inter,sans-serif" font-size="9" fill="#4CAF82">Starlink / imagens</text>
+            <circle cx="30" cy="50" r="4" fill="#F5A623"/><text x="40" y="54" font-family="Inter,sans-serif" font-size="9" fill="#F5A623">GPS / GNSS</text>
+            <circle cx="30" cy="70" r="4" fill="#E8560A"/><text x="40" y="74" font-family="Inter,sans-serif" font-size="9" fill="#E8560A">TV / Internet rural</text>
+          </svg>
+          <p class="illus-cap">Classificação de satélites por altitude orbital: LEO, MEO e GEO</p>
+        </div>
+
+        <table class="data-tbl">
+          <thead><tr><th>Órbita</th><th>Altitude</th><th>Latência</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td><strong>LEO</strong></td><td>160 – 2.000 km</td><td>~20–40 ms</td><td>Internet (Starlink), imagens de alta res.</td></tr>
+            <tr><td><strong>MEO</strong></td><td>2.000 – 35.000 km</td><td>~80–140 ms</td><td>Navegação GPS / GNSS</td></tr>
+            <tr><td><strong>GEO</strong></td><td>~35.786 km</td><td>~600 ms</td><td>TV, telefonia, internet rural</td></tr>
+          </tbody>
+        </table>
+        <h3>Principais locais de lançamento</h3>
+        <ul>
+          <li><strong>Cabo Canaveral (EUA):</strong> Kennedy Space Center — principal base americana</li>
+          <li><strong>Kourou (Guiana Francesa):</strong> Operado pela ESA — muito próximo ao Equador</li>
+          <li><strong>Baikonur (Cazaquistão):</strong> Base russa histórica</li>
+          <li><strong>Alcântara (Brasil):</strong> Centro de Lançamento do Maranhão — também próximo ao Equador</li>
+        </ul>
+        <div class="ibox info">
+          <span class="ibox-ico">🌍</span>
+          <p>Lançamentos próximos ao Equador aproveitam a rotação terrestre (~1.670 km/h), economizando combustível e aumentando a carga útil dos foguetes.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ═══════════════════ VIEW: CAMPO QUALIDADE ═══════════════════ -->
+<div class="view" id="v-campo-qual">
+  <div class="page-hdr">
+    <div class="breadcrumb">
+      <a onclick="goTo('home')">Início</a><span class="bc-sep">›</span>
+      <a onclick="goTo('campo')">Campo</a><span class="bc-sep">›</span>
+      <span>Qualidade Operacional</span>
+    </div>
+    <h1 class="page-title">📋 Treinamento de Qualidade: SLA de Atendimento</h1>
+    <p class="page-sub">Guia completo sobre prazos, franquias, suspensões e boas práticas — Contrato TIM.</p>
+  </div>
+
+  <div class="content-wrap">
+    <aside class="c-sidebar">
+      <p class="sb-label">Índice</p>
+      <nav class="sb-nav">
+        <a onclick="scrollTo('q-s1')"><span class="sb-idx">1</span>Avaliação de Franquia</a>
+        <a onclick="scrollTo('q-s2')"><span class="sb-idx">2</span>Prazos SLA – FMMT</a>
+        <a onclick="scrollTo('q-s3')"><span class="sb-idx">3</span>Prazos SLA – FMO</a>
+        <a onclick="scrollTo('q-s4')"><span class="sb-idx">4</span>Regra de Acionamento</a>
+        <a onclick="scrollTo('q-s5')"><span class="sb-idx">5</span>Relógio do SLA</a>
+        <a onclick="scrollTo('q-s6')"><span class="sb-idx">6</span>Como Registrar</a>
+        <a onclick="scrollTo('q-s7')"><span class="sb-idx">7</span>Suspensão × Tramitação</a>
+        <a onclick="scrollTo('q-s8')"><span class="sb-idx">8</span>Abono de Tempo</a>
+        <a onclick="scrollTo('q-s9')"><span class="sb-idx">9</span>Checklist</a>
+      </nav>
+    </aside>
+    <main class="c-main">
+
+      <div class="c-section sr" id="q-s1">
+        <h2><span class="s-icon">📏</span>1. Avaliação de Franquia</h2>
+        <p><strong>Somente os tickets considerados dentro da franquia</strong> são avaliados quanto ao cumprimento de prazo. Antes de qualquer análise de tempo, verifique se o chamado se enquadra nos critérios de elegibilidade.</p>
+        <div class="ibox warn">
+          <span class="ibox-ico">⚠️</span>
+          <p>A avaliação de franquia é o ponto de partida de toda análise de SLA. Um ticket fora da franquia não entra no indicador de desempenho.</p>
+        </div>
+        <h3 style="color:#F87171">O que fica FORA da franquia:</h3>
+        <ul>
+          <li><strong>GMG:</strong> Preditiva ou preventiva com piora no índice de falhas do END ID</li>
+          <li><strong>Cancelados:</strong> Tickets cancelados antes do encerramento</li>
+          <li><strong>Perda de Garantia:</strong> Casos pagos em franquia complementar</li>
+          <li><strong>Repetida Campo 72h:</strong> Falha reincidente no prazo de 72h após atendimento anterior</li>
+          <li><strong>Encerrado pelo Centralizado:</strong> Tickets finalizados diretamente pela equipe centralizada</li>
+        </ul>
+      </div>
+
+      <div class="c-section sr" id="q-s2">
+        <h2><span class="s-icon">⏱️</span>2. Prazos SLA – FMMT</h2>
+        <p>No modelo <strong>FMMT</strong> (Field Maintenance Management Team), os chamados são classificados por prioridade de P1 a P5, cada uma com prazo fixo.</p>
+
+        <!-- SVG: FMMT priority bars -->
+        <div class="illus-wrap sr-left">
+          <svg viewBox="0 0 520 165" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Prazos FMMT por prioridade">
+            <!-- Grid lines -->
+            <line x1="130" y1="10" x2="130" y2="145" stroke="#8895A7" stroke-width="0.5" opacity=".3"/>
+            <line x1="232" y1="10" x2="232" y2="145" stroke="#8895A7" stroke-width="0.5" opacity=".3"/>
+            <line x1="334" y1="10" x2="334" y2="145" stroke="#8895A7" stroke-width="0.5" opacity=".3"/>
+            <line x1="436" y1="10" x2="436" y2="145" stroke="#8895A7" stroke-width="0.5" opacity=".3"/>
+            <!-- Time axis labels -->
+            <text x="130" y="158" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#8895A7">12h</text>
+            <text x="232" y="158" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#8895A7">24h</text>
+            <text x="334" y="158" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#8895A7">36h</text>
+            <text x="436" y="158" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#8895A7">48h</text>
+            <!-- P1: 4h -->
+            <rect x="130" y="16" width="34" height="18" rx="4" fill="#F87171"/>
+            <text x="28" y="29" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#F87171">P1</text>
+            <text x="170" y="29" font-family="Inter,sans-serif" font-size="9" fill="#F87171" font-weight="600">4h</text>
+            <!-- P2: 6h -->
+            <rect x="130" y="42" width="51" height="18" rx="4" fill="#FB923C"/>
+            <text x="28" y="55" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#FB923C">P2</text>
+            <text x="186" y="55" font-family="Inter,sans-serif" font-size="9" fill="#FB923C" font-weight="600">6h</text>
+            <!-- P3: 12h -->
+            <rect x="130" y="68" width="102" height="18" rx="4" fill="#F5A623"/>
+            <text x="28" y="81" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#F5A623">P3</text>
+            <text x="237" y="81" font-family="Inter,sans-serif" font-size="9" fill="#F5A623" font-weight="600">12h</text>
+            <!-- P4: 24h -->
+            <rect x="130" y="94" width="204" height="18" rx="4" fill="#5BAAD0"/>
+            <text x="28" y="107" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#5BAAD0">P4</text>
+            <text x="339" y="107" font-family="Inter,sans-serif" font-size="9" fill="#5BAAD0" font-weight="600">24h</text>
+            <!-- P5: 48h -->
+            <rect x="130" y="120" width="408" height="18" rx="4" fill="#8895A7" opacity=".6"/>
+            <text x="28" y="133" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#8895A7">P5</text>
+            <text x="443" y="133" font-family="Inter,sans-serif" font-size="9" fill="#8895A7" font-weight="600">48h</text>
+          </svg>
+          <p class="illus-cap">Prazo de atendimento por prioridade no modelo FMMT</p>
+        </div>
+
+        <table class="data-tbl">
+          <thead><tr><th>Prioridade</th><th>Prazo</th><th>Descrição</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pill p1">P1 – Crítico</span></td><td><strong>4h</strong></td><td>Máxima criticidade — impacto total na rede</td></tr>
+            <tr><td><span class="pill p2">P2 – Alto</span></td><td><strong>6h</strong></td><td>Chamados de alta prioridade</td></tr>
+            <tr><td><span class="pill p3">P3 – Médio</span></td><td><strong>12h</strong></td><td>Prioridade intermediária</td></tr>
+            <tr><td><span class="pill p4">P4 – Baixo</span></td><td><strong>24h</strong></td><td>Baixa prioridade</td></tr>
+            <tr><td><span class="pill p5">P5 – Planejado</span></td><td><strong>48h</strong></td><td>Menor urgência</td></tr>
+          </tbody>
+        </table>
+        <div class="ibox warn">
+          <span class="ibox-ico">📍</span>
+          <p><strong>Acréscimo de distância:</strong> +1 hora a cada 100 km entre o CM e o site, conforme cadastro NGNIS TIM.</p>
+        </div>
+      </div>
+
+      <div class="c-section sr" id="q-s3">
+        <h2><span class="s-icon">⏱️</span>3. Prazos SLA – FMO</h2>
+        <p>No modelo <strong>FMO</strong> (Field Maintenance Operations), os chamados são classificados em três níveis de criticidade.</p>
+        <table class="data-tbl">
+          <thead><tr><th>Nível</th><th>Prazo</th><th>Descrição</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pill alta">Alta Prioridade</span></td><td><strong>4h</strong></td><td>Impacto direto na operação da rede</td></tr>
+            <tr><td><span class="pill media">Média Prioridade</span></td><td><strong>6h</strong></td><td>Impacto moderado na operação</td></tr>
+            <tr><td><span class="pill baixa">Baixa Prioridade</span></td><td><strong>24h</strong></td><td>Não compromete o funcionamento imediato</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="c-section sr" id="q-s4">
+        <h2><span class="s-icon">🚨</span>4. Regra de Acionamento: 20% do SLA</h2>
+        <p>Toda atividade deve ter acionamento até <strong>20% do SLA definido</strong>. O técnico precisa ser despachado no início do período — não basta acionar próximo ao vencimento.</p>
+        <table class="data-tbl">
+          <thead><tr><th>Prioridade</th><th>SLA Total</th><th>Acionar em até</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pill p1">P1 / FMO Alta</span></td><td>4h</td><td><strong>48 minutos</strong></td></tr>
+            <tr><td><span class="pill p2">P2 / FMO Média</span></td><td>6h</td><td><strong>72 minutos</strong></td></tr>
+            <tr><td><span class="pill p3">P3</span></td><td>12h</td><td><strong>2h 24min</strong></td></tr>
+            <tr><td><span class="pill p4">P4</span></td><td>24h</td><td><strong>4h 48min</strong></td></tr>
+            <tr><td><span class="pill baixa">FMO Baixa</span></td><td>24h</td><td><strong>4h 48min</strong></td></tr>
+          </tbody>
+        </table>
+        <div class="ibox info">
+          <span class="ibox-ico">⏰</span>
+          <p><strong>Cálculo:</strong> Tempo de acionamento = SLA × 0,20. O prazo começa a contar a partir da abertura do chamado no sistema.</p>
+        </div>
+      </div>
+
+      <div class="c-section sr" id="q-s5">
+        <h2><span class="s-icon">🕐</span>5. O Relógio do SLA</h2>
+        <p>O tempo do SLA <strong>só corre</strong> enquanto o ticket está em "Iniciado" ou "Não Iniciado" — quando o chamado está na fila da TLP sem estar paralisado.</p>
+
+        <!-- SVG: SLA clock states -->
+        <div class="illus-wrap sr-right">
+          <svg viewBox="0 0 520 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Estados do relógio do SLA">
+            <!-- Clock 1: Running -->
+            <circle cx="100" cy="75" r="44" fill="#1E2631" stroke="#4CAF82" stroke-width="2"/>
+            <!-- Clock face ticks -->
+            <line x1="100" y1="34" x2="100" y2="40" stroke="#4CAF82" stroke-width="2" opacity=".6"/>
+            <line x1="100" y1="110" x2="100" y2="116" stroke="#4CAF82" stroke-width="2" opacity=".6"/>
+            <line x1="56" y1="75" x2="62" y2="75" stroke="#4CAF82" stroke-width="2" opacity=".6"/>
+            <line x1="138" y1="75" x2="144" y2="75" stroke="#4CAF82" stroke-width="2" opacity=".6"/>
+            <!-- Minute hand at 11 -->
+            <line x1="100" y1="75" x2="85" y2="48" stroke="#4CAF82" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Hour hand at 2 -->
+            <line x1="100" y1="75" x2="118" y2="58" stroke="#4CAF82" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="100" cy="75" r="4" fill="#4CAF82"/>
+            <text x="100" y="128" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#4CAF82">▶ Rodando</text>
+            <text x="100" y="145" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">Iniciado / Não Iniciado</text>
+
+            <!-- Arrow between -->
+            <text x="200" y="78" text-anchor="middle" font-family="Inter,sans-serif" font-size="22" fill="#8895A7" opacity=".5">⇄</text>
+
+            <!-- Clock 2: Paused -->
+            <circle cx="300" cy="75" r="44" fill="#1E2631" stroke="#F5A623" stroke-width="2" stroke-dasharray="6,3"/>
+            <line x1="300" y1="34" x2="300" y2="40" stroke="#F5A623" stroke-width="2" opacity=".4"/>
+            <line x1="300" y1="110" x2="300" y2="116" stroke="#F5A623" stroke-width="2" opacity=".4"/>
+            <line x1="256" y1="75" x2="262" y2="75" stroke="#F5A623" stroke-width="2" opacity=".4"/>
+            <line x1="338" y1="75" x2="344" y2="75" stroke="#F5A623" stroke-width="2" opacity=".4"/>
+            <!-- Both hands at 12 (stopped) -->
+            <line x1="300" y1="75" x2="300" y2="38" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" opacity=".6"/>
+            <line x1="300" y1="75" x2="300" y2="45" stroke="#F5A623" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+            <circle cx="300" cy="75" r="4" fill="#F5A623" opacity=".7"/>
+            <!-- Pause symbol -->
+            <rect x="284" y="60" width="7" height="22" rx="2" fill="#F5A623" opacity=".5"/>
+            <rect x="295" y="60" width="7" height="22" rx="2" fill="#F5A623" opacity=".5"/>
+            <text x="300" y="128" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#F5A623">⏸ Pausado</text>
+            <text x="300" y="145" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">Suspenso / Tramitado</text>
+
+            <!-- Progress bar at bottom -->
+            <rect x="380" y="40" width="120" height="10" rx="5" fill="#1A2233"/>
+            <rect x="380" y="40" width="80" height="10" rx="5" fill="#4CAF82"/>
+            <text x="440" y="28" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">Progresso do SLA</text>
+            <text x="465" y="53" font-family="Inter,sans-serif" font-size="9" fill="#4CAF82">67%</text>
+
+            <rect x="380" y="80" width="120" height="10" rx="5" fill="#1A2233"/>
+            <rect x="380" y="80" width="95" height="10" rx="5" fill="#F87171"/>
+            <text x="440" y="68" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">SLA Vencido</text>
+            <text x="480" y="93" font-family="Inter,sans-serif" font-size="9" fill="#F87171">‼️</text>
+
+            <rect x="380" y="120" width="120" height="10" rx="5" fill="#1A2233"/>
+            <rect x="380" y="120" width="50" height="10" rx="5" fill="#F5A623"/>
+            <text x="440" y="108" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">Pausado em</text>
+            <text x="465" y="133" font-family="Inter,sans-serif" font-size="9" fill="#F5A623">42%</text>
+          </svg>
+          <p class="illus-cap">Estados do relógio SLA: rodando quando na fila TLP, pausado em suspensão/tramitação</p>
+        </div>
+
+        <table class="data-tbl">
+          <thead><tr><th>Status do Ticket</th><th>Relógio</th><th>O que fazer</th></tr></thead>
+          <tbody>
+            <tr><td>Iniciado</td><td><span class="pill ok">▶ Rodando</span></td><td>Atuar imediatamente</td></tr>
+            <tr><td>Não Iniciado</td><td><span class="pill ok">▶ Rodando</span></td><td>Acionar dentro do prazo de 20%</td></tr>
+            <tr><td>Paralisado por Suspensão</td><td><span class="pill p4">⏸ Pausado</span></td><td>Aguardar resolução do impedimento</td></tr>
+            <tr><td>Tramitado para TIM</td><td><span class="pill p4">⏸ Pausado</span></td><td>Acompanhar retorno pelo CCI</td></tr>
+          </tbody>
+        </table>
+        <div class="ibox ok">
+          <span class="ibox-ico">✅</span>
+          <p>Compreender essa lógica permite identificar os momentos em que é necessário agir para <strong>não perder o prazo contratual</strong>.</p>
+        </div>
+      </div>
+
+      <div class="c-section sr" id="q-s6">
+        <h2><span class="s-icon">📝</span>6. Como Registrar Corretamente</h2>
+        <p>A qualidade do registro garante a elegibilidade de pleitos de abono. Cada etapa deve ser documentada <strong>no momento em que acontece</strong>.</p>
+        <ol>
+          <li><strong>Acionamento:</strong> Registrar horário e localização do técnico no despacho.</li>
+          <li><strong>Check-in (CA):</strong> Registrar chegada ao site com evidência fotográfica e condições encontradas.</li>
+          <li><strong>Diagnóstico:</strong> Declarar a condição técnica e o diagnóstico detalhado.</li>
+          <li><strong>Tratativa:</strong> Atualizar o ticket em cada passo da solução aplicada.</li>
+          <li><strong>Encerramento:</strong> Registrar solução, evidências fotográficas e prazo de estabilização.</li>
+        </ol>
+        <div class="ibox danger">
+          <span class="ibox-ico">🚫</span>
+          <p><strong>Registro retroativo NÃO é aceito.</strong> Toda evidência deve ser registrada no momento da ocorrência. Sem evidência contemporânea, o pleito de abono será negado.</p>
+        </div>
+      </div>
+
+      <div class="c-section sr" id="q-s7">
+        <h2><span class="s-icon">⚖️</span>7. Suspensão × Tramitação</h2>
+        <p>É fundamental entender a diferença, pois cada ação tem impacto distinto no indicador de SLA.</p>
+        <table class="data-tbl">
+          <thead><tr><th>Ação</th><th>Quando usar</th><th>Responsável pelo retorno</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Suspensão</strong></td>
+              <td>Impedimento no lado TLP (aguardar agendamento, peças, acesso)</td>
+              <td>TLP — deve retornar quando o impedimento cessar</td>
+            </tr>
+            <tr>
+              <td><strong>Tramitação (NotDone)</strong></td>
+              <td>Dependência de terceiro: TIM, provedor de TX, concessionária</td>
+              <td>TIM / terceiro — ticket vai para fila do responsável</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="ibox info">
+          <span class="ibox-ico">🔁</span>
+          <p><strong>Suspensão incorreta</strong> pode resultar em vencimento de SLA sem possibilidade de abono. Sempre escolha a ação correta de acordo com a natureza do impedimento.</p>
+        </div>
+      </div>
+
+      <div class="c-section sr" id="q-s8">
+        <h2><span class="s-icon">⏳</span>8. Abono de Tempo e Dificuldades</h2>
+        <div class="ibox ok">
+          <span class="ibox-ico">💡</span>
+          <p><strong>Regra de Ouro:</strong> O abono é de <strong>TEMPO, não de ticket</strong>. Mesmo que uma dificuldade seja reconhecida, o abono incide somente sobre o período em que a equipe foi efetivamente prejudicada.</p>
+        </div>
+        <h3 style="color:var(--campo-l)">O que pode ser abonado:</h3>
+        <ul>
+          <li>Falha de energia sem flag GMG ativo no sistema</li>
+          <li>Falha de transmissão (TX alugada) com abertura de WO e registro de HH</li>
+          <li>Impedimentos de responsabilidade da TIM ou de terceiros</li>
+          <li>Condições climáticas extremas que impeçam o acesso ao site</li>
+        </ul>
+        <h3 style="color:#F87171">O que NÃO pode ser abonado (falhas operacionais TLP):</h3>
+        <ul>
+          <li>Demora no início das tratativas ou no diagnóstico</li>
+          <li>Problemas no veículo / demora no deslocamento</li>
+          <li>Falha no despacho ou falta de ferramenta</li>
+          <li>TSK sem atualização</li>
+        </ul>
+        <table class="data-tbl">
+          <thead><tr><th>Princípio</th><th>O que significa</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Evidência Obrigatória</strong></td><td>Sem evidência no ticket no momento da ocorrência, não há abono</td></tr>
+            <tr><td><strong>Paralisação Imediata</strong></td><td>Suspender ou tramitar o ticket imediatamente ao encontrar dificuldade</td></tr>
+            <tr><td><strong>Pleito Preciso</strong></td><td>Pleitear exatamente o tempo de impedimento — nem mais, nem menos</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="c-section sr" id="q-s9">
+        <h2><span class="s-icon">✅</span>9. Checklist do Atendimento Perfeito</h2>
+        <p>Use este checklist como guia em cada atendimento para garantir conformidade com o SLA:</p>
+        <h3>Durante o Atendimento</h3>
+        <ul class="checklist">
+          <li>Acionar dentro dos 20% do SLA</li>
+          <li>Registrar localização e horário no acionamento</li>
+          <li>Realizar CA (Check-in) ao chegar no site</li>
+          <li>Declarar condições encontradas e diagnóstico detalhado</li>
+          <li>Registrar evidências fotográficas e textuais</li>
+          <li>Registrar prazo estimado de solução</li>
+          <li>Paralisar / Tramitar imediatamente ao encontrar dificuldade</li>
+        </ul>
+        <h3 style="margin-top:18px">Em Caso de Dificuldade</h3>
+        <ul class="checklist">
+          <li>Identificar quem é o próximo responsável</li>
+          <li>Se TIM: Tramitar (NotDone) para fila TIM</li>
+          <li>Se TLP com impedimento: Suspender como Agendado Data Futura</li>
+          <li>Pleitar apenas o tempo efetivamente impactado</li>
+          <li>Nunca registrar dificuldade retroativamente</li>
+        </ul>
+        <div class="ibox ok" style="margin-top:20px">
+          <span class="ibox-ico">🏆</span>
+          <p>Seguir este checklist em todos os atendimentos garante conformidade com o SLA e maximiza a elegibilidade para abonos quando necessário.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 TLP – Conectados com o Futuro. Todos os direitos reservados.</span>
+  <span>Portal SAP – Sistema de Apoio Profissional</span>
+</footer>
+
+<script>
+const views = {
+  'home':       'v-home',
+  'cci':        'v-cci',
+  'campo':      'v-campo',
+  'cci-mod1':   'v-cci-mod1',
+  'campo-qual': 'v-campo-qual',
+};
+const navMap = {
+  'home':'nb-home', 'cci':'nb-cci', 'cci-mod1':'nb-cci',
+  'campo':'nb-campo', 'campo-qual':'nb-campo'
+};
+
+function goTo(page) {
+  Object.values(views).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('active');
+  });
+  const vId = views[page];
+  if (vId) document.getElementById(vId).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const nb = document.getElementById(navMap[page]);
+  if (nb) nb.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  location.hash = page === 'home' ? '' : page;
+  setTimeout(() => {
+    document.querySelectorAll('.view.active .sr, .view.active .sr-left, .view.active .sr-right, .view.active .sr-scale').forEach(el => {
+      if (typeof srObs !== 'undefined') srObs.observe(el);
+    });
+  }, 80);
+}
+
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Theme toggle
+let theme = (() => { try { return localStorage.getItem('sap-theme') || 'dark'; } catch{ return 'dark'; } })();
+function applyTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('themeBtn').textContent = t === 'dark' ? '☀️' : '🌙';
+  try { localStorage.setItem('sap-theme', t); } catch{}
+}
+function toggleTheme() {
+  theme = theme === 'dark' ? 'light' : 'dark';
+  applyTheme(theme);
+}
+applyTheme(theme);
+
+// Init from hash
+const hash = location.hash.replace('#', '') || 'home';
+if (views[hash]) goTo(hash); else goTo('home');
+
+// Bidirectional scroll reveal
+const srObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    e.target.classList.toggle('sr-in', e.isIntersecting);
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+function initSR() {
+  document.querySelectorAll('.view.active .sr, .view.active .sr-left, .view.active .sr-right, .view.active .sr-scale').forEach(el => {
+    srObs.observe(el);
+  });
+}
+
+// Re-init SR after each navigation
+const _origGoTo = goTo;
+// Wrap goTo to reinit after view change
+const goToOrig = window.goTo;
+window.addEventListener('hashchange', () => setTimeout(initSR, 80));
+document.querySelectorAll('.sector-card, .manual-card').forEach(card => {
+  const orig = card.getAttribute('onclick');
+  card.addEventListener('click', () => setTimeout(initSR, 80));
+});
+setTimeout(initSR, 80);
+</script>

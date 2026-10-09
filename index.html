@@ -84,14 +84,21 @@ body::before {
 }
 :root[data-theme="light"] .hdr { background: rgba(238,242,248,.95); }
 
-.logo-wrap { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-.logo-wrap:hover { opacity: .9; }
+.logo-wrap { display: flex; align-items: center; gap: 14px; cursor: pointer; }
+.logo-wrap:hover { opacity: .88; }
 
-.logo-svg { width: 52px; height: 36px; flex-shrink: 0; }
+.logo-svg { width: 56px; height: 30px; flex-shrink: 0; }
 
-.logo-text { display: flex; flex-direction: column; gap: 1px; }
-.logo-name { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 1.1rem; letter-spacing: .01em; color: var(--text); }
-.logo-tag  { font-size: .58rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.logo-tag  {
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1;
+  border-left: 1px solid var(--border);
+  padding-left: 14px;
+}
 
 .hdr-nav { display: flex; gap: 4px; align-items: center; }
 .nav-btn {
@@ -483,13 +490,53 @@ body::before {
 .checklist li::before { content:'☐'; color:var(--accent); flex-shrink:0; }
 
 /* ── FOOTER ── */
+.footer-dev {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 12px 52px;
+  text-align: center;
+  background: var(--surf);
+}
+.footer-dev-title {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: .55;
+  margin-bottom: 5px;
+}
+.footer-dev-row {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.footer-dev-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: .73rem;
+}
+.footer-dev-role {
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: .04em;
+}
+.footer-dev-name {
+  color: var(--text);
+  font-weight: 600;
+}
+.footer-dev-email {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: .68rem;
+}
+
 footer {
   position:relative; z-index:1;
   border-top:1px solid var(--border);
-  padding:20px 52px;
+  padding:16px 52px;
   display:flex; align-items:center; justify-content:space-between;
-  font-size:.74rem; color:var(--muted);
-  max-width:100%;
+  font-size:.72rem; color:var(--muted);
 }
 
 /* ── RESPONSIVE ── */
@@ -500,6 +547,7 @@ footer {
   .content-wrap { grid-template-columns:1fr; padding-inline:20px; }
   .c-sidebar { position:static; max-height:none; }
   footer { flex-direction:column; gap:6px; text-align:center; padding-inline:20px; }
+  .footer-dev { padding-inline:20px; }
   .hero { padding:40px 20px 32px; }
 }
 @media (max-width:480px) {
@@ -539,23 +587,18 @@ footer {
 <!-- ═══════════════════ HEADER ═══════════════════ -->
 <header class="hdr">
   <div class="logo-wrap" onclick="goTo('home')">
-    <svg class="logo-svg" viewBox="0 0 80 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg class="logo-svg" viewBox="0 0 80 30" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="tlpg" x1="0" y1="36" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+        <linearGradient id="tlpg" x1="0" y1="30" x2="80" y2="0" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stop-color="#C84A08"/>
-          <stop offset="55%" stop-color="#E8560A"/>
+          <stop offset="55%" stop-color="#E05210"/>
           <stop offset="100%" stop-color="#F5A020"/>
         </linearGradient>
       </defs>
-      <!-- Rounded rectangle background matching real logo -->
-      <rect x="0" y="0" width="80" height="36" rx="5" fill="url(#tlpg)"/>
-      <!-- TLP text in white, bold -->
-      <text x="40" y="26" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="20" fill="white" text-anchor="middle" letter-spacing="1.5">TLP</text>
+      <rect x="0" y="0" width="80" height="30" rx="4" fill="url(#tlpg)"/>
+      <text x="40" y="22" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="17" fill="white" text-anchor="middle" letter-spacing="2">TLP</text>
     </svg>
-    <div class="logo-text">
-      <span class="logo-name">TLP</span>
-      <span class="logo-tag">Conectados com o Futuro</span>
-    </div>
+    <span class="logo-tag">Conectados com o Futuro</span>
   </div>
   <nav class="hdr-nav">
     <button class="nav-btn active" id="nb-home"  onclick="goTo('home')">Início</button>
@@ -1412,6 +1455,18 @@ footer {
       </div>
 
     </main>
+  </div>
+</div>
+
+<!-- DEV CREDIT BAR -->
+<div class="footer-dev">
+  <p class="footer-dev-title">Equipe de Desenvolvimento</p>
+  <div class="footer-dev-row">
+    <div class="footer-dev-item">
+      <span class="footer-dev-role">Dev:</span>
+      <span class="footer-dev-name">Lucas Infante</span>
+      <span class="footer-dev-email">&lt;lucas.esao7751@gmail.com&gt;</span>
+    </div>
   </div>
 </div>
 

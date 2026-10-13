@@ -4,9 +4,8 @@
 <style>
 :root{
   --bg:#06090F; --surf:#0D1525; --surf2:#121E35;
-  --border:rgba(150,180,230,.08); --text:#D4DFF0; --muted:#6B7D96;
-  --accent:#C85210; --orange:#E05E14; --yellow:#F5A020;
-  --green:#22C55E; --blue:#3B82F6; --purple:#A855F7;
+  --border:rgba(150,180,230,.10); --text:#D4DFF0; --muted:#6B7D96;
+  --accent:#C85210; --orange:#E05E14;
   --r:12px; color-scheme:dark;
 }
 @media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
@@ -26,9 +25,6 @@ a{color:inherit;text-decoration:none}
 img{max-width:100%;border-radius:8px}
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
-
-/* PROGRESS BAR */
-#prog-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--accent),var(--yellow));z-index:200;transition:width .2s}
 
 /* HEADER */
 .tut-hdr{
@@ -87,12 +83,6 @@ img{max-width:100%;border-radius:8px}
   box-shadow:0 8px 32px rgba(200,82,16,.3);
 }
 .hero-start:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(200,82,16,.4)}
-.hero-emoji-row{display:flex;gap:24px;margin-bottom:48px;font-size:2rem}
-.hero-emoji-row span{animation:float 3s ease-in-out infinite}
-.hero-emoji-row span:nth-child(2){animation-delay:.5s}
-.hero-emoji-row span:nth-child(3){animation-delay:1s}
-.hero-emoji-row span:nth-child(4){animation-delay:1.5s}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
 /* CHAPTERS */
 .chapter{max-width:860px;margin:0 auto;padding:80px 24px}
@@ -116,11 +106,11 @@ img{max-width:100%;border-radius:8px}
   display:flex;gap:14px;align-items:flex-start;
   margin:24px 0;font-size:.92rem;line-height:1.7;
 }
-.callout.info{background:rgba(59,130,246,.1);border-left:3px solid var(--blue)}
-.callout.tip{background:rgba(34,197,94,.1);border-left:3px solid var(--green)}
-.callout.warn{background:rgba(200,82,16,.1);border-left:3px solid var(--accent)}
-.callout.fun{background:rgba(168,85,247,.1);border-left:3px solid var(--purple)}
-.callout-ico{font-size:1.3rem;flex-shrink:0;margin-top:1px}
+.callout.info{background:rgba(150,180,230,.07);border-left:3px solid rgba(150,180,230,.35)}
+.callout.tip{background:rgba(150,180,230,.07);border-left:3px solid rgba(150,180,230,.35)}
+.callout.warn{background:rgba(200,82,16,.08);border-left:3px solid var(--accent)}
+.callout.fun{background:rgba(150,180,230,.07);border-left:3px solid rgba(150,180,230,.35)}
+.callout-ico{font-size:.95rem;font-weight:700;flex-shrink:0;margin-top:2px;color:var(--accent);opacity:.9;min-width:16px;text-align:center}
 .callout p{margin:0;color:var(--muted)}
 .callout p strong{color:var(--text)}
 
@@ -190,7 +180,7 @@ img{max-width:100%;border-radius:8px}
 }
 .finish-screen h2{font-family:'Sora',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;margin-bottom:16px}
 .finish-screen p{color:var(--muted);max-width:480px;font-size:.97rem;line-height:1.8;margin-bottom:32px}
-.confetti-row{font-size:2.5rem;margin-bottom:24px;animation:float 2s ease-in-out infinite}
+.confetti-row{font-size:2rem;margin-bottom:24px}
 
 /* SCROLL REVEAL */
 .sr{opacity:0;transform:translateY(40px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
@@ -210,11 +200,32 @@ img{max-width:100%;border-radius:8px}
   .chapter{padding:56px 18px}
   .tech-btns{gap:6px}
   .gen-btn{padding:6px 12px;font-size:.76rem}
-  .hero-emoji-row{gap:14px;font-size:1.6rem}
 }
-</style>
 
-<div id="prog-bar"></div>
+/* MINI CHECK */
+.mini-check{
+  background:var(--surf2);border:1px solid var(--border);
+  border-radius:10px;padding:20px 24px;margin:32px 0 0 0;
+}
+.mini-check-title{
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:14px;
+}
+.mc-q{font-size:.95rem;font-weight:600;color:var(--text);margin-bottom:10px}
+.mc-opts{display:flex;flex-direction:column;gap:7px;margin-bottom:8px}
+.mc-opt{
+  padding:10px 14px;border-radius:7px;
+  border:1px solid var(--border);background:var(--surf);
+  color:var(--muted);font-size:.88rem;cursor:pointer;
+  text-align:left;font-family:'Inter',sans-serif;
+  transition:all .18s;
+}
+.mc-opt:hover{color:var(--text);border-color:var(--muted)}
+.mc-opt.correct{background:rgba(150,210,150,.1);border-color:rgba(150,210,150,.4);color:#9FD4A5}
+.mc-opt.wrong{background:rgba(220,80,80,.1);border-color:rgba(220,80,80,.35);color:#E08080}
+.mc-res{font-size:.82rem;font-weight:600;min-height:20px;margin-top:4px;color:var(--muted)}
+.mc-sep{border:none;border-top:1px solid var(--border);margin:18px 0}
+</style>
 
 <!-- HEADER -->
 <header class="tut-hdr">
@@ -236,12 +247,9 @@ img{max-width:100%;border-radius:8px}
 <!-- ═════ HERO ═════ -->
 <section class="hero-screen" data-chap="0">
   <div class="hero-badge"><span class="pulse"></span>Módulo 1 · Básico</div>
-  <div class="hero-emoji-row">
-    <span>📡</span><span>🏗️</span><span>📱</span><span>⚡</span>
-  </div>
   <h1 class="hero-title">Bem-vindo ao<br>Treinamento <em>Básico TLP!</em></h1>
   <p class="hero-sub">Aqui você vai entender, do zero, como funciona o trabalho que move a conectividade de milhões de pessoas. Simples, direto e sem complicação.</p>
-  <button class="hero-start" onclick="scrollToChapter(1)">Vamos começar! 🚀</button>
+  <button class="hero-start" onclick="scrollToChapter(1)">Começar treinamento</button>
 </section>
 
 <!-- ═════ CAP 1: Nossa missão ═════ -->
@@ -253,17 +261,28 @@ img{max-width:100%;border-radius:8px}
   <h2 class="sr">O que o <em>CCI</em> faz, afinal?</h2>
   <p class="sr">Antes de qualquer coisa, você precisa entender o que é o <strong>CCI — Centro de Controle e Inteligência</strong>. É aqui que você vai trabalhar.</p>
   <div class="callout fun sr">
-    <span class="callout-ico">🎯</span>
+    <span class="callout-ico">›</span>
     <p>Nossa missão principal é o <strong>monitoramento e acionamento da equipe de campo</strong> para resolução das falhas que ocorrem na nossa rede. Simples assim.</p>
   </div>
   <p class="sr">Mas aí surge a dúvida natural de quem está chegando agora:</p>
   <div class="callout tip sr">
-    <span class="callout-ico">🤔</span>
+    <span class="callout-ico">?</span>
     <p><strong>"Mas que tipo de falhas são essas? O que elas causam no dia a dia das pessoas?"</strong></p>
   </div>
   <p class="sr">Boa pergunta! Pra entender isso, primeiro precisamos entender o que garante o sinal no celular de todo mundo...</p>
 </div>
 
+
+  <div class="mini-check sr" id="mc1">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">O que é o CCI?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mc(this,'mc1',false)">Uma empresa parceira que cuida da fibra óptica</button>
+      <button class="mc-opt" onclick="mc(this,'mc1',true)">O centro responsável pelo monitoramento e acionamento de campo para resolver falhas na rede</button>
+      <button class="mc-opt" onclick="mc(this,'mc1',false)">O sistema de cadastro de clientes da operadora</button>
+    </div>
+    <div class="mc-res"></div>
+  </div>
 <hr class="div-chapter">
 
 <!-- ═════ CAP 2: Quem somos (CSC/CCI) ═════ -->
@@ -276,14 +295,14 @@ img{max-width:100%;border-radius:8px}
   <p class="sr">Antes de entrar no mundo técnico, você precisa saber em qual time você está. Spoiler: é um time grande e importante.</p>
 
   <div class="callout fun sr">
-    <span class="callout-ico">🏢</span>
+    <span class="callout-ico">›</span>
     <p>O <strong>CSC</strong> é o <strong>Centro de Serviços Compartilhados</strong> — e o <strong>CCI</strong> é o <strong>Centro de Controle Integrado</strong>. Na prática, é a mesma área. Você vai ouvir os dois nomes, mas estão falando da mesma coisa.</p>
   </div>
 
   <p class="sr">E o que essa área faz? Em uma frase:</p>
 
   <div class="callout info sr">
-    <span class="callout-ico">🎯</span>
+    <span class="callout-ico">›</span>
     <p>O CSC/CCI é responsável pelo <strong>controle, acompanhamento e suporte às equipes de campo</strong> da TLP — em todos os contratos com clientes como TIM, Vivo, Claro, ATC, IHS, Vtal e outros.</p>
   </div>
 
@@ -291,17 +310,17 @@ img{max-width:100%;border-radius:8px}
 
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin:28px 0">
     <div style="background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center" class="sr">
-      <div style="font-size:2rem;margin-bottom:8px">📍</div>
+      <strong style="color:var(--accent);font-size:1.1rem">—</strong>
       <strong style="font-size:.92rem">Onde estamos</strong>
       <p style="font-size:.82rem;color:var(--muted);margin-top:6px">SP, RJ, MG e Sul do país</p>
     </div>
     <div style="background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center" class="sr">
-      <div style="font-size:2rem;margin-bottom:8px">👥</div>
+      <strong style="color:var(--accent);font-size:1.1rem">—</strong>
       <strong style="font-size:.92rem">Nosso time</strong>
       <p style="font-size:.82rem;color:var(--muted);margin-top:6px">+150 colaboradores ativos</p>
     </div>
     <div style="background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:18px;text-align:center" class="sr">
-      <div style="font-size:2rem;margin-bottom:8px">📋</div>
+      <div style="font-size:2rem;margin-bottom:8px">—</strong>
       <strong style="font-size:.92rem">Nossos clientes</strong>
       <p style="font-size:.82rem;color:var(--muted);margin-top:6px">TIM, Vivo, Claro, ATC, IHS, Vtal</p>
     </div>
@@ -310,7 +329,7 @@ img{max-width:100%;border-radius:8px}
   <p class="sr">Dentro do CSC/CCI, existem frentes de trabalho diferentes:</p>
 
   <div class="callout tip sr">
-    <span class="callout-ico">⚡</span>
+    <span class="callout-ico">›</span>
     <div>
       <p><strong>Online (Corretiva):</strong> atendemos chamados em tempo real — um site caiu, precisa resolver agora.</p>
       <p style="margin-top:8px"><strong>Offline (Preventivas, Obras, Acesso):</strong> atividades planejadas, que não são emergências.</p>
@@ -319,11 +338,22 @@ img{max-width:100%;border-radius:8px}
   </div>
 
   <div class="callout fun sr">
-    <span class="callout-ico">🚀</span>
+    <span class="callout-ico">›</span>
     <p>O objetivo de todo mundo aqui é o mesmo: <strong>atendimento com excelência e eficiência nas metas contratuais</strong>. Simples de falar, mas no dia a dia exige foco e trabalho em equipe.</p>
   </div>
 </div>
 
+
+  <div class="mini-check sr" id="mc2">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">CSC e CCI são a mesma área?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mc(this,'mc2',true)">Sim — são dois nomes para a mesma área</button>
+      <button class="mc-opt" onclick="mc(this,'mc2',false)">Não — o CSC cuida do campo e o CCI do sistema</button>
+      <button class="mc-opt" onclick="mc(this,'mc2',false)">Não — o CCI é uma empresa diferente da TLP</button>
+    </div>
+    <div class="mc-res"></div>
+  </div>
 <hr class="div-chapter">
 
 <!-- ═════ CAP 3: O que é um Site ═════ -->
@@ -342,12 +372,23 @@ img{max-width:100%;border-radius:8px}
   </div>
 
   <div class="callout info sr">
-    <span class="callout-ico">💡</span>
+    <span class="callout-ico">›</span>
     <p>A foto acima mostra como a comunicação funciona de site para site. Cada um cobre sua área e "conversa" com os vizinhos para manter a rede funcionando.</p>
   </div>
   <p class="sr">E o sinal que chega no seu celular — o 2G, 3G, 4G e 5G — se mantém funcionando justamente por causa dessa operação toda. E adivinha? <strong>Você agora faz parte dessa operação!</strong></p>
 </div>
 
+
+  <div class="mini-check sr" id="mc3">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">O que é um "site" no contexto de telecomunicações?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mc(this,'mc3',false)">Um endereço na internet, como um portal web</button>
+      <button class="mc-opt" onclick="mc(this,'mc3',true)">Uma instalação física com equipamentos que transmite ou recebe sinal de rádio</button>
+      <button class="mc-opt" onclick="mc(this,'mc3',false)">O software de gestão usado pelas operadoras</button>
+    </div>
+    <div class="mc-res"></div>
+  </div>
 <hr class="div-chapter">
 
 <!-- ═════ CAP 3: Tecnologias ═════ -->
@@ -386,11 +427,22 @@ img{max-width:100%;border-radius:8px}
   </div>
 
   <div class="callout warn sr">
-    <span class="callout-ico">🧠</span>
+    <span class="callout-ico">›</span>
     <p><strong>Para guardar:</strong> Na TLP, trabalhamos principalmente com redes 4G e 5G. Garantir que essas tecnologias funcionem é o coração do nosso trabalho.</p>
   </div>
 </div>
 
+
+  <div class="mini-check sr" id="mc4">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">O que "G" significa em 2G, 3G, 4G e 5G?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mc(this,'mc4',false)">Gigabytes — a quantidade de dados disponível</button>
+      <button class="mc-opt" onclick="mc(this,'mc4',false)">Geração de aparelhos celulares</button>
+      <button class="mc-opt" onclick="mc(this,'mc4',true)">Geração — cada uma traz mais velocidade, menor latência e novas capacidades</button>
+    </div>
+    <div class="mc-res"></div>
+  </div>
 <hr class="div-chapter">
 
 <!-- ═════ CAP 4: Site Fora ═════ -->
@@ -411,17 +463,28 @@ img{max-width:100%;border-radius:8px}
   <h3 style="font-size:.95rem;font-weight:700;color:var(--text);margin:20px 0 12px" class="sr">As causas mais comuns de queda:</h3>
   <div class="stats-row sr">
     <div class="stat-card"><div class="stat-n" style="font-size:2rem">⚡</div><div class="stat-l">Queda de Energia</div></div>
-    <div class="stat-card"><div class="stat-n" style="font-size:2rem">🔧</div><div class="stat-l">Queima de Hardware</div></div>
+    <div class="stat-card"><div class="stat-n" style="font-size:1.6rem;color:var(--accent)">↯</div><div class="stat-l">Queima de Hardware</div></div>
     <div class="stat-card"><div class="stat-n" style="font-size:2rem">🦹</div><div class="stat-l">Furto / Vandalismo</div></div>
     <div class="stat-card"><div class="stat-n" style="font-size:2rem">🌩️</div><div class="stat-l">Condições Climáticas</div></div>
   </div>
 
   <div class="callout tip sr">
-    <span class="callout-ico">🚨</span>
+    <span class="callout-ico">!</span>
     <p><strong>Seu papel aqui:</strong> Identificar quando um site cai, entender a causa, e acionar a equipe certa para resolver o mais rápido possível — dentro do prazo do SLA.</p>
   </div>
 </div>
 
+
+  <div class="mini-check sr" id="mc5">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">Quando um site cai, o que acontece com os usuários próximos a ele?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mc(this,'mc5',false)">Nada — outro site assume automaticamente sem impacto</button>
+      <button class="mc-opt" onclick="mc(this,'mc5',true)">Ficam sem sinal ou com sinal fraco até o site ser restaurado</button>
+      <button class="mc-opt" onclick="mc(this,'mc5',false)">O celular troca automaticamente para Wi-Fi</button>
+    </div>
+    <div class="mc-res"></div>
+  </div>
 <hr class="div-chapter">
 
 <!-- ═════ CAP 5: Concentrador ═════ -->
@@ -440,21 +503,32 @@ img{max-width:100%;border-radius:8px}
 
   <p class="sr">Nessa imagem, o site que caiu é o que chamamos de <strong>concentrador</strong>. Mas o que isso significa exatamente?</p>
   <div class="callout warn sr">
-    <span class="callout-ico">🏗️</span>
+    <span class="callout-ico">›</span>
     <p><strong>Concentrador</strong> é um site responsável pela transmissão de outro(s) site(s). Se ele parar, o dano é muito maior — pode deixar uma cidade inteira, ou até várias cidades simultaneamente, sem conectividade.</p>
   </div>
 
   <div class="callout fun sr">
-    <span class="callout-ico">🎯</span>
+    <span class="callout-ico">›</span>
     <p>Pense assim: se um site normal cai, um bairro perde sinal. Se um <strong>concentrador</strong> cai, uma cidade inteira pode ficar sem cobertura. É por isso que os concentradores têm <strong>prioridade máxima de atendimento (P1)</strong>.</p>
   </div>
 
   <div class="callout info sr">
-    <span class="callout-ico">📌</span>
+    <span class="callout-ico">›</span>
     <p><strong>Para identificar um concentrador:</strong> nas ferramentas que você usará, ele aparece com um ícone diferente ou uma flag especial. O CCI mantém uma lista atualizada dos sites concentradores da sua área de responsabilidade.</p>
   </div>
 </div>
 
+
+  <div class="mini-check sr" id="mc6">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">O que é o concentrador?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mc(this,'mc6',false)">Um técnico responsável por coordenar a equipe de campo</button>
+      <button class="mc-opt" onclick="mc(this,'mc6',true)">Um equipamento ou sistema que agrupa o tráfego de vários sites e os conecta à rede maior</button>
+      <button class="mc-opt" onclick="mc(this,'mc6',false)">O sistema de tickets usado pelo CCI</button>
+    </div>
+    <div class="mc-res"></div>
+  </div>
 <hr class="div-chapter">
 
 <!-- ═════ CAP 6: Fluxo do Operador ═════ -->
@@ -486,11 +560,22 @@ img{max-width:100%;border-radius:8px}
   </div>
 
   <div class="callout info sr">
-    <span class="callout-ico">🔁</span>
+    <span class="callout-ico">›</span>
     <p>Esse ciclo se repete durante todo o turno. Com o tempo, você vai criar um ritmo e vai perceber os padrões — certos sites caem com mais frequência, certas áreas têm mais problemas de energia, e assim por diante.</p>
   </div>
 </div>
 
+
+  <div class="mini-check sr" id="mc10">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">Qual é a sequência correta no fluxo básico do operador ao identificar um alarme?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mc(this,'mc10',false)">Acionar campo → abrir chamado → registrar no sistema</button>
+      <button class="mc-opt" onclick="mc(this,'mc10',true)">Identificar alarme → analisar impacto → abrir chamado → acionar equipe → acompanhar até resolução</button>
+      <button class="mc-opt" onclick="mc(this,'mc10',false)">Ligar para a operadora → esperar instrução → fechar chamado</button>
+    </div>
+    <div class="mc-res"></div>
+  </div>
 <hr class="div-chapter">
 
 <!-- ═════ CAP 7: Assistente de Monitoramento ═════ -->
@@ -545,11 +630,22 @@ img{max-width:100%;border-radius:8px}
   </div>
 
   <div class="callout tip sr" style="margin-top:20px">
-    <span class="callout-ico">💡</span>
+    <span class="callout-ico">›</span>
     <p>Uma forma fácil de lembrar:<br><strong>Monitorar = ver → Escalonar = avisar → Validar = confirmar.</strong><br>São três ações que juntas formam o ciclo completo do seu trabalho diário.</p>
   </div>
 </div>
 
+
+  <div class="mini-check sr" id="mc7">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">Qual é a função principal do Assistente de Monitoramento?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mc(this,'mc7',false)">Ir ao campo consertar os equipamentos com defeito</button>
+      <button class="mc-opt" onclick="mc(this,'mc7',false)">Treinar os técnicos de campo nos sistemas da operadora</button>
+      <button class="mc-opt" onclick="mc(this,'mc7',true)">Acompanhar os alarmes da rede, abrir chamados e acionar a equipe certa para cada ocorrência</button>
+    </div>
+    <div class="mc-res"></div>
+  </div>
 <hr class="div-chapter">
 
 <!-- ═════ CAP 8: Ferramentas ═════ -->
@@ -565,49 +661,49 @@ img{max-width:100%;border-radius:8px}
 
   <div style="display:flex;flex-direction:column;gap:10px">
     <div class="callout info sr" style="border-left-color:var(--blue)">
-      <span class="callout-ico">🎫</span>
+      <span class="callout-ico">›</span>
       <div>
         <p><strong>Smart Service (ServiceNow)</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">É onde ficam todos os <strong>tickets de manutenção</strong>. Pensa nele como o "Trello da operação" — cada chamado vira um ticket aqui, com status, responsável e prazo.</p>
       </div>
     </div>
     <div class="callout info sr" style="border-left-color:var(--blue)">
-      <span class="callout-ico">👷</span>
+      <span class="callout-ico">›</span>
       <div>
         <p><strong>TOA / WFM (Workforce Management)</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Controla a <strong>força de trabalho em campo</strong> — qual técnico está disponível, onde ele está, a rota e a jornada de trabalho. É o "GPS + agenda" dos técnicos.</p>
       </div>
     </div>
     <div class="callout info sr" style="border-left-color:var(--blue)">
-      <span class="callout-ico">🔴</span>
+      <span class="callout-ico">!</span>
       <div>
         <p><strong>Gênesis</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Ferramenta principal para acompanhar os <strong>sites fora em tempo real</strong>. Mostra data/hora da falha, tempo de indisponibilidade, classificação, cidade e ticket relacionado. É o "painel de controle" dos sites em queda.</p>
       </div>
     </div>
     <div class="callout info sr" style="border-left-color:var(--blue)">
-      <span class="callout-ico">📊</span>
+      <span class="callout-ico">›</span>
       <div>
         <p><strong>Grafana</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Parecido com o Gênesis, mas mais focado em <strong>gráficos e dados históricos</strong>. Ótimo para visualizar tendências e acompanhar o comportamento da rede ao longo do tempo.</p>
       </div>
     </div>
     <div class="callout info sr" style="border-left-color:var(--blue)">
-      <span class="callout-ico">🔔</span>
+      <span class="callout-ico">›</span>
       <div>
         <p><strong>Netcool</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Ferramenta de <strong>alarmes da rede</strong>. Detecta e mostra todos os problemas ativos. É integrado ao Smart Service — quando um alarme aparece, ele pode gerar um ticket automaticamente.</p>
       </div>
     </div>
     <div class="callout info sr" style="border-left-color:var(--blue)">
-      <span class="callout-ico">🤖</span>
+      <span class="callout-ico">›</span>
       <div>
         <p><strong>TAIS (Chatbot)</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Assistente virtual que responde perguntas rápidas: alarmes, histórico de um site, endereço, backups. É como o "Google interno" da operação TIM — super útil no dia a dia.</p>
       </div>
     </div>
     <div class="callout info sr" style="border-left-color:var(--blue)">
-      <span class="callout-ico">📈</span>
+      <span class="callout-ico">›</span>
       <div>
         <p><strong>4FIELD</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Acompanha dados de <strong>backlog, eficiência e produtividade</strong> da equipe. É onde você vê se os indicadores estão no verde ou no vermelho.</p>
@@ -619,21 +715,21 @@ img{max-width:100%;border-radius:8px}
 
   <div style="display:flex;flex-direction:column;gap:10px">
     <div class="callout fun sr" style="border-left-color:var(--accent)">
-      <span class="callout-ico">🖥️</span>
+      <span class="callout-ico">›</span>
       <div>
         <p><strong>Portal Monitora</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Ferramenta interna TLP que <strong>cruza dados do WFM/TOA com outras plataformas</strong>. Tem dashboard geral, filtros por frente de trabalho e acompanhamento de SLAs, reincidências e falhas críticas.</p>
       </div>
     </div>
     <div class="callout fun sr" style="border-left-color:var(--accent)">
-      <span class="callout-ico">🗺️</span>
+      <span class="callout-ico">›</span>
       <div>
         <p><strong>Portal Auto Tracking</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Integrado ao Gênesis e WFM — monitora os sites fora e cruza com os tickets TLP. Permite fazer updates no Gênesis direto pelo portal e agrupar casos de massivas.</p>
       </div>
     </div>
     <div class="callout fun sr" style="border-left-color:var(--accent)">
-      <span class="callout-ico">📝</span>
+      <span class="callout-ico">›</span>
       <div>
         <p><strong>Portal SN2</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Usado pela equipe de Suporte N2 para registrar análises de chamados e decidir se o ticket vai para campo ou se fecha remotamente.</p>
@@ -642,11 +738,22 @@ img{max-width:100%;border-radius:8px}
   </div>
 
   <div class="callout tip sr" style="margin-top:20px">
-    <span class="callout-ico">🎓</span>
+    <span class="callout-ico">›</span>
     <p>Não precisa decorar tudo de uma vez! O importante agora é saber <strong>para que serve cada ferramenta</strong> — assim quando alguém pedir "checa no Gênesis" ou "abre no Smart Service", você já sabe exatamente onde ir.</p>
   </div>
 </div>
 
+
+  <div class="mini-check sr" id="mc8">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">Para que serve o NOC (Network Operations Center)?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mc(this,'mc8',false)">É o software de RH para controle de ponto dos técnicos</button>
+      <button class="mc-opt" onclick="mc(this,'mc8',true)">É o centro de onde se monitora a rede em tempo real, visualizando alarmes e status dos sites</button>
+      <button class="mc-opt" onclick="mc(this,'mc8',false)">É a ferramenta de faturamento usada pelas operadoras</button>
+    </div>
+    <div class="mc-res"></div>
+  </div>
 <hr class="div-chapter">
 
 <!-- ═════ CAP 9: Com quem a gente fala ═════ -->
@@ -681,7 +788,7 @@ img{max-width:100%;border-radius:8px}
       </div>
     </div>
     <div class="callout warn sr">
-      <span class="callout-ico" style="flex-shrink:0">🔧</span>
+      <span class="callout-ico" style="flex-shrink:0">›</span>
       <div>
         <p><strong>Operação TLP — o time de campo</strong></p>
         <p style="margin-top:5px;font-size:.88rem">São os técnicos TLP que vão fisicamente até o site. Você vai interagir muito com eles para garantir que os atendimentos sejam feitos com qualidade e dentro do prazo contratual.</p>
@@ -697,11 +804,22 @@ img{max-width:100%;border-radius:8px}
   </div>
 
   <div class="callout tip sr">
-    <span class="callout-ico">💬</span>
+    <span class="callout-ico">›</span>
     <p>É normal ter <strong>vários grupos de WhatsApp e Teams simultâneos</strong> — cada um para um projeto ou frente de trabalho. No começo parece caótico, mas você aprende rápido quem é quem em cada grupo.</p>
   </div>
 </div>
 
+
+  <div class="mini-check sr" id="mc9">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">Se você identificar uma falha em campo mas não souber quem acionar, o que deve fazer?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mc(this,'mc9',false)">Aguardar até o próximo turno para não interromper ninguém</button>
+      <button class="mc-opt" onclick="mc(this,'mc9',false)">Tentar resolver sozinho sem registrar</button>
+      <button class="mc-opt" onclick="mc(this,'mc9',true)">Consultar a matriz de escalação ou acionar seu supervisor imediatamente</button>
+    </div>
+    <div class="mc-res"></div>
+  </div>
 <hr class="div-chapter">
 
 <!-- ═════ CAP 11: Quiz ═════ -->
@@ -710,15 +828,15 @@ img{max-width:100%;border-radius:8px}
     <span class="eyebrow-num">11</span>
     <span class="eyebrow-label">Teste de Conhecimento</span>
   </div>
-  <h2 class="sr">Vamos ver o que você <em>aprendeu!</em> 🧠</h2>
-  <p class="sr">Não tem nota, não tem pressão — é só pra fixar. Bora!</p>
+  <h2 class="sr">Vamos ver o que você <em>aprendeu</em></h2>
+  <p class="sr">Sem nota, sem pressão — é só para fixar o conteúdo.</p>
 
   <div class="quiz-section sr" id="q1">
     <div class="quiz-q">1. O que é um "Site" na linguagem da TLP?</div>
     <div class="quiz-opts">
-      <button class="quiz-opt" onclick="answer(this,'q1',false)">🖥️ Um sistema de computador da operadora</button>
-      <button class="quiz-opt" onclick="answer(this,'q1',true)">📡 Uma torre/antena que cobre uma área com sinal</button>
-      <button class="quiz-opt" onclick="answer(this,'q1',false)">📋 Um ticket de atendimento aberto no sistema</button>
+      <button class="quiz-opt" onclick="answer(this,'q1',false)">Um sistema de computador da operadora</button>
+      <button class="quiz-opt" onclick="answer(this,'q1',true)">Uma instalação física (torre/antena) que cobre uma área com sinal</button>
+      <button class="quiz-opt" onclick="answer(this,'q1',false)">Um ticket de atendimento aberto no sistema</button>
     </div>
     <div class="quiz-result" id="q1-res"></div>
   </div>
@@ -726,9 +844,9 @@ img{max-width:100%;border-radius:8px}
   <div class="quiz-section sr" id="q2">
     <div class="quiz-q">2. O que é um Concentrador?</div>
     <div class="quiz-opts">
-      <button class="quiz-opt" onclick="answer(this,'q2',false)">🔌 Um equipamento que amplifica o sinal Wi-Fi</button>
-      <button class="quiz-opt" onclick="answer(this,'q2',false)">🧑‍💼 O supervisor responsável pelo turno do CCI</button>
-      <button class="quiz-opt" onclick="answer(this,'q2',true)">🏗️ Um site que é responsável pela transmissão de outro(s) site(s)</button>
+      <button class="quiz-opt" onclick="answer(this,'q2',false)">Um equipamento que amplifica o sinal Wi-Fi</button>
+      <button class="quiz-opt" onclick="answer(this,'q2',false)">O supervisor responsável pelo turno do CCI</button>
+      <button class="quiz-opt" onclick="answer(this,'q2',true)">Um site responsável pela transmissão de outro(s) site(s)</button>
     </div>
     <div class="quiz-result" id="q2-res"></div>
   </div>
@@ -736,9 +854,9 @@ img{max-width:100%;border-radius:8px}
   <div class="quiz-section sr" id="q3">
     <div class="quiz-q">3. Você recebeu um alarme P1 agora. Quanto tempo você tem para acionar o técnico?</div>
     <div class="quiz-opts">
-      <button class="quiz-opt" onclick="answer(this,'q3',false)">⏰ 2 horas</button>
-      <button class="quiz-opt" onclick="answer(this,'q3',true)">⚡ 48 minutos (20% das 4 horas do SLA P1)</button>
-      <button class="quiz-opt" onclick="answer(this,'q3',false)">🕐 1 hora</button>
+      <button class="quiz-opt" onclick="answer(this,'q3',false)">2 horas</button>
+      <button class="quiz-opt" onclick="answer(this,'q3',true)">48 minutos — 20% do SLA P1 de 4 horas</button>
+      <button class="quiz-opt" onclick="answer(this,'q3',false)">1 hora</button>
     </div>
     <div class="quiz-result" id="q3-res"></div>
   </div>
@@ -746,9 +864,9 @@ img{max-width:100%;border-radius:8px}
   <div class="quiz-section sr" id="q4">
     <div class="quiz-q">4. Para que serve o <strong>Gênesis</strong>?</div>
     <div class="quiz-opts">
-      <button class="quiz-opt" onclick="answer(this,'q4',false)">🎫 Para criar e gerenciar tickets de manutenção</button>
-      <button class="quiz-opt" onclick="answer(this,'q4',true)">🔴 Para acompanhar sites fora em tempo real</button>
-      <button class="quiz-opt" onclick="answer(this,'q4',false)">👷 Para controlar a jornada dos técnicos de campo</button>
+      <button class="quiz-opt" onclick="answer(this,'q4',false)">Para criar e gerenciar tickets de manutenção</button>
+      <button class="quiz-opt" onclick="answer(this,'q4',true)">Para acompanhar sites fora em tempo real</button>
+      <button class="quiz-opt" onclick="answer(this,'q4',false)">Para controlar a jornada dos técnicos de campo</button>
     </div>
     <div class="quiz-result" id="q4-res"></div>
   </div>
@@ -756,20 +874,64 @@ img{max-width:100%;border-radius:8px}
   <div class="quiz-section sr" id="q5">
     <div class="quiz-q">5. Quais são as 3 ações principais do Assistente de Monitoramento?</div>
     <div class="quiz-opts">
-      <button class="quiz-opt" onclick="answer(this,'q5',false)">📋 Analisar, Reportar e Fechar</button>
-      <button class="quiz-opt" onclick="answer(this,'q5',true)">👁️ Monitorar, Escalonar e Validar</button>
-      <button class="quiz-opt" onclick="answer(this,'q5',false)">📅 Planejar, Executar e Revisar</button>
+      <button class="quiz-opt" onclick="answer(this,'q5',false)">Analisar, Reportar e Fechar</button>
+      <button class="quiz-opt" onclick="answer(this,'q5',true)">Monitorar, Escalonar e Validar</button>
+      <button class="quiz-opt" onclick="answer(this,'q5',false)">Planejar, Executar e Revisar</button>
     </div>
     <div class="quiz-result" id="q5-res"></div>
   </div>
+
+  <div class="quiz-section sr" id="q6">
+    <div class="quiz-q">6. Qual é a diferença entre MW (Microondas) e FO (Fibra Óptica)?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q6',false)">MW é mais veloz; FO é usada em locais sem energia</button>
+      <button class="quiz-opt" onclick="answer(this,'q6',false)">São a mesma tecnologia com nomes diferentes por região</button>
+      <button class="quiz-opt" onclick="answer(this,'q6',true)">MW transmite via rádio pelo ar; FO transmite por pulsos de luz em cabo de vidro</button>
+    </div>
+    <div class="quiz-result" id="q6-res"></div>
+  </div>
+
+  <div class="quiz-section sr" id="q7">
+    <div class="quiz-q">7. O que acontece quando um concentrador falha?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q7',false)">Apenas um site específico fica fora do ar</button>
+      <button class="quiz-opt" onclick="answer(this,'q7',true)">Vários sites podem perder conectividade ao mesmo tempo, gerando impacto em larga área</button>
+      <button class="quiz-opt" onclick="answer(this,'q7',false)">O sinal cai apenas para usuários de 2G</button>
+    </div>
+    <div class="quiz-result" id="q7-res"></div>
+  </div>
+
+  <div class="quiz-section sr" id="q8">
+    <div class="quiz-q">8. Por que registrar corretamente um chamado é essencial?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q8',false)">É apenas uma exigência burocrática sem impacto prático</button>
+      <button class="quiz-opt" onclick="answer(this,'q8',false)">O sistema fecha o chamado automaticamente se não for registrado</button>
+      <button class="quiz-opt" onclick="answer(this,'q8',true)">Garante rastreabilidade, controle de SLA e que a equipe certa seja acionada com informações precisas</button>
+    </div>
+    <div class="quiz-result" id="q8-res"></div>
+  </div>
+
+  <div class="quiz-section sr" id="q9">
+    <div class="quiz-q">9. O 5G substitui completamente as redes anteriores?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q9',false)">Sim — quando o 5G chega, os sites de 4G são desativados</button>
+      <button class="quiz-opt" onclick="answer(this,'q9',true)">Não — as gerações coexistem; a rede evolui gradualmente sem desligar a anterior</button>
+      <button class="quiz-opt" onclick="answer(this,'q9',false)">Depende — só em capitais o 4G é desativado</button>
+    </div>
+    <div class="quiz-result" id="q9-res"></div>
+  </div>
+
 </div>
 
 <!-- ═════ FINISH ═════ -->
 <div class="finish-screen" data-chap="12">
-  <div class="confetti-row">🎉</div>
-  <h2>Módulo <em style="background:linear-gradient(135deg,var(--accent),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">concluído!</em></h2>
-  <p>Você já entende o básico do que faz a TLP. Nos próximos módulos vamos mergulhar nas ferramentas, nos sistemas e nos procedimentos do dia a dia.</p>
-  <button class="hero-start" onclick="scrollToChapter(0)">Rever do início 🔄</button>
+  <div class="confetti-row">✓</div>
+  <h2>Módulo <em style="color:var(--accent)">concluído!</em></h2>
+  <p>Você já conhece a base do que move o CCI. No Módulo 2, vamos aprofundar: tipos de falhas, regras de acionamento por categoria, estrutura regional e muito mais.</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:32px">
+    <button class="hero-start" onclick="window.location.href='tutorial-tlp-mod2.html'">Ir para o Módulo 2</button>
+    <button class="hero-start" style="background:var(--surf2);color:var(--muted);box-shadow:none" onclick="scrollToChapter(0)">Rever este módulo</button>
+  </div>
 </div>
 
 <script>
@@ -781,12 +943,6 @@ const IMG_TECH = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABMIAAAJiCAYAAAAl
 // Replace img src with actual base64 (done at generation time)
 
 // PROGRESS BAR
-const pb = document.getElementById('prog-bar');
-function updateProgress(){
-  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-  pb.style.width = Math.min(pct,100)+'%';
-}
-window.addEventListener('scroll', updateProgress);
 
 // SCROLL REVEAL
 const srObs = new IntersectionObserver(entries=>{

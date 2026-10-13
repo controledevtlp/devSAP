@@ -1,0 +1,690 @@
+<title>Treinamento TLP — Módulo 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06090F; --surf:#0D1525; --surf2:#121E35;
+  --border:rgba(150,180,230,.10); --text:#D4DFF0; --muted:#6B7D96;
+  --accent:#C85210; --orange:#E05E14;
+  --r:12px; color-scheme:dark;
+}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
+  --bg:#F4F7FC; --surf:#fff; --surf2:#EBF0F8;
+  --border:rgba(20,40,100,.09); --text:#111929; --muted:#506070;
+  --accent:#B84A0A; --orange:#D4560E; color-scheme:light;
+}}
+:root[data-theme="light"]{
+  --bg:#F4F7FC; --surf:#fff; --surf2:#EBF0F8;
+  --border:rgba(20,40,100,.09); --text:#111929; --muted:#506070;
+  --accent:#B84A0A; --orange:#D4560E; color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;padding-inline:0}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;border-radius:8px}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
+
+/* HEADER */
+.tut-hdr{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 48px;
+  background:rgba(6,9,15,.92);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .tut-hdr{background:rgba(244,247,252,.92)}}
+:root[data-theme="light"] .tut-hdr{background:rgba(244,247,252,.92)}
+.hdr-logo{display:flex;align-items:center;gap:12px}
+.hdr-logo svg{width:64px;height:26px;flex-shrink:0}
+.hdr-logo-tag{font-size:.6rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);border-left:1px solid var(--border);padding-left:12px}
+.hdr-step{font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.06em}
+.theme-btn{width:32px;height:32px;border-radius:7px;border:1px solid var(--border);background:var(--surf);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.88rem;transition:color .2s}
+.theme-btn:hover{color:var(--text)}
+
+/* CHAPTERS NAV */
+.chapters{display:flex;gap:6px;align-items:center}
+.chap-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;flex-shrink:0}
+.chap-dot.done{background:var(--accent);opacity:.6}
+.chap-dot.active{background:var(--accent);transform:scale(1.4)}
+
+/* HERO */
+.hero-screen{
+  min-height:88vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px;
+  position:relative;overflow:hidden;
+}
+.hero-screen::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 30%,rgba(200,82,16,.10),transparent);
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:5px 16px;border-radius:999px;
+  border:1px solid rgba(200,82,16,.3);background:rgba(200,82,16,.08);
+  font-size:.72rem;font-weight:700;color:var(--accent);
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:32px;
+}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.4}}
+.hero-title{font-family:'Sora',sans-serif;font-size:clamp(2rem,5.5vw,3.6rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:20px;text-wrap:balance}
+.hero-title em{font-style:normal;color:var(--accent)}
+.hero-sub{font-size:1rem;color:var(--muted);max-width:520px;margin-bottom:40px;line-height:1.8}
+.hero-start{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 32px;border-radius:10px;
+  background:linear-gradient(135deg,var(--accent),var(--orange));
+  color:white;font-weight:700;font-size:1rem;cursor:pointer;
+  border:none;font-family:'Inter',sans-serif;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 8px 32px rgba(200,82,16,.3);
+}
+.hero-start:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(200,82,16,.4)}
+
+/* CHAPTERS */
+.chapter{max-width:860px;margin:0 auto;padding:80px 24px}
+.chapter-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.eyebrow-num{
+  width:28px;height:28px;border-radius:8px;
+  background:rgba(200,82,16,.15);color:var(--accent);
+  font-size:.75rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.eyebrow-label{font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.chapter h2{font-family:'Sora',sans-serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;line-height:1.2;letter-spacing:-.02em;margin-bottom:20px}
+.chapter h2 em{font-style:normal;color:var(--accent)}
+.chapter p{color:var(--muted);font-size:.97rem;line-height:1.85;margin-bottom:16px}
+.chapter p strong{color:var(--text);font-weight:600}
+.chapter p:last-child{margin-bottom:0}
+
+/* CALLOUT BOXES */
+.callout{
+  border-radius:10px;padding:16px 20px;
+  display:flex;gap:14px;align-items:flex-start;
+  margin:24px 0;font-size:.92rem;line-height:1.7;
+}
+.callout.info{background:rgba(150,180,230,.07);border-left:3px solid rgba(150,180,230,.35)}
+.callout.tip{background:rgba(150,180,230,.07);border-left:3px solid rgba(150,180,230,.35)}
+.callout.warn{background:rgba(200,82,16,.08);border-left:3px solid var(--accent)}
+.callout.fun{background:rgba(150,180,230,.07);border-left:3px solid rgba(150,180,230,.35)}
+.callout-ico{font-size:.95rem;font-weight:700;flex-shrink:0;margin-top:2px;color:var(--accent);opacity:.9;min-width:16px;text-align:center}
+.callout p{margin:0;color:var(--muted)}
+.callout p strong{color:var(--text)}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;margin:24px 0}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:var(--surf2);color:var(--text);font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--muted);vertical-align:top}
+td strong{color:var(--text)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(150,180,230,.03)}
+.badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.73rem;font-weight:700;letter-spacing:.04em}
+.badge-p1{background:rgba(220,60,60,.15);color:#E08080;border:1px solid rgba(220,60,60,.2)}
+.badge-p2{background:rgba(200,130,16,.15);color:#E0A060;border:1px solid rgba(200,130,16,.2)}
+.badge-p3{background:rgba(150,180,230,.12);color:#9BB5D4;border:1px solid rgba(150,180,230,.2)}
+
+/* STEP FLOW */
+.step-flow{display:flex;flex-direction:column;gap:0;margin:24px 0}
+.step-item{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--border)}
+.step-item:last-child{border-bottom:none}
+.step-num{
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(200,82,16,.15);border:1px solid rgba(200,82,16,.25);
+  color:var(--accent);font-size:.8rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.step-body strong{display:block;color:var(--text);font-size:.95rem;margin-bottom:4px}
+.step-body p{font-size:.88rem;color:var(--muted);margin:0;line-height:1.65}
+
+/* CATEGORY GRID */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:24px 0}
+.cat-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:18px}
+.cat-card-head{font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.cat-card h3{font-size:.97rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.cat-card p{font-size:.85rem;color:var(--muted);margin:0;line-height:1.65}
+
+/* IMAGE PANELS */
+.img-panel{margin:28px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--surf)}
+.img-caption{padding:10px 16px;font-size:.75rem;color:var(--muted);text-align:center;border-top:1px solid var(--border)}
+
+/* QUIZ */
+.quiz-section{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:28px;margin:32px 0}
+.quiz-q{font-weight:700;font-size:.97rem;margin-bottom:16px}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{
+  padding:12px 16px;border-radius:8px;
+  border:1px solid var(--border);background:var(--surf2);
+  cursor:pointer;font-size:.9rem;color:var(--muted);
+  transition:all .2s;text-align:left;font-family:'Inter',sans-serif;
+}
+.quiz-opt:hover{color:var(--text);border-color:var(--muted)}
+.quiz-opt.correct{background:rgba(150,210,150,.1);border-color:rgba(150,210,150,.4);color:#9FD4A5}
+.quiz-opt.wrong{background:rgba(220,80,80,.1);border-color:rgba(220,80,80,.35);color:#E08080}
+.quiz-result{margin-top:12px;font-size:.88rem;font-weight:600;min-height:24px}
+
+/* MINI CHECK */
+.mini-check{background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin:32px 0 0 0}
+.mini-check-title{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.mc-q{font-size:.95rem;font-weight:600;color:var(--text);margin-bottom:10px}
+.mc-opts{display:flex;flex-direction:column;gap:7px;margin-bottom:8px}
+.mc-opt{padding:10px 14px;border-radius:7px;border:1px solid var(--border);background:var(--surf);color:var(--muted);font-size:.88rem;cursor:pointer;text-align:left;font-family:'Inter',sans-serif;transition:all .18s}
+.mc-opt:hover{color:var(--text);border-color:var(--muted)}
+.mc-opt.correct{background:rgba(150,210,150,.1);border-color:rgba(150,210,150,.4);color:#9FD4A5}
+.mc-opt.wrong{background:rgba(220,80,80,.1);border-color:rgba(220,80,80,.35);color:#E08080}
+.mc-res{font-size:.82rem;font-weight:600;min-height:20px;margin-top:4px;color:var(--muted)}
+.mc-sep{border:none;border-top:1px solid var(--border);margin:24px 0}
+
+/* DIVIDER */
+.div-chapter{border:none;border-top:1px solid var(--border);margin:0;opacity:.5}
+
+/* FINISH SCREEN */
+.finish-screen{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px}
+.finish-screen h2{font-family:'Sora',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;margin-bottom:16px}
+.finish-screen p{color:var(--muted);max-width:480px;font-size:.97rem;line-height:1.8;margin-bottom:32px}
+
+/* SCROLL REVEAL */
+.sr{opacity:0;transform:translateY(40px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.sr.in{opacity:1;transform:none}
+
+/* RESP */
+@media(max-width:640px){
+  .tut-hdr{padding:12px 18px}
+  .hdr-logo-tag{display:none}
+  .chapter{padding:56px 18px}
+  .cat-grid{grid-template-columns:1fr}
+}
+</style>
+
+<!-- HEADER -->
+<header class="tut-hdr">
+  <div class="hdr-logo">
+    <svg viewBox="0 0 64 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="hg2" x1="0" y1="26" x2="64" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#C84A08"/><stop offset=".55" stop-color="#E05E14"/><stop offset="1" stop-color="#F5A020"/></linearGradient></defs>
+      <rect width="64" height="26" rx="4" fill="url(#hg2)"/>
+      <text x="32" y="19" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="14" fill="white" text-anchor="middle" letter-spacing="2">TLP</text>
+    </svg>
+    <span class="hdr-logo-tag">Módulo 2 · Operação</span>
+  </div>
+  <div class="chapters" id="chapDots"></div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span class="hdr-step" id="stepLabel">Início</span>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">☀️</button>
+  </div>
+</header>
+
+<!-- ═════ HERO ═════ -->
+<section class="hero-screen" data-chap="0">
+  <div class="hero-badge"><span class="pulse"></span>Módulo 2 · Operação</div>
+  <h1 class="hero-title">Operação na prática:<br><em>falhas, tickets e SLAs</em></h1>
+  <p class="hero-sub">Você já conhece o básico. Agora vamos ao que acontece no dia a dia — quais são as falhas, como classificá-las, abrir chamados corretamente e garantir que o SLA seja cumprido.</p>
+  <button class="hero-start" onclick="scrollToChapter(1)">Continuar treinamento</button>
+</section>
+
+<!-- ═════ CAP 1: Tipos de Falha ═════ -->
+<div class="chapter" data-chap="1">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">1</span>
+    <span class="eyebrow-label">Tipos de Falha</span>
+  </div>
+  <h2 class="sr">O que pode <em>dar errado</em> em um site?</h2>
+  <p class="sr">Quando um alarme chega, o primeiro passo é entender que tipo de falha está acontecendo. Isso define o caminho: quem acionar, com que urgência, e o que verificar.</p>
+  <p class="sr">As falhas se dividem em grandes categorias. Cada uma tem causas típicas, impacto diferente e procedimento específico. Vamos ver as principais:</p>
+
+  <div class="cat-grid sr">
+    <div class="cat-card">
+      <div class="cat-card-head">Energia</div>
+      <h3>Falha de Energia</h3>
+      <p>Queda da rede elétrica, falha no nobreak (retificador), bateria descarregada ou gerador que não partiu. Pode derrubrar o site inteiro.</p>
+    </div>
+    <div class="cat-card">
+      <div class="cat-card-head">Transmissão</div>
+      <h3>Falha de Transmissão</h3>
+      <p>Problemas no link de backhaul — seja fibra óptica rompida, equipamento de microondas com defeito ou perda de alinhamento de antena MW.</p>
+    </div>
+    <div class="cat-card">
+      <div class="cat-card-head">Rádio / RF</div>
+      <h3>Falha de Rádio</h3>
+      <p>Equipamento de rádio-frequência com alarme — módulo danificado, perda de portadora ou interferência que compromete a cobertura celular.</p>
+    </div>
+    <div class="cat-card">
+      <div class="cat-card-head">Hardware</div>
+      <h3>Queima de Hardware</h3>
+      <p>Placa eletrônica queimada, módulo BBU/RRU com defeito. Exige substituição física por técnico de campo com o equipamento sobressalente.</p>
+    </div>
+    <div class="cat-card">
+      <div class="cat-card-head">Acesso</div>
+      <h3>Problemas de Acesso</h3>
+      <p>Portão trancado, chave extraviada, segurança que não libera a entrada. Impedem que o técnico realize o atendimento no prazo.</p>
+    </div>
+    <div class="cat-card">
+      <div class="cat-card-head">Vandalismo / Furto</div>
+      <h3>Furto de Cabos / Equipamentos</h3>
+      <p>Roubo de cabos de cobre, bateria ou equipamentos. Além do impacto no serviço, requer Boletim de Ocorrência e acionamento da segurança.</p>
+    </div>
+  </div>
+
+  <div class="callout warn sr">
+    <span class="callout-ico">!</span>
+    <p><strong>Atenção:</strong> Uma única falha pode combinar várias categorias. Por exemplo: um furto de cabo causa falha de energia <em>e</em> de transmissão ao mesmo tempo. Registre todas as causas identificadas no chamado.</p>
+  </div>
+
+  <div class="mini-check sr" id="mc1">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">Um técnico chega ao site e não consegue entrar porque o portão está trancado. Que categoria de falha é essa?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mc(this,'mc1',false)">Falha de Transmissão</button>
+      <button class="mc-opt" onclick="mc(this,'mc1',true)">Problema de Acesso</button>
+      <button class="mc-opt" onclick="mc(this,'mc1',false)">Falha de Hardware</button>
+    </div>
+    <div class="mc-res"></div>
+  </div>
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 2: Classificação e Prioridade ═════ -->
+<div class="chapter" data-chap="2">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">2</span>
+    <span class="eyebrow-label">Prioridade e SLA</span>
+  </div>
+  <h2 class="sr">P1, P2, P3 — qual é a <em>urgência?</em></h2>
+  <p class="sr">Nem toda falha é igual. O grau de urgência é definido pela <strong>prioridade</strong>, que determina o <strong>SLA</strong> — o tempo máximo para resolução. Errar a prioridade significa ou perder o SLA ou mobilizar recursos desnecessariamente.</p>
+
+  <div class="callout info sr">
+    <span class="callout-ico">›</span>
+    <p><strong>SLA</strong> (Service Level Agreement) é o acordo de nível de serviço entre a TLP e o cliente. Perder o SLA gera penalidades contratuais — e é exatamente por isso que o CCI existe: para garantir que os prazos sejam cumpridos.</p>
+  </div>
+
+  <div class="tbl-wrap sr">
+    <table>
+      <thead>
+        <tr>
+          <th>Prioridade</th>
+          <th>Quando usar</th>
+          <th>SLA típico</th>
+          <th>Acionamento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="badge badge-p1">P1 — Crítico</span></td>
+          <td>Site totalmente fora do ar, sem fallback; impacto em larga área ou infraestrutura crítica (hospital, rodovia, aeroporto)</td>
+          <td><strong>4 horas</strong></td>
+          <td>Imediato — técnico acionado em até 20% do SLA (≈ 48 min)</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-p2">P2 — Alto</span></td>
+          <td>Degradação grave (site parcialmente fora, capacidade reduzida); um setor inativo</td>
+          <td><strong>8 horas</strong></td>
+          <td>Urgente — acionar em até 20% do SLA (≈ 96 min)</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-p3">P3 — Normal</span></td>
+          <td>Falha menor ou manutenção preventiva; impacto localizado sem perda total de serviço</td>
+          <td><strong>24–48 h</strong></td>
+          <td>Programado — verificar disponibilidade de equipe e agendar</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout warn sr">
+    <span class="callout-ico">!</span>
+    <p><strong>Regra de ouro:</strong> Na dúvida entre P1 e P2, classifique como <strong>P1</strong> e acione. É melhor acionar com urgência e reclassificar depois do que atrasar e estourar o SLA.</p>
+  </div>
+
+  <div class="mini-check sr" id="mc2">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">Um site está com dois dos três setores fora (degradação grave, mas não totalmente inativo). Qual prioridade você atribui?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mc(this,'mc2',false)">P3 — Normal, pois o site ainda funciona parcialmente</button>
+      <button class="mc-opt" onclick="mc(this,'mc2',true)">P2 — Alto, pois há degradação grave com setor inativo</button>
+      <button class="mc-opt" onclick="mc(this,'mc2',false)">P1 — Crítico, pois qualquer falha é crítica</button>
+    </div>
+    <div class="mc-res"></div>
+  </div>
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 3: Abertura de Chamados ═════ -->
+<div class="chapter" data-chap="3">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">3</span>
+    <span class="eyebrow-label">Abertura de Chamados</span>
+  </div>
+  <h2 class="sr">Como abrir um chamado <em>do jeito certo</em></h2>
+  <p class="sr">Abrir chamado é uma das tarefas mais críticas do Assistente de Monitoramento. Um chamado mal preenchido atrasa o atendimento, compromete o SLA e dificulta a escalação para o nível correto.</p>
+  <p class="sr">Siga sempre o fluxo abaixo — cada passo é obrigatório:</p>
+
+  <div class="step-flow sr">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>Identificar o alarme</strong>
+        <p>No Gênesis ou NOC, verifique qual site está com alarme ativo, o horário de início e se já havia ocorrência anterior recente (reincidência).</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>Confirmar o impacto</strong>
+        <p>Verifique se o site está totalmente fora ou parcialmente degradado. Confira o tipo de equipamento afetado e se há concentrador envolvido (impacto em cascata).</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>Preencher os campos obrigatórios</strong>
+        <p><strong>ID do site</strong>, nome do site, operadora, <strong>prioridade (P1/P2/P3)</strong>, tipo de falha, descrição detalhada dos sintomas, horário do alarme e fontes consultadas.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <strong>Acionar a equipe correta</strong>
+        <p>Conforme a matriz de escalação: técnico de campo para intervenção física, supervisor para P1 fora do horário comercial, ou operadora para falhas de backhaul que dependem deles.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <strong>Acompanhar até o fechamento</strong>
+        <p>Não basta abrir — você precisa acompanhar. Verifique o status periodicamente, registre atualizações no chamado e valide que o alarme foi normalizando antes de fechar.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout fun sr">
+    <span class="callout-ico">›</span>
+    <p><strong>Dica prática:</strong> Sempre registre o horário exato em que você acionou o técnico. Isso é a sua prova de que o SLA foi respeitado — se alguém questionar depois, você tem o registro.</p>
+  </div>
+
+  <div class="mini-check sr" id="mc3">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">Você abriu o chamado e acionou o técnico. O que fazer a seguir?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mc(this,'mc3',false)">Fechar o chamado e aguardar feedback do técnico por e-mail</button>
+      <button class="mc-opt" onclick="mc(this,'mc3',true)">Acompanhar o chamado, registrar atualizações e verificar a normalização antes de fechar</button>
+      <button class="mc-opt" onclick="mc(this,'mc3',false)">Abrir um segundo chamado para garantir que o técnico recebeu</button>
+    </div>
+    <div class="mc-res"></div>
+  </div>
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 4: Estrutura Regional (ANF/CM) ═════ -->
+<div class="chapter" data-chap="4">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">4</span>
+    <span class="eyebrow-label">Estrutura Regional</span>
+  </div>
+  <h2 class="sr">ANF e CM — quem é responsável <em>por qual região?</em></h2>
+  <p class="sr">A TLP organiza seus contratos por <strong>regiões geográficas</strong>. Cada região tem um responsável técnico — o <strong>Gerente de Contrato (CM)</strong> — e um conjunto de Áreas de Negócio de Field (ANF). Saber qual CM é responsável por qual região é essencial para a escalação correta.</p>
+
+  <div class="callout info sr">
+    <span class="callout-ico">›</span>
+    <p>ANF = <strong>Área de Negócio de Field</strong> — a menor unidade de gestão de campo. Cada ANF agrupa sites de uma região e tem um time técnico dedicado. O CM coordena múltiplas ANFs.</p>
+  </div>
+
+  <div class="tbl-wrap sr">
+    <table>
+      <thead>
+        <tr>
+          <th>Contrato / Região</th>
+          <th>ANFs principais</th>
+          <th>Estados cobertos</th>
+          <th>Obs.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>TRJ</strong></td>
+          <td>ANF-RJ, ANF-ES</td>
+          <td>Rio de Janeiro, Espírito Santo</td>
+          <td>Controlado pelo CCI RJ</td>
+        </tr>
+        <tr>
+          <td><strong>TMG</strong></td>
+          <td>ANF31 – ANF38</td>
+          <td>Minas Gerais (macro e interior)</td>
+          <td>~880 municípios</td>
+        </tr>
+        <tr>
+          <td><strong>TNE</strong></td>
+          <td>ANF-NE01 – ANF-NE08</td>
+          <td>8 estados do Nordeste</td>
+          <td>~1.521 municípios</td>
+        </tr>
+        <tr>
+          <td><strong>Sul / SP</strong></td>
+          <td>A definir por região</td>
+          <td>SP, PR, SC, RS</td>
+          <td>Contratos em expansão</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="sr">Na prática, quando você abre um chamado, precisa saber em qual ANF o site está para selecionar o time de campo correto e notificar o CM responsável no caso de P1.</p>
+
+  <div class="callout warn sr">
+    <span class="callout-ico">!</span>
+    <p><strong>Escalação para P1:</strong> Em ocorrências P1 fora do horário comercial (noite, fim de semana, feriado), o CM da região deve ser notificado — mesmo que o técnico já tenha sido acionado. Isso é protocolo e está previsto no contrato.</p>
+  </div>
+
+  <div class="mini-check sr" id="mc4">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">Um site em Belo Horizonte (MG) está P1 às 2h da manhã. Além de acionar o técnico, o que mais você deve fazer?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mc(this,'mc4',false)">Aguardar até o horário comercial para não incomodar o CM</button>
+      <button class="mc-opt" onclick="mc(this,'mc4',true)">Notificar o CM do TMG (MG) — protocolos P1 exigem notificação mesmo fora do horário</button>
+      <button class="mc-opt" onclick="mc(this,'mc4',false)">Registrar como P2 para evitar urgência fora do horário</button>
+    </div>
+    <div class="mc-res"></div>
+  </div>
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 5: Reincidência e Escalação ═════ -->
+<div class="chapter" data-chap="5">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">5</span>
+    <span class="eyebrow-label">Reincidência e Escalação</span>
+  </div>
+  <h2 class="sr">Quando o problema <em>volta</em> — o que fazer?</h2>
+  <p class="sr">Se um site caiu, foi atendido e voltou a cair dentro de um curto período, isso é uma <strong>reincidência</strong>. Reincidências são um sinal de alerta: indicam que a causa raiz não foi tratada corretamente.</p>
+
+  <div class="tbl-wrap sr">
+    <table>
+      <thead>
+        <tr>
+          <th>Situação</th>
+          <th>Ação recomendada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2ª ocorrência em menos de 24h no mesmo site</td>
+          <td>Marcar como reincidência no chamado; escalar para o supervisor da ANF</td>
+        </tr>
+        <tr>
+          <td>3ª ocorrência na mesma semana</td>
+          <td>Solicitar análise de causa raiz (RCA — Root Cause Analysis) ao CM</td>
+        </tr>
+        <tr>
+          <td>Site com alarmes crônicos (semanal)</td>
+          <td>Abrir demanda de engenharia para avaliação; comunicar ao cliente</td>
+        </tr>
+        <tr>
+          <td>SLA já estourado ou prestes a estourar</td>
+          <td>Escalação imediata para o CM — nunca deixar o SLA estourar sem comunicação prévia</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout fun sr">
+    <span class="callout-ico">›</span>
+    <p><strong>RCA (Root Cause Analysis)</strong> é o processo de investigar o <em>porquê</em> de um problema, não apenas resolver o sintoma. Exemplo: trocar a bateria resolve o alarme imediato, mas a RCA pode revelar que o retificador está com problema crônico e precisa ser substituído.</p>
+  </div>
+
+  <div class="mini-check sr" id="mc5">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">Um site teve ocorrências P2 na segunda e na quarta da mesma semana. Na sexta, cai novamente. O que você deve fazer além de abrir o chamado?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mc(this,'mc5',false)">Abrir o chamado normalmente e aguardar o técnico resolver</button>
+      <button class="mc-opt" onclick="mc(this,'mc5',true)">Marcar como reincidência, escalar para o CM e solicitar análise de causa raiz (RCA)</button>
+      <button class="mc-opt" onclick="mc(this,'mc5',false)">Alterar para P1 automaticamente por ser a terceira ocorrência</button>
+    </div>
+    <div class="mc-res"></div>
+  </div>
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 6: Quiz Final ═════ -->
+<div class="chapter" data-chap="6">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">6</span>
+    <span class="eyebrow-label">Quiz</span>
+  </div>
+  <h2 class="sr">Revise o que você <em>aprendeu</em></h2>
+  <p class="sr">Sem nota, sem pressão — é só para fixar o conteúdo do Módulo 2.</p>
+
+  <div class="quiz-section sr" id="q1">
+    <div class="quiz-q">1. Um site perdeu energia elétrica e o gerador não partiu. Qual categoria de falha é essa?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q1',false)">Falha de Transmissão</button>
+      <button class="quiz-opt" onclick="answer(this,'q1',true)">Falha de Energia</button>
+      <button class="quiz-opt" onclick="answer(this,'q1',false)">Problema de Acesso</button>
+    </div>
+    <div class="quiz-result" id="q1-res"></div>
+  </div>
+
+  <div class="quiz-section sr" id="q2">
+    <div class="quiz-q">2. Um site está completamente fora do ar próximo a um hospital. Qual é a prioridade e o prazo de acionamento?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q2',false)">P2 — acionar em até 96 minutos</button>
+      <button class="quiz-opt" onclick="answer(this,'q2',true)">P1 — acionar em até 48 minutos (20% de 4h de SLA)</button>
+      <button class="quiz-opt" onclick="answer(this,'q2',false)">P3 — programar para o próximo turno</button>
+    </div>
+    <div class="quiz-result" id="q2-res"></div>
+  </div>
+
+  <div class="quiz-section sr" id="q3">
+    <div class="quiz-q">3. O que significa marcar um chamado como "reincidência"?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q3',false)">Que o chamado foi aberto duas vezes por engano</button>
+      <button class="quiz-opt" onclick="answer(this,'q3',true)">Que o mesmo site teve nova ocorrência pouco após a anterior, indicando causa raiz não resolvida</button>
+      <button class="quiz-opt" onclick="answer(this,'q3',false)">Que o técnico precisou revisitar o site por outro motivo</button>
+    </div>
+    <div class="quiz-result" id="q3-res"></div>
+  </div>
+
+  <div class="quiz-section sr" id="q4">
+    <div class="quiz-q">4. Para que serve o RCA (Root Cause Analysis)?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q4',false)">Para calcular o custo do atendimento e cobrar do cliente</button>
+      <button class="quiz-opt" onclick="answer(this,'q4',false)">Para registrar o técnico que resolveu o problema</button>
+      <button class="quiz-opt" onclick="answer(this,'q4',true)">Para investigar a causa raiz do problema e evitar que ele se repita</button>
+    </div>
+    <div class="quiz-result" id="q4-res"></div>
+  </div>
+
+  <div class="quiz-section sr" id="q5">
+    <div class="quiz-q">5. Um site no TMG tem P1 às 23h de sábado. Além de acionar o técnico, o que mais você DEVE fazer?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q5',false)">Aguardar o retorno do técnico na manhã de segunda-feira para atualizar o CM</button>
+      <button class="quiz-opt" onclick="answer(this,'q5',true)">Notificar o CM do TMG imediatamente — protocolo P1 exige notificação 24/7</button>
+      <button class="quiz-opt" onclick="answer(this,'q5',false)">Reclassificar como P2 para evitar incomodar o CM fora do horário</button>
+    </div>
+    <div class="quiz-result" id="q5-res"></div>
+  </div>
+
+  <div class="quiz-section sr" id="q6">
+    <div class="quiz-q">6. Qual campo é mais crítico ao preencher um chamado de P1?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q6',false)">O nome do operador que abriu o chamado</button>
+      <button class="quiz-opt" onclick="answer(this,'q6',true)">O horário exato do alarme e o horário do acionamento do técnico — prova de cumprimento do SLA</button>
+      <button class="quiz-opt" onclick="answer(this,'q6',false)">O modelo do equipamento com defeito</button>
+    </div>
+    <div class="quiz-result" id="q6-res"></div>
+  </div>
+</div>
+
+<!-- ═════ FINISH ═════ -->
+<div class="finish-screen" data-chap="7">
+  <div style="font-size:1.8rem;margin-bottom:20px;color:var(--accent)">✓</div>
+  <h2>Módulo 2 <em style="color:var(--accent)">concluído!</em></h2>
+  <p>Agora você sabe classificar falhas, abrir chamados corretamente, entender o SLA e saber quando escalar. Isso é o núcleo da operação no CCI.</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:32px">
+    <button class="hero-start" onclick="window.location.href='tutorial-tlp.html'">Rever Módulo 1</button>
+    <button class="hero-start" style="background:var(--surf2);color:var(--muted);box-shadow:none" onclick="scrollToChapter(0)">Rever este módulo</button>
+  </div>
+</div>
+
+<script>
+/* ── Theme ── */
+function toggleTheme(){
+  const r=document.documentElement;const b=document.getElementById('themeBtn');
+  if(r.dataset.theme==='light'){r.removeAttribute('data-theme');b.textContent='☀️';}
+  else{r.dataset.theme='light';b.textContent='🌙';}
+}
+try{const t=localStorage.getItem('tlpTheme2');if(t){document.documentElement.dataset.theme=t;document.getElementById('themeBtn').textContent=t==='light'?'🌙':'☀️';}}catch(e){}
+
+/* ── Chapters ── */
+const chapters=[...document.querySelectorAll('[data-chap]')];
+const chapNames=['Início','Tipos de Falha','Prioridade e SLA','Abertura de Chamados','Estrutura Regional','Reincidência','Quiz','Conclusão'];
+const dots=document.getElementById('chapDots');
+const stepLbl=document.getElementById('stepLabel');
+chapters.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='chap-dot';d.title=chapNames[i]||'Cap '+(i+1);
+  d.onclick=()=>scrollToChapter(i);
+  dots.appendChild(d);
+});
+function scrollToChapter(n){chapters[n]?.scrollIntoView({behavior:'smooth'})}
+function updateDots(){
+  let cur=0;
+  chapters.forEach((c,i)=>{const r=c.getBoundingClientRect();if(r.top<=120)cur=i;});
+  dots.querySelectorAll('.chap-dot').forEach((d,i)=>{
+    d.classList.toggle('active',i===cur);
+    d.classList.toggle('done',i<cur);
+  });
+  stepLbl.textContent=chapNames[cur]||'';
+}
+window.addEventListener('scroll',updateDots,{passive:true});
+updateDots();
+
+/* ── Scroll Reveal ── */
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.12});
+document.querySelectorAll('.sr').forEach(el=>io.observe(el));
+
+/* ── Quiz ── */
+function answer(btn,qId,correct){
+  const sec=document.getElementById(qId);
+  if(!sec||sec.dataset.done)return;
+  sec.dataset.done='1';
+  sec.querySelectorAll('.quiz-opt').forEach(b=>b.disabled=true);
+  const res=document.getElementById(qId+'-res');
+  if(correct){btn.classList.add('correct');res.textContent='Correto!';}
+  else{btn.classList.add('wrong');res.textContent='Não exatamente — reveja a explicação acima.';}
+}
+function mc(btn,mcId,correct){
+  const sec=document.getElementById(mcId);
+  if(!sec||sec.dataset.done)return;
+  sec.dataset.done='1';
+  sec.querySelectorAll('.mc-opt').forEach(b=>b.disabled=true);
+  const res=sec.querySelector('.mc-res');
+  if(correct){btn.classList.add('correct');res.textContent='Correto!';res.style.color='#9FD4A5';}
+  else{btn.classList.add('wrong');res.textContent='Não exatamente — veja a explicação acima.';res.style.color='#E08080';}
+}
+</script>

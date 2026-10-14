@@ -152,7 +152,7 @@ img{max-width:100%;border-radius:8px}
 .confetti-row{font-size:2rem;margin-bottom:24px}
 
 /* SCROLL REVEAL */
-.sr{opacity:0;transform:translateY(40px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.sr{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
 .sr-left{opacity:0;transform:translateX(-40px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
 .sr.in,.sr-left.in{opacity:1;transform:none}
 
@@ -160,7 +160,7 @@ img{max-width:100%;border-radius:8px}
 #spb{position:fixed;top:0;left:0;height:2px;width:0%;z-index:9999;pointer-events:none;background:linear-gradient(90deg,#C85210 0%,#E05E14 55%,#FF8B3E 100%);transition:width .07s linear}
 
 /* ── H2 CINEMATIC REVEAL ── */
-.chapter h2.sr{transform:translateY(50px);filter:blur(7px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1),filter .7s ease}
+.chapter h2.sr{transform:translateY(14px);filter:blur(5px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1),filter .65s ease}
 .chapter h2.sr.in{filter:none}
 
 /* ── STAGGER DELAYS (data-sr-i) ── */
@@ -1141,26 +1141,20 @@ const srObs = new IntersectionObserver(entries=>{
 },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.sr,.sr-left').forEach(el=>srObs.observe(el));
 
-// ── AUTO-STAGGER: filhos de grid/flex ─────────────────────
+// ── AUTO-STAGGER: apenas cards em múltiplas colunas ────────
+// Só aplica quando o grid tem colunas lado a lado (não lista vertical)
 document.querySelectorAll('.sr').forEach(function(el){
   var p=el.parentElement; if(!p) return;
   var cs=window.getComputedStyle(p);
-  if(cs.display==='grid'||cs.display==='flex'){
-    var sibs=Array.from(p.children).filter(function(c){return c.classList.contains('sr');});
-    var idx=sibs.indexOf(el);
-    if(idx>0&&idx<=5) el.setAttribute('data-sr-i',String(idx));
-  }
-});
-
-// ── CASCADE: eyebrow → h2 → 1ª linha de cada capítulo ─────
-document.querySelectorAll('.chapter').forEach(function(ch){
-  var h2=ch.querySelector('h2.sr');
-  var firstP=ch.querySelector('p.sr');
-  if(h2) h2.setAttribute('data-sr-i','1');
-  if(firstP&&!firstP.getAttribute('data-sr-i')) firstP.setAttribute('data-sr-i','2');
-  // callouts em sequência (>1)
-  var callouts=Array.from(ch.querySelectorAll(':scope>.callout.sr'));
-  callouts.forEach(function(el,i){ if(i>0) el.setAttribute('data-sr-i',String(Math.min(i+2,5))); });
+  if(cs.display!=='grid'&&cs.display!=='flex') return;
+  // Verifica se há mais de uma coluna (não apenas uma coluna vertical)
+  var cols=cs.gridTemplateColumns||'';
+  var colCount=(cols.match(/\S+/g)||[]).length;
+  if(cs.display==='flex'&&cs.flexDirection==='column') return; // descarta flex-column
+  if(cs.display==='grid'&&colCount<=1) return; // descarta grid de 1 coluna
+  var sibs=Array.from(p.children).filter(function(c){return c.classList.contains('sr');});
+  var idx=sibs.indexOf(el);
+  if(idx>0&&idx<=5) el.setAttribute('data-sr-i',String(idx));
 });
 
 // CHAPTER TRACKING

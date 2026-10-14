@@ -126,6 +126,8 @@ tr:hover td{background:rgba(150,180,230,.03)}
 .badge-p1{background:rgba(220,60,60,.15);color:#E08080;border:1px solid rgba(220,60,60,.2)}
 .badge-p2{background:rgba(200,130,16,.15);color:#E0A060;border:1px solid rgba(200,130,16,.2)}
 .badge-p3{background:rgba(150,180,230,.12);color:#9BB5D4;border:1px solid rgba(150,180,230,.2)}
+.badge-p4{background:rgba(100,150,100,.12);color:#90B890;border:1px solid rgba(100,150,100,.2)}
+.badge-p5{background:rgba(120,120,120,.10);color:#909090;border:1px solid rgba(120,120,120,.15)}
 
 /* STEP FLOW */
 .step-flow{display:flex;flex-direction:column;gap:0;margin:24px 0}
@@ -273,17 +275,7 @@ tr:hover td{background:rgba(150,180,230,.03)}
     <p><strong>Atenção:</strong> Uma única falha pode combinar várias categorias. Por exemplo: um furto de cabo causa falha de energia <em>e</em> de transmissão ao mesmo tempo. Registre todas as causas identificadas no chamado.</p>
   </div>
 
-  <div class="mini-check sr" id="mc1">
-    <div class="mini-check-title">Verificação rápida</div>
-    <div class="mc-q">Um técnico chega ao site e não consegue entrar porque o portão está trancado. Que categoria de falha é essa?</div>
-    <div class="mc-opts">
-      <button class="mc-opt" onclick="mc(this,'mc1',false)">Falha de Transmissão</button>
-      <button class="mc-opt" onclick="mc(this,'mc1',true)">Problema de Acesso</button>
-      <button class="mc-opt" onclick="mc(this,'mc1',false)">Falha de Hardware</button>
-    </div>
-    <div class="mc-res"></div>
   </div>
-</div>
 
 <hr class="div-chapter">
 
@@ -315,20 +307,32 @@ tr:hover td{background:rgba(150,180,230,.03)}
         <tr>
           <td><span class="badge badge-p1">P1 — Crítico</span></td>
           <td>Site totalmente fora do ar, sem fallback; impacto em larga área ou infraestrutura crítica (hospital, rodovia, aeroporto)</td>
-          <td><strong>4 horas</strong></td>
-          <td>Imediato — técnico acionado em até 20% do SLA (≈ 48 min)</td>
+          <td><strong>4 h</strong></td>
+          <td>Imediato — acionar em até 20% do SLA (≈ 48 min)</td>
         </tr>
         <tr>
           <td><span class="badge badge-p2">P2 — Alto</span></td>
-          <td>Degradação grave (site parcialmente fora, capacidade reduzida); um setor inativo</td>
-          <td><strong>8 horas</strong></td>
-          <td>Urgente — acionar em até 20% do SLA (≈ 96 min)</td>
+          <td>Degradação grave — site parcialmente fora ou setor inativo com impacto perceptível</td>
+          <td><strong>6 h</strong></td>
+          <td>Urgente — acionar em até 20% do SLA (≈ 72 min)</td>
         </tr>
         <tr>
-          <td><span class="badge badge-p3">P3 — Normal</span></td>
-          <td>Falha menor ou manutenção preventiva; impacto localizado sem perda total de serviço</td>
-          <td><strong>24–48 h</strong></td>
-          <td>Programado — verificar disponibilidade de equipe e agendar</td>
+          <td><span class="badge badge-p3">P3 — Médio</span></td>
+          <td>Falha com impacto moderado; site ainda funcional mas com degradação de qualidade</td>
+          <td><strong>12 h</strong></td>
+          <td>Acionar em até 20% do SLA (≈ 2h24)</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-p4">P4 — Baixo</span></td>
+          <td>Falha leve ou manutenção preventiva planejada; sem impacto imediato ao usuário</td>
+          <td><strong>24 h</strong></td>
+          <td>Programado — agendar com a equipe de campo</td>
+        </tr>
+        <tr>
+          <td><span class="badge badge-p5">P5 — Informativo</span></td>
+          <td>Alertas de monitoramento, ações programadas de longo prazo ou vistorias de rotina</td>
+          <td><strong>48 h</strong></td>
+          <td>Agendado — incluir na programação semanal da equipe</td>
         </tr>
       </tbody>
     </table>
@@ -336,20 +340,10 @@ tr:hover td{background:rgba(150,180,230,.03)}
 
   <div class="callout warn sr">
     <span class="callout-ico">!</span>
-    <p><strong>Regra de ouro:</strong> Na dúvida entre P1 e P2, classifique como <strong>P1</strong> e acione. É melhor acionar com urgência e reclassificar depois do que atrasar e estourar o SLA.</p>
+    <p><strong>Regra de ouro:</strong> Na dúvida entre P1 e P2, classifique como <strong>P1</strong> e acione. P4 e P5 nunca devem ser usados quando há impacto real ao usuário. É melhor acionar com urgência e reclassificar depois do que atrasar e estourar o SLA.</p>
   </div>
 
-  <div class="mini-check sr" id="mc2">
-    <div class="mini-check-title">Verificação rápida</div>
-    <div class="mc-q">Um site está com dois dos três setores fora (degradação grave, mas não totalmente inativo). Qual prioridade você atribui?</div>
-    <div class="mc-opts">
-      <button class="mc-opt" onclick="mc(this,'mc2',false)">P3 — Normal, pois o site ainda funciona parcialmente</button>
-      <button class="mc-opt" onclick="mc(this,'mc2',true)">P2 — Alto, pois há degradação grave com setor inativo</button>
-      <button class="mc-opt" onclick="mc(this,'mc2',false)">P1 — Crítico, pois qualquer falha é crítica</button>
-    </div>
-    <div class="mc-res"></div>
   </div>
-</div>
 
 <hr class="div-chapter">
 
@@ -406,17 +400,7 @@ tr:hover td{background:rgba(150,180,230,.03)}
     <p><strong>Dica prática:</strong> Sempre registre o horário exato em que você acionou o técnico. Isso é a sua prova de que o SLA foi respeitado — se alguém questionar depois, você tem o registro.</p>
   </div>
 
-  <div class="mini-check sr" id="mc3">
-    <div class="mini-check-title">Verificação rápida</div>
-    <div class="mc-q">Você abriu o chamado e acionou o técnico. O que fazer a seguir?</div>
-    <div class="mc-opts">
-      <button class="mc-opt" onclick="mc(this,'mc3',false)">Fechar o chamado e aguardar feedback do técnico por e-mail</button>
-      <button class="mc-opt" onclick="mc(this,'mc3',true)">Acompanhar o chamado, registrar atualizações e verificar a normalização antes de fechar</button>
-      <button class="mc-opt" onclick="mc(this,'mc3',false)">Abrir um segundo chamado para garantir que o técnico recebeu</button>
-    </div>
-    <div class="mc-res"></div>
   </div>
-</div>
 
 <hr class="div-chapter">
 
@@ -480,17 +464,7 @@ tr:hover td{background:rgba(150,180,230,.03)}
     <p><strong>Escalação para P1:</strong> Em ocorrências P1 fora do horário comercial (noite, fim de semana, feriado), o CM da região deve ser notificado — mesmo que o técnico já tenha sido acionado. Isso é protocolo e está previsto no contrato.</p>
   </div>
 
-  <div class="mini-check sr" id="mc4">
-    <div class="mini-check-title">Verificação rápida</div>
-    <div class="mc-q">Um site em Belo Horizonte (MG) está P1 às 2h da manhã. Além de acionar o técnico, o que mais você deve fazer?</div>
-    <div class="mc-opts">
-      <button class="mc-opt" onclick="mc(this,'mc4',false)">Aguardar até o horário comercial para não incomodar o CM</button>
-      <button class="mc-opt" onclick="mc(this,'mc4',true)">Notificar o CM do TMG (MG) — protocolos P1 exigem notificação mesmo fora do horário</button>
-      <button class="mc-opt" onclick="mc(this,'mc4',false)">Registrar como P2 para evitar urgência fora do horário</button>
-    </div>
-    <div class="mc-res"></div>
   </div>
-</div>
 
 <hr class="div-chapter">
 
@@ -537,17 +511,7 @@ tr:hover td{background:rgba(150,180,230,.03)}
     <p><strong>RCA (Root Cause Analysis)</strong> é o processo de investigar o <em>porquê</em> de um problema, não apenas resolver o sintoma. Exemplo: trocar a bateria resolve o alarme imediato, mas a RCA pode revelar que o retificador está com problema crônico e precisa ser substituído.</p>
   </div>
 
-  <div class="mini-check sr" id="mc5">
-    <div class="mini-check-title">Verificação rápida</div>
-    <div class="mc-q">Um site teve ocorrências P2 na segunda e na quarta da mesma semana. Na sexta, cai novamente. O que você deve fazer além de abrir o chamado?</div>
-    <div class="mc-opts">
-      <button class="mc-opt" onclick="mc(this,'mc5',false)">Abrir o chamado normalmente e aguardar o técnico resolver</button>
-      <button class="mc-opt" onclick="mc(this,'mc5',true)">Marcar como reincidência, escalar para o CM e solicitar análise de causa raiz (RCA)</button>
-      <button class="mc-opt" onclick="mc(this,'mc5',false)">Alterar para P1 automaticamente por ser a terceira ocorrência</button>
-    </div>
-    <div class="mc-res"></div>
   </div>
-</div>
 
 <hr class="div-chapter">
 
@@ -573,9 +537,9 @@ tr:hover td{background:rgba(150,180,230,.03)}
   <div class="quiz-section sr" id="q2">
     <div class="quiz-q">2. Um site está completamente fora do ar próximo a um hospital. Qual é a prioridade e o prazo de acionamento?</div>
     <div class="quiz-opts">
-      <button class="quiz-opt" onclick="answer(this,'q2',false)">P2 — acionar em até 96 minutos</button>
-      <button class="quiz-opt" onclick="answer(this,'q2',true)">P1 — acionar em até 48 minutos (20% de 4h de SLA)</button>
-      <button class="quiz-opt" onclick="answer(this,'q2',false)">P3 — programar para o próximo turno</button>
+      <button class="quiz-opt" onclick="answer(this,'q2',false)">P2 — acionar em até 72 minutos (SLA de 6h)</button>
+      <button class="quiz-opt" onclick="answer(this,'q2',true)">P1 — acionar em até 48 minutos (SLA de 4h)</button>
+      <button class="quiz-opt" onclick="answer(this,'q2',false)">P3 — programar para até 12h (SLA de 12h)</button>
     </div>
     <div class="quiz-result" id="q2-res"></div>
   </div>
@@ -619,6 +583,27 @@ tr:hover td{background:rgba(150,180,230,.03)}
     </div>
     <div class="quiz-result" id="q6-res"></div>
   </div>
+
+  <div class="quiz-section sr" id="q7">
+    <div class="quiz-q">7. Qual prioridade deve ser usada para uma vistoria de rotina programada sem impacto ao usuário?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q7',false)">P2 — pois toda visita técnica é urgente</button>
+      <button class="quiz-opt" onclick="answer(this,'q7',false)">P3 — pois qualquer falha é ao menos média</button>
+      <button class="quiz-opt" onclick="answer(this,'q7',true)">P5 — informativo, para ações programadas sem impacto imediato ao usuário</button>
+    </div>
+    <div class="quiz-result" id="q7-res"></div>
+  </div>
+
+  <div class="quiz-section sr" id="q8">
+    <div class="quiz-q">8. Um site está com degradação de qualidade mas ainda funcionando. O SLA é de 12h. Em quanto tempo você deve acionar o técnico?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q8',false)">Em até 48 minutos — mesmo prazo do P1</button>
+      <button class="quiz-opt" onclick="answer(this,'q8',false)">Em até 72 minutos — 20% de 6h (P2)</button>
+      <button class="quiz-opt" onclick="answer(this,'q8',true)">Em até 2h24 — 20% de 12h (P3)</button>
+    </div>
+    <div class="quiz-result" id="q8-res"></div>
+  </div>
+
 </div>
 
 <!-- ═════ FINISH ═════ -->

@@ -45,9 +45,9 @@ img{max-width:100%;border-radius:8px}
 
 /* CHAPTERS NAV */
 .chapters{display:flex;gap:6px;align-items:center}
-.chap-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;flex-shrink:0}
+.chap-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,width .2s,height .2s;flex-shrink:0}
 .chap-dot.done{background:var(--accent);opacity:.6}
-.chap-dot.active{background:var(--accent);transform:scale(1.4)}
+.chap-dot.active{background:var(--accent);width:11px;height:11px}
 
 /* HERO */
 .hero-screen{
@@ -156,8 +156,6 @@ img{max-width:100%;border-radius:8px}
 .sr-left{opacity:0;transform:translateX(-40px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
 .sr.in,.sr-left.in{opacity:1;transform:none}
 
-/* ── PROGRESS BAR ── */
-#spb{position:fixed;top:0;left:0;height:2px;width:0%;z-index:9999;pointer-events:none;background:linear-gradient(90deg,#C85210 0%,#E05E14 55%,#FF8B3E 100%);transition:width .07s linear}
 
 /* ── H2 CINEMATIC REVEAL ── */
 .chapter h2.sr{transform:translateY(14px);filter:blur(5px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1),filter .65s ease}
@@ -1127,13 +1125,6 @@ const IMG_TECH = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABMIAAAJiCAYAAAAl
 
 // Replace img src with actual base64 (done at generation time)
 
-// ── PROGRESS BAR ──────────────────────────────────────────
-(function(){
-  var spb=document.createElement('div'); spb.id='spb';
-  document.body.prepend(spb);
-  function upd(){ var t=document.documentElement.scrollHeight-window.innerHeight; spb.style.width=(t>0?window.scrollY/t*100:0)+'%'; }
-  window.addEventListener('scroll',upd,{passive:true}); upd();
-})();
 
 // ── SCROLL REVEAL (one-way: add .in uma vez, nunca remove) ─
 const srObs = new IntersectionObserver(entries=>{

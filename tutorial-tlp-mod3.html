@@ -1,0 +1,891 @@
+<title>Treinamento TLP — Módulo 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06090F; --surf:#0D1525; --surf2:#121E35;
+  --border:rgba(150,180,230,.10); --text:#D4DFF0; --muted:#6B7D96;
+  --accent:#C85210; --orange:#E05E14;
+  --r:12px; color-scheme:dark;
+}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
+  --bg:#F4F7FC; --surf:#fff; --surf2:#EBF0F8;
+  --border:rgba(20,40,100,.09); --text:#111929; --muted:#506070;
+  --accent:#B84A0A; --orange:#D4560E; color-scheme:light;
+}}
+:root[data-theme="light"]{
+  --bg:#F4F7FC; --surf:#fff; --surf2:#EBF0F8;
+  --border:rgba(20,40,100,.09); --text:#111929; --muted:#506070;
+  --accent:#B84A0A; --orange:#D4560E; color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;padding-inline:0}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;border-radius:8px}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
+
+/* HEADER */
+.tut-hdr{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 48px;
+  background:rgba(6,9,15,.92);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .tut-hdr{background:rgba(244,247,252,.92)}}
+:root[data-theme="light"] .tut-hdr{background:rgba(244,247,252,.92)}
+.hdr-logo{display:flex;align-items:center;gap:12px}
+.hdr-logo svg{width:64px;height:26px;flex-shrink:0}
+.hdr-logo-tag{font-size:.6rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);border-left:1px solid var(--border);padding-left:12px}
+.hdr-step{font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.06em}
+.theme-btn{width:32px;height:32px;border-radius:7px;border:1px solid var(--border);background:var(--surf);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .2s;padding:0}
+.theme-btn:hover{color:var(--text)}
+.theme-btn svg{pointer-events:none}
+
+/* CHAPTERS NAV */
+.chapters{display:flex;gap:6px;align-items:center}
+.chap-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,width .2s,height .2s;flex-shrink:0}
+.chap-dot.done{background:var(--accent);opacity:.6}
+.chap-dot.active{background:var(--accent);width:11px;height:11px}
+
+/* HERO */
+.hero-screen{
+  min-height:88vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px;
+  position:relative;overflow:hidden;
+}
+.hero-screen::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 30%,rgba(200,82,16,.10),transparent);
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:5px 16px;border-radius:999px;
+  border:1px solid rgba(200,82,16,.3);background:rgba(200,82,16,.08);
+  font-size:.72rem;font-weight:700;color:var(--accent);
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:32px;
+}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.4}}
+.hero-title{font-family:'Sora',sans-serif;font-size:clamp(2rem,5.5vw,3.6rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:20px;text-wrap:balance}
+.hero-title em{font-style:normal;color:var(--accent)}
+.hero-sub{font-size:1rem;color:var(--muted);max-width:520px;margin-bottom:40px;line-height:1.8}
+.hero-start{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:11px 26px;border-radius:9px;
+  background:linear-gradient(135deg,var(--accent),var(--orange));
+  color:white;font-weight:700;font-size:.93rem;cursor:pointer;
+  border:none;font-family:'Inter',sans-serif;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 6px 24px rgba(200,82,16,.28);
+}
+.hero-start:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(200,82,16,.38)}
+
+/* CHAPTERS */
+.chapter{max-width:980px;margin:0 auto;padding:80px 32px}
+.chapter-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.eyebrow-num{
+  width:28px;height:28px;border-radius:8px;
+  background:rgba(200,82,16,.15);color:var(--accent);
+  font-size:.75rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.eyebrow-label{font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.chapter h2{font-family:'Sora',sans-serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;line-height:1.2;letter-spacing:-.02em;margin-bottom:20px}
+.chapter h2 em{font-style:normal;color:var(--accent)}
+.chapter p{color:var(--muted);font-size:.97rem;line-height:1.85;margin-bottom:16px}
+.chapter p strong{color:var(--text);font-weight:600}
+.chapter p:last-child{margin-bottom:0}
+
+/* CALLOUT BOXES */
+.callout{
+  border-radius:10px;padding:16px 20px;
+  display:flex;gap:14px;align-items:flex-start;
+  margin:24px 0;font-size:.92rem;line-height:1.7;
+}
+.callout.info{background:rgba(150,180,230,.07);border-left:3px solid rgba(150,180,230,.35)}
+.callout.tip{background:rgba(150,180,230,.07);border-left:3px solid rgba(150,180,230,.35)}
+.callout.warn{background:rgba(200,82,16,.08);border-left:3px solid var(--accent)}
+.callout.danger{background:rgba(220,60,60,.08);border-left:3px solid rgba(220,80,80,.45)}
+.callout-ico{font-size:.95rem;font-weight:700;flex-shrink:0;margin-top:2px;color:var(--accent);opacity:.9;min-width:16px;text-align:center}
+.callout p{margin:0;color:var(--muted)}
+.callout p strong{color:var(--text)}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;margin:24px 0}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:var(--surf2);color:var(--text);font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--muted);vertical-align:top}
+td strong{color:var(--text)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(150,180,230,.03)}
+.badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.73rem;font-weight:700;letter-spacing:.04em}
+.badge-ok{background:rgba(100,180,120,.12);color:#80C89A;border:1px solid rgba(100,180,120,.2)}
+.badge-warn{background:rgba(200,130,16,.12);color:#E0A060;border:1px solid rgba(200,130,16,.2)}
+.badge-muted{background:rgba(120,120,120,.10);color:#909090;border:1px solid rgba(120,120,120,.15)}
+.badge-p1{background:rgba(220,60,60,.15);color:#E08080;border:1px solid rgba(220,60,60,.2)}
+.badge-p2{background:rgba(200,130,16,.15);color:#E0A060;border:1px solid rgba(200,130,16,.2)}
+.badge-p3{background:rgba(150,180,230,.12);color:#9BB5D4;border:1px solid rgba(150,180,230,.2)}
+.badge-p4{background:rgba(100,150,100,.12);color:#90B890;border:1px solid rgba(100,150,100,.2)}
+.badge-p5{background:rgba(120,120,120,.10);color:#909090;border:1px solid rgba(120,120,120,.15)}
+
+/* STEP FLOW */
+.step-flow{display:flex;flex-direction:column;gap:0;margin:24px 0}
+.step-item{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--border)}
+.step-item:last-child{border-bottom:none}
+.step-num{
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(200,82,16,.15);border:1px solid rgba(200,82,16,.25);
+  color:var(--accent);font-size:.8rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.step-body strong{display:block;color:var(--text);font-size:.95rem;margin-bottom:4px}
+.step-body p{font-size:.88rem;color:var(--muted);margin:0;line-height:1.65}
+
+/* CATEGORY GRID */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:24px 0}
+.cat-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:18px}
+.cat-card-head{font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.cat-card h3{font-size:.97rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.cat-card p{font-size:.85rem;color:var(--muted);margin:0;line-height:1.65}
+
+/* COMPARE TABLE (two-column card layout) */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0}
+.compare-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:20px}
+.compare-card.highlight{border-color:rgba(200,82,16,.35);background:rgba(200,82,16,.04)}
+.compare-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.compare-card h3{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:12px}
+.compare-card ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.compare-card ul li{font-size:.87rem;color:var(--muted);padding-left:14px;position:relative;line-height:1.5}
+.compare-card ul li::before{content:'—';position:absolute;left:0;color:var(--accent);font-size:.75rem}
+.compare-card ul li strong{color:var(--text)}
+
+/* CHECKLIST */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:0;margin:24px 0;background:var(--surf);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.checklist li{display:flex;align-items:flex-start;gap:14px;padding:13px 18px;border-bottom:1px solid var(--border);font-size:.9rem;color:var(--muted);cursor:pointer;transition:background .15s;user-select:none}
+.checklist li:last-child{border-bottom:none}
+.checklist li:hover{background:rgba(150,180,230,.04)}
+.chk-box{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border);background:var(--surf2);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.checklist li.checked .chk-box{background:rgba(100,180,120,.18);border-color:rgba(100,180,120,.45)}
+.checklist li.checked .chk-box::after{content:'';width:5px;height:9px;border-right:2px solid #80C89A;border-bottom:2px solid #80C89A;transform:rotate(45deg) translate(-1px,-1px)}
+.checklist li.checked span{text-decoration:line-through;opacity:.55}
+
+/* QUIZ */
+.quiz-section{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:28px;margin:32px 0}
+.quiz-q{font-weight:700;font-size:.97rem;margin-bottom:16px}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{
+  padding:11px 16px;border-radius:8px;
+  border:1px solid var(--border);background:var(--surf2);
+  cursor:pointer;font-size:.9rem;color:var(--muted);
+  transition:all .2s;text-align:left;font-family:'Inter',sans-serif;
+}
+.quiz-opt:hover{color:var(--text);border-color:var(--muted)}
+.quiz-opt.correct{background:rgba(150,210,150,.1);border-color:rgba(150,210,150,.4);color:#9FD4A5}
+.quiz-opt.wrong{background:rgba(220,80,80,.1);border-color:rgba(220,80,80,.35);color:#E08080}
+.quiz-result{margin-top:12px;font-size:.88rem;font-weight:600;min-height:24px}
+
+/* MINI CHECK */
+.mini-check{background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin:32px 0 0 0}
+.mini-check-title{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.mc-q{font-size:.95rem;font-weight:600;color:var(--text);margin-bottom:10px}
+.mc-opts{display:flex;flex-direction:column;gap:7px;margin-bottom:8px}
+.mc-opt{padding:10px 14px;border-radius:7px;border:1px solid var(--border);background:var(--surf);color:var(--muted);font-size:.88rem;cursor:pointer;text-align:left;font-family:'Inter',sans-serif;transition:all .18s}
+.mc-opt:hover{color:var(--text);border-color:var(--muted)}
+.mc-opt.correct{background:rgba(150,210,150,.1);border-color:rgba(150,210,150,.4);color:#9FD4A5}
+.mc-opt.wrong{background:rgba(220,80,80,.1);border-color:rgba(220,80,80,.35);color:#E08080}
+.mc-res{font-size:.82rem;font-weight:600;min-height:20px;margin-top:4px;color:var(--muted)}
+.mc-sep{border:none;border-top:1px solid var(--border);margin:24px 0}
+
+/* DIVIDER */
+.div-chapter{border:none;border-top:1px solid var(--border);margin:0;opacity:.5}
+
+/* FINISH SCREEN */
+.finish-screen{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px}
+.finish-screen h2{font-family:'Sora',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;margin-bottom:16px}
+.finish-screen p{color:var(--muted);max-width:480px;font-size:.97rem;line-height:1.8;margin-bottom:32px}
+.finish-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:9px;border:1px solid var(--border);background:var(--surf);color:var(--text);font-weight:600;font-size:.88rem;cursor:pointer;font-family:'Inter',sans-serif;transition:background .2s,border-color .2s}
+.finish-btn:hover{background:var(--surf2);border-color:var(--accent)}
+
+/* SCROLL REVEAL */
+.sr{opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.chapter h2.sr{transform:translateY(14px);filter:blur(5px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1),filter .65s ease}
+.chapter h2.sr.in{transform:none!important;filter:none}
+.sr.in{opacity:1;transform:none}
+[data-sr-i="1"]{transition-delay:.09s}
+[data-sr-i="2"]{transition-delay:.18s}
+[data-sr-i="3"]{transition-delay:.27s}
+[data-sr-i="4"]{transition-delay:.36s}
+[data-sr-i="5"]{transition-delay:.45s}
+
+/* RESP */
+@media(max-width:640px){
+  .tut-hdr{padding:12px 18px}
+  .hdr-logo-tag{display:none}
+  .chapter{padding:56px 18px}
+  .cat-grid,.compare-grid{grid-template-columns:1fr}
+}
+</style>
+
+<!-- HEADER -->
+<header class="tut-hdr">
+  <div class="hdr-logo">
+    <a href="index.html" style="display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--border);border-radius:7px;background:var(--surf);transition:color .2s" title="Voltar ao portal">&#8592; Portal</a>
+    <svg viewBox="0 0 64 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="hg3" x1="0" y1="26" x2="64" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#C84A08"/><stop offset=".55" stop-color="#E05E14"/><stop offset="1" stop-color="#F5A020"/></linearGradient></defs>
+      <rect width="64" height="26" rx="4" fill="url(#hg3)"/>
+      <text x="32" y="19" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="14" fill="white" text-anchor="middle" letter-spacing="2">TLP</text>
+    </svg>
+    <span class="hdr-logo-tag">Módulo 3 · GMG</span>
+  </div>
+  <div class="chapters" id="chapDots"></div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span class="hdr-step" id="stepLabel">Início</span>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn" title="Alternar tema">
+      <svg id="themeSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg id="themeMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ═════ HERO ═════ -->
+<section class="hero-screen" data-chap="0">
+  <div class="hero-badge"><span class="pulse"></span>Módulo 3 · GMG</div>
+  <h1 class="hero-title">Atendimentos GMG:<br><em>fluxo, CA e faturamento</em></h1>
+  <p class="hero-sub">Um gerador desligado a tempo pode ser a diferença entre o SLA cumprido e o indicador no vermelho. Entenda o processo completo — do acionamento à aprovação no Portal Operations.</p>
+  <button class="hero-start" onclick="scrollToChapter(1)">Iniciar módulo</button>
+</section>
+
+<!-- ═════ CAP 1: O que é o GMG ═════ -->
+<div class="chapter" data-chap="1">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">1</span>
+    <span class="eyebrow-label">Fundamentos</span>
+  </div>
+  <h2 class="sr">O que é o GMG e <em>por que ele importa</em></h2>
+  <p class="sr">As falhas de energia AC são o principal ofensor de disponibilidade da rede TIM. Quando a energia comercial falha, o site fica em risco imediato de queda — e é aí que entra o Grupo Motor Gerador.</p>
+  <p class="sr">O GMG é o equipamento responsável por manter o site ativo durante a ausência de energia comercial, protegendo os indicadores de disponibilidade da rede. O CCI monitora ativamente todos os atendimentos GMG.</p>
+
+  <div class="cat-grid sr">
+    <div class="cat-card">
+      <div class="cat-card-head">O problema</div>
+      <h3>Falha de Energia AC</h3>
+      <p>Principal causa de quedas de disponibilidade. Exige resposta rápida e totalmente documentada para que o SLA seja cumprido.</p>
+    </div>
+    <div class="cat-card">
+      <div class="cat-card-head">A solução</div>
+      <h3>GMG em campo</h3>
+      <p>O gerador mantém o site ativo durante a ausência de energia comercial. Pode ser deslocado até o local ou já estar instalado.</p>
+    </div>
+    <div class="cat-card">
+      <div class="cat-card-head">Obrigação do CCI</div>
+      <h3>Registro e controle</h3>
+      <p>O preenchimento correto do formulário de GMG é o que garante o pagamento pelo deslocamento e uso do ativo. Sem registro, sem receita.</p>
+    </div>
+  </div>
+
+  <div class="callout info sr">
+    <span class="callout-ico">›</span>
+    <p><strong>Célula de GMG — 24 horas:</strong> +55 21 98863-3230. Todo atendimento GMG é monitorado ativamente pelo CCI.</p>
+  </div>
+
+  <div class="mini-check">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">Qual é a principal consequência de não registrar corretamente um atendimento GMG?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mcCheck(this,'wrong')">O site fica sem cobertura no dia seguinte</button>
+      <button class="mc-opt" onclick="mcCheck(this,'correct')">O atendimento não é pago, gerando perda financeira</button>
+      <button class="mc-opt" onclick="mcCheck(this,'wrong')">O técnico recebe advertência automática</button>
+    </div>
+    <div class="mc-res" id="mc-res-1"></div>
+  </div>
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 2: Móvel vs. Fixo ═════ -->
+<div class="chapter" data-chap="2">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">2</span>
+    <span class="eyebrow-label">Tipos de GMG</span>
+  </div>
+  <h2 class="sr">GMG Móvel vs. GMG Fixo — <em>o que o CCI controla</em></h2>
+  <p class="sr">Existem dois tipos de geradores. Saber diferenciar é fundamental: o fluxo de controle e faturamento é completamente diferente para cada um. Confundir os dois gera perda de receita ou trabalho desnecessário.</p>
+
+  <div class="compare-grid sr">
+    <div class="compare-card highlight">
+      <div class="compare-label">Controle do CCI</div>
+      <h3>GMG Móvel</h3>
+      <ul>
+        <li><strong>Proprietário:</strong> ativo da TLP</li>
+        <li><strong>Uso:</strong> deslocado ao site quando há falha de energia AC</li>
+        <li><strong>Faturamento:</strong> por KM percorrido e tempo de uso do ativo</li>
+        <li><strong>Responsável:</strong> CCI acompanha e controla de ponta a ponta</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <div class="compare-label">Controle da Sala Técnica</div>
+      <h3>GMG Fixo (Estacionário)</h3>
+      <ul>
+        <li><strong>Proprietário:</strong> ativo da TIM</li>
+        <li><strong>Uso:</strong> já está instalado no site, abastecido com diesel pela TLP</li>
+        <li><strong>Faturamento:</strong> via nota fiscal de diesel — Sala Técnica</li>
+        <li><strong>CCI:</strong> apenas registra "GMG FIXO" no diário de trabalho, sem controle adicional</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout warn sr">
+    <span class="callout-ico">›</span>
+    <p><strong>Regra objetiva:</strong> O CCI só controla o GMG Móvel. Ao identificar um GMG Fixo, preencha apenas a nota no diário de trabalho informando "GMG FIXO" e encerre. O faturamento do diesel é responsabilidade da Sala Técnica.</p>
+  </div>
+
+  <div class="mini-check">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">Um site tem gerador já instalado e a energia comercial caiu. O CCI deve fazer o quê?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mcCheck(this,'wrong')">Abrir formulário de GMG Instalado e acompanhar normalmente</button>
+      <button class="mc-opt" onclick="mcCheck(this,'wrong')">Acionar o técnico para deslocar um GMG Móvel</button>
+      <button class="mc-opt" onclick="mcCheck(this,'correct')">Registrar "GMG FIXO" no diário de trabalho e acionar a Sala Técnica</button>
+    </div>
+    <div class="mc-res" id="mc-res-2"></div>
+  </div>
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 3: As 5 Classificações ═════ -->
+<div class="chapter" data-chap="3">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">3</span>
+    <span class="eyebrow-label">Classificações</span>
+  </div>
+  <h2 class="sr">As cinco classificações <em>do atendimento</em></h2>
+  <p class="sr">Cada atendimento recebe uma classificação específica no formulário. Escolher a classificação errada compromete o pagamento e pode invalidar o atendimento perante a TIM.</p>
+
+  <div class="step-flow sr">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>Em Deslocamento</strong>
+        <p>Status inicial de todos os atendimentos. Preencher assim que o técnico iniciar o deslocamento ao site. Garante a receita vinculada ao KM percorrido. Todo GMG começa aqui.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>GMG Instalado</strong>
+        <p>Utilizar quando o GMG é deslocado e efetivamente acoplado no site. Exige CA aberta, protocolo de energia da concessionária e formulário completo com início e término de cada acoplagem. O carimbo padrão deve ser atualizado a cada 2 horas.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>Apenas Deslocamento</strong>
+        <p>Utilizar quando o GMG foi deslocado ao site, mas não foi instalado porque a falha normalizou após a chegada da equipe. A CA deve ser aberta em até 15 minutos após a chegada ao site.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <strong>GMG Não Utilizado</strong>
+        <p>Utilizar quando não houve deslocamento do GMG nem da equipe — a falha normalizou na triagem, antes do técnico sair do CM. Geralmente aplicado quando o SLA está fora do prazo.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <strong>Visita FMMT</strong>
+        <p>Utilizar quando não houve deslocamento de GMG, mas houve intervenção da TLP. A falha não é de energia. O ticket está dentro do SLA e precisa retornar à franquia de ticket válido para garantir a remuneração.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warn sr">
+    <span class="callout-ico">›</span>
+    <p><strong>Regra de ouro:</strong> Se o técnico saiu do CM, houve deslocamento. Se houve deslocamento, use sempre <strong>Apenas Deslocamento</strong> — nunca "GMG Não Utilizado". Confundir as duas classificações significa perder a receita pelo KM percorrido.</p>
+  </div>
+
+  <div class="quiz-section sr">
+    <div class="quiz-q">O GMG foi despachado. Ao chegar no site, a energia comercial já havia voltado. O técnico não chegou a acoplar o gerador. Qual classificação usar?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','O GMG foi instalado? Não — a energia voltou antes. GMG Instalado exige acoplamento efetivo.')">GMG Instalado</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'correct','Correto. Houve deslocamento, mas não instalação. A classificação correta é Apenas Deslocamento. CA obrigatória em até 15 min após chegada.')">Apenas Deslocamento</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','O técnico saiu do CM — houve deslocamento. GMG Não Utilizado só vale quando a falha normaliza ANTES de o técnico sair.')">GMG Não Utilizado</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','Visita FMMT é para falhas que não são de energia, dentro do SLA. Aqui a causa é energia.')">Visita FMMT</button>
+    </div>
+    <div class="quiz-result" id="qr-1"></div>
+  </div>
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 4: Carimbo e CA ═════ -->
+<div class="chapter" data-chap="4">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">4</span>
+    <span class="eyebrow-label">Carimbo e CA</span>
+  </div>
+  <h2 class="sr">Carimbo Padrão GMG e <em>Controle de Acesso</em></h2>
+  <p class="sr">O carimbo padrão é o registro obrigatório presente em todos os tickets durante a tratativa de GMG. Sem ele preenchido corretamente, o atendimento pode ser invalidado pelo Portal Operations.</p>
+
+  <p class="sr" style="margin-top:8px"><strong style="color:var(--text)">Campos obrigatórios do carimbo:</strong></p>
+
+  <div class="tbl-wrap sr">
+    <table>
+      <thead><tr><th>Campo</th><th>Descrição</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Técnico</strong></td><td>Nome completo do responsável em campo</td></tr>
+        <tr><td><strong>Contato</strong></td><td>Número de telefone do técnico</td></tr>
+        <tr><td><strong>Ação</strong></td><td>Descrição da ação realizada no site</td></tr>
+        <tr><td><strong>TSK / CA / Site</strong></td><td>Identificadores do ticket, CA e site atendido</td></tr>
+        <tr><td><strong>Data/Hora início e fim do deslocamento</strong></td><td>Registro preciso do trajeto</td></tr>
+        <tr><td><strong>Data/Hora início e fim da instalação</strong></td><td>Quando o GMG foi acoplado e retirado</td></tr>
+        <tr><td><strong>KM ida e volta</strong></td><td>Distância total percorrida — base do faturamento</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout warn sr">
+    <span class="callout-ico">›</span>
+    <p><strong>Atualização obrigatória:</strong> O carimbo deve ser atualizado a cada 2 horas enquanto o GMG estiver acoplado no site. A cada atualização, enviar no ticket com o carimbo padrão preenchido.</p>
+  </div>
+
+  <h2 class="sr" style="font-size:clamp(1.1rem,2.5vw,1.5rem);margin-top:36px">Controle de Acesso — <em>as regras que garantem o pagamento</em></h2>
+  <p class="sr">A TIM só reconhece uma visita ao site se houver CA (Controle de Acesso) registrada durante todo o atendimento. Sem CA, a TIM não reconhece a visita e não há pagamento.</p>
+
+  <div class="step-flow sr">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>Abertura da CA</strong>
+        <p>Ao chegar ao site, o técnico deve abrir a CA imediatamente. A tolerância máxima é de 15 minutos após a chegada. A CA é a prova de presença física no local.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>Foto com timestamp</strong>
+        <p>No momento em que o técnico acopla o GMG, é obrigatório anexar uma foto com timestamp — assinatura com data, hora e geolocalização — ao ticket. Sem foto, a instalação não é evidenciada.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>CA individual por técnico</strong>
+        <p>A CA é individual. Em caso de troca de técnico durante o atendimento, uma nova CA deve ser aberta para o substituto. Nunca compartilhar CA entre dois profissionais diferentes.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <strong>Encerramento da CA</strong>
+        <p>A CA deve ser encerrada após o término da utilização do GMG. A mesma tolerância de 15 minutos aplica-se ao encerramento após a finalização do gerador.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout danger sr">
+    <span class="callout-ico">›</span>
+    <p><strong>Atenção:</strong> Dois técnicos que se revezam no mesmo atendimento precisam, cada um, da sua própria CA. Um único técnico não pode abrir CA em nome de outro. Isso invalida a visita perante a TIM.</p>
+  </div>
+
+  <div class="mini-check">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">O técnico A atendeu o site durante 6 horas e foi substituído pelo técnico B. Como deve ser a CA?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mcCheck2(this,'wrong')">O técnico A mantém a CA aberta para o técnico B continuar</button>
+      <button class="mc-opt" onclick="mcCheck2(this,'correct')">CA do técnico A encerrada; nova CA aberta pelo técnico B</button>
+      <button class="mc-opt" onclick="mcCheck2(this,'wrong')">Não é necessário CA para o segundo técnico se o primeiro já registrou</button>
+    </div>
+    <div class="mc-res" id="mc-res-3"></div>
+  </div>
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 5: Protocolo e 24h ═════ -->
+<div class="chapter" data-chap="5">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">5</span>
+    <span class="eyebrow-label">Protocolo de Energia</span>
+  </div>
+  <h2 class="sr">Célula de Energia — <em>protocolo de atendimento</em></h2>
+  <p class="sr">Toda falha de energia tem um fluxo definido de ações em campo. Seguir a sequência correta garante o registro adequado, o pagamento e a preservação dos indicadores.</p>
+
+  <div class="step-flow sr">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <strong>Confirmar a falha de AC</strong>
+        <p>Verificar localmente a ausência de energia comercial e acionar a concessionária local. O ticket deve conter obrigatoriamente o número do protocolo da concessionária e o prazo de normalização, com atualização a cada 3 horas.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <strong>Verificar a FLAG de GMG</strong>
+        <p>Se o ticket não tem FLAG de GMG, tramitar (NotDone para Field) para que a TIM decida se quer instalar o GMG Móvel. O ticket fica suspenso na fila da TIM por até 3 horas aguardando a decisão.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <strong>Instalar o GMG (quando FLAG acionada)</strong>
+        <p>Quando solicitado pela TIM via FLAG, instalar o GMG no site. O formulário deve ser preenchido como <strong>Em Deslocamento</strong> ao sair do CM e atualizado para <strong>GMG Instalado</strong> após o acoplamento efetivo.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sr" style="font-size:clamp(1.1rem,2.5vw,1.5rem);margin-top:36px">GMG acoplado acima de <em>24 horas</em></h2>
+  <p class="sr">Quando o GMG permanecer acoplado no mesmo site por mais de 24 horas — contínuas ou com interrupções — existe um procedimento obrigatório de notificação.</p>
+
+  <div class="callout warn sr">
+    <span class="callout-ico">›</span>
+    <p><strong>E-mail obrigatório à TIM:</strong> ao atingir 24 horas de acoplagem, enviar para <strong>nw_isoc_gmg@timbrasil.com.br</strong>. O e-mail deve ser reenviado diariamente enquanto o GMG permanecer instalado, acompanhado da atualização da CA vigente.</p>
+  </div>
+
+  <p class="sr" style="margin-top:4px"><strong style="color:var(--text)">O e-mail deve conter:</strong></p>
+  <div class="tbl-wrap sr">
+    <table>
+      <thead><tr><th>Informação obrigatória</th></tr></thead>
+      <tbody>
+        <tr><td>Número do site e identificação</td></tr>
+        <tr><td>Data e hora de início da instalação</td></tr>
+        <tr><td>Tempo total acoplado até o momento</td></tr>
+        <tr><td>Status atual do GMG</td></tr>
+        <tr><td>Previsão de normalização da energia comercial</td></tr>
+        <tr><td>Atualização da CA vigente</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mini-check">
+    <div class="mini-check-title">Verificação rápida</div>
+    <div class="mc-q">O GMG está acoplado há 26 horas contínuas. Além do carimbo a cada 2h, o que mais é obrigatório?</div>
+    <div class="mc-opts">
+      <button class="mc-opt" onclick="mcCheck3(this,'wrong')">Nada além do carimbo — 26h ainda não exige ação adicional</button>
+      <button class="mc-opt" onclick="mcCheck3(this,'correct')">Enviar e-mail para nw_isoc_gmg@timbrasil.com.br com as informações do site</button>
+      <button class="mc-opt" onclick="mcCheck3(this,'wrong')">Retirar o GMG e instalar outro para reiniciar a contagem</button>
+    </div>
+    <div class="mc-res" id="mc-res-4"></div>
+  </div>
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 6: SLA, Suspensão e Abono ═════ -->
+<div class="chapter" data-chap="6">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">6</span>
+    <span class="eyebrow-label">SLA e Abono</span>
+  </div>
+  <h2 class="sr">SLA, Suspensão vs. Tramitação <em>e o que pode ser abonado</em></h2>
+  <p class="sr">O cumprimento do SLA começa com o acionamento dentro dos primeiros 20% do prazo definido. O técnico precisa ser despachado logo no início do período, não próximo ao vencimento.</p>
+
+  <div class="tbl-wrap sr">
+    <table>
+      <thead><tr><th>Tipo</th><th>Prioridade</th><th>Prazo SLA</th><th>Acionar em até</th></tr></thead>
+      <tbody>
+        <tr><td><strong>FMMT</strong></td><td><span class="badge badge-p1">P1 — Crítico</span></td><td>4 horas</td><td>48 min</td></tr>
+        <tr><td><strong>FMMT</strong></td><td><span class="badge badge-p2">P2 — Alto</span></td><td>6 horas</td><td>72 min</td></tr>
+        <tr><td><strong>FMMT</strong></td><td><span class="badge badge-p3">P3 — Médio</span></td><td>12 horas</td><td>2h 24min</td></tr>
+        <tr><td><strong>FMMT</strong></td><td><span class="badge badge-p4">P4 — Baixo</span></td><td>24 horas</td><td>4h 48min</td></tr>
+        <tr><td><strong>FMMT</strong></td><td><span class="badge badge-p5">P5 — Planejado</span></td><td>48 horas</td><td>9h 36min</td></tr>
+        <tr><td><strong>FMO</strong></td><td><span class="badge badge-p1">Alta</span></td><td>4 horas</td><td>48 min</td></tr>
+        <tr><td><strong>FMO</strong></td><td><span class="badge badge-p2">Média</span></td><td>6 horas</td><td>72 min</td></tr>
+        <tr><td><strong>FMO</strong></td><td><span class="badge badge-p4">Baixa</span></td><td>24 horas</td><td>4h 48min</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout info sr">
+    <span class="callout-ico">›</span>
+    <p>Acréscimo de <strong>1 hora a cada 100 km</strong> de distância entre o CM e o site, conforme cadastro NGNIS TIM.</p>
+  </div>
+
+  <h2 class="sr" style="font-size:clamp(1.1rem,2.5vw,1.5rem);margin-top:36px">Suspensão vs. Tramitação</h2>
+  <p class="sr">A distinção entre suspensão e tramitação é crítica. Escolher incorretamente pode resultar em perda de SLA para a TLP. A regra é direta: <strong>quem é o próximo responsável pela ação?</strong></p>
+
+  <div class="compare-grid sr">
+    <div class="compare-card">
+      <div class="compare-label">Próximo responsável: TIM</div>
+      <h3>Tramitação (NotDone)</h3>
+      <ul>
+        <li>O ticket vai para a fila TIM</li>
+        <li>O SLA continua contando para a TIM enquanto estiver na fila deles</li>
+        <li>Usar quando aguardando decisão ou ação da TIM</li>
+      </ul>
+    </div>
+    <div class="compare-card highlight">
+      <div class="compare-label">Próximo responsável: TLP</div>
+      <h3>Suspensão (Agendado Data Futura)</h3>
+      <ul>
+        <li>O ticket permanece na fila da TLP</li>
+        <li>SLA congelado até retomada da ação</li>
+        <li>Usar quando a dificuldade é da TLP e o próximo passo ainda é da TLP</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="sr" style="font-size:clamp(1.1rem,2.5vw,1.5rem);margin-top:36px">O que pode e o que não pode ser abonado</h2>
+  <p class="sr">Após o encerramento, os tickets são auditados pelo Portal Operations. A TIM decide se o processo está aprovado ou reprovado. Casos reprovados podem ser pleiteados — mas dependem da qualidade do registro feito durante a tratativa.</p>
+
+  <div class="compare-grid sr">
+    <div class="compare-card highlight">
+      <div class="compare-label">Pode ser abonado</div>
+      <h3>Dificuldades aceitas</h3>
+      <ul>
+        <li>Falhas sistêmicas que impeçam o registro no formulário ou diário de trabalho</li>
+        <li>Campo KM com valor incorreto com evidências da utilização</li>
+        <li>GMG acoplado antes da abertura do ticket a pedido da TIM</li>
+        <li>CA aberta antes ou depois por dificuldade justificável</li>
+        <li>Tempo aplicado incorreto no formulário, com evidências da utilização</li>
+      </ul>
+    </div>
+    <div class="compare-card">
+      <div class="compare-label">Não pode ser abonado</div>
+      <h3>Dificuldades não aceitas</h3>
+      <ul>
+        <li>Atraso para iniciar o acionamento</li>
+        <li>Atraso no mapeamento da TSK no TOA</li>
+        <li>Falta de técnico disponível (responsabilidade TLP)</li>
+        <li>Demora no diagnóstico inicial ou nas tratativas</li>
+        <li>Problemas no veículo da TLP</li>
+        <li>Falha no despacho ou ferramenta TLP</li>
+        <li>TSK sem atualização no sistema</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout warn sr">
+    <span class="callout-ico">›</span>
+    <p>Em caso de dificuldade, <strong>paralisar o ticket imediatamente</strong> — suspender ou tramitar. O pleito deve cobrir exatamente o período impactado, nem mais nem menos.</p>
+  </div>
+
+  <div class="quiz-section sr">
+    <div class="quiz-q">Houve falta de técnico disponível para atender um P1. O ticket perdeu SLA. Esse caso pode ser abonado?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','Falta de técnico é responsabilidade da TLP — não é motivo aceito para abono. Apenas dificuldades sistêmicas ou da TIM são abonáveis.')">Sim, pois foi uma situação imprevista</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'correct','Correto. Falta de técnico é responsabilidade da TLP. Não é um motivo aceito para abono pelo Portal Operations.')">Não, falta de técnico é responsabilidade da TLP</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','O Portal Operations pode recusar o pleito — falta de técnico está explicitamente listada como não abonável.')">Depende do prazo — P1 pode ser tratado diferente</button>
+    </div>
+    <div class="quiz-result" id="qr-2"></div>
+  </div>
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 7: Casos Práticos e Checklist ═════ -->
+<div class="chapter" data-chap="7">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">7</span>
+    <span class="eyebrow-label">Prática e Checklist</span>
+  </div>
+  <h2 class="sr">Casos práticos e <em>checklist do atendimento perfeito</em></h2>
+  <p class="sr">Veja como aplicar as regras do processo GMG em situações reais. Cada cenário tem uma resposta correta que garante o pagamento e preserva os indicadores.</p>
+
+  <div class="step-flow sr">
+    <div class="step-item">
+      <div class="step-num">A</div>
+      <div class="step-body">
+        <strong>Técnico desloca, falha normaliza na chegada</strong>
+        <p><em>"O GMG foi deslocado. Ao chegar no site, a energia já havia voltado."</em><br>
+        Abrir CA em até 15 min após chegada. Registrar como <strong>Apenas Deslocamento</strong>. Preencher KM ida e volta. O técnico recebe pelo deslocamento realizado.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">B</div>
+      <div class="step-body">
+        <strong>Falha normaliza antes do despacho</strong>
+        <p><em>"A falha normalizou na triagem, antes do técnico sair do CM. O SLA está fora do prazo."</em><br>
+        Usar classificação <strong>GMG Não Utilizado</strong>. Não houve deslocamento nem uso do ativo. O SLA fora do prazo é registrado normalmente.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">C</div>
+      <div class="step-body">
+        <strong>GMG acoplado por mais de 24 horas</strong>
+        <p><em>"O GMG está no site há 26 horas contínuas. O que fazer além do carimbo?"</em><br>
+        Enviar e-mail imediatamente para <strong>nw_isoc_gmg@timbrasil.com.br</strong> e repetir diariamente com atualização de CA enquanto o GMG permanecer instalado.</p>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">D</div>
+      <div class="step-body">
+        <strong>Falha não é de energia, ticket dentro do SLA</strong>
+        <p><em>"Técnico foi ao site, falha não é de energia e o ticket está dentro do SLA."</em><br>
+        Classificar como <strong>Visita FMMT</strong> para retornar o ticket à franquia como atendimento válido e garantir a remuneração pelo chamado.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sr" style="font-size:clamp(1.1rem,2.5vw,1.5rem);margin-top:48px">Checklist do atendimento GMG</h2>
+  <p class="sr">Use este checklist a cada atendimento para garantir conformidade total com o processo e assegurar o pagamento por cada etapa realizada.</p>
+
+  <ul class="checklist sr" id="gmgChecklist">
+    <li onclick="toggleCheck(this)"><div class="chk-box"></div><span>Identificar se é GMG Móvel ou Fixo</span></li>
+    <li onclick="toggleCheck(this)"><div class="chk-box"></div><span>Preencher formulário como "Em Deslocamento" ao sair do CM</span></li>
+    <li onclick="toggleCheck(this)"><div class="chk-box"></div><span>Registrar protocolo da concessionária de energia no ticket</span></li>
+    <li onclick="toggleCheck(this)"><div class="chk-box"></div><span>Abrir CA em até 15 minutos após chegada ao site</span></li>
+    <li onclick="toggleCheck(this)"><div class="chk-box"></div><span>Verificar FLAG de GMG no ticket</span></li>
+    <li onclick="toggleCheck(this)"><div class="chk-box"></div><span>Classificar corretamente (Instalado / Apenas Deslocamento)</span></li>
+    <li onclick="toggleCheck(this)"><div class="chk-box"></div><span>Foto com timestamp no momento do acoplamento</span></li>
+    <li onclick="toggleCheck(this)"><div class="chk-box"></div><span>Preencher carimbo padrão GMG no ticket</span></li>
+    <li onclick="toggleCheck(this)"><div class="chk-box"></div><span>Atualizar carimbo a cada 2 horas durante o acoplamento</span></li>
+    <li onclick="toggleCheck(this)"><div class="chk-box"></div><span>Enviar e-mail à TIM se acoplagem superar 24 horas</span></li>
+    <li onclick="toggleCheck(this)"><div class="chk-box"></div><span>Encerrar CA em até 15 minutos após fim do GMG</span></li>
+  </ul>
+
+  <div class="callout info sr" style="margin-top:32px">
+    <span class="callout-ico">›</span>
+    <p><strong>Em caso de dúvida:</strong> acionar a Célula CCI antes de agir. É melhor perguntar do que perder o SLA ou o pagamento. Contato 24h: +55 21 98863-3230.</p>
+  </div>
+</div>
+
+<!-- ═════ FINISH ═════ -->
+<div class="finish-screen" data-chap="8">
+  <div style="width:48px;height:48px;border-radius:12px;background:rgba(200,82,16,.15);border:1px solid rgba(200,82,16,.25);display:flex;align-items:center;justify-content:center;margin-bottom:24px">
+    <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <h2>Módulo 3 concluído</h2>
+  <p>Você conhece agora o processo completo de atendimentos GMG — das classificações ao carimbo, da CA ao abono. Cada campo preenchido corretamente é receita garantida para a operação.</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+    <button class="finish-btn" onclick="window.location.href='index.html'">&#8592; Voltar ao portal</button>
+    <button class="finish-btn" onclick="window.location.href='tutorial-tlp.html'" style="border-color:rgba(200,82,16,.3)">Rever Módulo 1</button>
+    <button class="finish-btn" onclick="window.location.href='tutorial-tlp-mod2.html'" style="border-color:rgba(200,82,16,.3)">Rever Módulo 2</button>
+  </div>
+</div>
+
+<script>
+const chapNames=['Início','Fundamentos','Tipos de GMG','Classificações','Carimbo e CA','Protocolo','SLA e Abono','Prática'];
+const chaps=document.querySelectorAll('[data-chap]');
+const dots=document.getElementById('chapDots');
+const stepLbl=document.getElementById('stepLabel');
+
+chapNames.forEach((n,i)=>{
+  if(i===0)return;
+  const d=document.createElement('button');
+  d.className='chap-dot';d.title=n;
+  d.onclick=()=>scrollToChapter(i);
+  dots.appendChild(d);
+});
+
+function scrollToChapter(n){
+  const el=document.querySelector('[data-chap="'+n+'"]');
+  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function updateProgress(){
+  const allDots=document.querySelectorAll('.chap-dot');
+  let active=0;
+  chaps.forEach((s,i)=>{
+    if(i===0)return;
+    const r=s.getBoundingClientRect();
+    if(r.top<=window.innerHeight*0.5)active=i;
+  });
+  allDots.forEach((d,i)=>{
+    d.classList.toggle('done',i<active-1);
+    d.classList.toggle('active',i===active-1);
+  });
+  const names=['Início','Fundamentos','GMG Móvel vs. Fixo','Classificações','Carimbo e CA','Protocolo de Energia','SLA e Abono','Casos Práticos','Módulo Concluído'];
+  stepLbl.textContent=names[active]||'Início';
+}
+window.addEventListener('scroll',updateProgress,{passive:true});
+updateProgress();
+
+// Scroll Reveal
+const srObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('in');srObs.unobserve(e.target);}
+  });
+},{threshold:0.08,rootMargin:'0px 0px -32px 0px'});
+document.querySelectorAll('.sr').forEach(el=>srObs.observe(el));
+
+// Auto stagger
+document.querySelectorAll('.cat-grid,.compare-grid,.step-flow').forEach(grid=>{
+  const cs=getComputedStyle(grid);
+  const cols=cs.gridTemplateColumns?cs.gridTemplateColumns.split(' ').length:1;
+  if(cols<2)return;
+  [...grid.children].forEach((child,i)=>{
+    const col=(i%cols)+1;
+    if(col<=5)child.dataset.srI=col;
+  });
+});
+
+// Quiz helpers
+function quizCheck(btn,result,explanation){
+  const section=btn.closest('.quiz-section');
+  const resEl=section.querySelector('.quiz-result');
+  if(section.dataset.answered)return;
+  section.dataset.answered='1';
+  section.querySelectorAll('.quiz-opt').forEach(b=>b.style.pointerEvents='none');
+  btn.classList.add(result);
+  resEl.textContent=explanation;
+  resEl.style.color=result==='correct'?'#9FD4A5':'#E08080';
+}
+function mcCheck(btn,result){
+  const wrap=btn.closest('.mini-check');
+  const resEl=wrap.querySelector('.mc-res');
+  if(wrap.dataset.answered)return;
+  wrap.dataset.answered='1';
+  wrap.querySelectorAll('.mc-opt').forEach(b=>b.style.pointerEvents='none');
+  btn.classList.add(result);
+  resEl.textContent=result==='correct'?'Correto.':'Incorreto — revise o conteúdo acima.';
+  resEl.style.color=result==='correct'?'#9FD4A5':'#E08080';
+}
+function mcCheck2(btn,result){
+  const wrap=btn.closest('.mini-check');
+  const resEl=wrap.querySelector('.mc-res');
+  if(wrap.dataset.answered)return;
+  wrap.dataset.answered='1';
+  wrap.querySelectorAll('.mc-opt').forEach(b=>b.style.pointerEvents='none');
+  btn.classList.add(result);
+  resEl.textContent=result==='correct'?'Correto. A CA é individual — cada técnico precisa da sua.':'Incorreto — revise as regras de CA acima.';
+  resEl.style.color=result==='correct'?'#9FD4A5':'#E08080';
+}
+function mcCheck3(btn,result){
+  const wrap=btn.closest('.mini-check');
+  const resEl=wrap.querySelector('.mc-res');
+  if(wrap.dataset.answered)return;
+  wrap.dataset.answered='1';
+  wrap.querySelectorAll('.mc-opt').forEach(b=>b.style.pointerEvents='none');
+  btn.classList.add(result);
+  resEl.textContent=result==='correct'?'Correto. E-mail obrigatório após 24h, reenviado diariamente.':'Incorreto — revise o protocolo de 24h acima.';
+  resEl.style.color=result==='correct'?'#9FD4A5':'#E08080';
+}
+
+// Checklist
+function toggleCheck(li){
+  li.classList.toggle('checked');
+}
+
+// Theme
+function toggleTheme(){
+  const r=document.documentElement;
+  const sun=document.getElementById('themeSun');
+  const moon=document.getElementById('themeMoon');
+  if(r.dataset.theme==='light'){
+    r.removeAttribute('data-theme');
+    sun.style.display='';moon.style.display='none';
+    try{localStorage.setItem('tlpTheme3','dark');}catch(e){}
+  } else {
+    r.dataset.theme='light';
+    sun.style.display='none';moon.style.display='';
+    try{localStorage.setItem('tlpTheme3','light');}catch(e){}
+  }
+}
+try{
+  const t=localStorage.getItem('tlpTheme3');
+  const sun=document.getElementById('themeSun');
+  const moon=document.getElementById('themeMoon');
+  if(t==='light'){
+    document.documentElement.dataset.theme='light';
+    sun.style.display='none';moon.style.display='';
+  }
+}catch(e){}
+</script>

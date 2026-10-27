@@ -40,14 +40,14 @@ img{max-width:100%;border-radius:8px}
 .hdr-logo svg{width:64px;height:26px;flex-shrink:0}
 .hdr-logo-tag{font-size:.6rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);border-left:1px solid var(--border);padding-left:12px}
 .hdr-step{font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.06em}
-.theme-btn{width:32px;height:32px;border-radius:7px;border:1px solid var(--border);background:var(--surf);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.88rem;transition:color .2s}
+.theme-btn{width:32px;height:32px;border-radius:7px;border:1px solid var(--border);background:var(--surf);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .2s;padding:0}
 .theme-btn:hover{color:var(--text)}
 
 /* CHAPTERS NAV */
 .chapters{display:flex;gap:6px;align-items:center}
-.chap-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;flex-shrink:0}
+.chap-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,width .2s,height .2s;flex-shrink:0}
 .chap-dot.done{background:var(--accent);opacity:.6}
-.chap-dot.active{background:var(--accent);transform:scale(1.4)}
+.chap-dot.active{background:var(--accent);width:11px;height:11px}
 
 /* HERO */
 .hero-screen{
@@ -75,7 +75,7 @@ img{max-width:100%;border-radius:8px}
 .hero-sub{font-size:1rem;color:var(--muted);max-width:520px;margin-bottom:40px;line-height:1.8}
 .hero-start{
   display:inline-flex;align-items:center;gap:10px;
-  padding:14px 32px;border-radius:10px;
+  padding:11px 26px;border-radius:9px;
   background:linear-gradient(135deg,var(--accent),var(--orange));
   color:white;font-weight:700;font-size:1rem;cursor:pointer;
   border:none;font-family:'Inter',sans-serif;
@@ -215,7 +215,7 @@ tr:hover td{background:rgba(150,180,230,.03)}
   <div class="chapters" id="chapDots"></div>
   <div style="display:flex;align-items:center;gap:12px">
     <span class="hdr-step" id="stepLabel">Início</span>
-    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">☀️</button>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn" title="Alternar tema"><svg id="themeSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg id="themeMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
   </div>
 </header>
 
@@ -621,10 +621,10 @@ tr:hover td{background:rgba(150,180,230,.03)}
 /* ── Theme ── */
 function toggleTheme(){
   const r=document.documentElement;const b=document.getElementById('themeBtn');
-  if(r.dataset.theme==='light'){r.removeAttribute('data-theme');b.textContent='☀️';}
-  else{r.dataset.theme='light';b.textContent='🌙';}
+  if(r.dataset.theme==='light'){r.removeAttribute('data-theme');var s=document.getElementById('themeSun'),m=document.getElementById('themeMoon');if(s)s.style.display='';if(m)m.style.display='none';}
+  else{r.dataset.theme='light';var s=document.getElementById('themeSun'),m=document.getElementById('themeMoon');if(s)s.style.display='none';if(m)m.style.display='';}
 }
-try{const t=localStorage.getItem('tlpTheme2');if(t){document.documentElement.dataset.theme=t;document.getElementById('themeBtn').textContent=t==='light'?'🌙':'☀️';}}catch(e){}
+try{const t=localStorage.getItem('tlpTheme2');if(t){document.documentElement.dataset.theme=t;const s=document.getElementById('themeSun'),m=document.getElementById('themeMoon');if(s&&m){if(t==='light'){s.style.display='none';m.style.display='';}else{s.style.display='';m.style.display='none';}}}}catch(e){}
 
 /* ── Chapters ── */
 const chapters=[...document.querySelectorAll('[data-chap]')];

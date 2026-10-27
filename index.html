@@ -265,7 +265,7 @@ body::before {
 
 .card-foot {
   display:flex; align-items:center; justify-content:space-between;
-  padding: 14px 28px;
+  padding: 11px 22px;
   border-top: 1px solid var(--border);
   font-size:.82rem; font-weight:600; color:var(--muted);
   transition: background .2s;
@@ -280,6 +280,12 @@ body::before {
 .sector-card:hover .arrow-btn { transform: translateX(4px); }
 .cci   .arrow-btn { background: var(--cci-g);   color:var(--cci-l); }
 .campo .arrow-btn { background: var(--campo-g); color:var(--campo-l); }
+
+
+/* SVG color inheritance for manual-thumb */
+.cci-c   .manual-thumb { color: var(--cci); }
+.campo-c .manual-thumb { color: var(--campo); }
+.manual-thumb svg { opacity: .55; }
 
 /* ── SECTOR PAGE ── */
 .page-hdr {
@@ -604,7 +610,7 @@ footer {
     <button class="nav-btn active" id="nb-home"  onclick="goTo('home')">Início</button>
     <button class="nav-btn"        id="nb-cci"   onclick="goTo('cci')">CCI</button>
     <button class="nav-btn"        id="nb-campo" onclick="goTo('campo')">Campo</button>
-    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema">🌙</button>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema" style="padding:0"><svg id="themeSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg id="themeMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
   </nav>
 </header>
 
@@ -623,7 +629,7 @@ footer {
       <div class="sector-card cci" onclick="goTo('cci')">
         <div class="card-stripe"></div>
         <div class="card-body">
-          <div class="card-icon">📡</div>
+          <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="18" r="2" fill="currentColor" stroke="none"/><path d="M7 13a7 7 0 0 1 10 0"/><path d="M2.5 9a12.5 12.5 0 0 1 19 0"/></svg></div>
           <span class="card-chip">CCI</span>
           <h2 class="card-title">Centro de Controle<br>e Inteligência</h2>
           <p class="card-desc">Procedimentos, manuais técnicos e treinamentos do setor CCI. Conceitos de telecomunicações, ERBs, meios de transmissão e muito mais.</p>
@@ -642,7 +648,7 @@ footer {
       <div class="sector-card campo" onclick="goTo('campo')">
         <div class="card-stripe"></div>
         <div class="card-body">
-          <div class="card-icon">🔧</div>
+          <div class="card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
           <span class="card-chip">Campo</span>
           <h2 class="card-title">Operações<br>de Campo</h2>
           <p class="card-desc">Guias de qualidade operacional, SLA de atendimento, prazos, franquias, suspensões e boas práticas para o técnico de campo.</p>
@@ -668,13 +674,13 @@ footer {
     <div class="breadcrumb">
       <a onclick="goTo('home')">Início</a><span class="bc-sep">›</span><span>CCI</span>
     </div>
-    <h1 class="page-title">📡 Centro de Controle e Inteligência</h1>
+    <h1 class="page-title">Centro de Controle e Inteligência</h1>
     <p class="page-sub">Manuais técnicos, treinamentos e procedimentos do setor CCI.</p>
   </div>
   <div class="manuals-section">
     <div class="manuals-grid">
       <div class="manual-card cci-c tutorial-card" onclick="window.location.href='tutorial-tlp.html'">
-        <div class="manual-thumb">&#x1F393;</div>
+        <div class="manual-thumb"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6c0 0 4-2 14-2s14 2 14 2v24s-4-2-14-2-14 2-14 2V6z"/><line x1="18" y1="4" x2="18" y2="28"/></svg></div>
         <div class="manual-info">
           <span class="m-chip" style="background:rgba(200,82,16,.15);color:var(--accent);">Comece aqui</span>
           <h3 class="m-title">Tutorial B&#xE1;sico TLP</h3>
@@ -683,7 +689,7 @@ footer {
         <div class="manual-action"><span>Abrir tutorial</span><span>&#x2192;</span></div>
       </div>
       <div class="manual-card cci-c" onclick="window.location.href='tutorial-tlp-mod2.html'">
-        <div class="manual-thumb">&#x1F4CB;</div>
+        <div class="manual-thumb"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="20" height="24" rx="2"/><polyline points="12,8 12,5 24,5 24,8"/><line x1="12" y1="16" x2="24" y2="16"/><line x1="12" y1="21" x2="24" y2="21"/><line x1="12" y1="26" x2="20" y2="26"/></svg></div>
         <div class="manual-info">
           <span class="m-chip" style="background:rgba(200,82,16,.15);color:var(--accent);">Módulo 2</span>
           <h3 class="m-title">Operação: Falhas, Tickets e SLAs</h3>
@@ -692,7 +698,7 @@ footer {
         <div class="manual-action"><span>Abrir tutorial</span><span>&#x2192;</span></div>
       </div>
       <div class="manual-card cci-c" onclick="goTo('cci-mod1')">
-        <div class="manual-thumb">📡</div>
+        <div class="manual-thumb"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="26" r="2.5" fill="currentColor" stroke="none"/><path d="M11 19a10 10 0 0 1 14 0"/><path d="M5 13a18 18 0 0 1 26 0"/></svg></div>
         <div class="manual-info">
           <span class="m-chip">Módulo I</span>
           <h3 class="m-title">Introdução a Telecomunicações</h3>
@@ -700,14 +706,14 @@ footer {
         </div>
         <div class="manual-action"><span>Abrir manual</span><span>→</span></div>
       </div>
-      <div class="manual-card cci-c locked">
-        <div class="manual-thumb">🛰️</div>
+      <div class="manual-card cci-c" onclick="window.location.href='tutorial-tlp-mod3.html'">
+        <div class="manual-thumb"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22,4 14,20 22,20 14,32"/></svg></div>
         <div class="manual-info">
-          <span class="m-chip">Módulo III</span>
-          <h3 class="m-title">Em breve</h3>
-          <p class="m-desc">Próximo módulo em desenvolvimento.</p>
+          <span class="m-chip" style="background:rgba(200,82,16,.15);color:var(--accent);">Módulo 3</span>
+          <h3 class="m-title">Atendimentos GMG</h3>
+          <p class="m-desc">Fluxo completo do Grupo Motor Gerador: classificações, Controle de Acesso, carimbo padrão, SLA e aprovação no Portal Operations.</p>
         </div>
-        <div class="manual-action"><span>Em breve</span><span>🔒</span></div>
+        <div class="manual-action"><span>Abrir tutorial</span><span>→</span></div>
       </div>
     </div>
   </div>
@@ -719,13 +725,13 @@ footer {
     <div class="breadcrumb">
       <a onclick="goTo('home')">Início</a><span class="bc-sep">›</span><span>Campo</span>
     </div>
-    <h1 class="page-title">🔧 Operações de Campo</h1>
+    <h1 class="page-title">Operações de Campo</h1>
     <p class="page-sub">Manuais de qualidade, SLA de atendimento e boas práticas para o técnico de campo.</p>
   </div>
   <div class="manuals-section">
     <div class="manuals-grid">
       <div class="manual-card campo-c" onclick="goTo('campo-qual')">
-        <div class="manual-thumb">📋</div>
+        <div class="manual-thumb"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="20" height="24" rx="2"/><polyline points="12,8 12,5 24,5 24,8"/><line x1="12" y1="16" x2="24" y2="16"/><line x1="12" y1="21" x2="24" y2="21"/><line x1="12" y1="26" x2="20" y2="26"/></svg></div>
         <div class="manual-info">
           <span class="m-chip">Qualidade Operacional</span>
           <h3 class="m-title">SLA de Atendimento – Contrato TIM</h3>
@@ -740,16 +746,16 @@ footer {
           <h3 class="m-title">Procedimentos de Deslocamento</h3>
           <p class="m-desc">Manual em desenvolvimento.</p>
         </div>
-        <div class="manual-action"><span>Em breve</span><span>🔒</span></div>
+        <div class="manual-action"><span>Abrir tutorial</span><span>→</span></div>
       </div>
       <div class="manual-card campo-c locked">
-        <div class="manual-thumb">🛡️</div>
+        <div class="manual-thumb"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3L6 8.5v10C6 26 11.6 32 18 33c6.4-1 12-7 12-14.5V8.5L18 3z"/><polyline points="13,18 16.5,21.5 23,15"/></svg></div>
         <div class="manual-info">
           <span class="m-chip">Em Breve</span>
           <h3 class="m-title">Saúde e Segurança do Trabalho</h3>
           <p class="m-desc">Manual em desenvolvimento.</p>
         </div>
-        <div class="manual-action"><span>Em breve</span><span>🔒</span></div>
+        <div class="manual-action"><span>Abrir tutorial</span><span>→</span></div>
       </div>
     </div>
   </div>
@@ -763,7 +769,7 @@ footer {
       <a onclick="goTo('cci')">CCI</a><span class="bc-sep">›</span>
       <span>Módulo I</span>
     </div>
-    <h1 class="page-title">📡 Módulo I – Introdução a Telecomunicações</h1>
+    <h1 class="page-title">Módulo I – Introdução a Telecomunicações</h1>
     <p class="page-sub">Conceitos fundamentais para o entendimento da infraestrutura de telecomunicações.</p>
   </div>
 
@@ -784,17 +790,17 @@ footer {
     <main class="c-main">
 
       <div class="c-section sr" id="m1-s1">
-        <h2><span class="s-icon">📖</span>1. Conceitos de Telecomunicações</h2>
+        <h2>1. Conceitos de Telecomunicações</h2>
         <p>As telecomunicações surgiram quando o ser humano passou a buscar formas de comunicar informações à distância, superando os limites da voz e da visão direta. A evolução foi gradual e acompanhou avanços científicos, elétricos e eletrônicos.</p>
         <div class="ibox info">
-          <span class="ibox-ico">💡</span>
+          <span class="ibox-ico">›</span>
           <p><strong>Definição:</strong> Telecomunicação é toda transmissão, emissão ou recepção de sinais, escrita, imagens, sons ou informações de qualquer natureza por fio, radioeletricidade, meios ópticos ou outros sistemas eletromagnéticos.</p>
         </div>
         <p>A evolução das telecomunicações inclui marcos como a invenção do telégrafo, do telefone, do rádio e, mais recentemente, a internet e as redes móveis de alta velocidade.</p>
       </div>
 
       <div class="c-section sr" id="m1-s2">
-        <h2><span class="s-icon">📱</span>2. Evolução da Rede Celular</h2>
+        <h2>2. Evolução da Rede Celular</h2>
         <p>As redes celulares evoluíram em gerações, cada uma com maior capacidade, velocidade e menor latência.</p>
 
         <!-- SVG: 5G evolution bar chart -->
@@ -839,13 +845,13 @@ footer {
           </tbody>
         </table>
         <div class="ibox warn">
-          <span class="ibox-ico">⚡</span>
+          <span class="ibox-ico">›</span>
           <p>O <strong>5G</strong> representa uma revolução com latências abaixo de 1ms, possibilitando veículos autônomos, cirurgias remotas e cidades inteligentes.</p>
         </div>
       </div>
 
       <div class="c-section sr" id="m1-s3">
-        <h2><span class="s-icon">🗼</span>3. Estações Rádio Base (ERBs)</h2>
+        <h2>3. Estações Rádio Base (ERBs)</h2>
         <p>As Estações Rádio Base são o elo entre os dispositivos móveis dos usuários e a rede principal da operadora (core network). São instaladas em torres, prédios e postes e cobrem uma área chamada <strong>célula</strong>.</p>
 
         <!-- SVG: ERB Tower diagram -->
@@ -903,13 +909,13 @@ footer {
           <li><strong>Energia:</strong> retificadores, baterias e grupo gerador (GMG)</li>
         </ul>
         <div class="ibox ok">
-          <span class="ibox-ico">✅</span>
+          <span class="ibox-ico">›</span>
           <p>A manutenção adequada de cada ERB é essencial para garantir a qualidade do sinal e o cumprimento dos SLAs contratuais.</p>
         </div>
       </div>
 
       <div class="c-section sr" id="m1-s4">
-        <h2><span class="s-icon">🔗</span>4. Meios de Transmissão</h2>
+        <h2>4. Meios de Transmissão</h2>
         <p><strong>Meio de Transmissão</strong> é o suporte físico ou o espaço por onde os sinais viajam entre dispositivos.</p>
         <h3>🔵 Guiados (Conduzidos)</h3>
         <ul>
@@ -935,7 +941,7 @@ footer {
       </div>
 
       <div class="c-section sr" id="m1-s5">
-        <h2><span class="s-icon">📊</span>5. Conceito de dB e dBm</h2>
+        <h2>5. Conceito de dB e dBm</h2>
         <h3>Decibel (dB)</h3>
         <p>O decibel (dB) é o logaritmo da relação de duas potências, utilizado para indicar <strong>ganho</strong> ou <strong>perda (atenuação)</strong> de sinal.</p>
         <div class="ibox info">
@@ -957,7 +963,7 @@ footer {
       </div>
 
       <div class="c-section sr" id="m1-s6">
-        <h2><span class="s-icon">📞</span>6. Central de Comutação</h2>
+        <h2>6. Central de Comutação</h2>
         <p>A central de comutação interliga os assinantes de uma rede telefônica, criando circuitos de comunicação sob demanda, eliminando a necessidade de fios diretos entre cada par de usuários.</p>
         <table class="data-tbl">
           <thead><tr><th>Sistema</th><th>Descrição</th><th>Exemplo</th></tr></thead>
@@ -967,14 +973,14 @@ footer {
           </tbody>
         </table>
         <div class="ibox warn">
-          <span class="ibox-ico">📌</span>
+          <span class="ibox-ico">›</span>
           <p><strong>Exemplo:</strong> Para 1.000 assinantes sem central = <strong>499.500 pares de fios</strong>. Com central telefônica, o número cai para centenas de pares.</p>
         </div>
         <p>Marcos históricos: Primeira Central Telefônica em Estocolmo, Suécia (1883). No Brasil, a primeira central foi instalada em 1884.</p>
       </div>
 
       <div class="c-section sr" id="m1-s7">
-        <h2><span class="s-icon">💡</span>7. Fibra Óptica</h2>
+        <h2>7. Fibra Óptica</h2>
         <p>A fibra óptica transmite informação por <strong>pulsos de luz</strong> em filamentos de vidro ou plástico, usando o princípio de reflexão total interna. É o principal meio de transmissão de alta capacidade no mundo.</p>
 
         <!-- SVG: Fiber optic types -->
@@ -1082,7 +1088,7 @@ footer {
       </div>
 
       <div class="c-section sr" id="m1-s8">
-        <h2><span class="s-icon">🛰️</span>8. Satélites Artificiais</h2>
+        <h2>8. Satélites Artificiais</h2>
         <p>Satélites permitem comunicações superando barreiras geográficas. São classificados por altitude de órbita:</p>
 
         <!-- SVG: Satellite orbits -->
@@ -1164,7 +1170,7 @@ footer {
       <a onclick="goTo('campo')">Campo</a><span class="bc-sep">›</span>
       <span>Qualidade Operacional</span>
     </div>
-    <h1 class="page-title">📋 Treinamento de Qualidade: SLA de Atendimento</h1>
+    <h1 class="page-title">Treinamento de Qualidade: SLA de Atendimento</h1>
     <p class="page-sub">Guia completo sobre prazos, franquias, suspensões e boas práticas — Contrato TIM.</p>
   </div>
 
@@ -1186,10 +1192,10 @@ footer {
     <main class="c-main">
 
       <div class="c-section sr" id="q-s1">
-        <h2><span class="s-icon">📏</span>1. Avaliação de Franquia</h2>
+        <h2>1. Avaliação de Franquia</h2>
         <p><strong>Somente os tickets considerados dentro da franquia</strong> são avaliados quanto ao cumprimento de prazo. Antes de qualquer análise de tempo, verifique se o chamado se enquadra nos critérios de elegibilidade.</p>
         <div class="ibox warn">
-          <span class="ibox-ico">⚠️</span>
+          <span class="ibox-ico">›</span>
           <p>A avaliação de franquia é o ponto de partida de toda análise de SLA. Um ticket fora da franquia não entra no indicador de desempenho.</p>
         </div>
         <h3 style="color:#F87171">O que fica FORA da franquia:</h3>
@@ -1203,7 +1209,7 @@ footer {
       </div>
 
       <div class="c-section sr" id="q-s2">
-        <h2><span class="s-icon">⏱️</span>2. Prazos SLA – FMMT</h2>
+        <h2>2. Prazos SLA – FMMT</h2>
         <p>No modelo <strong>FMMT</strong> (Field Maintenance Management Team), os chamados são classificados por prioridade de P1 a P5, cada uma com prazo fixo.</p>
 
         <!-- SVG: FMMT priority bars -->
@@ -1260,7 +1266,7 @@ footer {
       </div>
 
       <div class="c-section sr" id="q-s3">
-        <h2><span class="s-icon">⏱️</span>3. Prazos SLA – FMO</h2>
+        <h2>3. Prazos SLA – FMO</h2>
         <p>No modelo <strong>FMO</strong> (Field Maintenance Operations), os chamados são classificados em três níveis de criticidade.</p>
         <table class="data-tbl">
           <thead><tr><th>Nível</th><th>Prazo</th><th>Descrição</th></tr></thead>
@@ -1273,7 +1279,7 @@ footer {
       </div>
 
       <div class="c-section sr" id="q-s4">
-        <h2><span class="s-icon">🚨</span>4. Regra de Acionamento: 20% do SLA</h2>
+        <h2>4. Regra de Acionamento: 20% do SLA</h2>
         <p>Toda atividade deve ter acionamento até <strong>20% do SLA definido</strong>. O técnico precisa ser despachado no início do período — não basta acionar próximo ao vencimento.</p>
         <table class="data-tbl">
           <thead><tr><th>Prioridade</th><th>SLA Total</th><th>Acionar em até</th></tr></thead>
@@ -1292,7 +1298,7 @@ footer {
       </div>
 
       <div class="c-section sr" id="q-s5">
-        <h2><span class="s-icon">🕐</span>5. O Relógio do SLA</h2>
+        <h2>5. O Relógio do SLA</h2>
         <p>O tempo do SLA <strong>só corre</strong> enquanto o ticket está em "Iniciado" ou "Não Iniciado" — quando o chamado está na fila da TLP sem estar paralisado.</p>
 
         <!-- SVG: SLA clock states -->
@@ -1341,7 +1347,7 @@ footer {
             <rect x="380" y="80" width="120" height="10" rx="5" fill="#1A2233"/>
             <rect x="380" y="80" width="95" height="10" rx="5" fill="#F87171"/>
             <text x="440" y="68" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">SLA Vencido</text>
-            <text x="480" y="93" font-family="Inter,sans-serif" font-size="9" fill="#F87171">‼️</text>
+            <text x="480" y="93" font-family="Inter,sans-serif" font-size="9" fill="#F87171">!</text>
 
             <rect x="380" y="120" width="120" height="10" rx="5" fill="#1A2233"/>
             <rect x="380" y="120" width="50" height="10" rx="5" fill="#F5A623"/>
@@ -1361,13 +1367,13 @@ footer {
           </tbody>
         </table>
         <div class="ibox ok">
-          <span class="ibox-ico">✅</span>
+          <span class="ibox-ico">›</span>
           <p>Compreender essa lógica permite identificar os momentos em que é necessário agir para <strong>não perder o prazo contratual</strong>.</p>
         </div>
       </div>
 
       <div class="c-section sr" id="q-s6">
-        <h2><span class="s-icon">📝</span>6. Como Registrar Corretamente</h2>
+        <h2>6. Como Registrar Corretamente</h2>
         <p>A qualidade do registro garante a elegibilidade de pleitos de abono. Cada etapa deve ser documentada <strong>no momento em que acontece</strong>.</p>
         <ol>
           <li><strong>Acionamento:</strong> Registrar horário e localização do técnico no despacho.</li>
@@ -1383,7 +1389,7 @@ footer {
       </div>
 
       <div class="c-section sr" id="q-s7">
-        <h2><span class="s-icon">⚖️</span>7. Suspensão × Tramitação</h2>
+        <h2>7. Suspensão × Tramitação</h2>
         <p>É fundamental entender a diferença, pois cada ação tem impacto distinto no indicador de SLA.</p>
         <table class="data-tbl">
           <thead><tr><th>Ação</th><th>Quando usar</th><th>Responsável pelo retorno</th></tr></thead>
@@ -1401,15 +1407,15 @@ footer {
           </tbody>
         </table>
         <div class="ibox info">
-          <span class="ibox-ico">🔁</span>
+          <span class="ibox-ico">›</span>
           <p><strong>Suspensão incorreta</strong> pode resultar em vencimento de SLA sem possibilidade de abono. Sempre escolha a ação correta de acordo com a natureza do impedimento.</p>
         </div>
       </div>
 
       <div class="c-section sr" id="q-s8">
-        <h2><span class="s-icon">⏳</span>8. Abono de Tempo e Dificuldades</h2>
+        <h2>8. Abono de Tempo e Dificuldades</h2>
         <div class="ibox ok">
-          <span class="ibox-ico">💡</span>
+          <span class="ibox-ico">›</span>
           <p><strong>Regra de Ouro:</strong> O abono é de <strong>TEMPO, não de ticket</strong>. Mesmo que uma dificuldade seja reconhecida, o abono incide somente sobre o período em que a equipe foi efetivamente prejudicada.</p>
         </div>
         <h3 style="color:var(--campo-l)">O que pode ser abonado:</h3>
@@ -1437,7 +1443,7 @@ footer {
       </div>
 
       <div class="c-section sr" id="q-s9">
-        <h2><span class="s-icon">✅</span>9. Checklist do Atendimento Perfeito</h2>
+        <h2>9. Checklist do Atendimento Perfeito</h2>
         <p>Use este checklist como guia em cada atendimento para garantir conformidade com o SLA:</p>
         <h3>Durante o Atendimento</h3>
         <ul class="checklist">
@@ -1458,7 +1464,7 @@ footer {
           <li>Nunca registrar dificuldade retroativamente</li>
         </ul>
         <div class="ibox ok" style="margin-top:20px">
-          <span class="ibox-ico">🏆</span>
+          <span class="ibox-ico">›</span>
           <p>Seguir este checklist em todos os atendimentos garante conformidade com o SLA e maximiza a elegibilidade para abonos quando necessário.</p>
         </div>
       </div>
@@ -1526,7 +1532,7 @@ function scrollTo(id) {
 let theme = (() => { try { return localStorage.getItem('sap-theme') || 'dark'; } catch{ return 'dark'; } })();
 function applyTheme(t) {
   document.documentElement.setAttribute('data-theme', t);
-  document.getElementById('themeBtn').textContent = t === 'dark' ? '☀️' : '🌙';
+  var s=document.getElementById('themeSun'),m=document.getElementById('themeMoon');if(s&&m){if(t==='dark'){s.style.display='';m.style.display='none';}else{s.style.display='none';m.style.display='';} }
   try { localStorage.setItem('sap-theme', t); } catch{}
 }
 function toggleTheme() {

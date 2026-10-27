@@ -674,3 +674,158 @@ function mc(btn,mcId,correct){
   else{btn.classList.add('wrong');res.textContent='Não exatamente — veja a explicação acima.';res.style.color='#E08080';}
 }
 </script>
+
+<style>
+/* ── ADMIN EDIT MODE ──────────────────────────────────────── */
+#adm-btn{position:fixed;bottom:20px;right:20px;width:34px;height:34px;border-radius:8px;background:var(--surf);border:1px solid var(--border);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:9998;opacity:.22;transition:opacity .2s,color .2s;padding:0}
+#adm-btn:hover{opacity:1;color:var(--text)}
+body.edit-mode #adm-btn{display:none}
+#adm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .22s}
+#adm-overlay.open{opacity:1;pointer-events:all}
+#adm-modal{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:30px;width:300px;max-width:88vw;display:flex;flex-direction:column;gap:14px}
+.adm-mt{font-family:'Sora',sans-serif;font-size:.95rem;font-weight:700;color:var(--text)}
+.adm-ms{font-size:.82rem;color:var(--muted);margin:0;line-height:1.5}
+#adm-pwd{width:100%;box-sizing:border-box;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surf2);color:var(--text);font-family:'Inter',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s}
+#adm-pwd:focus{border-color:var(--accent)}
+.adm-br{display:flex;gap:8px}
+.adm-b{flex:1;padding:9px 0;border-radius:8px;font-family:'Inter',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .18s}
+.adm-b:hover{color:var(--text);border-color:var(--muted)}
+.adm-b.prim{background:linear-gradient(135deg,var(--accent),var(--orange));color:white;border-color:transparent}
+.adm-b.prim:hover{opacity:.88}
+#adm-err{font-size:.78rem;color:#E08080;min-height:16px}
+#adm-bar{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:9px 14px;display:flex;gap:8px;align-items:center;z-index:9998;box-shadow:0 8px 32px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .2s;white-space:nowrap}
+body.edit-mode #adm-bar{opacity:1;pointer-events:all}
+#adm-lbl{font-size:.7rem;font-weight:700;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;padding-right:8px;border-right:1px solid var(--border)}
+.adm-bb{padding:7px 12px;border-radius:7px;font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .15s}
+.adm-bb:hover{color:var(--text);border-color:var(--muted)}
+.adm-bb.sv{background:linear-gradient(135deg,var(--accent),var(--orange));color:white;border-color:transparent}
+.adm-bb.sv:hover{opacity:.88}
+#adm-toast{font-size:.75rem;color:#9FD4A5;min-width:50px;text-align:center;transition:opacity .3s;opacity:0}
+[data-editable]{border-radius:3px}
+body.edit-mode [data-editable]{outline:1.5px dashed rgba(200,82,16,.22);cursor:text}
+body.edit-mode [data-editable]:hover{outline-color:rgba(200,82,16,.5)}
+body.edit-mode [data-editable]:focus{outline:1.5px solid rgba(200,82,16,.65);background:rgba(200,82,16,.03)}
+body.edit-mode [data-editable]:empty::before{content:'(vazio)';color:var(--muted);opacity:.4;font-style:italic}
+</style>
+
+<div id="adm-overlay">
+  <div id="adm-modal">
+    <div class="adm-mt">Modo Administrador</div>
+    <p class="adm-ms">Digite a senha para ativar a edição de conteúdo nesta página.</p>
+    <input type="password" id="adm-pwd" placeholder="Senha" onkeydown="if(event.key==='Enter')admSubmit()">
+    <div class="adm-br">
+      <button class="adm-b" onclick="admClose()">Cancelar</button>
+      <button class="adm-b prim" onclick="admSubmit()">Entrar</button>
+    </div>
+    <div id="adm-err"></div>
+  </div>
+</div>
+
+<div id="adm-bar">
+  <span id="adm-lbl">Editando</span>
+  <button class="adm-bb sv" onclick="admSave()">Salvar</button>
+  <button class="adm-bb" onclick="admExport()">Exportar HTML</button>
+  <button class="adm-bb" onclick="admReset()">Resetar</button>
+  <button class="adm-bb" onclick="admExit()">Sair</button>
+  <span id="adm-toast">Salvo ✓</span>
+</div>
+
+<button id="adm-btn" onclick="admOpen()" title="Administrador">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+</button>
+
+<script>
+(function(){
+var PAGE='mod2',HASH='9b378c73982d24f1ffba37384dce17a3385311d7a880ac58910e8060f630cc77',B64H='b64:VExQQDIwMjY=',LS='tlp_edit_'+PAGE;
+var SEL='.chapter h2,.chapter > p,.chapter .callout p,.chapter .step-body p,.chapter .cat-card h3,.chapter .cat-card p,.chapter .compare-card h3,.chapter .compare-card li,.chapter .quiz-q,.chapter .mc-q,.hero-title,.hero-sub,.finish-screen h2,.finish-screen p';
+
+async function sha256(s){
+  try{
+    if(crypto&&crypto.subtle){
+      var b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+      return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0');}).join('');
+    }
+  }catch(e){}
+  return 'b64:'+btoa(s);
+}
+function els(){return document.querySelectorAll('[data-editable]');}
+
+// Auto-tag editable elements
+(function tag(){
+  var i=0;
+  document.querySelectorAll(SEL).forEach(function(el){
+    if(!el.closest('#adm-overlay,#adm-bar,#adm-btn')){el.dataset.editable=i++;}
+  });
+})();
+
+// Restore saved content
+(function load(){
+  try{
+    var saved=JSON.parse(localStorage.getItem(LS)||'{}');
+    Object.keys(saved).forEach(function(k){
+      var el=document.querySelector('[data-editable="'+k+'"]');
+      if(el)el.innerHTML=saved[k];
+    });
+  }catch(e){}
+})();
+
+window.admOpen=function(){
+  document.getElementById('adm-overlay').classList.add('open');
+  setTimeout(function(){document.getElementById('adm-pwd').focus();},80);
+};
+window.admClose=function(){
+  document.getElementById('adm-overlay').classList.remove('open');
+  document.getElementById('adm-pwd').value='';
+  document.getElementById('adm-err').textContent='';
+};
+window.admSubmit=async function(){
+  var pwd=document.getElementById('adm-pwd').value;
+  if(!pwd)return;
+  var h=await sha256(pwd);
+  if(h===HASH||h===B64H){admClose();admEnter();}
+  else{document.getElementById('adm-err').textContent='Senha incorreta.';document.getElementById('adm-pwd').value='';document.getElementById('adm-pwd').focus();}
+};
+function admEnter(){
+  document.body.classList.add('edit-mode');
+  els().forEach(function(el){el.contentEditable='true';});
+  document.querySelectorAll('.quiz-opt,.mc-opt').forEach(function(b){b.disabled=true;b.style.pointerEvents='none';});
+}
+window.admExit=function(){
+  document.body.classList.remove('edit-mode');
+  els().forEach(function(el){el.contentEditable='false';el.removeAttribute('contenteditable');});
+  document.querySelectorAll('.quiz-opt,.mc-opt').forEach(function(b){b.disabled=false;b.style.pointerEvents='';});
+};
+window.admSave=function(){
+  var data={};
+  els().forEach(function(el){data[el.dataset.editable]=el.innerHTML;});
+  try{
+    localStorage.setItem(LS,JSON.stringify(data));
+    var t=document.getElementById('adm-toast');
+    t.style.opacity='1';setTimeout(function(){t.style.opacity='0';},2200);
+  }catch(e){alert('Erro ao salvar: '+e.message);}
+};
+window.admReset=function(){
+  if(!confirm('Resetar todo o conteúdo desta página para o texto original?'))return;
+  try{localStorage.removeItem(LS);}catch(e){}
+  location.reload();
+};
+window.admExport=function(){
+  admSave();
+  var wasEditing=document.body.classList.contains('edit-mode');
+  els().forEach(function(el){el.removeAttribute('contenteditable');});
+  document.body.classList.remove('edit-mode');
+  var html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+  if(wasEditing){document.body.classList.add('edit-mode');els().forEach(function(el){el.contentEditable='true';});}
+  var blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='tutorial-tlp-mod2-editado.html';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+};
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&document.getElementById('adm-overlay').classList.contains('open'))admClose();
+});
+})();
+</script>
+

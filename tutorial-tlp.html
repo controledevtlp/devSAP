@@ -509,6 +509,127 @@ function topoMode(mode){
   <h2 class="sr">Do <em>2G</em> ao <em>5G</em>: a evolução do sinal</h2>
   <p class="sr">Você já ouviu falar em 4G, 5G... mas o que significa cada um desses números? Vamos ver a evolução de cada geração.</p>
 
+  <div class="sr" style="border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#070E1B;margin:24px 0">
+  <svg viewBox="0 0 580 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;max-height:220px" aria-label="Linha do tempo da evolução das redes celulares: 2G, 3G, 4G e 5G">
+    <defs>
+      <pattern id="ev-dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+        <circle cx="12" cy="12" r=".9" fill="rgba(150,180,230,0.05)"/>
+      </pattern>
+      <radialGradient id="ev-g2" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#6B7D96" stop-opacity=".18"/>
+        <stop offset="100%" stop-color="#6B7D96" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="ev-g3" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#60B4D2" stop-opacity=".18"/>
+        <stop offset="100%" stop-color="#60B4D2" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="ev-g4" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#D4A040" stop-opacity=".18"/>
+        <stop offset="100%" stop-color="#D4A040" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="ev-g5" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#E05E14" stop-opacity=".25"/>
+        <stop offset="100%" stop-color="#E05E14" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="ev-glow">
+        <feGaussianBlur stdDeviation="3" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+
+    <!-- Background -->
+    <rect width="580" height="220" fill="#070E1B"/>
+    <rect width="580" height="220" fill="url(#ev-dots)"/>
+
+    <!-- Timeline spine -->
+    <line x1="70" y1="110" x2="510" y2="110" stroke="rgba(150,180,230,0.12)" stroke-width="2"/>
+    <!-- Animated flow -->
+    <line x1="70" y1="110" x2="510" y2="110" stroke="rgba(150,180,230,0.22)" stroke-width="1.5" stroke-dasharray="8,6">
+      <animate attributeName="stroke-dashoffset" from="0" to="-28" dur="2s" repeatCount="indefinite"/>
+    </line>
+
+    <!-- ── 2G ── x=88 -->
+    <ellipse cx="88" cy="110" rx="38" ry="38" fill="url(#ev-g2)"/>
+    <circle cx="88" cy="110" r="26" fill="rgba(107,125,150,0.08)" stroke="rgba(107,125,150,0.4)" stroke-width="1.5"/>
+    <!-- Signal bars 2G (1 bar) -->
+    <g transform="translate(77,100)" fill="none">
+      <rect x="0" y="10" width="5" height="6" rx="1" fill="rgba(107,125,150,0.9)"/>
+      <rect x="7" y="7" width="5" height="9" rx="1" fill="rgba(107,125,150,0.3)"/>
+      <rect x="14" y="4" width="5" height="12" rx="1" fill="rgba(107,125,150,0.15)"/>
+      <rect x="21" y="1" width="5" height="15" rx="1" fill="rgba(107,125,150,0.1)"/>
+    </g>
+    <text x="88" y="148" text-anchor="middle" fill="#6B7D96" font-size="16" font-family="Inter,sans-serif" font-weight="800" letter-spacing="-0.5">2G</text>
+    <text x="88" y="163" text-anchor="middle" fill="rgba(107,125,150,0.7)" font-size="8.5" font-family="Inter,sans-serif">Voz · SMS</text>
+    <text x="88" y="174" text-anchor="middle" fill="rgba(107,125,150,0.5)" font-size="8" font-family="Inter,sans-serif">~64 kbps</text>
+    <!-- Year chip -->
+    <rect x="66" y="60" width="44" height="14" rx="4" fill="rgba(107,125,150,0.1)" stroke="rgba(107,125,150,0.2)" stroke-width="1"/>
+    <text x="88" y="71" text-anchor="middle" fill="rgba(107,125,150,0.6)" font-size="7.5" font-family="Inter,sans-serif">1991</text>
+
+    <!-- ── 3G ── x=218 -->
+    <ellipse cx="218" cy="110" rx="38" ry="38" fill="url(#ev-g3)"/>
+    <circle cx="218" cy="110" r="26" fill="rgba(96,180,210,0.08)" stroke="rgba(96,180,210,0.45)" stroke-width="1.5"/>
+    <!-- Signal bars 3G (2 bars) -->
+    <g transform="translate(207,100)" fill="none">
+      <rect x="0" y="10" width="5" height="6" rx="1" fill="rgba(96,180,210,0.9)"/>
+      <rect x="7" y="7" width="5" height="9" rx="1" fill="rgba(96,180,210,0.8)"/>
+      <rect x="14" y="4" width="5" height="12" rx="1" fill="rgba(96,180,210,0.25)"/>
+      <rect x="21" y="1" width="5" height="15" rx="1" fill="rgba(96,180,210,0.1)"/>
+    </g>
+    <text x="218" y="148" text-anchor="middle" fill="#60B4D2" font-size="16" font-family="Inter,sans-serif" font-weight="800" letter-spacing="-0.5">3G</text>
+    <text x="218" y="163" text-anchor="middle" fill="rgba(96,180,210,0.7)" font-size="8.5" font-family="Inter,sans-serif">Internet móvel</text>
+    <text x="218" y="174" text-anchor="middle" fill="rgba(96,180,210,0.5)" font-size="8" font-family="Inter,sans-serif">~3.6 Mbps</text>
+    <rect x="196" y="60" width="44" height="14" rx="4" fill="rgba(96,180,210,0.1)" stroke="rgba(96,180,210,0.2)" stroke-width="1"/>
+    <text x="218" y="71" text-anchor="middle" fill="rgba(96,180,210,0.6)" font-size="7.5" font-family="Inter,sans-serif">2001</text>
+
+    <!-- ── 4G ── x=362 -->
+    <ellipse cx="362" cy="110" rx="40" ry="40" fill="url(#ev-g4)"/>
+    <circle cx="362" cy="110" r="28" fill="rgba(212,160,64,0.09)" stroke="rgba(212,160,64,0.5)" stroke-width="1.8"/>
+    <!-- Signal bars 4G (3 bars) -->
+    <g transform="translate(350,99)" fill="none">
+      <rect x="0" y="10" width="5" height="7" rx="1" fill="rgba(212,160,64,0.95)"/>
+      <rect x="7" y="6" width="5" height="11" rx="1" fill="rgba(212,160,64,0.85)"/>
+      <rect x="14" y="2" width="5" height="15" rx="1" fill="rgba(212,160,64,0.7)"/>
+      <rect x="21" y="0" width="5" height="17" rx="1" fill="rgba(212,160,64,0.15)"/>
+    </g>
+    <text x="362" y="150" text-anchor="middle" fill="#D4A040" font-size="16" font-family="Inter,sans-serif" font-weight="800" letter-spacing="-0.5">4G</text>
+    <text x="362" y="165" text-anchor="middle" fill="rgba(212,160,64,0.7)" font-size="8.5" font-family="Inter,sans-serif">Streaming · Apps</text>
+    <text x="362" y="176" text-anchor="middle" fill="rgba(212,160,64,0.5)" font-size="8" font-family="Inter,sans-serif">~100 Mbps</text>
+    <rect x="340" y="58" width="44" height="14" rx="4" fill="rgba(212,160,64,0.1)" stroke="rgba(212,160,64,0.2)" stroke-width="1"/>
+    <text x="362" y="69" text-anchor="middle" fill="rgba(212,160,64,0.6)" font-size="7.5" font-family="Inter,sans-serif">2009</text>
+
+    <!-- ── 5G ── x=492 -->
+    <ellipse cx="492" cy="110" rx="46" ry="46" fill="url(#ev-g5)"/>
+    <!-- Pulse ring -->
+    <circle cx="492" cy="110" r="32" fill="none" stroke="rgba(224,94,20,0.18)" stroke-width="1">
+      <animate attributeName="r" values="32;50" dur="2.2s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-opacity" values="0.18;0" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="492" cy="110" r="32" fill="rgba(200,82,16,0.12)" stroke="rgba(200,82,16,0.6)" stroke-width="2" filter="url(#ev-glow)"/>
+    <!-- Signal bars 5G (4 bars — full) -->
+    <g transform="translate(480,98)" fill="none">
+      <rect x="0" y="10" width="5" height="8" rx="1" fill="#E05E14"/>
+      <rect x="7" y="6" width="5" height="12" rx="1" fill="#E05E14"/>
+      <rect x="14" y="2" width="5" height="16" rx="1" fill="#E05E14"/>
+      <rect x="21" y="0" width="5" height="18" rx="1" fill="#E05E14"/>
+    </g>
+    <text x="492" y="153" text-anchor="middle" fill="#E05E14" font-size="18" font-family="Inter,sans-serif" font-weight="800" letter-spacing="-0.5">5G</text>
+    <text x="492" y="168" text-anchor="middle" fill="rgba(224,94,20,0.8)" font-size="8.5" font-family="Inter,sans-serif">Ultra-baixa latência</text>
+    <text x="492" y="179" text-anchor="middle" fill="rgba(224,94,20,0.6)" font-size="8" font-family="Inter,sans-serif">~20 Gbps</text>
+    <rect x="470" y="55" width="44" height="14" rx="4" fill="rgba(224,94,20,0.12)" stroke="rgba(224,94,20,0.3)" stroke-width="1"/>
+    <text x="492" y="66" text-anchor="middle" fill="rgba(224,94,20,0.7)" font-size="7.5" font-family="Inter,sans-serif">2019+</text>
+
+    <!-- Connector dots on timeline -->
+    <circle cx="88" cy="110" r="5" fill="#6B7D96" opacity=".5"/>
+    <circle cx="218" cy="110" r="5" fill="#60B4D2" opacity=".6"/>
+    <circle cx="362" cy="110" r="6" fill="#D4A040" opacity=".7"/>
+    <circle cx="492" cy="110" r="7" fill="#E05E14"/>
+
+    <!-- Footer note -->
+    <text x="290" y="210" text-anchor="middle" fill="rgba(150,180,230,0.25)" font-size="8" font-family="Inter,sans-serif">Na TLP trabalhamos principalmente com redes 4G e 5G — o coração do nosso contrato</text>
+  </svg>
+  <div class="img-caption">Evolução das redes celulares — cada geração multiplica a velocidade e reduz a latência</div>
+  </div>
+
   
 
   
@@ -542,111 +663,187 @@ function topoMode(mode){
   <p class="sr">Então, você entendeu que cada site cobre uma área. Mas o que acontece quando um deles para de funcionar?</p>
   <p class="sr">A ilustração abaixo mostra exatamente isso: um site que está fora do ar (as marcas em laranja ✕) causa a <strong>indisponibilidade de sinal</strong> na área demarcada, deixando as pessoas que residem ou simplesmente passam pela localidade sem conectividade, seja totalmente ou parcialmente.</p>
 
-  <div class="sr" style="border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#0A1020;margin:24px 0">
-  <svg viewBox="0 0 580 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;max-height:300px" aria-label="Mapa mostrando cobertura de sites: um ativo e um com falha">
+  <div class="sr" style="border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#070E1B;margin:24px 0">
+  <svg viewBox="0 0 580 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;max-height:300px" aria-label="Mapa de cobertura: site ativo (verde) e site fora do ar (laranja) com área sem sinal">
     <defs>
-      <radialGradient id="cov-a" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#22C55E" stop-opacity="0.18"/>
-        <stop offset="85%" stop-color="#22C55E" stop-opacity="0.05"/>
+      <radialGradient id="cov-ok" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#22C55E" stop-opacity=".22"/>
+        <stop offset="65%" stop-color="#22C55E" stop-opacity=".07"/>
         <stop offset="100%" stop-color="#22C55E" stop-opacity="0"/>
       </radialGradient>
-      <radialGradient id="cov-b" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#E05E14" stop-opacity="0.10"/>
-        <stop offset="85%" stop-color="#E05E14" stop-opacity="0.03"/>
+      <radialGradient id="cov-fail" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#E05E14" stop-opacity=".08"/>
         <stop offset="100%" stop-color="#E05E14" stop-opacity="0"/>
       </radialGradient>
-      <pattern id="streets" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-        <line x1="0" y1="30" x2="60" y2="30" stroke="rgba(150,180,230,0.06)" stroke-width="4"/>
-        <line x1="30" y1="0" x2="30" y2="60" stroke="rgba(150,180,230,0.06)" stroke-width="4"/>
+      <radialGradient id="cov-dark" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#000" stop-opacity=".55"/>
+        <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+      </radialGradient>
+      <pattern id="hex-grid" x="0" y="0" width="34.64" height="40" patternUnits="userSpaceOnUse">
+        <path d="M17.32 0 L34.64 10 L34.64 30 L17.32 40 L0 30 L0 10 Z" fill="none" stroke="rgba(150,180,230,0.055)" stroke-width="1"/>
       </pattern>
-      <filter id="glow-g" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="4" result="b"/>
+      <pattern id="city-block" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+        <line x1="25" y1="0" x2="25" y2="50" stroke="rgba(150,180,230,0.05)" stroke-width="3"/>
+        <line x1="0" y1="25" x2="50" y2="25" stroke="rgba(150,180,230,0.05)" stroke-width="3"/>
+      </pattern>
+      <filter id="site-glow-ok" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="6" result="b"/>
         <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
       </filter>
-      <filter id="glow-r" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="4" result="b"/>
+      <filter id="site-glow-fail" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur stdDeviation="5" result="b"/>
         <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
       </filter>
+      <clipPath id="map-clip">
+        <rect width="580" height="300" rx="12"/>
+      </clipPath>
     </defs>
 
-    <!-- Background city -->
+    <!-- Background -->
     <rect width="580" height="300" fill="#070E1B" rx="12"/>
-    <rect width="580" height="300" fill="url(#streets)" rx="12"/>
+    <rect width="580" height="300" fill="url(#city-block)" clip-path="url(#map-clip)"/>
+    <rect width="580" height="300" fill="url(#hex-grid)" clip-path="url(#map-clip)" opacity=".6"/>
 
-    <!-- Buildings (simplified) -->
-    <rect x="30" y="40" width="55" height="40" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
-    <rect x="30" y="90" width="30" height="30" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
-    <rect x="70" y="90" width="45" height="55" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
-    <rect x="30" y="200" width="70" height="40" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
-    <rect x="30" y="250" width="40" height="30" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
-    <rect x="430" y="40" width="55" height="40" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
-    <rect x="500" y="40" width="40" height="65" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
-    <rect x="430" y="200" width="60" height="45" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
-    <rect x="500" y="200" width="50" height="30" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
-    <rect x="500" y="240" width="50" height="35" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
-    <rect x="240" y="30" width="45" height="30" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
-    <rect x="295" y="30" width="50" height="30" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
-    <rect x="240" y="240" width="50" height="35" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
-    <rect x="300" y="240" width="40" height="35" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
+    <!-- City blocks - left area (Site OK territory) -->
+    <rect x="22" y="35" width="62" height="38" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.08)" stroke-width="1"/>
+    <rect x="22" y="82" width="35" height="28" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
+    <rect x="64" y="82" width="52" height="48" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
+    <rect x="22" y="190" width="80" height="42" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
+    <rect x="22" y="245" width="50" height="32" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
+    <rect x="80" y="245" width="36" height="28" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
+    <!-- Window lights on buildings (active area) -->
+    <rect x="28" y="40" width="6" height="5" rx="1" fill="rgba(34,197,94,0.15)"/>
+    <rect x="38" y="40" width="6" height="5" rx="1" fill="rgba(34,197,94,0.12)"/>
+    <rect x="28" y="50" width="6" height="5" rx="1" fill="rgba(34,197,94,0.1)"/>
+    <rect x="48" y="50" width="6" height="5" rx="1" fill="rgba(34,197,94,0.08)"/>
+    <rect x="67" y="87" width="5" height="4" rx="1" fill="rgba(34,197,94,0.12)"/>
+    <rect x="76" y="87" width="5" height="4" rx="1" fill="rgba(34,197,94,0.09)"/>
+    <rect x="67" y="96" width="5" height="4" rx="1" fill="rgba(34,197,94,0.08)"/>
+    <rect x="28" y="196" width="7" height="5" rx="1" fill="rgba(34,197,94,0.1)"/>
+    <rect x="42" y="196" width="7" height="5" rx="1" fill="rgba(34,197,94,0.08)"/>
 
-    <!-- SITE A coverage circle (active, green) -->
-    <circle cx="155" cy="152" r="112" fill="url(#cov-a)"/>
-    <circle cx="155" cy="152" r="112" fill="none" stroke="rgba(34,197,94,0.25)" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <!-- City blocks - right area (failed site territory) -->
+    <rect x="430" y="35" width="62" height="38" rx="2" fill="rgba(150,180,230,0.03)" stroke="rgba(150,180,230,0.06)" stroke-width="1"/>
+    <rect x="500" y="35" width="48" height="62" rx="2" fill="rgba(150,180,230,0.03)" stroke="rgba(150,180,230,0.05)" stroke-width="1"/>
+    <rect x="430" y="195" width="65" height="46" rx="2" fill="rgba(150,180,230,0.03)" stroke="rgba(150,180,230,0.06)" stroke-width="1"/>
+    <rect x="502" y="195" width="48" height="30" rx="2" fill="rgba(150,180,230,0.03)" stroke="rgba(150,180,230,0.05)" stroke-width="1"/>
+    <rect x="502" y="235" width="48" height="37" rx="2" fill="rgba(150,180,230,0.03)" stroke="rgba(150,180,230,0.05)" stroke-width="1"/>
+    <!-- Dark windows (no signal = no life) -->
+    <rect x="436" y="40" width="5" height="4" rx="1" fill="rgba(150,80,80,0.08)"/>
+    <rect x="445" y="40" width="5" height="4" rx="1" fill="rgba(150,80,80,0.06)"/>
+    <rect x="436" y="50" width="5" height="4" rx="1" fill="rgba(0,0,0,0.3)"/>
+    <rect x="436" y="200" width="6" height="5" rx="1" fill="rgba(0,0,0,0.25)"/>
+    <rect x="450" y="200" width="6" height="5" rx="1" fill="rgba(0,0,0,0.2)"/>
 
-    <!-- SITE B coverage circle (failed, dim/red) -->
-    <circle cx="420" cy="152" r="112" fill="url(#cov-b)"/>
-    <circle cx="420" cy="152" r="112" fill="none" stroke="rgba(224,94,20,0.2)" stroke-width="1.5" stroke-dasharray="3,5"/>
+    <!-- Center buildings -->
+    <rect x="240" y="25" width="50" height="32" rx="2" fill="rgba(150,180,230,0.04)" stroke="rgba(150,180,230,0.07)" stroke-width="1"/>
+    <rect x="298" y="25" width="55" height="32" rx="2" fill="rgba(150,180,230,0.03)" stroke="rgba(150,180,230,0.06)" stroke-width="1"/>
+    <rect x="240" y="248" width="55" height="34" rx="2" fill="rgba(150,180,230,0.03)" stroke="rgba(150,180,230,0.06)" stroke-width="1"/>
 
-    <!-- GAP zone label -->
-    <text x="290" y="140" text-anchor="middle" fill="rgba(224,94,20,0.55)" font-size="10" font-family="Inter,sans-serif" font-weight="700" letter-spacing="1">SEM SINAL</text>
-    <text x="290" y="155" text-anchor="middle" fill="rgba(200,82,16,0.4)" font-size="8.5" font-family="Inter,sans-serif">área afetada</text>
+    <!-- Coverage area - Site OK (left) -->
+    <ellipse cx="155" cy="152" rx="130" ry="120" fill="url(#cov-ok)"/>
+    <!-- Animated pulse ring from OK site -->
+    <ellipse cx="155" cy="152" rx="60" ry="60" fill="none" stroke="rgba(34,197,94,0.15)" stroke-width="1">
+      <animate attributeName="rx" values="60;120" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="ry" values="60;110" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-opacity" values="0.15;0" dur="3s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="155" cy="152" rx="60" ry="60" fill="none" stroke="rgba(34,197,94,0.1)" stroke-width="1">
+      <animate attributeName="rx" values="60;120" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+      <animate attributeName="ry" values="60;110" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-opacity" values="0.1;0" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+    </ellipse>
+    <!-- Coverage border circle OK -->
+    <ellipse cx="155" cy="152" rx="125" ry="115" fill="none" stroke="rgba(34,197,94,0.18)" stroke-width="1.5" stroke-dasharray="4,6"/>
 
-    <!-- SITE A: tower (active) -->
-    <g filter="url(#glow-g)">
-      <circle cx="155" cy="152" r="18" fill="rgba(34,197,94,0.12)" stroke="rgba(34,197,94,0.5)" stroke-width="1.6"/>
+    <!-- Coverage area - Site FAIL (dark overlay) -->
+    <ellipse cx="422" cy="152" rx="135" ry="122" fill="url(#cov-dark)"/>
+    <ellipse cx="422" cy="152" rx="130" ry="118" fill="url(#cov-fail)"/>
+    <!-- Broken coverage border -->
+    <ellipse cx="422" cy="152" rx="128" ry="116" fill="none" stroke="rgba(224,94,20,0.2)" stroke-width="1.5" stroke-dasharray="3,8"/>
+
+    <!-- SITE A (active) -->
+    <g filter="url(#site-glow-ok)">
+      <circle cx="155" cy="152" r="22" fill="rgba(34,197,94,0.12)" stroke="rgba(34,197,94,0.55)" stroke-width="2"/>
     </g>
-    <g transform="translate(144,136)" fill="none" stroke="#22C55E" stroke-width="1.4" stroke-linecap="round">
-      <line x1="11" y1="22" x2="11" y2="0"/>
-      <line x1="0" y1="22" x2="22" y2="22"/>
-      <line x1="4.5" y1="14" x2="11" y2="22"/>
-      <line x1="17.5" y1="14" x2="11" y2="22"/>
-      <path d="M3,7 Q11,-2 19,7" stroke="#22C55E" fill="none"/>
-      <path d="M6,10 Q11,4 16,10" stroke="#22C55E" fill="none"/>
+    <!-- Tower icon - active -->
+    <g transform="translate(143,135)" fill="none" stroke="#22C55E" stroke-width="1.4" stroke-linecap="round">
+      <line x1="12" y1="26" x2="12" y2="0"/>
+      <line x1="0" y1="26" x2="24" y2="26"/>
+      <line x1="5" y1="17" x2="12" y2="26"/>
+      <line x1="19" y1="17" x2="12" y2="26"/>
+      <path d="M4,8 Q12,-3 20,8" fill="none"/>
+      <path d="M7,12 Q12,4 17,12" fill="none"/>
     </g>
-    <!-- Pulse animation for active site -->
-    <circle cx="155" cy="152" r="18" fill="none" stroke="rgba(34,197,94,0.3)" stroke-width="1">
-      <animate attributeName="r" values="18;32" dur="2s" repeatCount="indefinite"/>
-      <animate attributeName="stroke-opacity" values="0.3;0" dur="2s" repeatCount="indefinite"/>
-    </circle>
-    <text x="155" y="180" text-anchor="middle" fill="#22C55E" font-size="8.5" font-family="Inter,sans-serif" font-weight="700">Site Ativo</text>
-    <text x="155" y="191" text-anchor="middle" fill="rgba(34,197,94,0.6)" font-size="7.5" font-family="Inter,sans-serif">Cobertura normal</text>
+    <!-- Label -->
+    <rect x="122" y="183" width="66" height="30" rx="6" fill="rgba(7,14,27,0.92)" stroke="rgba(34,197,94,0.3)" stroke-width="1"/>
+    <text x="155" y="197" text-anchor="middle" fill="#22C55E" font-size="9" font-family="Inter,sans-serif" font-weight="700">Site A — Ativo</text>
+    <text x="155" y="208" text-anchor="middle" fill="rgba(34,197,94,0.6)" font-size="7.5" font-family="Inter,sans-serif">Cobertura normal</text>
 
-    <!-- SITE B: tower (down) -->
-    <g filter="url(#glow-r)">
-      <circle cx="420" cy="152" r="18" fill="rgba(224,94,20,0.10)" stroke="rgba(224,94,20,0.35)" stroke-width="1.6"/>
+    <!-- SITE B (failed) -->
+    <g filter="url(#site-glow-fail)">
+      <circle cx="422" cy="152" r="22" fill="rgba(224,94,20,0.10)" stroke="rgba(224,94,20,0.35)" stroke-width="2"/>
     </g>
-    <g transform="translate(409,136)" fill="none" stroke="rgba(150,100,100,0.6)" stroke-width="1.4" stroke-linecap="round">
-      <line x1="11" y1="22" x2="11" y2="0"/>
-      <line x1="0" y1="22" x2="22" y2="22"/>
-      <line x1="4.5" y1="14" x2="11" y2="22"/>
-      <line x1="17.5" y1="14" x2="11" y2="22"/>
-      <path d="M3,7 Q11,-2 19,7" stroke="rgba(150,100,100,0.5)" fill="none"/>
+    <!-- Tower icon - dead -->
+    <g transform="translate(410,135)" fill="none" stroke="rgba(150,100,100,0.5)" stroke-width="1.4" stroke-linecap="round">
+      <line x1="12" y1="26" x2="12" y2="0"/>
+      <line x1="0" y1="26" x2="24" y2="26"/>
+      <line x1="5" y1="17" x2="12" y2="26"/>
+      <line x1="19" y1="17" x2="12" y2="26"/>
+      <path d="M4,8 Q12,-3 20,8" fill="none" stroke="rgba(150,100,100,0.35)"/>
     </g>
-    <!-- X mark over failed tower -->
-    <line x1="408" y1="138" x2="432" y2="162" stroke="#E05E14" stroke-width="2.5" stroke-linecap="round"/>
-    <line x1="432" y1="138" x2="408" y2="162" stroke="#E05E14" stroke-width="2.5" stroke-linecap="round"/>
-    <text x="420" y="180" text-anchor="middle" fill="#E05E14" font-size="8.5" font-family="Inter,sans-serif" font-weight="700">Site Fora</text>
-    <text x="420" y="191" text-anchor="middle" fill="rgba(224,94,20,0.6)" font-size="7.5" font-family="Inter,sans-serif">P1 — Acionar imediatamente</text>
+    <!-- X mark -->
+    <line x1="409" y1="137" x2="435" y2="163" stroke="#E05E14" stroke-width="2.8" stroke-linecap="round"/>
+    <line x1="435" y1="137" x2="409" y2="163" stroke="#E05E14" stroke-width="2.8" stroke-linecap="round"/>
+    <!-- Label -->
+    <rect x="387" y="183" width="70" height="30" rx="6" fill="rgba(7,14,27,0.92)" stroke="rgba(224,94,20,0.35)" stroke-width="1"/>
+    <text x="422" y="197" text-anchor="middle" fill="#E05E14" font-size="9" font-family="Inter,sans-serif" font-weight="700">Site B — Fora</text>
+    <text x="422" y="208" text-anchor="middle" fill="rgba(224,94,20,0.6)" font-size="7.5" font-family="Inter,sans-serif">P1 · Acionar imediato</text>
+
+    <!-- "Sem sinal" badge over failed area -->
+    <rect x="354" y="82" width="78" height="22" rx="7" fill="rgba(30,10,5,0.9)" stroke="rgba(224,94,20,0.4)" stroke-width="1.2"/>
+    <text x="393" y="97" text-anchor="middle" fill="#E05E14" font-size="9" font-family="Inter,sans-serif" font-weight="700" letter-spacing=".04em">SEM SINAL</text>
+
+    <!-- Person icons in left (OK) area -->
+    <g transform="translate(100,105)" fill="rgba(34,197,94,0.5)">
+      <circle cx="6" cy="3" r="3"/>
+      <path d="M0 12 Q6 8 12 12" fill="none" stroke="rgba(34,197,94,0.5)" stroke-width="1.5"/>
+    </g>
+    <g transform="translate(200,115)" fill="rgba(34,197,94,0.4)">
+      <circle cx="6" cy="3" r="3"/>
+      <path d="M0 12 Q6 8 12 12" fill="none" stroke="rgba(34,197,94,0.4)" stroke-width="1.5"/>
+    </g>
+    <g transform="translate(120,200)" fill="rgba(34,197,94,0.35)">
+      <circle cx="6" cy="3" r="3"/>
+      <path d="M0 12 Q6 8 12 12" fill="none" stroke="rgba(34,197,94,0.35)" stroke-width="1.5"/>
+    </g>
+
+    <!-- Person icons in right (no signal) area — grayed out -->
+    <g transform="translate(465,105)" fill="rgba(150,80,80,0.35)">
+      <circle cx="6" cy="3" r="3"/>
+      <path d="M0 12 Q6 8 12 12" fill="none" stroke="rgba(150,80,80,0.35)" stroke-width="1.5"/>
+    </g>
+    <g transform="translate(370,130)" fill="rgba(150,80,80,0.3)">
+      <circle cx="6" cy="3" r="3"/>
+      <path d="M0 12 Q6 8 12 12" fill="none" stroke="rgba(150,80,80,0.3)" stroke-width="1.5"/>
+    </g>
+    <g transform="translate(480,195)" fill="rgba(150,80,80,0.28)">
+      <circle cx="6" cy="3" r="3"/>
+      <path d="M0 12 Q6 8 12 12" fill="none" stroke="rgba(150,80,80,0.28)" stroke-width="1.5"/>
+    </g>
+
+    <!-- Dividing line (subtle) -->
+    <line x1="290" y1="30" x2="290" y2="270" stroke="rgba(150,180,230,0.06)" stroke-width="1" stroke-dasharray="4,8"/>
 
     <!-- Legend -->
-    <rect x="18" y="265" width="200" height="22" rx="5" fill="rgba(7,14,27,0.9)" stroke="rgba(150,180,230,0.1)" stroke-width="1"/>
-    <circle cx="32" cy="276" r="5" fill="rgba(34,197,94,0.15)" stroke="rgba(34,197,94,0.6)" stroke-width="1.2"/>
-    <text x="42" y="280" fill="#6B7D96" font-size="8.5" font-family="Inter,sans-serif">Cobertura ativa</text>
-    <circle cx="118" cy="276" r="5" fill="rgba(224,94,20,0.1)" stroke="rgba(224,94,20,0.5)" stroke-width="1.2"/>
-    <text x="128" y="280" fill="#6B7D96" font-size="8.5" font-family="Inter,sans-serif">Site em falha</text>
+    <rect x="180" y="268" width="220" height="20" rx="5" fill="rgba(7,14,27,0.88)" stroke="rgba(150,180,230,0.08)" stroke-width="1"/>
+    <circle cx="196" cy="278" r="4" fill="rgba(34,197,94,0.2)" stroke="rgba(34,197,94,0.7)" stroke-width="1.2"/>
+    <text x="205" y="282" fill="#6B7D96" font-size="8" font-family="Inter,sans-serif">Cobertura ativa</text>
+    <circle cx="286" cy="278" r="4" fill="rgba(224,94,20,0.12)" stroke="rgba(224,94,20,0.5)" stroke-width="1.2"/>
+    <text x="295" y="282" fill="#6B7D96" font-size="8" font-family="Inter,sans-serif">Área sem cobertura</text>
   </svg>
-  <div class="img-caption">Ilustração: site ativo mantém cobertura na sua área — quando um site cai, a cobertura da região é interrompida</div>
-</div>
+  <div class="img-caption">Quando um site cai, toda a sua área de cobertura fica sem sinal — as pessoas na região perdem conectividade</div>
+  </div>
 
   <p style="font-size:.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:20px 0 10px" class="sr">As causas mais comuns de queda:</p>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:20px" class="sr">
@@ -684,57 +881,208 @@ function topoMode(mode){
   <h2 class="sr">O que é um <em>Concentrador</em>?</h2>
   <p class="sr">Voltando para a nossa imagem de exemplo...</p>
 
-  <div style="border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#0A1020;margin:24px 0" class="sr">
-  <svg viewBox="0 0 580 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;max-height:280px" aria-label="Topologia de concentrador: um site central que serve vários dependentes">
+  <div style="border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#070E1B;margin:24px 0" class="sr">
+  <svg viewBox="0 0 580 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;max-height:300px" aria-label="Concentrador: antes (normal) e depois (falha em cascata)">
     <defs>
-      <pattern id="cg3" x="0" y="0" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="14" cy="14" r="1" fill="rgba(150,180,230,0.055)"/></pattern>
-      <radialGradient id="hg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#E05E14" stop-opacity="0.2"/><stop offset="100%" stop-color="#E05E14" stop-opacity="0"/></radialGradient>
-      <radialGradient id="sg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#96B4E6" stop-opacity="0.13"/><stop offset="100%" stop-color="#96B4E6" stop-opacity="0"/></radialGradient>
+      <pattern id="cc-dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+        <circle cx="10" cy="10" r=".8" fill="rgba(150,180,230,0.045)"/>
+      </pattern>
+      <radialGradient id="cc-hub-ok" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#E05E14" stop-opacity=".22"/>
+        <stop offset="100%" stop-color="#E05E14" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="cc-hub-fail" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#900" stop-opacity=".18"/>
+        <stop offset="100%" stop-color="#900" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="cc-site-ok" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#96B4E6" stop-opacity=".15"/>
+        <stop offset="100%" stop-color="#96B4E6" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="cc-glow-ok">
+        <feGaussianBlur stdDeviation="3.5" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="cc-glow-fail">
+        <feGaussianBlur stdDeviation="3" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
     </defs>
-    <rect width="580" height="280" fill="#0A1020"/>
-    <rect width="580" height="280" fill="url(#cg3)"/>
-    <ellipse cx="290" cy="140" rx="85" ry="85" fill="url(#hg3)"/>
-    <!-- Connection lines with animation -->
-    <line x1="290" y1="140" x2="110" y2="62" stroke="rgba(224,94,20,0.4)" stroke-width="1.8" stroke-dasharray="5,4"><animate attributeName="stroke-dashoffset" from="0" to="-27" dur="1.7s" repeatCount="indefinite"/></line>
-    <line x1="290" y1="140" x2="470" y2="62" stroke="rgba(224,94,20,0.4)" stroke-width="1.8" stroke-dasharray="5,4"><animate attributeName="stroke-dashoffset" from="0" to="-27" dur="2.1s" repeatCount="indefinite"/></line>
-    <line x1="290" y1="140" x2="110" y2="218" stroke="rgba(224,94,20,0.4)" stroke-width="1.8" stroke-dasharray="5,4"><animate attributeName="stroke-dashoffset" from="0" to="-27" dur="2s" repeatCount="indefinite"/></line>
-    <line x1="290" y1="140" x2="470" y2="218" stroke="rgba(224,94,20,0.4)" stroke-width="1.8" stroke-dasharray="5,4"><animate attributeName="stroke-dashoffset" from="0" to="-27" dur="2.3s" repeatCount="indefinite"/></line>
-    <line x1="290" y1="140" x2="540" y2="140" stroke="rgba(224,94,20,0.3)" stroke-width="1.8" stroke-dasharray="5,4"><animate attributeName="stroke-dashoffset" from="0" to="-27" dur="1.5s" repeatCount="indefinite"/></line>
+
+    <!-- Background -->
+    <rect width="580" height="300" fill="#070E1B"/>
+    <rect width="580" height="300" fill="url(#cc-dots)"/>
+
+    <!-- Panel divider -->
+    <line x1="290" y1="15" x2="290" y2="285" stroke="rgba(150,180,230,0.1)" stroke-width="1" stroke-dasharray="5,7"/>
+    <rect x="218" y="8" width="144" height="18" rx="5" fill="rgba(10,16,32,0.95)" stroke="rgba(150,180,230,0.1)" stroke-width="1"/>
+    <text x="254" y="21" text-anchor="middle" fill="rgba(34,197,94,0.7)" font-size="8" font-family="Inter,sans-serif" font-weight="700">NORMAL</text>
+    <line x1="262" y1="16" x2="268" y2="16" stroke="rgba(150,180,230,0.15)" stroke-width="1"/>
+    <text x="326" y="21" text-anchor="middle" fill="rgba(224,94,20,0.7)" font-size="8" font-family="Inter,sans-serif" font-weight="700">CONCENTRADOR CAI</text>
+
+    <!-- ══ LEFT PANEL: Normal operation ══ -->
+    <!-- Hub glow -->
+    <ellipse cx="144" cy="150" rx="55" ry="55" fill="url(#cc-hub-ok)"/>
+    <!-- Animated connection lines OK -->
+    <line x1="144" y1="150" x2="50" y2="68" stroke="rgba(224,94,20,0.45)" stroke-width="1.8" stroke-dasharray="5,4">
+      <animate attributeName="stroke-dashoffset" from="0" to="-27" dur="1.8s" repeatCount="indefinite"/>
+    </line>
+    <line x1="144" y1="150" x2="238" y2="68" stroke="rgba(224,94,20,0.45)" stroke-width="1.8" stroke-dasharray="5,4">
+      <animate attributeName="stroke-dashoffset" from="0" to="-27" dur="2.1s" repeatCount="indefinite"/>
+    </line>
+    <line x1="144" y1="150" x2="50" y2="232" stroke="rgba(224,94,20,0.45)" stroke-width="1.8" stroke-dasharray="5,4">
+      <animate attributeName="stroke-dashoffset" from="0" to="-27" dur="2s" repeatCount="indefinite"/>
+    </line>
+    <line x1="144" y1="150" x2="238" y2="232" stroke="rgba(224,94,20,0.45)" stroke-width="1.8" stroke-dasharray="5,4">
+      <animate attributeName="stroke-dashoffset" from="0" to="-27" dur="2.3s" repeatCount="indefinite"/>
+    </line>
     <!-- Hub pulse -->
-    <circle cx="290" cy="140" r="34" fill="none" stroke="rgba(224,94,20,0.15)" stroke-width="1"><animate attributeName="r" values="34;55" dur="2.5s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values="0.15;0" dur="2.5s" repeatCount="indefinite"/></circle>
-    <circle cx="290" cy="140" r="34" fill="none" stroke="rgba(224,94,20,0.15)" stroke-width="1"><animate attributeName="r" values="34;55" dur="2.5s" begin="1.25s" repeatCount="indefinite"/><animate attributeName="stroke-opacity" values="0.15;0" dur="2.5s" begin="1.25s" repeatCount="indefinite"/></circle>
-    <!-- Hub node -->
-    <circle cx="290" cy="140" r="32" fill="rgba(200,82,16,0.14)" stroke="rgba(200,82,16,0.55)" stroke-width="2"/>
-    <g transform="translate(277,122)" fill="none" stroke="#E05E14" stroke-width="1.5" stroke-linecap="round">
-      <line x1="13" y1="30" x2="13" y2="0"/><line x1="0" y1="30" x2="26" y2="30"/>
-      <line x1="5" y1="20" x2="13" y2="30"/><line x1="21" y1="20" x2="13" y2="30"/>
-      <path d="M4,9 Q13,-4 22,9" stroke="#E05E14" fill="none" stroke-width="1.6"/><path d="M7,13 Q13,4 19,13" stroke="#E05E14" fill="none"/>
+    <circle cx="144" cy="150" r="30" fill="none" stroke="rgba(224,94,20,0.15)" stroke-width="1">
+      <animate attributeName="r" values="30;50" dur="2.4s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-opacity" values="0.15;0" dur="2.4s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Hub node (ok) -->
+    <g filter="url(#cc-glow-ok)">
+      <circle cx="144" cy="150" r="28" fill="rgba(200,82,16,0.14)" stroke="rgba(200,82,16,0.6)" stroke-width="2"/>
     </g>
-    <text x="290" y="186" text-anchor="middle" fill="#E05E14" font-size="10" font-family="Inter,sans-serif" font-weight="700" letter-spacing="0.8">CONCENTRADOR</text>
-    <!-- Leaf sites -->
-    <ellipse cx="110" cy="62" rx="36" ry="36" fill="url(#sg3)"/>
-    <circle cx="110" cy="62" r="21" fill="rgba(150,180,230,0.08)" stroke="rgba(150,180,230,0.4)" stroke-width="1.5"/>
-    <g transform="translate(99,47)" fill="none" stroke="#96B4E6" stroke-width="1.2" stroke-linecap="round"><line x1="11" y1="22" x2="11" y2="0"/><line x1="0" y1="22" x2="22" y2="22"/><line x1="4.5" y1="14" x2="11" y2="22"/><line x1="17.5" y1="14" x2="11" y2="22"/><path d="M3,7 Q11,-2 19,7" stroke="#96B4E6" fill="none"/></g>
-    <text x="110" y="91" text-anchor="middle" fill="#6B7D96" font-size="8.5" font-family="Inter,sans-serif">Site A</text>
-    <ellipse cx="470" cy="62" rx="36" ry="36" fill="url(#sg3)"/>
-    <circle cx="470" cy="62" r="21" fill="rgba(150,180,230,0.08)" stroke="rgba(150,180,230,0.4)" stroke-width="1.5"/>
-    <g transform="translate(459,47)" fill="none" stroke="#96B4E6" stroke-width="1.2" stroke-linecap="round"><line x1="11" y1="22" x2="11" y2="0"/><line x1="0" y1="22" x2="22" y2="22"/><line x1="4.5" y1="14" x2="11" y2="22"/><line x1="17.5" y1="14" x2="11" y2="22"/><path d="M3,7 Q11,-2 19,7" stroke="#96B4E6" fill="none"/></g>
-    <text x="470" y="91" text-anchor="middle" fill="#6B7D96" font-size="8.5" font-family="Inter,sans-serif">Site B</text>
-    <ellipse cx="110" cy="218" rx="36" ry="36" fill="url(#sg3)"/>
-    <circle cx="110" cy="218" r="21" fill="rgba(150,180,230,0.08)" stroke="rgba(150,180,230,0.4)" stroke-width="1.5"/>
-    <g transform="translate(99,203)" fill="none" stroke="#96B4E6" stroke-width="1.2" stroke-linecap="round"><line x1="11" y1="22" x2="11" y2="0"/><line x1="0" y1="22" x2="22" y2="22"/><line x1="4.5" y1="14" x2="11" y2="22"/><line x1="17.5" y1="14" x2="11" y2="22"/><path d="M3,7 Q11,-2 19,7" stroke="#96B4E6" fill="none"/></g>
-    <text x="110" y="247" text-anchor="middle" fill="#6B7D96" font-size="8.5" font-family="Inter,sans-serif">Site C</text>
-    <ellipse cx="470" cy="218" rx="36" ry="36" fill="url(#sg3)"/>
-    <circle cx="470" cy="218" r="21" fill="rgba(150,180,230,0.08)" stroke="rgba(150,180,230,0.4)" stroke-width="1.5"/>
-    <g transform="translate(459,203)" fill="none" stroke="#96B4E6" stroke-width="1.2" stroke-linecap="round"><line x1="11" y1="22" x2="11" y2="0"/><line x1="0" y1="22" x2="22" y2="22"/><line x1="4.5" y1="14" x2="11" y2="22"/><line x1="17.5" y1="14" x2="11" y2="22"/><path d="M3,7 Q11,-2 19,7" stroke="#96B4E6" fill="none"/></g>
-    <text x="470" y="247" text-anchor="middle" fill="#6B7D96" font-size="8.5" font-family="Inter,sans-serif">Site D</text>
-    <ellipse cx="540" cy="140" rx="28" ry="28" fill="url(#sg3)"/>
-    <circle cx="540" cy="140" r="18" fill="rgba(150,180,230,0.08)" stroke="rgba(150,180,230,0.4)" stroke-width="1.5"/>
-    <g transform="translate(531,126)" fill="none" stroke="#96B4E6" stroke-width="1.1" stroke-linecap="round"><line x1="9" y1="18" x2="9" y2="0"/><line x1="0" y1="18" x2="18" y2="18"/><line x1="3" y1="11" x2="9" y2="18"/><line x1="15" y1="11" x2="9" y2="18"/><path d="M2,5 Q9,-1 16,5" stroke="#96B4E6" fill="none"/></g>
-    <text x="540" y="167" text-anchor="middle" fill="#6B7D96" font-size="7.5" font-family="Inter,sans-serif">Site E</text>
+    <g transform="translate(132,133)" fill="none" stroke="#E05E14" stroke-width="1.5" stroke-linecap="round">
+      <line x1="12" y1="26" x2="12" y2="0"/><line x1="0" y1="26" x2="24" y2="26"/>
+      <line x1="5" y1="17" x2="12" y2="26"/><line x1="19" y1="17" x2="12" y2="26"/>
+      <path d="M4,8 Q12,-3 20,8" fill="none"/><path d="M7,12 Q12,4 17,12" fill="none"/>
+    </g>
+    <text x="144" y="193" text-anchor="middle" fill="#E05E14" font-size="8" font-family="Inter,sans-serif" font-weight="700">CONC.</text>
+    <!-- Check mark on hub -->
+    <circle cx="164" cy="134" r="9" fill="#070E1B" stroke="rgba(34,197,94,0.6)" stroke-width="1.2"/>
+    <polyline points="160,134 163,137 169,131" fill="none" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Leaf sites OK -->
+    <!-- Site A - top left -->
+    <ellipse cx="50" cy="68" rx="26" ry="26" fill="url(#cc-site-ok)"/>
+    <circle cx="50" cy="68" r="18" fill="rgba(150,180,230,0.08)" stroke="rgba(150,180,230,0.4)" stroke-width="1.4"/>
+    <g transform="translate(41,55)" fill="none" stroke="#96B4E6" stroke-width="1.2" stroke-linecap="round">
+      <line x1="9" y1="19" x2="9" y2="0"/><line x1="0" y1="19" x2="18" y2="19"/>
+      <line x1="3.5" y1="12" x2="9" y2="19"/><line x1="14.5" y1="12" x2="9" y2="19"/>
+      <path d="M2,6 Q9,-2 16,6" fill="none"/>
+    </g>
+    <text x="50" y="95" text-anchor="middle" fill="#6B7D96" font-size="8" font-family="Inter,sans-serif">Site A</text>
+    <circle cx="65" cy="54" r="7" fill="#070E1B" stroke="rgba(34,197,94,0.5)" stroke-width="1"/>
+    <polyline points="62,54 64.5,56.5 69,51" fill="none" stroke="#22C55E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Site B - top right -->
+    <ellipse cx="238" cy="68" rx="26" ry="26" fill="url(#cc-site-ok)"/>
+    <circle cx="238" cy="68" r="18" fill="rgba(150,180,230,0.08)" stroke="rgba(150,180,230,0.4)" stroke-width="1.4"/>
+    <g transform="translate(229,55)" fill="none" stroke="#96B4E6" stroke-width="1.2" stroke-linecap="round">
+      <line x1="9" y1="19" x2="9" y2="0"/><line x1="0" y1="19" x2="18" y2="19"/>
+      <line x1="3.5" y1="12" x2="9" y2="19"/><line x1="14.5" y1="12" x2="9" y2="19"/>
+      <path d="M2,6 Q9,-2 16,6" fill="none"/>
+    </g>
+    <text x="238" y="95" text-anchor="middle" fill="#6B7D96" font-size="8" font-family="Inter,sans-serif">Site B</text>
+    <circle cx="253" cy="54" r="7" fill="#070E1B" stroke="rgba(34,197,94,0.5)" stroke-width="1"/>
+    <polyline points="250,54 252.5,56.5 257,51" fill="none" stroke="#22C55E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Site C - bottom left -->
+    <ellipse cx="50" cy="232" rx="26" ry="26" fill="url(#cc-site-ok)"/>
+    <circle cx="50" cy="232" r="18" fill="rgba(150,180,230,0.08)" stroke="rgba(150,180,230,0.4)" stroke-width="1.4"/>
+    <g transform="translate(41,219)" fill="none" stroke="#96B4E6" stroke-width="1.2" stroke-linecap="round">
+      <line x1="9" y1="19" x2="9" y2="0"/><line x1="0" y1="19" x2="18" y2="19"/>
+      <line x1="3.5" y1="12" x2="9" y2="19"/><line x1="14.5" y1="12" x2="9" y2="19"/>
+      <path d="M2,6 Q9,-2 16,6" fill="none"/>
+    </g>
+    <text x="50" y="259" text-anchor="middle" fill="#6B7D96" font-size="8" font-family="Inter,sans-serif">Site C</text>
+    <circle cx="65" cy="218" r="7" fill="#070E1B" stroke="rgba(34,197,94,0.5)" stroke-width="1"/>
+    <polyline points="62,218 64.5,220.5 69,215" fill="none" stroke="#22C55E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Site D - bottom right -->
+    <ellipse cx="238" cy="232" rx="26" ry="26" fill="url(#cc-site-ok)"/>
+    <circle cx="238" cy="232" r="18" fill="rgba(150,180,230,0.08)" stroke="rgba(150,180,230,0.4)" stroke-width="1.4"/>
+    <g transform="translate(229,219)" fill="none" stroke="#96B4E6" stroke-width="1.2" stroke-linecap="round">
+      <line x1="9" y1="19" x2="9" y2="0"/><line x1="0" y1="19" x2="18" y2="19"/>
+      <line x1="3.5" y1="12" x2="9" y2="19"/><line x1="14.5" y1="12" x2="9" y2="19"/>
+      <path d="M2,6 Q9,-2 16,6" fill="none"/>
+    </g>
+    <text x="238" y="259" text-anchor="middle" fill="#6B7D96" font-size="8" font-family="Inter,sans-serif">Site D</text>
+    <circle cx="253" cy="218" r="7" fill="#070E1B" stroke="rgba(34,197,94,0.5)" stroke-width="1"/>
+    <polyline points="250,218 252.5,220.5 257,215" fill="none" stroke="#22C55E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- ══ RIGHT PANEL: Cascade failure ══ -->
+    <!-- Dark overlay over right panel -->
+    <rect x="292" y="0" width="288" height="300" fill="rgba(5,5,10,0.25)"/>
+
+    <!-- Hub glow (fail) -->
+    <ellipse cx="436" cy="150" rx="55" ry="55" fill="url(#cc-hub-fail)"/>
+    <!-- Broken/fading lines -->
+    <line x1="436" y1="150" x2="342" y2="68" stroke="rgba(150,60,60,0.25)" stroke-width="1.5" stroke-dasharray="3,8"/>
+    <line x1="436" y1="150" x2="530" y2="68" stroke="rgba(150,60,60,0.25)" stroke-width="1.5" stroke-dasharray="3,8"/>
+    <line x1="436" y1="150" x2="342" y2="232" stroke="rgba(150,60,60,0.25)" stroke-width="1.5" stroke-dasharray="3,8"/>
+    <line x1="436" y1="150" x2="530" y2="232" stroke="rgba(150,60,60,0.25)" stroke-width="1.5" stroke-dasharray="3,8"/>
+    <!-- Hub node (failed) -->
+    <g filter="url(#cc-glow-fail)">
+      <circle cx="436" cy="150" r="28" fill="rgba(90,20,20,0.22)" stroke="rgba(200,60,60,0.4)" stroke-width="2"/>
+    </g>
+    <g transform="translate(424,133)" fill="none" stroke="rgba(150,100,100,0.5)" stroke-width="1.5" stroke-linecap="round">
+      <line x1="12" y1="26" x2="12" y2="0"/><line x1="0" y1="26" x2="24" y2="26"/>
+      <line x1="5" y1="17" x2="12" y2="26"/><line x1="19" y1="17" x2="12" y2="26"/>
+      <path d="M4,8 Q12,-3 20,8" fill="none" stroke="rgba(150,100,100,0.3)"/>
+    </g>
+    <!-- X on hub -->
+    <line x1="421" y1="135" x2="451" y2="165" stroke="#E05E14" stroke-width="3" stroke-linecap="round"/>
+    <line x1="451" y1="135" x2="421" y2="165" stroke="#E05E14" stroke-width="3" stroke-linecap="round"/>
+    <text x="436" y="193" text-anchor="middle" fill="rgba(224,94,20,0.5)" font-size="8" font-family="Inter,sans-serif" font-weight="700">CONC.</text>
+
+    <!-- Leaf sites FAILED (all show X) -->
+    <!-- Site A fail -->
+    <ellipse cx="342" cy="68" rx="26" ry="26" fill="url(#cc-site-ok)" opacity=".3"/>
+    <circle cx="342" cy="68" r="18" fill="rgba(30,10,10,0.4)" stroke="rgba(150,100,100,0.25)" stroke-width="1.4"/>
+    <g transform="translate(333,55)" fill="none" stroke="rgba(150,100,100,0.35)" stroke-width="1.2" stroke-linecap="round">
+      <line x1="9" y1="19" x2="9" y2="0"/><line x1="0" y1="19" x2="18" y2="19"/>
+      <line x1="3.5" y1="12" x2="9" y2="19"/><line x1="14.5" y1="12" x2="9" y2="19"/>
+    </g>
+    <line x1="335" y1="60" x2="349" y2="76" stroke="rgba(224,94,20,0.7)" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="349" y1="60" x2="335" y2="76" stroke="rgba(224,94,20,0.7)" stroke-width="1.8" stroke-linecap="round"/>
+    <text x="342" y="95" text-anchor="middle" fill="rgba(150,100,100,0.5)" font-size="8" font-family="Inter,sans-serif">Site A</text>
+
+    <!-- Site B fail -->
+    <ellipse cx="530" cy="68" rx="26" ry="26" fill="url(#cc-site-ok)" opacity=".3"/>
+    <circle cx="530" cy="68" r="18" fill="rgba(30,10,10,0.4)" stroke="rgba(150,100,100,0.25)" stroke-width="1.4"/>
+    <g transform="translate(521,55)" fill="none" stroke="rgba(150,100,100,0.35)" stroke-width="1.2" stroke-linecap="round">
+      <line x1="9" y1="19" x2="9" y2="0"/><line x1="0" y1="19" x2="18" y2="19"/>
+      <line x1="3.5" y1="12" x2="9" y2="19"/><line x1="14.5" y1="12" x2="9" y2="19"/>
+    </g>
+    <line x1="523" y1="60" x2="537" y2="76" stroke="rgba(224,94,20,0.7)" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="537" y1="60" x2="523" y2="76" stroke="rgba(224,94,20,0.7)" stroke-width="1.8" stroke-linecap="round"/>
+    <text x="530" y="95" text-anchor="middle" fill="rgba(150,100,100,0.5)" font-size="8" font-family="Inter,sans-serif">Site B</text>
+
+    <!-- Site C fail -->
+    <ellipse cx="342" cy="232" rx="26" ry="26" fill="url(#cc-site-ok)" opacity=".3"/>
+    <circle cx="342" cy="232" r="18" fill="rgba(30,10,10,0.4)" stroke="rgba(150,100,100,0.25)" stroke-width="1.4"/>
+    <g transform="translate(333,219)" fill="none" stroke="rgba(150,100,100,0.35)" stroke-width="1.2" stroke-linecap="round">
+      <line x1="9" y1="19" x2="9" y2="0"/><line x1="0" y1="19" x2="18" y2="19"/>
+      <line x1="3.5" y1="12" x2="9" y2="19"/><line x1="14.5" y1="12" x2="9" y2="19"/>
+    </g>
+    <line x1="335" y1="224" x2="349" y2="240" stroke="rgba(224,94,20,0.7)" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="349" y1="224" x2="335" y2="240" stroke="rgba(224,94,20,0.7)" stroke-width="1.8" stroke-linecap="round"/>
+    <text x="342" y="259" text-anchor="middle" fill="rgba(150,100,100,0.5)" font-size="8" font-family="Inter,sans-serif">Site C</text>
+
+    <!-- Site D fail -->
+    <ellipse cx="530" cy="232" rx="26" ry="26" fill="url(#cc-site-ok)" opacity=".3"/>
+    <circle cx="530" cy="232" r="18" fill="rgba(30,10,10,0.4)" stroke="rgba(150,100,100,0.25)" stroke-width="1.4"/>
+    <g transform="translate(521,219)" fill="none" stroke="rgba(150,100,100,0.35)" stroke-width="1.2" stroke-linecap="round">
+      <line x1="9" y1="19" x2="9" y2="0"/><line x1="0" y1="19" x2="18" y2="19"/>
+      <line x1="3.5" y1="12" x2="9" y2="19"/><line x1="14.5" y1="12" x2="9" y2="19"/>
+    </g>
+    <line x1="523" y1="224" x2="537" y2="240" stroke="rgba(224,94,20,0.7)" stroke-width="1.8" stroke-linecap="round"/>
+    <line x1="537" y1="224" x2="523" y2="240" stroke="rgba(224,94,20,0.7)" stroke-width="1.8" stroke-linecap="round"/>
+    <text x="530" y="259" text-anchor="middle" fill="rgba(150,100,100,0.5)" font-size="8" font-family="Inter,sans-serif">Site D</text>
+
+    <!-- Alert badge right panel -->
+    <rect x="348" y="280" width="180" height="16" rx="4" fill="rgba(30,8,8,0.9)" stroke="rgba(224,94,20,0.3)" stroke-width="1"/>
+    <text x="438" y="292" text-anchor="middle" fill="rgba(224,94,20,0.7)" font-size="8" font-family="Inter,sans-serif" font-weight="600">4 sites perderam sinal simultaneamente</text>
+
+    <!-- Footer -->
+    <text x="144" y="292" text-anchor="middle" fill="rgba(34,197,94,0.35)" font-size="7.5" font-family="Inter,sans-serif">Operação normal</text>
   </svg>
-  <div class="img-caption">O Concentrador (laranja) é o hub central — se ele cair, todos os sites dependentes perdem sinal simultaneamente</div>
-</div>
+  <div class="img-caption">Falha em cascata: se o concentrador cai, todos os sites dependentes perdem sinal ao mesmo tempo — impacto muito maior que uma falha simples</div>
+  </div>
 
   <p class="sr">Nessa imagem, o site que caiu é o que chamamos de <strong>concentrador</strong>. Mas o que isso significa exatamente?</p>
   <div class="callout warn sr">
@@ -1221,3 +1569,158 @@ function applyTheme(t){
 function toggleTheme(){theme=theme==='dark'?'light':'dark';applyTheme(theme);}
 applyTheme(theme);
 </script>
+
+<style>
+/* ── ADMIN EDIT MODE ──────────────────────────────────────── */
+#adm-btn{position:fixed;bottom:20px;right:20px;width:34px;height:34px;border-radius:8px;background:var(--surf);border:1px solid var(--border);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:9998;opacity:.22;transition:opacity .2s,color .2s;padding:0}
+#adm-btn:hover{opacity:1;color:var(--text)}
+body.edit-mode #adm-btn{display:none}
+#adm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .22s}
+#adm-overlay.open{opacity:1;pointer-events:all}
+#adm-modal{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:30px;width:300px;max-width:88vw;display:flex;flex-direction:column;gap:14px}
+.adm-mt{font-family:'Sora',sans-serif;font-size:.95rem;font-weight:700;color:var(--text)}
+.adm-ms{font-size:.82rem;color:var(--muted);margin:0;line-height:1.5}
+#adm-pwd{width:100%;box-sizing:border-box;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surf2);color:var(--text);font-family:'Inter',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s}
+#adm-pwd:focus{border-color:var(--accent)}
+.adm-br{display:flex;gap:8px}
+.adm-b{flex:1;padding:9px 0;border-radius:8px;font-family:'Inter',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .18s}
+.adm-b:hover{color:var(--text);border-color:var(--muted)}
+.adm-b.prim{background:linear-gradient(135deg,var(--accent),var(--orange));color:white;border-color:transparent}
+.adm-b.prim:hover{opacity:.88}
+#adm-err{font-size:.78rem;color:#E08080;min-height:16px}
+#adm-bar{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:9px 14px;display:flex;gap:8px;align-items:center;z-index:9998;box-shadow:0 8px 32px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .2s;white-space:nowrap}
+body.edit-mode #adm-bar{opacity:1;pointer-events:all}
+#adm-lbl{font-size:.7rem;font-weight:700;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;padding-right:8px;border-right:1px solid var(--border)}
+.adm-bb{padding:7px 12px;border-radius:7px;font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .15s}
+.adm-bb:hover{color:var(--text);border-color:var(--muted)}
+.adm-bb.sv{background:linear-gradient(135deg,var(--accent),var(--orange));color:white;border-color:transparent}
+.adm-bb.sv:hover{opacity:.88}
+#adm-toast{font-size:.75rem;color:#9FD4A5;min-width:50px;text-align:center;transition:opacity .3s;opacity:0}
+[data-editable]{border-radius:3px}
+body.edit-mode [data-editable]{outline:1.5px dashed rgba(200,82,16,.22);cursor:text}
+body.edit-mode [data-editable]:hover{outline-color:rgba(200,82,16,.5)}
+body.edit-mode [data-editable]:focus{outline:1.5px solid rgba(200,82,16,.65);background:rgba(200,82,16,.03)}
+body.edit-mode [data-editable]:empty::before{content:'(vazio)';color:var(--muted);opacity:.4;font-style:italic}
+</style>
+
+<div id="adm-overlay">
+  <div id="adm-modal">
+    <div class="adm-mt">Modo Administrador</div>
+    <p class="adm-ms">Digite a senha para ativar a edição de conteúdo nesta página.</p>
+    <input type="password" id="adm-pwd" placeholder="Senha" onkeydown="if(event.key==='Enter')admSubmit()">
+    <div class="adm-br">
+      <button class="adm-b" onclick="admClose()">Cancelar</button>
+      <button class="adm-b prim" onclick="admSubmit()">Entrar</button>
+    </div>
+    <div id="adm-err"></div>
+  </div>
+</div>
+
+<div id="adm-bar">
+  <span id="adm-lbl">Editando</span>
+  <button class="adm-bb sv" onclick="admSave()">Salvar</button>
+  <button class="adm-bb" onclick="admExport()">Exportar HTML</button>
+  <button class="adm-bb" onclick="admReset()">Resetar</button>
+  <button class="adm-bb" onclick="admExit()">Sair</button>
+  <span id="adm-toast">Salvo ✓</span>
+</div>
+
+<button id="adm-btn" onclick="admOpen()" title="Administrador">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+</button>
+
+<script>
+(function(){
+var PAGE='mod1',HASH='9b378c73982d24f1ffba37384dce17a3385311d7a880ac58910e8060f630cc77',B64H='b64:VExQQDIwMjY=',LS='tlp_edit_'+PAGE;
+var SEL='.chapter h2,.chapter > p,.chapter .callout p,.chapter .step-body p,.chapter .cat-card h3,.chapter .cat-card p,.chapter .compare-card h3,.chapter .compare-card li,.chapter .quiz-q,.chapter .mc-q,.hero-title,.hero-sub,.finish-screen h2,.finish-screen p';
+
+async function sha256(s){
+  try{
+    if(crypto&&crypto.subtle){
+      var b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+      return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0');}).join('');
+    }
+  }catch(e){}
+  return 'b64:'+btoa(s);
+}
+function els(){return document.querySelectorAll('[data-editable]');}
+
+// Auto-tag editable elements
+(function tag(){
+  var i=0;
+  document.querySelectorAll(SEL).forEach(function(el){
+    if(!el.closest('#adm-overlay,#adm-bar,#adm-btn')){el.dataset.editable=i++;}
+  });
+})();
+
+// Restore saved content
+(function load(){
+  try{
+    var saved=JSON.parse(localStorage.getItem(LS)||'{}');
+    Object.keys(saved).forEach(function(k){
+      var el=document.querySelector('[data-editable="'+k+'"]');
+      if(el)el.innerHTML=saved[k];
+    });
+  }catch(e){}
+})();
+
+window.admOpen=function(){
+  document.getElementById('adm-overlay').classList.add('open');
+  setTimeout(function(){document.getElementById('adm-pwd').focus();},80);
+};
+window.admClose=function(){
+  document.getElementById('adm-overlay').classList.remove('open');
+  document.getElementById('adm-pwd').value='';
+  document.getElementById('adm-err').textContent='';
+};
+window.admSubmit=async function(){
+  var pwd=document.getElementById('adm-pwd').value;
+  if(!pwd)return;
+  var h=await sha256(pwd);
+  if(h===HASH||h===B64H){admClose();admEnter();}
+  else{document.getElementById('adm-err').textContent='Senha incorreta.';document.getElementById('adm-pwd').value='';document.getElementById('adm-pwd').focus();}
+};
+function admEnter(){
+  document.body.classList.add('edit-mode');
+  els().forEach(function(el){el.contentEditable='true';});
+  document.querySelectorAll('.quiz-opt,.mc-opt').forEach(function(b){b.disabled=true;b.style.pointerEvents='none';});
+}
+window.admExit=function(){
+  document.body.classList.remove('edit-mode');
+  els().forEach(function(el){el.contentEditable='false';el.removeAttribute('contenteditable');});
+  document.querySelectorAll('.quiz-opt,.mc-opt').forEach(function(b){b.disabled=false;b.style.pointerEvents='';});
+};
+window.admSave=function(){
+  var data={};
+  els().forEach(function(el){data[el.dataset.editable]=el.innerHTML;});
+  try{
+    localStorage.setItem(LS,JSON.stringify(data));
+    var t=document.getElementById('adm-toast');
+    t.style.opacity='1';setTimeout(function(){t.style.opacity='0';},2200);
+  }catch(e){alert('Erro ao salvar: '+e.message);}
+};
+window.admReset=function(){
+  if(!confirm('Resetar todo o conteúdo desta página para o texto original?'))return;
+  try{localStorage.removeItem(LS);}catch(e){}
+  location.reload();
+};
+window.admExport=function(){
+  admSave();
+  var wasEditing=document.body.classList.contains('edit-mode');
+  els().forEach(function(el){el.removeAttribute('contenteditable');});
+  document.body.classList.remove('edit-mode');
+  var html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+  if(wasEditing){document.body.classList.add('edit-mode');els().forEach(function(el){el.contentEditable='true';});}
+  var blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='tutorial-tlp-editado.html';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+};
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&document.getElementById('adm-overlay').classList.contains('open'))admClose();
+});
+})();
+</script>
+

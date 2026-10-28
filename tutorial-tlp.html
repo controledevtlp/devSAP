@@ -95,7 +95,7 @@ img{max-width:100%;border-radius:8px}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
 /* CHAPTERS */
-.chapter{max-width:860px;margin:0 auto;padding:52px 24px}
+.chapter{max-width:860px;margin:0 auto;padding:36px 24px}
 .chapter-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .eyebrow-num{
   width:28px;height:28px;border-radius:8px;
@@ -206,7 +206,7 @@ img{max-width:100%;border-radius:8px}
 @media(max-width:640px){
   .tut-hdr{padding:12px 18px}
   .hdr-logo-tag{display:none}
-  .chapter{padding:40px 18px}
+  .chapter{padding:28px 18px}
   .tech-btns{gap:6px}
   .gen-btn{padding:6px 12px;font-size:.76rem}
   .hero-emoji-row{gap:14px;font-size:1.6rem}
@@ -228,6 +228,9 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
   cursor:pointer;transition:color .2s,border-color .2s,background .2s;
 }
 .tool-preview-btn:hover{color:var(--text);border-color:rgba(150,180,230,.3);background:rgba(150,180,230,.12)}
+
+/* Callouts dentro de flex-direction:column: margin gerenciado pelo gap do container */
+[style*="flex-direction:column"] > .callout{margin:0}
 </style>
 
 <div id="prog-bar"></div>
@@ -1057,7 +1060,7 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
       <div>
         <p><strong>Gênesis</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Ferramenta principal para acompanhar os <strong>sites fora em tempo real</strong>. Mostra data/hora da falha, tempo de indisponibilidade, classificação, cidade e ticket relacionado. É o "painel de controle" dos sites em queda.</p>
-        <button class="tool-preview-btn" onclick="openToolImg('img/tools/genesis-alarmes.jpg','Gênesis Vivo — Verificação de Alarmes')"><i class="ph ph-magnifying-glass"></i> Ver interface</button>
+        <button class="tool-preview-btn" onclick="openToolImg('img/tools/portal-tlp-painel.png','Gênesis Vivo — Painel Online (sites fora em tempo real)')"><i class="ph ph-monitor-play"></i> Ver interface</button>
       </div>
     </div>
     <div class="callout info sr">
@@ -1071,6 +1074,7 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
       <div>
         <p><strong>Netcool</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Ferramenta de <strong>alarmes da rede</strong>. Detecta e mostra todos os problemas ativos. É integrado ao Smart Service — quando um alarme aparece, ele pode gerar um ticket automaticamente.</p>
+        <button class="tool-preview-btn" onclick="openToolImg('img/tools/genesis-alarmes.jpg','Netcool / Gênesis — Verificação de Alarmes')"><i class="ph ph-bell-ringing"></i> Ver interface</button>
       </div>
     </div>
     <div class="callout info sr">
@@ -1097,7 +1101,6 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Plataforma interna da TLP com tudo em um só lugar: <strong>Painel Online</strong> (sites fora em tempo real — status, causa, previsão e ID massiva), <strong>Monitora</strong> (dashboard geral com SLAs, reincidências e falhas críticas por ANF e frente de trabalho), <strong>Auto Tracking</strong> (cruza Gênesis + tickets TLP, permite updates direto no portal e agrupamento de massivas), <strong>Downloads</strong>, <strong>BaseCheck</strong>, <strong>InfoSite</strong>, <strong>Relatórios</strong> e acesso rápido às principais ferramentas do contrato.</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
           <button class="tool-preview-btn" onclick="openToolImg('img/tools/portal-tlp-home.png','Portal TLP — Tela Inicial')"><i class="ph ph-layout"></i> Ver portal</button>
-          <button class="tool-preview-btn" onclick="openToolImg('img/tools/portal-tlp-painel.png','Portal TLP — Painel Online (sites fora)')"><i class="ph ph-monitor"></i> Ver painel online</button>
         </div>
       </div>
     </div>

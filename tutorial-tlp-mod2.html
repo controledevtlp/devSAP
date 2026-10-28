@@ -199,6 +199,12 @@ tr:hover td{background:rgba(150,180,230,.03)}
   .chapter{padding:56px 18px}
   .cat-grid{grid-template-columns:1fr}
 }
+
+/* TÍTULOS MAIÚSCULO */
+h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q,.mc-q {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
 </style>
 
 <!-- HEADER -->
@@ -602,6 +608,26 @@ tr:hover td{background:rgba(150,180,230,.03)}
       <button class="quiz-opt" onclick="answer(this,'q8',true)">Em até 2h24 — 20% de 12h (P3)</button>
     </div>
     <div class="quiz-result" id="q8-res"></div>
+  </div>
+
+  <div class="quiz-section sr" id="q9">
+    <div class="quiz-q">9. Um site foi reativado após manutenção, mas voltou a cair 2 horas depois com a mesma causa. Como você deve classificar a segunda ocorrência?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q9',false)">Nova ocorrência independente — abrir novo ticket normalmente</button>
+      <button class="quiz-opt" onclick="answer(this,'q9',true)">Reincidência — indicar no ticket que é a mesma causa raiz não resolvida</button>
+      <button class="quiz-opt" onclick="answer(this,'q9',false)">Cancelar o ticket anterior e reabrir com nova numeração</button>
+    </div>
+    <div class="quiz-result" id="q9-res"></div>
+  </div>
+
+  <div class="quiz-section sr" id="q10">
+    <div class="quiz-q">10. Qual é o objetivo principal de um RCA (Root Cause Analysis)?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q10',false)">Registrar quantas horas o técnico ficou no site</button>
+      <button class="quiz-opt" onclick="answer(this,'q10',false)">Abrir um ticket automático para a próxima ocorrência</button>
+      <button class="quiz-opt" onclick="answer(this,'q10',true)">Identificar e documentar a causa raiz da falha para evitar reincidências</button>
+    </div>
+    <div class="quiz-result" id="q10-res"></div>
   </div>
 
 </div>

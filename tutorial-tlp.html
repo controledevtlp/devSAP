@@ -218,6 +218,16 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
   letter-spacing: 0.04em;
 }
 
+
+/* Botão "Ver interface" nas ferramentas */
+.tool-preview-btn{
+  display:inline-flex;align-items:center;gap:5px;margin-top:10px;
+  padding:4px 12px;border-radius:5px;border:1px solid var(--border);
+  background:rgba(150,180,230,.07);color:var(--muted);
+  font-size:.76rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  cursor:pointer;transition:color .2s,border-color .2s,background .2s;
+}
+.tool-preview-btn:hover{color:var(--text);border-color:rgba(150,180,230,.3);background:rgba(150,180,230,.12)}
 </style>
 
 <div id="prog-bar"></div>
@@ -1033,24 +1043,28 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
       <div>
         <p><strong>Smart Service (ServiceNow)</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">É onde ficam todos os <strong>tickets de manutenção</strong>. Pensa nele como o "Trello da operação" — cada chamado vira um ticket aqui, com status, responsável e prazo.</p>
+        <button class="tool-preview-btn" onclick="openToolImg('img/tools/smart-service.png','Smart Service — Lista de Tarefas (TSK)')"><i class="ph ph-list-checks"></i> Ver interface</button>
       </div>
     </div>
     <div class="callout info sr">
       <div>
         <p><strong>TOA / WFM (Workforce Management)</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Controla a <strong>força de trabalho em campo</strong> — qual técnico está disponível, onde ele está, a rota e a jornada de trabalho. É o "GPS + agenda" dos técnicos.</p>
+        <button class="tool-preview-btn" onclick="openToolImg('img/tools/toa-wfm.png','TOA TIM — Console de Alocação')"><i class="ph ph-calendar-check"></i> Ver interface</button>
       </div>
     </div>
     <div class="callout info sr">
       <div>
         <p><strong>Gênesis</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Ferramenta principal para acompanhar os <strong>sites fora em tempo real</strong>. Mostra data/hora da falha, tempo de indisponibilidade, classificação, cidade e ticket relacionado. É o "painel de controle" dos sites em queda.</p>
+        <button class="tool-preview-btn" onclick="openToolImg('img/tools/genesis-alarmes.jpg','Gênesis Vivo — Verificação de Alarmes')"><i class="ph ph-magnifying-glass"></i> Ver interface</button>
       </div>
     </div>
     <div class="callout info sr">
       <div>
         <p><strong>Grafana</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Parecido com o Gênesis, mas mais focado em <strong>gráficos e dados históricos</strong>. Ótimo para visualizar tendências e acompanhar o comportamento da rede ao longo do tempo.</p>
+        <button class="tool-preview-btn" onclick="openToolImg('img/tools/grafana.png','Grafana TIM — Dashboard de Equipamentos')"><i class="ph ph-chart-bar"></i> Ver interface</button>
       </div>
     </div>
     <div class="callout info sr">
@@ -1063,6 +1077,7 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
       <div>
         <p><strong>TAIS (Chatbot)</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Assistente virtual que responde perguntas rápidas: alarmes, histórico de um site, endereço, backups. É como o "Google interno" da operação TIM — super útil no dia a dia.</p>
+        <button class="tool-preview-btn" onclick="openToolImg('img/tools/tais-tim.png','TAIS TIM — Assistente Virtual')"><i class="ph ph-chat-circle-text"></i> Ver interface</button>
       </div>
     </div>
     <div class="callout info sr">
@@ -1078,14 +1093,12 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
   <div style="display:flex;flex-direction:column;gap:10px">
     <div class="callout fun sr">
       <div>
-        <p><strong>Portal Monitora</strong></p>
-        <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Ferramenta interna TLP que <strong>cruza dados do WFM/TOA com outras plataformas</strong>. Tem dashboard geral, filtros por frente de trabalho e acompanhamento de SLAs, reincidências e falhas críticas.</p>
-      </div>
-    </div>
-    <div class="callout fun sr">
-      <div>
-        <p><strong>Portal Auto Tracking</strong></p>
-        <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Integrado ao Gênesis e WFM — monitora os sites fora e cruza com os tickets TLP. Permite fazer updates no Gênesis direto pelo portal e agrupar casos de massivas.</p>
+        <p><strong>Portal TLP</strong></p>
+        <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Plataforma interna da TLP com tudo em um só lugar: <strong>Painel Online</strong> (sites fora em tempo real — status, causa, previsão e ID massiva), <strong>Monitora</strong> (dashboard geral com SLAs, reincidências e falhas críticas por ANF e frente de trabalho), <strong>Auto Tracking</strong> (cruza Gênesis + tickets TLP, permite updates direto no portal e agrupamento de massivas), <strong>Downloads</strong>, <strong>BaseCheck</strong>, <strong>InfoSite</strong>, <strong>Relatórios</strong> e acesso rápido às principais ferramentas do contrato.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+          <button class="tool-preview-btn" onclick="openToolImg('img/tools/portal-tlp-home.png','Portal TLP — Tela Inicial')"><i class="ph ph-layout"></i> Ver portal</button>
+          <button class="tool-preview-btn" onclick="openToolImg('img/tools/portal-tlp-painel.png','Portal TLP — Painel Online (sites fora)')"><i class="ph ph-monitor"></i> Ver painel online</button>
+        </div>
       </div>
     </div>
     <div class="callout fun sr">

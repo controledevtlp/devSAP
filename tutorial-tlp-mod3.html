@@ -229,6 +229,12 @@ tr:hover td{background:rgba(150,180,230,.03)}
   .chapter{padding:56px 18px}
   .cat-grid,.compare-grid{grid-template-columns:1fr}
 }
+
+/* TÍTULOS MAIÚSCULO */
+h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q,.mc-q {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
 </style>
 
 <!-- HEADER -->
@@ -676,6 +682,95 @@ tr:hover td{background:rgba(150,180,230,.03)}
     </div>
     <div class="quiz-result" id="qr-2"></div>
   </div>
+
+  <div class="quiz-section sr">
+    <div class="quiz-q">O Gerador foi acoplado às 08h00. São 10h10 e ainda não foi feito carimbo. O que isso representa?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','O carimbamento a cada 2h é obrigatório. Às 10h00 já deveria ter o 2º carimbo. Ausência representa pendência operacional e pode impactar o pagamento.')">Está dentro do prazo — ainda faltam 50 min para o 3º carimbo</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'correct','Correto. O 2º carimbo era obrigatório às 10h00. Com 10 min de atraso, já há pendência. Acione o técnico para regularizar imediatamente.')">Há uma pendência — o 2º carimbo (às 10h00) já está atrasado 10 minutos</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','O sistema não registra automaticamente. O carimbo depende do técnico e deve ser exigido pelo CCI proativamente.')">O sistema registra automaticamente — não é necessária ação</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','Desacoplamento só resolve o problema operacional, não a pendência de registro. Regularize o carimbo antes.')">Desacoplar o gerador e aguardar energia comercial</button>
+    </div>
+    <div class="quiz-result" id="qr-3"></div>
+  </div>
+
+  <div class="quiz-section sr">
+    <div class="quiz-q">A energia comercial voltou enquanto o gerador estava acoplado. O técnico desacoplou o GMG e o site voltou ao normal. Qual é a classificação correta?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','Apenas Deslocamento é para quando o técnico chega ao site mas NÃO acopla o gerador. Aqui houve acoplamento efetivo.')">Apenas Deslocamento</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','GMG Não Utilizado é quando a falha normaliza ANTES de o técnico sair do CM. Aqui o técnico chegou ao site e acoplo.')">GMG Não Utilizado</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'correct','Correto. O gerador foi acoplado e prestou suporte ao site até a energia comercial retornar. Classificação: GMG Instalado.')">GMG Instalado — houve acoplamento efetivo</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','Visita FMMT é para falhas que não são de energia. Esta ocorrência é de energia — não se aplica.')">Visita FMMT</button>
+    </div>
+    <div class="quiz-result" id="qr-4"></div>
+  </div>
+
+  <div class="quiz-section sr">
+    <div class="quiz-q">O técnico está no site com o gerador acoplado há 4 horas. O CCI não recebeu nenhuma CA. O que deve ser exigido?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','Aguardar nunca é a resposta correta — a CA tem prazo rígido e o CCI é responsável por cobrar ativamente.')">Aguardar mais 2h para acumular informações antes de cobrar</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'correct','Correto. Com 4h acoplado, devem existir no mínimo 2 CAs (a de chegada e o 1º carimbo às +2h). Exigir imediatamente e registrar a pendência.')">Exigir as 2 CAs em atraso e registrar a pendência no ticket</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','Desacoplar sem autorização pode comprometer o SLA e gerar pendência de pagamento. A ação correta é cobrar a CA.')">Desacoplar o gerador e encerrar o ticket por falta de registro</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','O CCI não envia CA — quem envia é o técnico de campo. O CCI é responsável por cobrar e controlar.')">Enviar a CA pelo CCI para não atrasar o registro</button>
+    </div>
+    <div class="quiz-result" id="qr-5"></div>
+  </div>
+
+  <div class="quiz-section sr">
+    <div class="quiz-q">Um site teve falha de energia. O técnico foi despachado, mas antes de sair do CM a energia comercial voltou. Como classificar?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','Apenas Deslocamento exige que o técnico CHEGUE ao site — aqui ele nem saiu do CM.')">Apenas Deslocamento</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'correct','Correto. A energia normalizou antes de o técnico sair do CM, então o gerador não foi necessário. Classificação: GMG Não Utilizado.')">GMG Não Utilizado — energia voltou antes de o técnico sair do CM</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','GMG Instalado exige acoplamento efetivo no site. Aqui o técnico nem chegou ao local.')">GMG Instalado</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','O evento ocorreu — apenas a energia voltou antes da saída. É preciso classificar e registrar corretamente.')">Cancelar o despacho e não registrar — não houve atendimento</button>
+    </div>
+    <div class="quiz-result" id="qr-6"></div>
+  </div>
+
+  <div class="quiz-section sr">
+    <div class="quiz-q">Um ticket de energia está com SLA prestes a vencer. O técnico ainda não chegou ao site. Qual é a ação imediata do CCI?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','Fechar o ticket mascara o problema e pode gerar multa contratual. Nunca encerre ticket sem resolução da falha.')">Fechar o ticket para evitar que o SLA expire como "não atendido"</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','Alterar o prazo unilateralmente não é permitido. O prazo é contratual e qualquer prorrogação segue processo formal.')">Alterar o prazo do ticket no sistema para ganhar mais tempo</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'correct','Correto. Acionar o técnico mais próximo disponível, registrar todas as ações com timestamp no ticket e notificar a Célula CCI para avaliação de abono.')">Acionar técnico mais próximo, registrar no ticket e notificar a Célula CCI</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','Aguardar nunca é opção quando o SLA está em risco. A ação deve ser imediata e registrada.')">Aguardar — o técnico já foi despachado e a responsabilidade passou para ele</button>
+    </div>
+    <div class="quiz-result" id="qr-7"></div>
+  </div>
+
+  <div class="quiz-section sr">
+    <div class="quiz-q">O técnico A atendeu um site por 5h e foi substituído pelo técnico B, que continuou por mais 3h. Como deve ser registrado?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','Uma única CA do técnico A omite informações obrigatórias do técnico B, como hora de chegada, saída e ações realizadas.')">Uma CA do técnico A cobrindo todo o período</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'correct','Correto. Cada técnico deve emitir sua própria CA cobrindo apenas o período em que esteve no site, com dados individuais de chegada, saída e ações.')">Uma CA para cada técnico, cada um cobrindo seu período</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','A CA é individual e por período de atendimento. Uma CA única do técnico B omite o histórico do técnico A.')">Uma única CA do técnico B ao final do atendimento</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','A CA é documento obrigatório e deve ser emitida mesmo em atendimentos de curta duração. Não há exceção por tempo.')">Nenhuma CA — o atendimento foi dividido e não completou o turno mínimo</button>
+    </div>
+    <div class="quiz-result" id="qr-8"></div>
+  </div>
+
+  <div class="quiz-section sr">
+    <div class="quiz-q">Um site está com o gerador há 30 horas contínuas. Além do carimbo a cada 2h, o que mais é obrigatório?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','O relatório diário é necessário, mas não é o único requisito. Após 24h há obrigações adicionais de combustível e verificação técnica.')">Enviar apenas o relatório diário de acompanhamento</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','Desacoplar não resolve — se a energia ainda não voltou, o gerador deve continuar. A ação correta é verificar o abastecimento e acionar suporte técnico se necessário.')">Desacoplar o gerador e aguardar normalização da energia comercial</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'correct','Correto. Após 24h, é obrigatório verificar o nível de combustível, garantir abastecimento se necessário, e acionar suporte técnico para avaliação da continuidade segura.')">Verificar combustível, garantir abastecimento e acionar suporte técnico para avaliação</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','Escalonar sozinho não é suficiente. Manter os carimbos, verificar combustível e acionar suporte são ações simultâneas e obrigatórias.')">Escalonar para a equipe de manutenção e encerrar o acompanhamento do CCI</button>
+    </div>
+    <div class="quiz-result" id="qr-9"></div>
+  </div>
+
+  <div class="quiz-section sr">
+    <div class="quiz-q">Um atendimento de GMG foi concluído com sucesso mas o ticket foi encerrado sem CA do técnico. O que deve acontecer?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','Encerrar sem CA é irregular. O ticket deve ser reaberto e a CA exigida — a ausência do documento pode bloquear o pagamento.')">Manter o ticket encerrado — a CA é opcional se o site voltou ao normal</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'correct','Correto. O ticket deve ser reaberto, a CA exigida do técnico e o registro completado antes do fechamento definitivo. CA é documento obrigatório.')">Reabrir o ticket, exigir a CA do técnico e completar o registro</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','O CCI não emite CA em lugar do técnico. A CA deve ser gerada pelo profissional que esteve no campo.')">O CCI emite uma CA retroativa para regularizar o ticket</button>
+      <button class="quiz-opt" onclick="quizCheck(this,'wrong','A ausência de CA pode bloquear o pagamento do atendimento. A irregularidade deve ser corrigida imediatamente pelo CCI.')">Aguardar o próximo mês para regularizar no fechamento de apuração</button>
+    </div>
+    <div class="quiz-result" id="qr-10"></div>
+  </div>
+
 </div>
 
 <hr class="div-chapter">

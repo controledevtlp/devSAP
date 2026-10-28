@@ -5,9 +5,8 @@
 <style>
 :root{
   --bg:#06090F; --surf:#0D1525; --surf2:#121E35;
-  --border:rgba(150,180,230,.08); --text:#D4DFF0; --muted:#6B7D96;
-  --accent:#C85210; --orange:#E05E14; --yellow:#F5A020;
-  --green:#22C55E; --blue:#3B82F6; --purple:#A855F7;
+  --border:rgba(150,180,230,.10); --text:#D4DFF0; --muted:#6B7D96;
+  --accent:#C85210; --orange:#E05E14;
   --r:12px; color-scheme:dark;
 }
 @media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
@@ -29,7 +28,7 @@ img{max-width:100%;border-radius:8px}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
 
 /* PROGRESS BAR */
-#prog-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--accent),var(--yellow));z-index:200;transition:width .2s}
+#prog-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:var(--accent);z-index:200;transition:width .2s}
 
 /* HEADER */
 .tut-hdr{
@@ -76,7 +75,7 @@ img{max-width:100%;border-radius:8px}
 .pulse{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease infinite}
 @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.4}}
 .hero-title{font-family:'Sora',sans-serif;font-size:clamp(2.2rem,6vw,4rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:20px;text-wrap:balance}
-.hero-title em{font-style:normal;background:linear-gradient(135deg,var(--accent),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-title em{font-style:normal;color:var(--accent)}
 .hero-sub{font-size:1.05rem;color:var(--muted);max-width:520px;margin-bottom:40px;line-height:1.75}
 .hero-start{
   display:inline-flex;align-items:center;gap:10px;
@@ -117,11 +116,11 @@ img{max-width:100%;border-radius:8px}
   display:flex;gap:14px;align-items:flex-start;
   margin:24px 0;font-size:.92rem;line-height:1.7;
 }
-.callout.info{background:rgba(59,130,246,.1);border-left:3px solid var(--blue)}
-.callout.tip{background:rgba(34,197,94,.1);border-left:3px solid var(--green)}
-.callout.warn{background:rgba(200,82,16,.1);border-left:3px solid var(--accent)}
-.callout.fun{background:rgba(168,85,247,.1);border-left:3px solid var(--purple)}
-.callout-ico{font-size:1.3rem;flex-shrink:0;margin-top:1px}
+.callout.info{background:rgba(150,180,230,.07);border-left:3px solid rgba(150,180,230,.35)}
+.callout.tip{background:rgba(150,180,230,.07);border-left:3px solid rgba(150,180,230,.35)}
+.callout.warn{background:rgba(200,82,16,.08);border-left:3px solid var(--accent)}
+.callout.fun{background:rgba(150,180,230,.07);border-left:3px solid rgba(150,180,230,.35)}
+.callout-ico{font-size:.95rem;font-weight:700;flex-shrink:0;margin-top:2px;color:var(--accent);opacity:.9;min-width:16px;text-align:center}
 .callout p{margin:0;color:var(--muted)}
 .callout p strong{color:var(--text)}
 
@@ -176,7 +175,7 @@ img{max-width:100%;border-radius:8px}
   transition:all .2s;text-align:left;font-family:'Inter',sans-serif;
 }
 .quiz-opt:hover{color:var(--text);border-color:var(--muted)}
-.quiz-opt.correct{background:rgba(34,197,94,.12);border-color:var(--green);color:var(--green)}
+.quiz-opt.correct{background:rgba(34,197,94,.12);border-color:#22C55E;color:#22C55E}
 .quiz-opt.wrong{background:rgba(220,50,50,.12);border-color:#DC3232;color:#F87171}
 .quiz-result{margin-top:12px;font-size:.88rem;font-weight:600;min-height:24px}
 
@@ -191,7 +190,6 @@ img{max-width:100%;border-radius:8px}
 }
 .finish-screen h2{font-family:'Sora',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;margin-bottom:16px}
 .finish-screen p{color:var(--muted);max-width:480px;font-size:.97rem;line-height:1.8;margin-bottom:32px}
-.confetti-row{font-size:2.5rem;margin-bottom:24px;animation:float 2s ease-in-out infinite}
 
 /* SCROLL REVEAL */
 .sr{opacity:0;transform:translateY(40px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
@@ -238,6 +236,7 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
 <!-- HEADER -->
 <header class="tut-hdr">
   <div class="hdr-logo">
+    <a href="index.html" style="display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--border);border-radius:7px;background:var(--surf);transition:color .2s" title="Voltar ao portal">&#8592; Portal</a>
     <svg viewBox="0 0 64 26" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs><linearGradient id="hg" x1="0" y1="26" x2="64" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#C84A08"/><stop offset=".55" stop-color="#E05E14"/><stop offset="1" stop-color="#F5A020"/></linearGradient></defs>
       <rect width="64" height="26" rx="4" fill="url(#hg)"/>
@@ -600,10 +599,10 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
   <p class="sr">Você já ouviu falar em 4G, 5G... mas o que significa cada um desses números? Vamos explorar essa linha do tempo. <strong>Clique em cada geração</strong> para ver os detalhes!</p>
 
 <div class="stats-row sr">
-    <div class="stat-card"><div class="stat-n" style="color:var(--blue)">5</div><div class="stat-l">Gerações</div></div>
+    <div class="stat-card"><div class="stat-n">5</div><div class="stat-l">Gerações</div></div>
     <div class="stat-card"><div class="stat-n" style="color:var(--orange)">40+</div><div class="stat-l">Anos de evolução</div></div>
-    <div class="stat-card"><div class="stat-n" style="color:var(--green)">20 Gbps</div><div class="stat-l">Velocidade 5G</div></div>
-    <div class="stat-card"><div class="stat-n" style="color:var(--purple)">&lt;1ms</div><div class="stat-l">Latência 5G</div></div>
+    <div class="stat-card"><div class="stat-n">20 Gbps</div><div class="stat-l">Velocidade 5G</div></div>
+    <div class="stat-card"><div class="stat-n">&lt;1ms</div><div class="stat-l">Latência 5G</div></div>
   </div>
 
   <div class="callout warn sr">
@@ -967,11 +966,11 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
   <p class="sr">Agora que você entendeu os conceitos básicos, vamos ao fluxo real do trabalho:</p>
 
   <div style="display:flex;flex-direction:column;gap:14px;margin:24px 0">
-    <div class="callout info sr" style="border-left-color:var(--blue)">
+    <div class="callout info sr">
       <span class="callout-ico" style="background:rgba(59,130,246,.15);width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</span>
       <div><p><strong>Monitoramento contínuo</strong><br>Você acompanha as ferramentas de alarme em tempo real, verificando quedas de sites, alertas de energia, falhas de transmissão e backlog.</p></div>
     </div>
-    <div class="callout tip sr" style="border-left-color:var(--green)">
+    <div class="callout tip sr">
       <span class="callout-ico" style="background:rgba(34,197,94,.15);width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</span>
       <div><p><strong>Identificação e classificação</strong><br>Ao detectar uma falha, você identifica qual site caiu, qual a causa provável, se é ou não um concentrador, e qual a prioridade (P1 a P5).</p></div>
     </div>
@@ -979,7 +978,7 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
       <span class="callout-ico" style="background:rgba(200,82,16,.15);width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</span>
       <div><p><strong>Acionamento dentro do prazo (20% do SLA)</strong><br>Você aciona o técnico de campo no tempo certo. Lembra da regra dos 20%? Para um P1 de 4h, você tem apenas 48 minutos para acionar.</p></div>
     </div>
-    <div class="callout fun sr" style="border-left-color:var(--purple)">
+    <div class="callout fun sr">
       <span class="callout-ico" style="background:rgba(168,85,247,.15);width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</span>
       <div><p><strong>Acompanhamento e encerramento</strong><br>Você monitora o técnico em campo, registra os marcos no sistema e garante que o ticket seja encerrado corretamente com todas as evidências.</p></div>
     </div>
@@ -1003,7 +1002,7 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
   <p class="sr">Agora que você já entendeu o que é um site, como eles falham e qual é o fluxo geral, vamos falar sobre o <strong>seu papel específico</strong> dentro do CCI.</p>
   <p class="sr">O trabalho do Assistente de Monitoramento se resume em <strong>3 verbos</strong>:</p>
 
-  <div class="callout info sr" style="border-left-color:var(--blue)">
+  <div class="callout info sr">
     <span class="callout-ico" style="font-size:1.7rem;flex-shrink:0"><i class="ph ph-eye"></i></span>
     <div>
       <p style="font-size:1.05rem;font-weight:700;margin-bottom:10px">1 · MONITORAR</p>
@@ -1031,7 +1030,7 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
     </div>
   </div>
 
-  <div class="callout fun sr" style="margin-top:14px;border-left-color:var(--green)">
+  <div class="callout fun sr" style="margin-top:14px">
     <span class="callout-ico" style="font-size:1.7rem;flex-shrink:0"><i class="ph ph-check-circle"></i></span>
     <div>
       <p style="font-size:1.05rem;font-weight:700;margin-bottom:10px">3 · VALIDAR</p>
@@ -1061,52 +1060,52 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
   <h2 class="sr">As <em>ferramentas</em> do dia a dia</h2>
   <p class="sr">No CCI você vai trabalhar com várias ferramentas ao mesmo tempo. No início pode parecer muita coisa, mas calma — com o tempo você pega o ritmo. Aqui vai uma explicação simples de cada uma:</p>
 
-  <p class="sr" style="margin-bottom:12px;font-weight:700;font-size:.9rem;letter-spacing:.06em;text-transform:uppercase;color:var(--blue)">🔵 Ferramentas do cliente (TIM)</p>
+  <p class="sr" style="margin-bottom:12px;font-weight:700;font-size:.9rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)"><i class="ph ph-device-tablet"></i> Ferramentas do cliente (TIM)</p>
 
   <div style="display:flex;flex-direction:column;gap:10px">
-    <div class="callout info sr" style="border-left-color:var(--blue)">
+    <div class="callout info sr">
       <span class="callout-ico"><i class="ph ph-ticket"></i></span>
       <div>
         <p><strong>Smart Service (ServiceNow)</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">É onde ficam todos os <strong>tickets de manutenção</strong>. Pensa nele como o "Trello da operação" — cada chamado vira um ticket aqui, com status, responsável e prazo.</p>
       </div>
     </div>
-    <div class="callout info sr" style="border-left-color:var(--blue)">
+    <div class="callout info sr">
       <span class="callout-ico"><i class="ph ph-hard-hat"></i></span>
       <div>
         <p><strong>TOA / WFM (Workforce Management)</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Controla a <strong>força de trabalho em campo</strong> — qual técnico está disponível, onde ele está, a rota e a jornada de trabalho. É o "GPS + agenda" dos técnicos.</p>
       </div>
     </div>
-    <div class="callout info sr" style="border-left-color:var(--blue)">
+    <div class="callout info sr">
       <span class="callout-ico"><i class="ph ph-circle-fill" style="color:#EF4444"></i></span>
       <div>
         <p><strong>Gênesis</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Ferramenta principal para acompanhar os <strong>sites fora em tempo real</strong>. Mostra data/hora da falha, tempo de indisponibilidade, classificação, cidade e ticket relacionado. É o "painel de controle" dos sites em queda.</p>
       </div>
     </div>
-    <div class="callout info sr" style="border-left-color:var(--blue)">
+    <div class="callout info sr">
       <span class="callout-ico"><i class="ph ph-chart-bar"></i></span>
       <div>
         <p><strong>Grafana</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Parecido com o Gênesis, mas mais focado em <strong>gráficos e dados históricos</strong>. Ótimo para visualizar tendências e acompanhar o comportamento da rede ao longo do tempo.</p>
       </div>
     </div>
-    <div class="callout info sr" style="border-left-color:var(--blue)">
+    <div class="callout info sr">
       <span class="callout-ico"><i class="ph ph-bell"></i></span>
       <div>
         <p><strong>Netcool</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Ferramenta de <strong>alarmes da rede</strong>. Detecta e mostra todos os problemas ativos. É integrado ao Smart Service — quando um alarme aparece, ele pode gerar um ticket automaticamente.</p>
       </div>
     </div>
-    <div class="callout info sr" style="border-left-color:var(--blue)">
+    <div class="callout info sr">
       <span class="callout-ico"><i class="ph ph-robot"></i></span>
       <div>
         <p><strong>TAIS (Chatbot)</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Assistente virtual que responde perguntas rápidas: alarmes, histórico de um site, endereço, backups. É como o "Google interno" da operação TIM — super útil no dia a dia.</p>
       </div>
     </div>
-    <div class="callout info sr" style="border-left-color:var(--blue)">
+    <div class="callout info sr">
       <span class="callout-ico"><i class="ph ph-trend-up"></i></span>
       <div>
         <p><strong>4FIELD</strong></p>
@@ -1115,24 +1114,24 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
     </div>
   </div>
 
-  <p class="sr" style="margin:28px 0 12px;font-weight:700;font-size:.9rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)">🟠 Ferramentas internas (TLP)</p>
+  <p class="sr" style="margin:28px 0 12px;font-weight:700;font-size:.9rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)"><i class="ph ph-wrench"></i> Ferramentas internas (TLP)</p>
 
   <div style="display:flex;flex-direction:column;gap:10px">
-    <div class="callout fun sr" style="border-left-color:var(--accent)">
+    <div class="callout fun sr">
       <span class="callout-ico"><i class="ph ph-monitor"></i></span>
       <div>
         <p><strong>Portal Monitora</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Ferramenta interna TLP que <strong>cruza dados do WFM/TOA com outras plataformas</strong>. Tem dashboard geral, filtros por frente de trabalho e acompanhamento de SLAs, reincidências e falhas críticas.</p>
       </div>
     </div>
-    <div class="callout fun sr" style="border-left-color:var(--accent)">
+    <div class="callout fun sr">
       <span class="callout-ico"><i class="ph ph-map-trifold"></i></span>
       <div>
         <p><strong>Portal Auto Tracking</strong></p>
         <p style="margin-top:4px;color:var(--muted);font-size:.88rem">Integrado ao Gênesis e WFM — monitora os sites fora e cruza com os tickets TLP. Permite fazer updates no Gênesis direto pelo portal e agrupar casos de massivas.</p>
       </div>
     </div>
-    <div class="callout fun sr" style="border-left-color:var(--accent)">
+    <div class="callout fun sr">
       <span class="callout-ico"><i class="ph ph-note-pencil"></i></span>
       <div>
         <p><strong>Portal SN2</strong></p>
@@ -1159,21 +1158,21 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
   <p class="sr">O trabalho no CCI nunca é solitário. Você vai interagir com várias áreas todos os dias — via <strong>WhatsApp, Microsoft Teams ou telefone</strong>. Saber quem faz o quê agiliza muito o atendimento.</p>
 
   <div style="display:flex;flex-direction:column;gap:12px;margin:24px 0">
-    <div class="callout info sr" style="border-left-color:var(--blue)">
+    <div class="callout info sr">
       <span class="callout-ico" style="flex-shrink:0"><i class="ph ph-broadcast"></i></span>
       <div>
         <p><strong>ISOC / DSOC — o NOC do cliente</strong></p>
         <p style="margin-top:5px;font-size:.88rem">São os analistas técnicos da TIM. Responsáveis pelas <strong>análises profundas, testes, troubleshootings e validações</strong> na rede. Quando a falha não tem causa óbvia, eles entram em ação.</p>
       </div>
     </div>
-    <div class="callout info sr" style="border-left-color:var(--blue)">
+    <div class="callout info sr">
       <span class="callout-ico" style="flex-shrink:0">🔗</span>
       <div>
         <p><strong>FIELD — área dentro do ISOC/DSOC</strong></p>
         <p style="margin-top:5px;font-size:.88rem">Responsáveis pelo <strong>tracking dos tickets prioritários</strong> e escalonamentos entre todas as áreas — internas TIM e parceiras como a TLP. Basicamente garantem que nada fique parado entre uma área e outra.</p>
       </div>
     </div>
-    <div class="callout info sr" style="border-left-color:var(--blue)">
+    <div class="callout info sr">
       <span class="callout-ico" style="flex-shrink:0"><i class="ph ph-bank"></i></span>
       <div>
         <p><strong>Layer — os gestores regionais TIM</strong></p>
@@ -1187,7 +1186,7 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
         <p style="margin-top:5px;font-size:.88rem">São os técnicos TLP que vão fisicamente até o site. Você vai interagir muito com eles para garantir que os atendimentos sejam feitos com qualidade e dentro do prazo contratual.</p>
       </div>
     </div>
-    <div class="callout fun sr" style="border-left-color:var(--purple)">
+    <div class="callout fun sr">
       <span class="callout-ico" style="flex-shrink:0">🔬</span>
       <div>
         <p><strong>Suporte N2 — equipe técnica interna do CCI</strong></p>
@@ -1266,11 +1265,13 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
 
 <!-- ═════ FINISH ═════ -->
 <div class="finish-screen" data-chap="12">
-  <div class="confetti-row"><i class="ph ph-confetti"></i></div>
-  <h2>Módulo <em style="background:linear-gradient(135deg,var(--accent),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">concluído!</em></h2>
+  <div style="font-size:1.8rem;margin-bottom:20px;color:var(--accent)">✓</div>
+  <h2>Módulo 1 <em style="color:var(--accent)">concluído!</em></h2>
   <p>Você já entende o básico do que faz a TLP. Nos próximos módulos vamos mergulhar nas ferramentas, nos sistemas e nos procedimentos do dia a dia.</p>
-  <button class="hero-start" onclick="scrollToChapter(0)">Rever do início <i class="ph ph-arrows-clockwise"></i></button>
-  <button class="hero-start" style="background:var(--surf);border:1px solid var(--border);color:var(--text);box-shadow:none;margin-top:12px" onclick="window.location.href='index.html'">← Voltar ao Menu</button>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:32px">
+    <button class="hero-start" onclick="window.location.href='index.html'">← Voltar ao Menu</button>
+    <button class="hero-start" style="background:var(--surf2);color:var(--muted);box-shadow:none" onclick="scrollToChapter(0)">Rever do início</button>
+  </div>
 </div>
 
 <script>
@@ -1356,7 +1357,7 @@ function answer(btn,qId,correct){
   if(sec.querySelector('.correct')||sec.querySelector('.wrong')) return;
   btn.classList.add(correct?'correct':'wrong');
   document.getElementById(qId+'-res').innerHTML = correct
-    ? '<span style="color:var(--green)"><i class="ph ph-check-circle"></i> Correto! Muito bem!</span>'
+    ? '<span><i class="ph ph-check-circle"></i> Correto! Muito bem!</span>'
     : '<span style="color:#F87171"><i class="ph ph-x-circle"></i> Não dessa vez. Veja os outros módulos!</span>';
   if(!correct){
     sec.querySelectorAll('.quiz-opt').forEach(o=>{

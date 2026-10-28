@@ -95,7 +95,7 @@ img{max-width:100%;border-radius:8px}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
 /* CHAPTERS */
-.chapter{max-width:860px;margin:0 auto;padding:80px 24px}
+.chapter{max-width:860px;margin:0 auto;padding:52px 24px}
 .chapter-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .eyebrow-num{
   width:28px;height:28px;border-radius:8px;
@@ -206,7 +206,7 @@ img{max-width:100%;border-radius:8px}
 @media(max-width:640px){
   .tut-hdr{padding:12px 18px}
   .hdr-logo-tag{display:none}
-  .chapter{padding:56px 18px}
+  .chapter{padding:40px 18px}
   .tech-btns{gap:6px}
   .gen-btn{padding:6px 12px;font-size:.76rem}
   .hero-emoji-row{gap:14px;font-size:1.6rem}
@@ -1560,4 +1560,24 @@ document.addEventListener('keydown',function(e){
   if(e.key==='Escape'&&document.getElementById('adm-overlay').classList.contains('open'))admClose();
 });
 })();
+</script>
+
+<!-- LIGHTBOX FERRAMENTAS -->
+<div id="tlp-lb" onclick="document.getElementById('tlp-lb').style.display='none'" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.90);z-index:9999;align-items:center;justify-content:center;padding:16px;cursor:zoom-out">
+  <figure style="margin:0;max-width:92vw;max-height:92vh;display:flex;flex-direction:column;align-items:center;gap:10px" onclick="event.stopPropagation()">
+    <button onclick="document.getElementById('tlp-lb').style.display='none'" style="align-self:flex-end;background:rgba(150,180,230,.1);border:1px solid rgba(150,180,230,.25);color:rgba(200,220,255,.7);border-radius:5px;padding:4px 12px;cursor:pointer;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;font-weight:600">Fechar ✕</button>
+    <img id="tlp-lb-img" src="" alt="" style="max-width:100%;max-height:78vh;border-radius:8px;box-shadow:0 8px 48px rgba(0,0,0,.8);object-fit:contain">
+    <figcaption id="tlp-lb-cap" style="color:rgba(200,220,255,.5);font-size:.76rem;letter-spacing:.05em;text-align:center;text-transform:uppercase"></figcaption>
+  </figure>
+</div>
+<script>
+function openToolImg(src,cap){
+  var lb=document.getElementById('tlp-lb');
+  document.getElementById('tlp-lb-img').src=src;
+  document.getElementById('tlp-lb-cap').textContent=cap;
+  lb.style.display='flex';
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){document.getElementById('tlp-lb').style.display='none';}
+});
 </script>

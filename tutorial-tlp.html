@@ -192,9 +192,11 @@ img{max-width:100%;border-radius:8px}
 .finish-screen p{color:var(--muted);max-width:480px;font-size:.97rem;line-height:1.8;margin-bottom:32px}
 
 /* SCROLL REVEAL */
-.sr{opacity:0;transform:translateY(40px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
-.sr-left{opacity:0;transform:translateX(-40px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+.sr{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.sr-left{opacity:0;transform:translateX(-28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
 .sr.in,.sr-left.in{opacity:1;transform:none}
+.chapter h2.sr{transform:translateY(20px);filter:blur(4px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1),filter .6s ease}
+.chapter h2.sr.in{transform:none!important;filter:none}
 
 /* STATS ROW */
 .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:28px 0}
@@ -231,6 +233,56 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
 
 /* Callouts dentro de flex-direction:column: margin gerenciado pelo gap do container */
 [style*="flex-direction:column"] > .callout{margin:0}
+
+/* ════ HERO SCREEN UPGRADE ════════════════════════════════════════════════ */
+.hero-screen { position:relative; overflow:hidden; }
+
+.hero-grid-bg {
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(150,180,230,.032) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(150,180,230,.032) 1px,transparent 1px);
+  background-size:60px 60px;
+  will-change:transform;
+}
+.hero-glow-bg {
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 75% 65% at 65% 30%,rgba(200,82,16,.058),transparent 70%);
+}
+.hero-badge,.hero-title,.hero-sub { position:relative;z-index:1; }
+.hero-screen .hero-start         { position:relative;z-index:1; }
+
+/* word-up reveal */
+.hero-line { display:block; overflow:hidden; padding-bottom:.05em; }
+.hero-word {
+  display:inline-block;
+  transform:translateY(108%) skewY(3deg);
+  opacity:0;
+  animation:hwUp .92s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes hwUp { to { transform:translateY(0) skewY(0deg); opacity:1; } }
+
+/* sub + button fade-in on load */
+.hero-screen .hero-sub   { opacity:0; animation:hsFade .65s .72s cubic-bezier(.16,1,.3,1) forwards; }
+.hero-screen .hero-start { opacity:0; animation:hsFade .65s .94s cubic-bezier(.16,1,.3,1) forwards; }
+@keyframes hsFade {
+  from { opacity:0; transform:translateY(14px); }
+  to   { opacity:1; transform:none; }
+}
+
+/* badge pulse orange */
+.hero-badge .pulse {
+  background:var(--accent) !important;
+  box-shadow:0 0 8px var(--accent) !important;
+  animation:accPulse 2.2s ease infinite !important;
+}
+@keyframes accPulse {
+  0%,100% { opacity:1; box-shadow:0 0 8px var(--accent); }
+  50%      { opacity:.18; box-shadow:0 0 2px transparent; }
+}
+
+/* ════ SR REFINEMENT ═══════════════════════════════════════════════════════ */
+/* smoother easing + smaller Y offset for body text */
 </style>
 
 <div id="prog-bar"></div>
@@ -255,11 +307,13 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
 
 <!-- ═════ HERO ═════ -->
 <section class="hero-screen" data-chap="0">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow-bg"></div>
   <div class="hero-badge"><span class="pulse"></span>Módulo 1 · Básico</div>
-  <div class="hero-emoji-row">
-    <span></span><span></span><span></span><span></span>
-  </div>
-  <h1 class="hero-title">Bem-vindo ao<br>Treinamento <em>Básico TLP!</em></h1>
+  <h1 class="hero-title">
+    <span class="hero-line"><span class="hero-word" style="animation-delay:.20s">Bem-vindo ao</span></span>
+    <span class="hero-line"><span class="hero-word" style="animation-delay:.38s">Treinamento <em>Básico TLP!</em></span></span>
+  </h1>
   <p class="hero-sub">Aqui você vai entender, do zero, como funciona o trabalho que move a conectividade de milhões de pessoas. Simples, direto e sem complicação.</p>
   <button class="hero-start" onclick="scrollToChapter(1)">Vamos começar! </button>
 </section>

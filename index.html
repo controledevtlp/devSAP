@@ -590,14 +590,29 @@ footer {
 }
 
 /* ════ HERO ENHANCEMENTS ═══════════════════════ */
-.hero { position:relative; overflow:hidden; }
+.hero {
+  position:relative; overflow:hidden;
+  max-width:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  border-bottom:1px solid var(--border);
+}
+.hero-content {
+  max-width:1300px;
+  margin:0 auto;
+  padding:64px 52px 44px;
+  position:relative;
+  z-index:1;
+}
 
 .hero-grid-bg {
   position:absolute;inset:0;z-index:0;pointer-events:none;
   background-image:
-    linear-gradient(var(--border) 1px,transparent 1px),
-    linear-gradient(90deg,var(--border) 1px,transparent 1px);
-  background-size:60px 60px;
+    linear-gradient(rgba(150,180,230,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(150,180,230,.045) 1px,transparent 1px);
+  background-size:72px 72px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 85% at 50% 0%, black 0%, rgba(0,0,0,.55) 50%, transparent 85%);
+  mask-image:radial-gradient(ellipse 70% 85% at 50% 0%, black 0%, rgba(0,0,0,.55) 50%, transparent 85%);
   will-change:transform;
 }
 :root[data-theme="light"] .hero-grid-bg { opacity:.3; }
@@ -605,11 +620,11 @@ footer {
 .hero-glow-bg {
   position:absolute;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(ellipse 65% 70% at 90% 20%,rgba(200,82,16,.055),transparent 70%),
-    radial-gradient(ellipse 40% 50% at 10% 90%,rgba(20,88,168,.04),transparent 60%);
+    linear-gradient(135deg, rgba(200,82,16,.05) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 65% at 72% 35%, rgba(200,82,16,.06), transparent 65%);
 }
 
-.hero-badge,.hero h1,.hero p,.hero-sub { position:relative;z-index:1; }
+.hero-badge,.hero h1,.hero p,.hero-sub { position:relative; }
 
 /* word-up reveal */
 .hero-line { display:block; overflow:hidden; padding-bottom:.04em; line-height:1.15; }
@@ -728,13 +743,15 @@ footer {
   <section class="hero">
     <div class="hero-grid-bg" id="homeGrid"></div>
     <div class="hero-glow-bg"></div>
-    <div class="hero-badge"><span class="badge-dot-acc"></span>Sistema de Apoio Profissional — TLP</div>
-    <h1 class="kinetic">
-      <span class="hero-line"><span class="hero-word" style="animation-delay:.18s">Portal de</span></span>
-      <span class="hero-line"><span class="hero-word" style="animation-delay:.36s"><em>Procedimentos</em></span></span>
-      <span class="hero-line"><span class="hero-word" style="animation-delay:.54s"><em>Operacionais</em></span></span>
-    </h1>
-    <p class="hero-sub">Documentação técnica, treinamentos e manuais de campo para os colaboradores TLP. Selecione o setor para acessar os conteúdos disponíveis.</p>
+    <div class="hero-content">
+      <div class="hero-badge"><span class="badge-dot-acc"></span>Sistema de Apoio Profissional — TLP</div>
+      <h1 class="kinetic">
+        <span class="hero-line"><span class="hero-word" style="animation-delay:.18s">Portal de</span></span>
+        <span class="hero-line"><span class="hero-word" style="animation-delay:.36s"><em>Procedimentos</em></span></span>
+        <span class="hero-line"><span class="hero-word" style="animation-delay:.54s"><em>Operacionais</em></span></span>
+      </h1>
+      <p class="hero-sub">Documentação técnica, treinamentos e manuais de campo para os colaboradores TLP. Selecione o setor para acessar os conteúdos disponíveis.</p>
+    </div>
   </section>
 
 

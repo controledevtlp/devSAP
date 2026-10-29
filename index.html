@@ -588,6 +588,115 @@ footer {
   padding: 8px 12px 10px;
   letter-spacing: .03em;
 }
+
+/* ════ HERO ENHANCEMENTS ═══════════════════════ */
+.hero { position:relative; overflow:hidden; }
+
+.hero-grid-bg {
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--border) 1px,transparent 1px),
+    linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:60px 60px;
+  will-change:transform;
+}
+:root[data-theme="light"] .hero-grid-bg { opacity:.3; }
+
+.hero-glow-bg {
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 65% 70% at 90% 20%,rgba(200,82,16,.055),transparent 70%),
+    radial-gradient(ellipse 40% 50% at 10% 90%,rgba(20,88,168,.04),transparent 60%);
+}
+
+.hero-badge,.hero h1,.hero p,.hero-sub { position:relative;z-index:1; }
+
+/* word-up reveal */
+.hero-line { display:block; overflow:hidden; padding-bottom:.04em; line-height:1.15; }
+.hero-word {
+  display:inline-block;
+  transform:translateY(110%) skewY(3deg);
+  opacity:0;
+  animation:heroWordUp .95s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes heroWordUp { to { transform:translateY(0) skewY(0deg); opacity:1; } }
+
+/* bigger bolder hero */
+.hero h1.kinetic {
+  font-size:clamp(2rem,4vw,3.4rem);
+  line-height:1;
+  letter-spacing:-.03em;
+  margin-bottom:18px;
+  text-transform:uppercase;
+}
+.hero h1.kinetic em {
+  font-style:normal;
+  color:var(--accent);
+  filter:drop-shadow(0 0 24px rgba(200,82,16,.22));
+}
+
+/* badge pulse orange */
+.badge-dot-acc {
+  width:5px;height:5px;border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 8px var(--accent);
+  animation:bdPulse 2s ease infinite;
+  flex-shrink:0;
+}
+@keyframes bdPulse {
+  0%,100% { opacity:1; box-shadow:0 0 8px var(--accent); }
+  50%      { opacity:.2; box-shadow:0 0 2px transparent; }
+}
+
+/* badge + sub fade-in */
+.hero-badge { opacity:0; animation:hFadeUp .65s .08s cubic-bezier(.16,1,.3,1) forwards; }
+.hero-sub   { opacity:0; animation:hFadeUp .65s .82s cubic-bezier(.16,1,.3,1) forwards; }
+@keyframes hFadeUp {
+  from { opacity:0; transform:translateY(14px); }
+  to   { opacity:1; transform:none; }
+}
+
+/* ════ TICKER ═══════════════════════════════════ */
+.home-ticker {
+  overflow:hidden;padding:13px 0;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:rgba(200,82,16,.03);
+}
+:root[data-theme="light"] .home-ticker { background:rgba(200,82,16,.05); }
+.home-ticker-track {
+  display:flex;width:max-content;
+  animation:homeTicker 26s linear infinite;
+}
+@keyframes homeTicker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.home-ticker-item {
+  white-space:nowrap;padding:0 44px;flex-shrink:0;
+  font-family:'Sora',sans-serif;
+  font-size:.67rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);
+  display:flex;align-items:center;gap:36px;
+}
+.home-ticker-sep {
+  width:3px;height:3px;border-radius:50%;
+  background:var(--accent);opacity:.65;flex-shrink:0;
+}
+
+/* ════ CARDS ENHANCEMENTS ═══════════════════════ */
+.sector-card {
+  transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,border-color .3s;
+}
+.sector-card.cci:hover {
+  transform:translateY(-5px);
+  box-shadow:0 16px 48px rgba(20,88,168,.16), 0 0 0 1px rgba(20,88,168,.28);
+  border-color:rgba(20,88,168,.35);
+}
+.sector-card.campo:hover {
+  transform:translateY(-5px);
+  box-shadow:0 16px 48px rgba(22,94,52,.16), 0 0 0 1px rgba(22,94,52,.32);
+  border-color:rgba(22,94,52,.35);
+}
+.sector-card:nth-child(1) { animation-delay:.04s; }
+.sector-card:nth-child(2) { animation-delay:.16s; }
 </style>
 
 <!-- ═══════════════════ HEADER ═══════════════════ -->
@@ -617,11 +726,25 @@ footer {
 <!-- ═══════════════════ VIEW: HOME ═══════════════════ -->
 <div class="view active" id="v-home">
   <section class="hero">
-    <div class="hero-badge"><span class="badge-dot"></span>Sistema de Apoio Profissional — TLP</div>
-    <h1>Portal de <em>Procedimentos Operacionais</em></h1>
-    <p>Documentação técnica, treinamentos e manuais de campo para os colaboradores TLP. Selecione o setor para acessar os conteúdos disponíveis.</p>
+    <div class="hero-grid-bg" id="homeGrid"></div>
+    <div class="hero-glow-bg"></div>
+    <div class="hero-badge"><span class="badge-dot-acc"></span>Sistema de Apoio Profissional — TLP</div>
+    <h1 class="kinetic">
+      <span class="hero-line"><span class="hero-word" style="animation-delay:.18s">Portal de</span></span>
+      <span class="hero-line"><span class="hero-word" style="animation-delay:.36s"><em>Procedimentos</em></span></span>
+      <span class="hero-line"><span class="hero-word" style="animation-delay:.54s"><em>Operacionais</em></span></span>
+    </h1>
+    <p class="hero-sub">Documentação técnica, treinamentos e manuais de campo para os colaboradores TLP. Selecione o setor para acessar os conteúdos disponíveis.</p>
   </section>
 
+
+  <!-- TICKER -->
+  <div class="home-ticker" aria-hidden="true">
+    <div class="home-ticker-track">
+      <div class="home-ticker-item">TIM <span class="home-ticker-sep"></span> ATC <span class="home-ticker-sep"></span> CLARO <span class="home-ticker-sep"></span> MONITORAMENTO 24H <span class="home-ticker-sep"></span> ESCALAMENTO RÁPIDO <span class="home-ticker-sep"></span> SLA EM DIA <span class="home-ticker-sep"></span> CCI TLP <span class="home-ticker-sep"></span> RIO DE JANEIRO <span class="home-ticker-sep"></span> MINAS GERAIS <span class="home-ticker-sep"></span> NORDESTE <span class="home-ticker-sep"></span></div>
+      <div class="home-ticker-item">TIM <span class="home-ticker-sep"></span> ATC <span class="home-ticker-sep"></span> CLARO <span class="home-ticker-sep"></span> MONITORAMENTO 24H <span class="home-ticker-sep"></span> ESCALAMENTO RÁPIDO <span class="home-ticker-sep"></span> SLA EM DIA <span class="home-ticker-sep"></span> CCI TLP <span class="home-ticker-sep"></span> RIO DE JANEIRO <span class="home-ticker-sep"></span> MINAS GERAIS <span class="home-ticker-sep"></span> NORDESTE <span class="home-ticker-sep"></span></div>
+    </div>
+  </div>
   <div class="cards-wrap">
     <p class="section-eyebrow">Setores disponíveis</p>
     <div class="cards-grid">
@@ -1568,4 +1691,21 @@ document.querySelectorAll('.sector-card, .manual-card').forEach(card => {
   card.addEventListener('click', () => setTimeout(initSR, 80));
 });
 setTimeout(initSR, 80);
+
+// Parallax hero grid
+(function() {
+  var grid = document.getElementById('homeGrid');
+  if (!grid) return;
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        if (grid) grid.style.transform = 'translateY(' + (window.scrollY * 0.22) + 'px)';
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, {passive:true});
+})();
+
 </script>

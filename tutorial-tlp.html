@@ -27,8 +27,6 @@ img{max-width:100%;border-radius:8px}
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
 
-/* PROGRESS BAR */
-#prog-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:var(--accent);z-index:200;transition:width .2s}
 
 /* HEADER */
 .tut-hdr{
@@ -51,9 +49,9 @@ img{max-width:100%;border-radius:8px}
 
 /* CHAPTERS NAV */
 .chapters{display:flex;gap:6px;align-items:center}
-.chap-dot{width:8px;height:8px;border-radius:50%;background:var(--border);cursor:pointer;transition:background .2s,transform .2s;flex-shrink:0}
-.chap-dot.done{background:var(--accent);opacity:.6}
-.chap-dot.active{background:var(--accent);transform:scale(1.4)}
+.chap-dot{width:8px;height:8px;border-radius:50%;background:rgba(150,180,230,.18);cursor:pointer;transition:background .25s,transform .25s,opacity .25s;flex-shrink:0}
+.chap-dot.done{background:var(--accent);opacity:.5}
+.chap-dot.active{background:var(--accent);transform:scale(1.5);opacity:1}
 
 /* HERO */
 .hero-screen{
@@ -286,8 +284,6 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
 /* ════ SR REFINEMENT ═══════════════════════════════════════════════════════ */
 /* smoother easing + smaller Y offset for body text */
 </style>
-
-<div id="prog-bar"></div>
 
 <!-- HEADER -->
 <header class="tut-hdr">
@@ -1351,13 +1347,6 @@ const IMG_TECH = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABMIAAAJiCAYAAAAl
 // Replace img src with actual base64 (done at generation time)
 
 // PROGRESS BAR
-const pb = document.getElementById('prog-bar');
-function updateProgress(){
-  const pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-  pb.style.width = Math.min(pct,100)+'%';
-}
-window.addEventListener('scroll', updateProgress);
-
 // SCROLL REVEAL
 const srObs = new IntersectionObserver(entries=>{
   entries.forEach(e=>{ e.target.classList.toggle('in',e.isIntersecting); });
@@ -1435,15 +1424,23 @@ function answer(btn,qId,correct){
 }
 
 // THEME
-let theme = (()=>{try{return localStorage.getItem('tlp-tut-theme')||'dark'}catch{return 'dark'}})();
-function applyTheme(t){
-  document.documentElement.setAttribute('data-theme',t);
-  document.getElementById('themeBtn')||null;
-  document.querySelectorAll('.theme-btn').forEach(b=>b.innerHTML=t==='dark'?'<i class="ph-sun"></i>':'<i class="ph-moon"></i>');
-  try{localStorage.setItem('tlp-tut-theme',t)}catch{}
-}
-function toggleTheme(){theme=theme==='dark'?'light':'dark';applyTheme(theme);}
-applyTheme(theme);
+(function(){
+  function applyTheme(t){
+    var r=document.documentElement;
+    if(t==='light'){r.setAttribute('data-theme','light');}
+    else{r.setAttribute('data-theme','dark');}
+    document.querySelectorAll('.theme-btn').forEach(function(b){
+      b.innerHTML=t==='light'?'<i class="ph-moon"></i>':'<i class="ph-sun"></i>';
+    });
+    try{localStorage.setItem('tlp-tut-theme',t);}catch(e){}
+  }
+  var saved;try{saved=localStorage.getItem('tlp-tut-theme');}catch(e){}
+  applyTheme(saved==='light'?'light':'dark');
+  window.toggleTheme=function(){
+    var cur=document.documentElement.getAttribute('data-theme');
+    applyTheme(cur==='light'?'dark':'light');
+  };
+})();
 </script>
 
 <style>

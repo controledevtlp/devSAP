@@ -44,8 +44,10 @@ img{max-width:100%;border-radius:8px}
 .hdr-logo svg{width:64px;height:26px;flex-shrink:0}
 .hdr-logo-tag{font-size:.6rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);border-left:1px solid var(--border);padding-left:12px}
 .hdr-step{font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.06em}
-.theme-btn{width:32px;height:32px;border-radius:7px;border:1px solid var(--border);background:var(--surf);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.88rem;transition:color .2s}
-.theme-btn:hover{color:var(--text)}
+.theme-btn{width:32px;height:32px;border-radius:7px;border:1px solid rgba(150,180,230,.20);background:var(--surf2);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:color .2s,border-color .2s,background .2s}
+.theme-btn:hover{color:var(--text);border-color:rgba(150,180,230,.40)}
+:root[data-theme="light"] .theme-btn{border-color:rgba(20,40,100,.22);background:var(--surf2);color:var(--text)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .theme-btn{border-color:rgba(20,40,100,.22);background:var(--surf2);color:var(--text)}}
 
 /* CHAPTERS NAV */
 .chapters{display:flex;gap:6px;align-items:center}
@@ -301,7 +303,7 @@ h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q {
   <div class="chapters" id="chapDots"></div>
   <div style="display:flex;align-items:center;gap:12px">
     <span class="hdr-step" id="stepLabel">Início</span>
-    <button class="theme-btn" onclick="toggleTheme()"></button>
+    <button class="theme-btn" onclick="toggleTheme()" title="Alternar tema"><i class="ph-sun"></i></button>
   </div>
 </header>
 
@@ -1437,7 +1439,7 @@ let theme = (()=>{try{return localStorage.getItem('tlp-tut-theme')||'dark'}catch
 function applyTheme(t){
   document.documentElement.setAttribute('data-theme',t);
   document.getElementById('themeBtn')||null;
-  document.querySelectorAll('.theme-btn').forEach(b=>b.innerHTML=t==='dark'?'':'');
+  document.querySelectorAll('.theme-btn').forEach(b=>b.innerHTML=t==='dark'?'<i class="ph-sun"></i>':'<i class="ph-moon"></i>');
   try{localStorage.setItem('tlp-tut-theme',t)}catch{}
 }
 function toggleTheme(){theme=theme==='dark'?'light':'dark';applyTheme(theme);}

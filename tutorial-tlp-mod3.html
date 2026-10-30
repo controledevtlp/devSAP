@@ -42,6 +42,8 @@ img{max-width:100%;border-radius:8px}
 .hdr-step{font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.06em}
 .theme-btn{width:32px;height:32px;border-radius:7px;border:1px solid var(--border);background:var(--surf);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .2s;padding:0}
 .theme-btn:hover{color:var(--text)}
+:root[data-theme="light"] .theme-btn{border-color:rgba(20,40,100,.25);background:var(--surf2);color:var(--text)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .theme-btn{border-color:rgba(20,40,100,.25);background:var(--surf2);color:var(--text)}}
 .theme-btn svg{pointer-events:none}
 
 /* CHAPTERS NAV */

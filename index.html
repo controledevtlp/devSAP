@@ -546,6 +546,29 @@ footer {
 }
 
 /* ── RESPONSIVE ── */
+
+@media (max-width:640px) {
+  /* NAV */
+  .nav-btn{padding:5px 10px;font-size:.72rem;letter-spacing:0}
+  .hdr-nav{gap:2px}
+  /* HERO */
+  .hero{padding:28px 16px 20px}
+  .hero h1{font-size:clamp(1.7rem,8vw,2.4rem);letter-spacing:-.02em}
+  .hero p{max-width:100%;font-size:.92rem}
+  .hero-badge{font-size:.68rem;padding:4px 12px}
+  /* CARDS */
+  .cards-wrap{padding:20px 16px 48px}
+  .cards-grid{grid-template-columns:1fr}
+  .card-stats{gap:14px}
+  /* MANUAIS */
+  .manuals-section{padding:20px 16px 48px}
+  .manuals-grid{grid-template-columns:1fr}
+  /* PAGE HDR / CONTEUDO */
+  .page-hdr{padding:24px 16px 16px}
+  /* FOOTER */
+  footer{padding:12px 16px}
+  .footer-dev{padding:8px 16px}
+}
 @media (max-width:860px) {
   .hdr { padding:12px 20px; }
   .logo-tag { display:none; }

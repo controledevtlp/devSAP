@@ -49,7 +49,7 @@ img{max-width:100%;border-radius:8px}
 
 /* CHAPTERS NAV */
 .chapters{display:flex;gap:6px;align-items:center}
-.chap-dot{width:8px;height:8px;border-radius:50%;background:rgba(150,180,230,.18);cursor:pointer;transition:background .25s,transform .25s,opacity .25s;flex-shrink:0}
+.chap-dot{width:8px;height:8px;border-radius:50%;background:rgba(150,180,230,.18);border:none;padding:0;-webkit-appearance:none;appearance:none;cursor:pointer;transition:background .25s,transform .25s,opacity .25s;flex-shrink:0}
 .chap-dot.done{background:var(--accent);opacity:.5}
 .chap-dot.active{background:var(--accent);transform:scale(1.5);opacity:1}
 
@@ -1385,28 +1385,6 @@ const chapObs = new IntersectionObserver(entries=>{
 },{threshold:0.3});
 chapters.forEach(c=>chapObs.observe(c));
 
-// TECH ZOOM
-const genData = {
-  '1G':{x:0,y:0,scale:1.15,desc:'<strong>1G (1979–1990):</strong> A primeira geração! Apenas voz analógica. Era enorme, caro e com qualidade péssima de áudio. Mas foi o começo de tudo.'},
-  '2G':{x:-15,y:0,scale:1.25,desc:'<strong>2G (1990–2000):</strong> Chegou o SMS e os dados básicos! Padrões GSM, GPRS e EDGE. O primeiro celular que a maioria das pessoas teve na mão.'},
-  '3G':{x:-35,y:0,scale:1.35,desc:'<strong>3G (2001–2008):</strong> Internet no celular de verdade! Streaming de vídeo, navegação web, e a chegada dos smartphones modernos.'},
-  '4G':{x:-55,y:0,scale:1.4,desc:'<strong>4G – LTE (2011–hoje):</strong> A geração que mudou tudo. HD, videoconferência, apps em tempo real. Transmissão de dados acima de 1 Gbps.'},
-  '5G':{x:-78,y:0,scale:1.5,desc:'<strong>5G (2019–hoje):</strong> A revolução! Velocidade acima de 20 Gbps, latência abaixo de 1ms. Possibilita carros autônomos, cirurgias remotas e IoT massivo.'},
-};
-const techImg = document.getElementById('techImg');
-const techLbl = document.getElementById('techLabel');
-const techDesc = document.getElementById('techDesc');
-
-function selectGen(btn, gen, px, py, sc){
-  document.querySelectorAll('.gen-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  const d = genData[gen];
-  techImg.style.transform = `scale(${d.scale}) translateX(${d.x}px)`;
-  techLbl.textContent = gen;
-  techDesc.innerHTML = d.desc;
-}
-// init with 5G selected
-selectGen(document.querySelector('.gen-btn.g5g'),'5G',0,0,1.4);
 
 // QUIZ
 function answer(btn,qId,correct){

@@ -1,6 +1,6 @@
 ﻿<title>Portal SAP TLP</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
 
 <style>
 /* Layout: single-page app, content-width cap 1300px, sidebar layout for manuals */
@@ -47,6 +47,9 @@ body {
   color: var(--text);
   line-height: 1.6;
   padding-inline: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -134,7 +137,7 @@ body::before {
 
 /* ── VIEWS ── */
 .view { position: relative; z-index: 1; display: none; }
-.view.active { display: block; }
+.view.active { display: block; flex: 1; }
 
 /* ── HOME ── */
 .hero {
@@ -340,7 +343,7 @@ body::before {
 .cci-c   .manual-thumb { background: linear-gradient(135deg,rgba(26,107,181,.18),rgba(91,170,208,.07)); }
 .campo-c .manual-thumb { background: linear-gradient(135deg,rgba(27,122,62,.18),rgba(76,175,130,.07)); }
 
-.manual-info { padding:18px 18px 14px; }
+.manual-info { padding:18px 18px 14px; text-align:center; }
 .m-chip {
   display:inline-block; padding:2px 8px; border-radius:5px;
   font-size:.67rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
@@ -628,23 +631,12 @@ footer {
   z-index:1;
 }
 
-.hero-grid-bg {
-  position:absolute;inset:0;z-index:0;pointer-events:none;
-  background-image:
-    linear-gradient(rgba(150,180,230,.045) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(150,180,230,.045) 1px,transparent 1px);
-  background-size:72px 72px;
-  -webkit-mask-image:radial-gradient(ellipse 70% 85% at 50% 0%, black 0%, rgba(0,0,0,.55) 50%, transparent 85%);
-  mask-image:radial-gradient(ellipse 70% 85% at 50% 0%, black 0%, rgba(0,0,0,.55) 50%, transparent 85%);
-  will-change:transform;
-}
-:root[data-theme="light"] .hero-grid-bg { opacity:.3; }
-
 .hero-glow-bg {
   position:absolute;inset:0;z-index:0;pointer-events:none;
   background:
-    linear-gradient(135deg, rgba(200,82,16,.05) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 65% at 72% 35%, rgba(200,82,16,.06), transparent 65%);
+    linear-gradient(135deg, rgba(200,82,16,.07) 0%, transparent 55%),
+    radial-gradient(ellipse 65% 70% at 72% 30%, rgba(200,82,16,.09), transparent 65%),
+    radial-gradient(ellipse 45% 55% at 18% 85%, rgba(150,180,230,.05), transparent 60%);
 }
 
 .hero-badge,.hero h1,.hero p,.hero-sub { position:relative; }
@@ -661,9 +653,11 @@ footer {
 
 /* bigger bolder hero */
 .hero h1.kinetic {
+  font-family:'Nunito','Sora',sans-serif;
   font-size:clamp(2rem,4vw,3.4rem);
+  font-weight:900;
   line-height:1;
-  letter-spacing:-.03em;
+  letter-spacing:-.02em;
   margin-bottom:18px;
   text-transform:uppercase;
 }
@@ -743,13 +737,18 @@ footer {
     <svg class="logo-svg" viewBox="0 0 80 30" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="tlpg" x1="0" y1="30" x2="80" y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#C84A08"/>
-          <stop offset="55%" stop-color="#E05210"/>
-          <stop offset="100%" stop-color="#F5A020"/>
+          <stop offset="0%" stop-color="#BF4206"/>
+          <stop offset="50%" stop-color="#D94E0E"/>
+          <stop offset="100%" stop-color="#F0921A"/>
+        </linearGradient>
+        <linearGradient id="tlpg2" x1="0" y1="0" x2="0" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,.18)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
         </linearGradient>
       </defs>
-      <rect x="0" y="0" width="80" height="30" rx="4" fill="url(#tlpg)"/>
-      <text x="40" y="22" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="17" fill="white" text-anchor="middle" letter-spacing="2">TLP</text>
+      <rect x="0" y="0" width="80" height="30" rx="8" fill="url(#tlpg)"/>
+      <rect x="0" y="0" width="80" height="15" rx="8" fill="url(#tlpg2)"/>
+      <text x="40" y="21.5" font-family="'Nunito','Arial Black',Arial,sans-serif" font-weight="900" font-size="17" fill="white" text-anchor="middle" letter-spacing="3">TLP</text>
     </svg>
     <span class="logo-tag">Conectados com o Futuro</span>
   </div>
@@ -764,7 +763,6 @@ footer {
 <!-- ═══════════════════ VIEW: HOME ═══════════════════ -->
 <div class="view active" id="v-home">
   <section class="hero">
-    <div class="hero-grid-bg" id="homeGrid"></div>
     <div class="hero-glow-bg"></div>
     <div class="hero-content">
       <div class="hero-badge"><span class="badge-dot-acc"></span>Sistema de Apoio Profissional — TLP</div>
@@ -903,7 +901,7 @@ footer {
         <div class="manual-action"><span>Abrir manual</span><span>→</span></div>
       </div>
       <div class="manual-card campo-c locked">
-        <div class="manual-thumb">🚗</div>
+        <div class="manual-thumb"><svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="18" width="28" height="8" rx="2"/><path d="M8 18l4-8h12l4 8"/><circle cx="10" cy="26" r="3"/><circle cx="26" cy="26" r="3"/></svg></div>
         <div class="manual-info">
           <span class="m-chip">Em Breve</span>
           <h3 class="m-title">Procedimentos de Deslocamento</h3>

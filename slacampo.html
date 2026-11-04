@@ -1,0 +1,1443 @@
+﻿<title>SLA de Atendimento – Contrato TIM – Portal SAP TLP</title>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* Layout: single-page app, content-width cap 1300px, sidebar layout for manuals */
+:root {
+  --bg:       #06090F;
+  --surf:     #0C1322;
+  --surf2:    #121C30;
+  --border:   rgba(150,180,230,.07);
+  --text:     #D4DFF0;
+  --muted:    #6B7D96;
+  --accent:   #C85210;
+  --yellow:   #D9941A;
+  --cci:      #1458A8;
+  --cci-l:    #4D9AC8;
+  --cci-g:    rgba(20,88,168,.11);
+  --campo:    #165E34;
+  --campo-l:  #3FA870;
+  --campo-g:  rgba(22,94,52,.11);
+  --r:        10px;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg:#EEF2F8; --surf:#FFFFFF; --surf2:#E4EAF4; --border:rgba(20,40,100,.09);
+    --text:#111929; --muted:#4E5E78; --accent:#B84A0A; --yellow:#A87010;
+    --cci:#1054A0; --cci-l:#1458A8; --cci-g:rgba(16,84,160,.08);
+    --campo:#145630; --campo-l:#165E34; --campo-g:rgba(20,86,48,.08);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg:#EEF2F8; --surf:#FFFFFF; --surf2:#E4EAF4; --border:rgba(20,40,100,.09);
+  --text:#111929; --muted:#4E5E78; --accent:#B84A0A; --yellow:#A87010;
+  --cci:#1054A0; --cci-l:#1458A8; --cci-g:rgba(16,84,160,.08);
+  --campo:#145630; --campo-l:#165E34; --campo-g:rgba(20,86,48,.08);
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  padding-inline: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+/* ── SUBTLE TOP GRADIENT ── */
+body::before {
+  content: '';
+  position: fixed; top: 0; left: 0; right: 0; height: 280px;
+  background: linear-gradient(180deg, rgba(20,88,168,.06) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── SITE HEADER ── */
+.hdr {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 52px;
+  background: rgba(6,9,15,.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .hdr { background: rgba(238,242,248,.95); }
+}
+:root[data-theme="light"] .hdr { background: rgba(238,242,248,.95); }
+
+.logo-wrap { display: flex; align-items: center; gap: 14px; cursor: pointer; }
+.logo-wrap:hover { opacity: .88; }
+
+.logo-svg { width: 56px; height: 30px; flex-shrink: 0; }
+
+.logo-tag  {
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1;
+  border-left: 1px solid var(--border);
+  padding-left: 14px;
+}
+
+.hdr-nav { display: flex; gap: 4px; align-items: center; }
+.nav-btn {
+  padding: 7px 18px;
+  border-radius: 6px;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  transition: color .2s, background .2s;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+.nav-btn:hover { color: var(--text); background: var(--surf2); }
+.nav-btn.active { color: var(--accent); background: rgba(200,82,16,.1); border-bottom: 2px solid var(--accent); border-radius: 6px 6px 0 0; }
+
+.theme-btn {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surf);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .9rem;
+  margin-left: 8px;
+  transition: color .2s, background .2s;
+}
+.theme-btn:hover { color: var(--text); }
+
+/* ── VIEWS ── */
+.view { position: relative; z-index: 1; display: none; }
+.view.active { display: block; flex: 1; }
+
+/* ── HOME ── */
+.hero {
+  text-align: left;
+  padding: 64px 52px 44px;
+  max-width: 1300px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center; gap: 8px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--surf2);
+  font-size: .68rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.badge-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--campo-l);
+  animation: blink 3s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:.25} }
+
+.hero h1 {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+.hero p {
+  font-size: .92rem;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 520px;
+}
+
+/* ── CARDS GRID ── */
+.cards-wrap {
+  padding: 36px 52px 80px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.section-eyebrow {
+  text-align: left;
+  font-size: .68rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.sector-card {
+  background: var(--surf);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s, border-color .25s;
+  animation: fadeUp .45s ease both;
+}
+.sector-card:nth-child(2) { animation-delay: .1s; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+
+.sector-card:hover { transform: translateY(-3px); }
+.sector-card.cci:hover   { border-color: rgba(20,88,168,.5); box-shadow: 0 12px 36px rgba(20,88,168,.12); }
+.sector-card.campo:hover { border-color: rgba(22,94,52,.5);  box-shadow: 0 12px 36px rgba(22,94,52,.12); }
+
+.card-stripe { height: 4px; }
+.cci   .card-stripe { background: linear-gradient(90deg, var(--cci), var(--cci-l)); }
+.campo .card-stripe { background: linear-gradient(90deg, var(--campo), var(--campo-l)); }
+
+.card-body  { padding: 28px 28px 22px; }
+.card-icon  {
+  width: 52px; height: 52px;
+  border-radius: 13px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 18px;
+  transition: transform .3s;
+}
+.sector-card:hover .card-icon { transform: scale(1.1) rotate(-5deg); }
+.cci   .card-icon { background: var(--cci-g); }
+.campo .card-icon { background: var(--campo-g); }
+
+.card-chip {
+  display: inline-block;
+  padding: 2px 9px; border-radius: 5px;
+  font-size: .68rem; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.cci   .card-chip { background: var(--cci-g);   color: var(--cci-l); }
+.campo .card-chip { background: var(--campo-g); color: var(--campo-l); }
+
+.card-title { font-family:'Sora',sans-serif; font-size:1.4rem; font-weight:800; line-height:1.2; margin-bottom:10px; letter-spacing:-.02em; }
+.card-desc  { font-size:.87rem; color:var(--muted); line-height:1.68; margin-bottom:22px; }
+.card-stats { display:flex; gap:22px; }
+.stat { display:flex; flex-direction:column; gap:1px; }
+.stat-n { font-size:1.2rem; font-weight:700; }
+.stat-l { font-size:.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
+.cci   .stat-n { color:var(--cci-l); }
+.campo .stat-n { color:var(--campo-l); }
+
+.card-foot {
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 11px 22px;
+  border-top: 1px solid var(--border);
+  font-size:.82rem; font-weight:600; color:var(--muted);
+  transition: background .2s;
+}
+.sector-card:hover .card-foot { background: rgba(255,255,255,.025); }
+.arrow-btn {
+  width:30px; height:30px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.9rem;
+  transition: transform .25s;
+}
+.sector-card:hover .arrow-btn { transform: translateX(4px); }
+.cci   .arrow-btn { background: var(--cci-g);   color:var(--cci-l); }
+.campo .arrow-btn { background: var(--campo-g); color:var(--campo-l); }
+
+
+/* SVG color inheritance for manual-thumb */
+.cci-c   .manual-thumb { color: var(--cci); }
+.campo-c .manual-thumb { color: var(--campo); }
+.manual-thumb svg { opacity: .55; }
+
+/* ── SECTOR PAGE ── */
+.page-hdr {
+  padding: 48px 52px 36px;
+  max-width: 1300px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+.breadcrumb {
+  display:flex; align-items:center; gap:6px;
+  font-size:.78rem; color:var(--muted);
+  margin-bottom:22px;
+}
+.breadcrumb a { cursor:pointer; transition:color .2s; }
+.breadcrumb a:hover { color:var(--text); }
+.bc-sep { color:var(--border); }
+
+.page-title {
+  font-family:'Sora',sans-serif;
+  font-size:clamp(1.3rem,2.5vw,1.9rem);
+  font-weight:700; letter-spacing:-.015em;
+  margin-bottom:6px;
+}
+.page-sub { font-size:.86rem; color:var(--muted); }
+
+.manuals-section { padding: 32px 52px 80px; max-width:1300px; margin:0 auto; }
+.manuals-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:18px;
+}
+
+.manual-card {
+  background:var(--surf);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  overflow:hidden;
+  cursor:pointer;
+  transition: transform .25s, border-color .25s, box-shadow .25s;
+  animation: fadeUp .4s ease both;
+}
+.manual-card.locked { opacity:.42; pointer-events:none; }
+.manual-card:hover { transform:translateY(-3px); }
+.manual-card.cci-c:hover   { border-color:var(--cci);   box-shadow:0 12px 36px var(--cci-g); }
+.manual-card.campo-c:hover { border-color:var(--campo); box-shadow:0 12px 36px var(--campo-g); }
+
+.manual-thumb {
+  height:108px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:2.8rem;
+}
+.cci-c   .manual-thumb { background: linear-gradient(135deg,rgba(26,107,181,.18),rgba(91,170,208,.07)); }
+.campo-c .manual-thumb { background: linear-gradient(135deg,rgba(27,122,62,.18),rgba(76,175,130,.07)); }
+
+.manual-info { padding:18px 18px 14px; text-align:center; }
+.m-chip {
+  display:inline-block; padding:2px 8px; border-radius:5px;
+  font-size:.67rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase;
+  margin-bottom:8px;
+}
+.cci-c   .m-chip { background:var(--cci-g);   color:var(--cci-l); }
+.campo-c .m-chip { background:var(--campo-g); color:var(--campo-l); }
+
+.m-title { font-weight:700; font-size:.97rem; margin-bottom:5px; }
+.m-desc  { font-size:.8rem; color:var(--muted); line-height:1.6; }
+
+.manual-action {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 18px;
+  border-top:1px solid var(--border);
+  font-size:.8rem; font-weight:600; color:var(--muted);
+  transition:color .2s;
+}
+.manual-card:hover .manual-action { color:var(--text); }
+
+/* ── CONTENT PAGE ── */
+.content-wrap {
+  display:grid;
+  grid-template-columns:260px 1fr;
+  gap:32px;
+  padding:32px 52px 80px;
+  max-width:1300px;
+  margin:0 auto;
+}
+
+.c-sidebar {
+  position:sticky;
+  top:calc(env(safe-area-inset-top, 0px) + 70px);
+  align-self:start;
+  background:var(--surf);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:18px;
+  max-height:calc(100vh - 110px);
+  overflow-y:auto;
+}
+.sb-label { font-size:.68rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.09em; margin-bottom:12px; }
+.sb-nav a {
+  display:flex; align-items:center; gap:8px;
+  padding:7px 9px; border-radius:8px;
+  font-size:.8rem; color:var(--muted);
+  transition:color .2s, background .2s;
+  margin-bottom:2px;
+  cursor:pointer;
+}
+.sb-nav a:hover, .sb-nav a.active { color:var(--text); background:rgba(232,86,10,.09); }
+.sb-idx {
+  width:20px; height:20px; border-radius:5px;
+  background:var(--surf2); font-size:.68rem; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+
+.c-main { min-width:0; }
+
+.c-section {
+  background:var(--surf);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:32px;
+  margin-bottom:20px;
+  scroll-margin-top:80px;
+  animation: fadeUp .4s ease both;
+}
+.c-section:nth-child(2){animation-delay:.05s}
+.c-section:nth-child(3){animation-delay:.1s}
+.c-section:nth-child(4){animation-delay:.12s}
+.c-section:nth-child(5){animation-delay:.14s}
+.c-section:nth-child(6){animation-delay:.16s}
+.c-section:nth-child(7){animation-delay:.18s}
+.c-section:nth-child(8){animation-delay:.20s}
+.c-section:nth-child(9){animation-delay:.22s}
+
+.c-section h2 {
+  font-family:'Sora',sans-serif;
+  font-size:1.15rem; font-weight:800;
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:16px;
+  letter-spacing:-.01em;
+}
+.s-icon {
+  width:30px; height:30px; border-radius:7px;
+  background:rgba(232,86,10,.12);
+  display:flex; align-items:center; justify-content:center;
+  font-size:.88rem; flex-shrink:0;
+}
+.c-section p { font-size:.88rem; color:var(--muted); line-height:1.78; margin-bottom:12px; }
+.c-section p:last-child { margin-bottom:0; }
+.c-section ul, .c-section ol { padding-left:18px; margin-bottom:12px; }
+.c-section li { font-size:.88rem; color:var(--muted); line-height:1.78; margin-bottom:3px; }
+.c-section strong { color:var(--text); font-weight:600; }
+.c-section h3 { font-size:.88rem; font-weight:700; color:var(--text); margin:18px 0 8px; }
+
+.ibox {
+  border-radius:9px; padding:13px 16px;
+  display:flex; gap:11px; font-size:.84rem;
+  line-height:1.65; margin:14px 0;
+}
+.ibox.info    { background:rgba(26,107,181,.1);  border-left:3px solid var(--cci); }
+.ibox.warn    { background:rgba(245,166,35,.1);  border-left:3px solid var(--yellow); }
+.ibox.ok      { background:rgba(27,122,62,.1);   border-left:3px solid var(--campo); }
+.ibox.danger  { background:rgba(220,50,50,.1);   border-left:3px solid #DC3232; }
+.ibox-ico     { font-size:1rem; flex-shrink:0; margin-top:1px; }
+.ibox p       { margin:0; color:var(--muted); }
+
+.data-tbl {
+  width:100%; border-collapse:collapse;
+  font-size:.84rem; margin:14px 0;
+  overflow-x:auto; display:block;
+}
+.data-tbl th {
+  background:rgba(232,86,10,.09);
+  color:var(--accent);
+  padding:9px 13px; text-align:left;
+  font-weight:700; font-size:.73rem;
+  text-transform:uppercase; letter-spacing:.05em;
+  white-space:nowrap;
+}
+.data-tbl td {
+  padding:9px 13px; color:var(--muted);
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+.data-tbl tr:last-child td { border-bottom:none; }
+.data-tbl tr:hover td { background:rgba(255,255,255,.02); color:var(--text); }
+
+.pill {
+  display:inline-block; padding:2px 9px; border-radius:5px;
+  font-size:.73rem; font-weight:700;
+}
+.pill.p1 { background:rgba(220,50,50,.18);  color:#F87171; }
+.pill.p2 { background:rgba(249,115,22,.18); color:#FB923C; }
+.pill.p3 { background:rgba(245,166,35,.18); color:var(--yellow); }
+.pill.p4 { background:rgba(26,107,181,.18); color:var(--cci-l); }
+.pill.p5 { background:rgba(139,148,158,.18);color:var(--muted); }
+.pill.alta  { background:rgba(220,50,50,.18);  color:#F87171; }
+.pill.media { background:rgba(245,166,35,.18); color:var(--yellow); }
+.pill.baixa { background:rgba(139,148,158,.18);color:var(--muted); }
+.pill.ok    { background:rgba(27,122,62,.18);  color:var(--campo-l); }
+
+.checklist { list-style:none; padding:0; }
+.checklist li {
+  display:flex; align-items:flex-start; gap:9px;
+  padding:8px 0; border-bottom:1px solid var(--border);
+  font-size:.87rem; color:var(--muted);
+}
+.checklist li:last-child { border-bottom:none; }
+.checklist li::before { content:'☐'; color:var(--accent); flex-shrink:0; }
+
+/* ── FOOTER ── */
+.footer-dev {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 12px 52px;
+  text-align: center;
+  background: var(--surf);
+}
+.footer-dev-title {
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: .55;
+  margin-bottom: 5px;
+}
+.footer-dev-row {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.footer-dev-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: .73rem;
+}
+.footer-dev-role {
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: .04em;
+}
+.footer-dev-name {
+  color: var(--text);
+  font-weight: 600;
+}
+.footer-dev-email {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: .68rem;
+}
+
+footer {
+  position:relative; z-index:1;
+  border-top:1px solid var(--border);
+  padding:16px 52px;
+  display:flex; align-items:center; justify-content:space-between;
+  font-size:.72rem; color:var(--muted);
+}
+
+/* ── RESPONSIVE ── */
+
+@media (max-width:640px) {
+  /* NAV */
+  .nav-btn{padding:5px 10px;font-size:.72rem;letter-spacing:0}
+  .hdr-nav{gap:2px}
+  /* HERO */
+  .hero{padding:28px 16px 20px}
+  .hero h1{font-size:clamp(1.7rem,8vw,2.4rem);letter-spacing:-.02em}
+  .hero p{max-width:100%;font-size:.92rem}
+  .hero-badge{font-size:.68rem;padding:4px 12px}
+  /* CARDS */
+  .cards-wrap{padding:20px 16px 48px}
+  .cards-grid{grid-template-columns:1fr}
+  .card-stats{gap:14px}
+  /* MANUAIS */
+  .manuals-section{padding:20px 16px 48px}
+  .manuals-grid{grid-template-columns:1fr}
+  /* PAGE HDR / CONTEUDO */
+  .page-hdr{padding:24px 16px 16px}
+  /* FOOTER */
+  footer{padding:12px 16px}
+  .footer-dev{padding:8px 16px}
+}
+@media (max-width:860px) {
+  .hdr { padding:12px 20px; }
+  .logo-tag { display:none; }
+  .cards-wrap, .manuals-section, .page-hdr { padding-inline:20px; }
+  .content-wrap { grid-template-columns:1fr; padding-inline:20px; }
+  .c-sidebar { position:static; max-height:none; }
+  footer { flex-direction:column; gap:6px; text-align:center; padding-inline:20px; }
+  .footer-dev { padding-inline:20px; }
+  .hero { padding:40px 20px 32px; }
+}
+@media (max-width:480px) {
+  .cards-grid { grid-template-columns:1fr; }
+  .nav-btn { padding:6px 10px; font-size:.7rem; }
+}
+
+/* ── SCROLL REVEAL ── */
+.sr        { opacity:0; transform:translateY(48px);   transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+.sr-left   { opacity:0; transform:translateX(-48px);  transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+.sr-right  { opacity:0; transform:translateX(48px);   transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+.sr-scale  { opacity:0; transform:scale(.88);          transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1); }
+.sr.sr-in, .sr-left.sr-in, .sr-right.sr-in, .sr-scale.sr-in { opacity:1; transform:none; }
+
+/* ── ILLUSTRATION ── */
+.illus-wrap {
+  margin: 20px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surf2);
+}
+.illus-wrap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.illus-cap {
+  text-align: center;
+  font-size: .72rem;
+  color: var(--muted);
+  padding: 8px 12px 10px;
+  letter-spacing: .03em;
+}
+
+/* ════ HERO ENHANCEMENTS ═══════════════════════ */
+.hero {
+  position:relative; overflow:hidden;
+  max-width:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  border-bottom:1px solid var(--border);
+}
+.hero-content {
+  max-width:1300px;
+  margin:0 auto;
+  padding:64px 52px 44px;
+  position:relative;
+  z-index:1;
+}
+
+.hero-glow-bg {
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    linear-gradient(135deg, rgba(200,82,16,.07) 0%, transparent 55%),
+    radial-gradient(ellipse 65% 70% at 72% 30%, rgba(200,82,16,.09), transparent 65%),
+    radial-gradient(ellipse 45% 55% at 18% 85%, rgba(150,180,230,.05), transparent 60%);
+}
+
+.hero-badge,.hero h1,.hero p,.hero-sub { position:relative; }
+
+/* word-up reveal */
+.hero-line { display:block; overflow:hidden; padding-bottom:.04em; line-height:1.15; }
+.hero-word {
+  display:inline-block;
+  transform:translateY(110%) skewY(3deg);
+  opacity:0;
+  animation:heroWordUp .95s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes heroWordUp { to { transform:translateY(0) skewY(0deg); opacity:1; } }
+
+/* bigger bolder hero */
+.hero h1.kinetic {
+  font-family:'Nunito','Sora',sans-serif;
+  font-size:clamp(2rem,4vw,3.4rem);
+  font-weight:900;
+  line-height:1;
+  letter-spacing:-.02em;
+  margin-bottom:18px;
+  text-transform:uppercase;
+}
+.hero h1.kinetic em {
+  font-style:normal;
+  color:var(--accent);
+  filter:drop-shadow(0 0 24px rgba(200,82,16,.22));
+}
+
+/* badge pulse orange */
+.badge-dot-acc {
+  width:5px;height:5px;border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 8px var(--accent);
+  animation:bdPulse 2s ease infinite;
+  flex-shrink:0;
+}
+@keyframes bdPulse {
+  0%,100% { opacity:1; box-shadow:0 0 8px var(--accent); }
+  50%      { opacity:.2; box-shadow:0 0 2px transparent; }
+}
+
+/* badge + sub fade-in */
+.hero-badge { opacity:0; animation:hFadeUp .65s .08s cubic-bezier(.16,1,.3,1) forwards; }
+.hero-sub   { opacity:0; animation:hFadeUp .65s .82s cubic-bezier(.16,1,.3,1) forwards; }
+@keyframes hFadeUp {
+  from { opacity:0; transform:translateY(14px); }
+  to   { opacity:1; transform:none; }
+}
+
+/* ════ TICKER ═══════════════════════════════════ */
+.home-ticker {
+  overflow:hidden;padding:13px 0;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:rgba(200,82,16,.03);
+}
+:root[data-theme="light"] .home-ticker { background:rgba(200,82,16,.05); }
+.home-ticker-track {
+  display:flex;width:max-content;
+  animation:homeTicker 26s linear infinite;
+}
+@keyframes homeTicker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.home-ticker-item {
+  white-space:nowrap;padding:0 44px;flex-shrink:0;
+  font-family:'Sora',sans-serif;
+  font-size:.67rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);
+  display:flex;align-items:center;gap:36px;
+}
+.home-ticker-sep {
+  width:3px;height:3px;border-radius:50%;
+  background:var(--accent);opacity:.65;flex-shrink:0;
+}
+
+/* ════ CARDS ENHANCEMENTS ═══════════════════════ */
+.sector-card {
+  transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,border-color .3s;
+}
+.sector-card.cci:hover {
+  transform:translateY(-5px);
+  box-shadow:0 16px 48px rgba(20,88,168,.16), 0 0 0 1px rgba(20,88,168,.28);
+  border-color:rgba(20,88,168,.35);
+}
+.sector-card.campo:hover {
+  transform:translateY(-5px);
+  box-shadow:0 16px 48px rgba(22,94,52,.16), 0 0 0 1px rgba(22,94,52,.32);
+  border-color:rgba(22,94,52,.35);
+}
+.sector-card:nth-child(1) { animation-delay:.04s; }
+.sector-card:nth-child(2) { animation-delay:.16s; }
+
+/* ── LOGO IMG ── */
+.logo-img { height:38px; width:auto; max-width:180px; object-fit:contain; flex-shrink:0; display:block; }
+
+/* ── HOME CARDS: mais destaque ── */
+.cards-grid { grid-template-columns:repeat(auto-fit,minmax(420px,1fr)); gap:28px; }
+.sector-card { position:relative; display:flex; flex-direction:column; border-radius:16px; }
+.sector-card.cci   { background:linear-gradient(160deg,var(--cci-g),transparent 55%),var(--surf);   border-color:rgba(20,88,168,.28); }
+.sector-card.campo { background:linear-gradient(160deg,var(--campo-g),transparent 55%),var(--surf); border-color:rgba(22,94,52,.3); }
+.sector-card::after { content:''; position:absolute; right:-60px; top:-60px; width:220px; height:220px; border-radius:50%; pointer-events:none; }
+.sector-card.cci::after   { background:radial-gradient(circle,rgba(20,88,168,.22),transparent 70%); }
+.sector-card.campo::after { background:radial-gradient(circle,rgba(22,94,52,.22),transparent 70%); }
+.card-stripe { height:6px; }
+.sector-card .card-body { padding:34px 34px 26px; position:relative; z-index:1; flex:1; }
+.sector-card .card-icon { width:64px; height:64px; border-radius:16px; margin-bottom:20px; }
+.sector-card .card-icon svg { width:30px; height:30px; }
+.cci .card-icon   { color:var(--cci-l); }
+.campo .card-icon { color:var(--campo-l); }
+.sector-card .card-title { font-size:1.75rem; }
+.card-feats { list-style:none; padding:0; margin:0 0 20px; display:grid; gap:9px; }
+.card-feats li { display:flex; gap:10px; align-items:flex-start; font-size:.84rem; color:var(--text); line-height:1.5; }
+.card-feats li::before { content:'✓'; flex-shrink:0; width:18px; height:18px; border-radius:50%; font-size:.65rem; font-weight:800; display:flex; align-items:center; justify-content:center; margin-top:1px; }
+.cci .card-feats li::before   { background:var(--cci-g);   color:var(--cci-l); }
+.campo .card-feats li::before { background:var(--campo-g); color:var(--campo-l); }
+.card-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:22px; }
+.card-tags span { padding:3px 10px; border-radius:99px; font-size:.68rem; font-weight:600; border:1px solid var(--border); background:var(--surf2); color:var(--muted); }
+.sector-card .card-stats { padding-top:18px; border-top:1px solid var(--border); }
+.sector-card .stat-n { font-size:1.6rem; font-family:'Sora',sans-serif; }
+.sector-card .card-foot { padding:15px 34px; font-size:.88rem; position:relative; z-index:1; }
+@media (max-width:640px) { .cards-grid { grid-template-columns:1fr; } .sector-card .card-body { padding:26px 22px 20px; } .sector-card .card-foot { padding:13px 22px; } }
+
+/* ── CAMPO: cards centralizados ── */
+.manuals-grid.center-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:22px; }
+.manuals-grid.center-grid .manual-card { flex:0 1 320px; width:320px; max-width:100%; }
+
+/* ── LEITURA (CCI / Campo) ── */
+.read-meta { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+.rm-chip { padding:4px 12px; border-radius:99px; font-size:.72rem; font-weight:600; background:var(--surf2); border:1px solid var(--border); color:var(--muted); }
+.sb-prog { height:5px; border-radius:99px; background:var(--surf2); overflow:hidden; margin-bottom:6px; }
+.sb-prog span { display:block; height:100%; width:0; background:var(--campo-l); transition:width .3s; }
+.sb-prog-l { font-size:.7rem; color:var(--muted); margin-bottom:14px; }
+.sb-nav a.cur { color:var(--text); background:rgba(200,82,16,.12); box-shadow:inset 2px 0 0 var(--accent); }
+.sb-nav a.read .sb-idx { background:var(--campo); color:#fff; font-size:0; }
+.sb-nav a.read .sb-idx::after { content:'✓'; font-size:.68rem; }
+.recap { margin-top:20px; padding:14px 16px; border-radius:10px; background:var(--surf2); border:1px dashed var(--border); }
+.recap h4 { font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:8px; }
+.recap ul { margin:0 !important; }
+.sec-nav { display:flex; justify-content:space-between; gap:10px; margin-top:22px; padding-top:16px; border-top:1px solid var(--border); }
+.sec-nav button { font-family:inherit; font-size:.78rem; font-weight:600; padding:8px 14px; border-radius:8px; border:1px solid var(--border); background:var(--surf2); color:var(--muted); cursor:pointer; transition:color .2s,border-color .2s; }
+.sec-nav button:hover { color:var(--text); border-color:var(--accent); }
+.sec-nav .sn-next { margin-left:auto; }
+.qz-score { display:inline-block; font-size:.8rem; font-weight:700; color:var(--campo-l); margin-bottom:14px; }
+.qz-q { margin-bottom:20px; }
+.qz-opts { display:grid; gap:8px; margin-top:8px; }
+.qz-opt { text-align:left; font-family:inherit; font-size:.84rem; padding:10px 14px; border-radius:8px; border:1px solid var(--border); background:var(--surf2); color:var(--text); cursor:pointer; transition:border-color .2s; }
+.qz-opt:hover { border-color:var(--cci-l); }
+.qz-opt.ok  { border-color:var(--campo-l); background:var(--campo-g); }
+.qz-opt.bad { border-color:#DC3232; background:rgba(220,50,50,.1); }
+.qz-fb { display:none; font-size:.8rem; color:var(--muted); margin-top:8px; }
+/* ── Módulo 1 / Campo-qual: área de conteúdo mais larga ── */
+#v-cci-mod1 .page-hdr, #v-campo-qual .page-hdr { max-width:1640px; }
+#v-cci-mod1 .content-wrap, #v-campo-qual .content-wrap { max-width:1640px; grid-template-columns:230px 1fr; gap:28px; padding-inline:36px; }
+#v-cci-mod1 .c-section, #v-campo-qual .c-section { padding:40px 48px; }
+#v-cci-mod1 .c-section p, #v-cci-mod1 .c-section li, #v-campo-qual .c-section p, #v-campo-qual .c-section li { font-size:.96rem; }
+#v-cci-mod1 .data-tbl, #v-campo-qual .data-tbl { font-size:.9rem; }
+@media (max-width:860px) {
+  #v-cci-mod1 .content-wrap, #v-campo-qual .content-wrap { grid-template-columns:1fr; padding-inline:20px; }
+  #v-cci-mod1 .c-section, #v-campo-qual .c-section { padding:26px 20px; }
+}
+
+/* ── Cards de módulos / tutoriais com mais destaque ── */
+.manuals-grid { grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px; }
+.manual-card { position:relative; border-radius:16px; box-shadow:0 8px 28px rgba(0,0,0,.2); }
+.manual-card::before { content:''; position:absolute; top:0; left:0; right:0; height:5px; z-index:2; }
+.manual-card.cci-c::before   { background:linear-gradient(90deg,var(--cci),var(--cci-l)); }
+.manual-card.campo-c::before { background:linear-gradient(90deg,var(--campo),var(--campo-l)); }
+.manual-card.cci-c   { border-color:rgba(20,88,168,.32); }
+.manual-card.campo-c { border-color:rgba(22,94,52,.32); }
+.manual-card.tutorial-card { border-color:rgba(200,82,16,.45); box-shadow:0 8px 32px rgba(200,82,16,.14); }
+.manual-card.tutorial-card::before { background:linear-gradient(90deg,var(--accent),var(--yellow)); }
+.manual-card.tutorial-card .manual-thumb { color:var(--accent); background:linear-gradient(135deg,rgba(200,82,16,.2),rgba(217,148,26,.07)); }
+.manual-thumb { height:140px; }
+.manual-card .manual-thumb svg { opacity:.95; width:44px; height:44px; padding:16px; box-sizing:content-box; border-radius:20px; background:rgba(255,255,255,.05); border:1px solid var(--border); }
+.manual-card .m-chip { font-size:.7rem; padding:3px 11px; }
+.manual-card .m-title { font-size:1.12rem; margin-bottom:7px; }
+.manual-card .m-desc { font-size:.84rem; }
+.manual-card .manual-info { padding:20px 20px 16px; }
+.manual-card.cci-c .manual-action   { background:var(--cci-g);   color:var(--cci-l); }
+.manual-card.campo-c .manual-action { background:var(--campo-g); color:var(--campo-l); }
+.manual-card.tutorial-card .manual-action { background:rgba(200,82,16,.12); color:var(--accent); }
+.manual-card:hover { transform:translateY(-6px); box-shadow:0 16px 44px rgba(0,0,0,.3); }
+.manual-card:hover .manual-action { color:var(--text); }
+.manual-card.locked { box-shadow:none; }
+.qz-reset { margin-top:6px; font-family:inherit; font-size:.78rem; font-weight:600; padding:8px 14px; border-radius:8px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; }
+
+/* ── CCI: 4 cards em linha + cores (tutorial = laranja, módulos = azul) ── */
+.cci-section { max-width:1480px; }
+.cci-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; }
+.cci-grid .manual-card { display:flex; flex-direction:column; }
+.cci-grid .manual-info { flex:1; }
+.cci-grid .manual-card.tutorial-card:hover { border-color:var(--accent); box-shadow:0 16px 44px rgba(200,82,16,.25); }
+.cci-grid .manual-card.tutorial-card .m-chip { background:rgba(200,82,16,.15); color:var(--accent); }
+.cci-grid .manual-card.cci-c:not(.tutorial-card) .manual-thumb { color:var(--cci-l); background:linear-gradient(135deg,rgba(20,88,168,.22),rgba(77,154,200,.08)); }
+.cci-grid .manual-card.cci-c:not(.tutorial-card) .m-chip { background:var(--cci-g); color:var(--cci-l); }
+@media (max-width:1180px) { .cci-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:640px)  { .cci-grid { grid-template-columns:1fr; } }
+</style>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<header class="hdr">
+  <div class="logo-wrap" onclick="goTo('home')">
+    <!-- LOGO: troque o src abaixo pela URL da logo TLP -->
+    <img class="logo-img" id="logoImg" src="https://URL-DA-LOGO-TLP/logo.png" alt="TLP" onerror="this.style.display='none';document.getElementById('logoFallback').style.display='block'">
+    <svg id="logoFallback" style="display:none" class="logo-svg" viewBox="0 0 80 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="tlpg" x1="0" y1="30" x2="80" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#BF4206"/>
+          <stop offset="50%" stop-color="#D94E0E"/>
+          <stop offset="100%" stop-color="#F0921A"/>
+        </linearGradient>
+        <linearGradient id="tlpg2" x1="0" y1="0" x2="0" y2="30" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="rgba(255,255,255,.18)"/>
+          <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="80" height="30" rx="8" fill="url(#tlpg)"/>
+      <rect x="0" y="0" width="80" height="15" rx="8" fill="url(#tlpg2)"/>
+      <text x="40" y="21.5" font-family="'Nunito','Arial Black',Arial,sans-serif" font-weight="900" font-size="17" fill="white" text-anchor="middle" letter-spacing="3">TLP</text>
+    </svg>
+    <span class="logo-tag">Conectados com o Futuro</span>
+  </div>
+  <nav class="hdr-nav">
+    <button class="nav-btn" id="nb-home"  onclick="goTo('home')">Início</button>
+    <button class="nav-btn"        id="nb-cci"   onclick="goTo('cci')">CCI</button>
+    <button class="nav-btn active" id="nb-campo" onclick="goTo('campo')">Campo</button>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Alternar tema" style="padding:0"><svg id="themeSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg id="themeMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
+  </nav>
+</header>
+<!-- ═══════════════════ VIEW: CAMPO QUALIDADE ═══════════════════ -->
+<div class="view active" id="v-campo-qual">
+  <div class="page-hdr">
+    <div class="breadcrumb">
+      <a onclick="goTo('home')">Início</a><span class="bc-sep">›</span>
+      <a onclick="goTo('campo')">Campo</a><span class="bc-sep">›</span>
+      <span>Qualidade Operacional</span>
+    </div>
+    <h1 class="page-title">Treinamento de Qualidade: SLA de Atendimento</h1>
+    <p class="page-sub">Guia completo sobre prazos, franquias, suspensões e boas práticas — Contrato TIM.</p>
+  </div>
+
+  <div class="content-wrap">
+    <aside class="c-sidebar">
+      <p class="sb-label">Índice</p>
+      <nav class="sb-nav">
+        <a onclick="scrollTo('q-s1')"><span class="sb-idx">1</span>Avaliação de Franquia</a>
+        <a onclick="scrollTo('q-s2')"><span class="sb-idx">2</span>Prazos SLA – FMMT</a>
+        <a onclick="scrollTo('q-s3')"><span class="sb-idx">3</span>Prazos SLA – FMO</a>
+        <a onclick="scrollTo('q-s4')"><span class="sb-idx">4</span>Regra de Acionamento</a>
+        <a onclick="scrollTo('q-s5')"><span class="sb-idx">5</span>Relógio do SLA</a>
+        <a onclick="scrollTo('q-s6')"><span class="sb-idx">6</span>Como Registrar</a>
+        <a onclick="scrollTo('q-s7')"><span class="sb-idx">7</span>Suspensão × Tramitação</a>
+        <a onclick="scrollTo('q-s8')"><span class="sb-idx">8</span>Abono de Tempo</a>
+        <a onclick="scrollTo('q-s9')"><span class="sb-idx">9</span>Checklist</a>
+      </nav>
+    </aside>
+    <main class="c-main">
+
+      <div class="c-section sr" id="q-s1">
+        <h2>1. Avaliação de Franquia</h2>
+        <p><strong>Somente os tickets considerados dentro da franquia</strong> são avaliados quanto ao cumprimento de prazo. Antes de qualquer análise de tempo, verifique se o chamado se enquadra nos critérios de elegibilidade.</p>
+        <div class="ibox warn">
+          <span class="ibox-ico">›</span>
+          <p>A avaliação de franquia é o ponto de partida de toda análise de SLA. Um ticket fora da franquia não entra no indicador de desempenho.</p>
+        </div>
+        <h3 style="color:#F87171">O que fica FORA da franquia:</h3>
+        <ul>
+          <li><strong>GMG:</strong> Preditiva ou preventiva com piora no índice de falhas do END ID</li>
+          <li><strong>Cancelados:</strong> Tickets cancelados antes do encerramento</li>
+          <li><strong>Perda de Garantia:</strong> Casos pagos em franquia complementar</li>
+          <li><strong>Repetida Campo 72h:</strong> Falha reincidente no prazo de 72h após atendimento anterior</li>
+          <li><strong>Encerrado pelo Centralizado:</strong> Tickets finalizados diretamente pela equipe centralizada</li>
+        </ul>
+        <div class="ibox info">
+          <span class="ibox-ico">›</span>
+          <p><strong>Exemplo:</strong> um site volta a falhar 40h depois de um atendimento. Como está dentro das 72h do atendimento anterior, o ticket é classificado como <strong>Repetida Campo 72h</strong> e fica fora da franquia.</p>
+        </div>
+        <h3>Como verificar rapidamente</h3>
+        <ol>
+          <li>Confira se o ticket foi cancelado ou encerrado pelo Centralizado.</li>
+          <li>Verifique se é reincidência dentro de 72h do atendimento anterior.</li>
+          <li>Veja se há flag de GMG ou perda de garantia. Só então analise o prazo.</li>
+        </ol>
+      </div>
+
+      <div class="c-section sr" id="q-s2">
+        <h2>2. Prazos SLA – FMMT</h2>
+        <p>No modelo <strong>FMMT</strong> (Field Maintenance Management Team), os chamados são classificados por prioridade de P1 a P5, cada uma com prazo fixo.</p>
+
+        <!-- SVG: FMMT priority bars -->
+        <div class="illus-wrap sr-left">
+          <svg viewBox="0 0 520 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Prazos FMMT por prioridade, em horas, com a janela de acionamento de 20%">
+          <line x1="70" y1="10" x2="70" y2="168" stroke="#8895A7" stroke-width="0.5" opacity=".35"/>
+          <text x="70" y="183" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">0h</text>
+          <line x1="160" y1="10" x2="160" y2="168" stroke="#8895A7" stroke-width="0.5" opacity=".35"/>
+          <text x="160" y="183" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">12h</text>
+          <line x1="250" y1="10" x2="250" y2="168" stroke="#8895A7" stroke-width="0.5" opacity=".35"/>
+          <text x="250" y="183" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">24h</text>
+          <line x1="340" y1="10" x2="340" y2="168" stroke="#8895A7" stroke-width="0.5" opacity=".35"/>
+          <text x="340" y="183" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">36h</text>
+          <line x1="430" y1="10" x2="430" y2="168" stroke="#8895A7" stroke-width="0.5" opacity=".35"/>
+          <text x="430" y="183" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">48h</text>
+          <text x="14" y="30" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#F87171">P1</text>
+          <rect x="70" y="16" width="30" height="20" rx="4" fill="#F87171"/>
+          <rect x="70" y="16" width="6" height="20" rx="4" fill="#fff" opacity=".38"/>
+          <text x="107" y="30" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#F87171">4h</text>
+          <text x="14" y="60" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#FB923C">P2</text>
+          <rect x="70" y="46" width="45" height="20" rx="4" fill="#FB923C"/>
+          <rect x="70" y="46" width="9" height="20" rx="4" fill="#fff" opacity=".38"/>
+          <text x="122" y="60" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#FB923C">6h</text>
+          <text x="14" y="90" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#F5A623">P3</text>
+          <rect x="70" y="76" width="90" height="20" rx="4" fill="#F5A623"/>
+          <rect x="70" y="76" width="18" height="20" rx="4" fill="#fff" opacity=".38"/>
+          <text x="167" y="90" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#F5A623">12h</text>
+          <text x="14" y="120" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#5BAAD0">P4</text>
+          <rect x="70" y="106" width="180" height="20" rx="4" fill="#5BAAD0"/>
+          <rect x="70" y="106" width="36" height="20" rx="4" fill="#fff" opacity=".38"/>
+          <text x="257" y="120" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#5BAAD0">24h</text>
+          <text x="14" y="150" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#8895A7">P5</text>
+          <rect x="70" y="136" width="360" height="20" rx="4" fill="#8895A7" opacity=".75"/>
+          <rect x="70" y="136" width="72" height="20" rx="4" fill="#fff" opacity=".38"/>
+          <text x="437" y="150" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#8895A7">48h</text>
+          <text x="70" y="203" text-anchor="start" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">Horas de SLA desde a abertura</text>
+          <rect x="330" y="196" width="12" height="9" rx="2" fill="#fff" opacity=".5" stroke="#8895A7" stroke-width=".5"/>
+          <text x="347" y="204" font-family="Inter,sans-serif" font-size="8.5" fill="#8895A7">faixa clara = acionar até 20% do SLA</text>
+          </svg>
+          <p class="illus-cap">Prazo de atendimento por prioridade (FMMT). A faixa clara no início de cada barra indica a janela em que o técnico precisa ser acionado (20% do SLA).</p>
+        </div>
+
+        <table class="data-tbl">
+          <thead><tr><th>Prioridade</th><th>Prazo</th><th>Descrição</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pill p1">P1 – Crítico</span></td><td><strong>4h</strong></td><td>Máxima criticidade — impacto total na rede</td></tr>
+            <tr><td><span class="pill p2">P2 – Alto</span></td><td><strong>6h</strong></td><td>Alto impacto na operação — exige despacho rápido</td></tr>
+            <tr><td><span class="pill p3">P3 – Médio</span></td><td><strong>12h</strong></td><td>Impacto intermediário — acompanhe o relógio desde a abertura</td></tr>
+            <tr><td><span class="pill p4">P4 – Baixo</span></td><td><strong>24h</strong></td><td>Baixo impacto — ainda assim vale a regra de acionamento em 20%</td></tr>
+            <tr><td><span class="pill p5">P5 – Planejado</span></td><td><strong>48h</strong></td><td>Menor urgência — atividades planejadas, com maior janela</td></tr>
+          </tbody>
+        </table>
+        <div class="ibox warn">
+          <span class="ibox-ico">📍</span>
+          <p><strong>Acréscimo de distância:</strong> +1 hora a cada 100 km entre o CM e o site, conforme cadastro NGNIS TIM.</p>
+        </div>
+        <h3>Exemplo de acréscimo por distância</h3>
+        <table class="data-tbl">
+          <thead><tr><th>Prioridade</th><th>Prazo base</th><th>Site a 200 km do CM</th><th>Prazo final</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pill p1">P1</span></td><td>4h</td><td>+2h</td><td><strong>6h</strong></td></tr>
+            <tr><td><span class="pill p2">P2</span></td><td>6h</td><td>+2h</td><td><strong>8h</strong></td></tr>
+            <tr><td><span class="pill p4">P4</span></td><td>24h</td><td>+2h</td><td><strong>26h</strong></td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:.8rem">Exemplo didático. Confirme a distância cadastrada do site e a regra de arredondamento no NGNIS TIM.</p>
+      </div>
+
+      <div class="c-section sr" id="q-s3">
+        <h2>3. Prazos SLA – FMO</h2>
+        <p>No modelo <strong>FMO</strong> (Field Maintenance Operations), os chamados são classificados em três níveis de criticidade.</p>
+        <table class="data-tbl">
+          <thead><tr><th>Nível</th><th>Prazo</th><th>Descrição</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pill alta">Alta Prioridade</span></td><td><strong>4h</strong></td><td>Impacto direto na operação da rede</td></tr>
+            <tr><td><span class="pill media">Média Prioridade</span></td><td><strong>6h</strong></td><td>Impacto moderado na operação</td></tr>
+            <tr><td><span class="pill baixa">Baixa Prioridade</span></td><td><strong>24h</strong></td><td>Não compromete o funcionamento imediato</td></tr>
+          </tbody>
+        </table>
+        <h3>FMO × FMMT: comparação de prazos</h3>
+        <table class="data-tbl">
+          <thead><tr><th>Prazo</th><th>FMO</th><th>FMMT</th></tr></thead>
+          <tbody>
+            <tr><td><strong>4h</strong></td><td>Alta</td><td>P1</td></tr>
+            <tr><td><strong>6h</strong></td><td>Média</td><td>P2</td></tr>
+            <tr><td><strong>12h</strong></td><td>—</td><td>P3</td></tr>
+            <tr><td><strong>24h</strong></td><td>Baixa</td><td>P4</td></tr>
+            <tr><td><strong>48h</strong></td><td>—</td><td>P5</td></tr>
+          </tbody>
+        </table>
+        <div class="ibox warn">
+          <span class="ibox-ico">📍</span>
+          <p><strong>Confira o modelo antes de ler o prazo.</strong> O FMO só tem 3 níveis (4h, 6h e 24h). Não procure P3 ou P5 em um chamado FMO.</p>
+        </div>
+      </div>
+
+      <div class="c-section sr" id="q-s4">
+        <h2>4. Regra de Acionamento: 20% do SLA</h2>
+        <p>Toda atividade deve ter acionamento até <strong>20% do SLA definido</strong>. O técnico precisa ser despachado no início do período — não basta acionar próximo ao vencimento.</p>
+        <table class="data-tbl">
+          <thead><tr><th>Prioridade</th><th>SLA Total</th><th>Acionar em até</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pill p1">P1 / FMO Alta</span></td><td>4h</td><td><strong>48 minutos</strong></td></tr>
+            <tr><td><span class="pill p2">P2 / FMO Média</span></td><td>6h</td><td><strong>72 minutos</strong></td></tr>
+            <tr><td><span class="pill p3">P3</span></td><td>12h</td><td><strong>2h 24min</strong></td></tr>
+            <tr><td><span class="pill p4">P4</span></td><td>24h</td><td><strong>4h 48min</strong></td></tr>
+            <tr><td><span class="pill baixa">FMO Baixa</span></td><td>24h</td><td><strong>4h 48min</strong></td></tr>
+            <tr><td><span class="pill p5">P5</span></td><td>48h</td><td><strong>9h 36min</strong></td></tr>
+          </tbody>
+        </table>
+        <div class="ibox info">
+          <span class="ibox-ico">⏰</span>
+          <p><strong>Cálculo:</strong> Tempo de acionamento = SLA × 0,20. O prazo começa a contar a partir da abertura do chamado no sistema.</p>
+        </div>
+        <div class="ibox warn">
+          <span class="ibox-ico">⏰</span>
+          <p><strong>Exemplo:</strong> chamado P2 aberto às 08:00 (SLA de 6h, vence às 14:00). O limite de acionamento é 72 minutos, ou seja, o técnico precisa estar despachado até <strong>09:12</strong>.</p>
+        </div>
+      </div>
+
+      <div class="c-section sr" id="q-s5">
+        <h2>5. O Relógio do SLA</h2>
+        <p>O tempo do SLA <strong>só corre</strong> enquanto o ticket está em "Iniciado" ou "Não Iniciado" — quando o chamado está na fila da TLP sem estar paralisado.</p>
+
+        <!-- SVG: SLA clock states -->
+        <div class="illus-wrap sr-right">
+          <svg viewBox="0 0 520 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Estados do relógio do SLA">
+            <!-- Clock 1: Running -->
+            <circle cx="100" cy="75" r="44" fill="#1E2631" stroke="#4CAF82" stroke-width="2"/>
+            <!-- Clock face ticks -->
+            <line x1="100" y1="34" x2="100" y2="40" stroke="#4CAF82" stroke-width="2" opacity=".6"/>
+            <line x1="100" y1="110" x2="100" y2="116" stroke="#4CAF82" stroke-width="2" opacity=".6"/>
+            <line x1="56" y1="75" x2="62" y2="75" stroke="#4CAF82" stroke-width="2" opacity=".6"/>
+            <line x1="138" y1="75" x2="144" y2="75" stroke="#4CAF82" stroke-width="2" opacity=".6"/>
+            <!-- Minute hand at 11 -->
+            <line x1="100" y1="75" x2="85" y2="48" stroke="#4CAF82" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Hour hand at 2 -->
+            <line x1="100" y1="75" x2="118" y2="58" stroke="#4CAF82" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="100" cy="75" r="4" fill="#4CAF82"/>
+            <text x="100" y="128" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#4CAF82">▶ Rodando</text>
+            <text x="100" y="145" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">Iniciado / Não Iniciado</text>
+
+            <!-- Arrow between -->
+            <text x="200" y="78" text-anchor="middle" font-family="Inter,sans-serif" font-size="22" fill="#8895A7" opacity=".5">⇄</text>
+
+            <!-- Clock 2: Paused -->
+            <circle cx="300" cy="75" r="44" fill="#1E2631" stroke="#F5A623" stroke-width="2" stroke-dasharray="6,3"/>
+            <line x1="300" y1="34" x2="300" y2="40" stroke="#F5A623" stroke-width="2" opacity=".4"/>
+            <line x1="300" y1="110" x2="300" y2="116" stroke="#F5A623" stroke-width="2" opacity=".4"/>
+            <line x1="256" y1="75" x2="262" y2="75" stroke="#F5A623" stroke-width="2" opacity=".4"/>
+            <line x1="338" y1="75" x2="344" y2="75" stroke="#F5A623" stroke-width="2" opacity=".4"/>
+            <!-- Both hands at 12 (stopped) -->
+            <line x1="300" y1="75" x2="300" y2="38" stroke="#F5A623" stroke-width="2.5" stroke-linecap="round" opacity=".6"/>
+            <line x1="300" y1="75" x2="300" y2="45" stroke="#F5A623" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+            <circle cx="300" cy="75" r="4" fill="#F5A623" opacity=".7"/>
+            <!-- Pause symbol -->
+            <rect x="284" y="60" width="7" height="22" rx="2" fill="#F5A623" opacity=".5"/>
+            <rect x="295" y="60" width="7" height="22" rx="2" fill="#F5A623" opacity=".5"/>
+            <text x="300" y="128" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#F5A623">⏸ Pausado</text>
+            <text x="300" y="145" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">Suspenso / Tramitado</text>
+
+            <!-- Progress bar at bottom -->
+            <rect x="380" y="40" width="120" height="10" rx="5" fill="#1A2233"/>
+            <rect x="380" y="40" width="80" height="10" rx="5" fill="#4CAF82"/>
+            <text x="440" y="28" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">Progresso do SLA</text>
+            <text x="465" y="53" font-family="Inter,sans-serif" font-size="9" fill="#4CAF82">67%</text>
+
+            <rect x="380" y="80" width="120" height="10" rx="5" fill="#1A2233"/>
+            <rect x="380" y="80" width="95" height="10" rx="5" fill="#F87171"/>
+            <text x="440" y="68" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">SLA Vencido</text>
+            <text x="480" y="93" font-family="Inter,sans-serif" font-size="9" fill="#F87171">!</text>
+
+            <rect x="380" y="120" width="120" height="10" rx="5" fill="#1A2233"/>
+            <rect x="380" y="120" width="50" height="10" rx="5" fill="#F5A623"/>
+            <text x="440" y="108" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#8895A7">Pausado em</text>
+            <text x="465" y="133" font-family="Inter,sans-serif" font-size="9" fill="#F5A623">42%</text>
+          </svg>
+          <p class="illus-cap">Estados do relógio SLA: rodando quando na fila TLP, pausado em suspensão/tramitação</p>
+        </div>
+
+        <table class="data-tbl">
+          <thead><tr><th>Status do Ticket</th><th>Relógio</th><th>O que fazer</th></tr></thead>
+          <tbody>
+            <tr><td>Iniciado</td><td><span class="pill ok">▶ Rodando</span></td><td>Atuar imediatamente</td></tr>
+            <tr><td>Não Iniciado</td><td><span class="pill ok">▶ Rodando</span></td><td>Acionar dentro do prazo de 20%</td></tr>
+            <tr><td>Paralisado por Suspensão</td><td><span class="pill p4">⏸ Pausado</span></td><td>Aguardar resolução do impedimento</td></tr>
+            <tr><td>Tramitado para TIM</td><td><span class="pill p4">⏸ Pausado</span></td><td>Acompanhar retorno pelo CCI</td></tr>
+          </tbody>
+        </table>
+        <h3>Exemplo prático: chamado P2 (SLA de 6h)</h3>
+        <table class="data-tbl">
+          <thead><tr><th>Horário</th><th>Evento</th><th>Relógio</th></tr></thead>
+          <tbody>
+            <tr><td>08:00</td><td>Chamado aberto (vencimento previsto: 14:00)</td><td><span class="pill ok">▶ Rodando</span></td></tr>
+            <tr><td>09:00</td><td>Técnico acionado, dentro do limite de 09:12</td><td><span class="pill ok">▶ Rodando</span></td></tr>
+            <tr><td>10:00</td><td>Técnico chega e encontra impedimento no lado TLP. Suspende na hora, com evidência. Já foram consumidas 2h.</td><td><span class="pill p4">⏸ Pausado</span></td></tr>
+            <tr><td>11:30</td><td>Impedimento resolvido e a TLP retorna o ticket. Ficou 1h30 pausado.</td><td><span class="pill ok">▶ Rodando</span></td></tr>
+            <tr><td>15:30</td><td>Novo vencimento: 4h restantes após o retorno</td><td><span class="pill p1">Prazo final</span></td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:.8rem">Exemplo didático. A suspensão só vale se seguir as regras da seção 7 e estiver registrada no momento da ocorrência.</p>
+        <div class="ibox ok">
+          <span class="ibox-ico">›</span>
+          <p>Compreender essa lógica permite identificar os momentos em que é necessário agir para <strong>não perder o prazo contratual</strong>.</p>
+        </div>
+      </div>
+
+      <div class="c-section sr" id="q-s6">
+        <h2>6. Como Registrar Corretamente</h2>
+        <p>A qualidade do registro garante a elegibilidade de pleitos de abono. Cada etapa deve ser documentada <strong>no momento em que acontece</strong>.</p>
+        <ol>
+          <li><strong>Acionamento:</strong> Registrar horário e localização do técnico no despacho.</li>
+          <li><strong>Check-in (CA):</strong> Registrar chegada ao site com evidência fotográfica e condições encontradas.</li>
+          <li><strong>Diagnóstico:</strong> Declarar a condição técnica e o diagnóstico detalhado.</li>
+          <li><strong>Tratativa:</strong> Atualizar o ticket em cada passo da solução aplicada.</li>
+          <li><strong>Encerramento:</strong> Registrar solução, evidências fotográficas e prazo de estabilização.</li>
+        </ol>
+        <h3>Registro fraco × registro forte</h3>
+        <table class="data-tbl">
+          <thead><tr><th>Etapa</th><th>Fraco</th><th>Forte</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Acionamento</strong></td><td>"Técnico acionado"</td><td>Nome do técnico, horário exato e de onde ele saiu</td></tr>
+            <tr><td><strong>Check-in</strong></td><td>"No site"</td><td>Horário da chegada com foto da fachada/equipamento</td></tr>
+            <tr><td><strong>Diagnóstico</strong></td><td>"Site fora do ar"</td><td>Condição encontrada, causa provável e foto do equipamento afetado</td></tr>
+            <tr><td><strong>Encerramento</strong></td><td>"Normalizado"</td><td>Solução aplicada, fotos antes/depois e prazo de estabilização</td></tr>
+          </tbody>
+        </table>
+        <div class="ibox danger">
+          <span class="ibox-ico">🚫</span>
+          <p><strong>Registro retroativo NÃO é aceito.</strong> Toda evidência deve ser registrada no momento da ocorrência. Sem evidência contemporânea, o pleito de abono será negado.</p>
+        </div>
+      </div>
+
+      <div class="c-section sr" id="q-s7">
+        <h2>7. Suspensão × Tramitação</h2>
+        <p>É fundamental entender a diferença, pois cada ação tem impacto distinto no indicador de SLA.</p>
+        <table class="data-tbl">
+          <thead><tr><th>Ação</th><th>Quando usar</th><th>Responsável pelo retorno</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>Suspensão</strong></td>
+              <td>Impedimento no lado TLP (aguardar agendamento, peças, acesso)</td>
+              <td>TLP — deve retornar quando o impedimento cessar</td>
+            </tr>
+            <tr>
+              <td><strong>Tramitação (NotDone)</strong></td>
+              <td>Dependência de terceiro: TIM, provedor de TX, concessionária</td>
+              <td>TIM / terceiro — ticket vai para fila do responsável</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="ibox info">
+          <span class="ibox-ico">›</span>
+          <p><strong>Suspensão incorreta</strong> pode resultar em vencimento de SLA sem possibilidade de abono. Sempre escolha a ação correta de acordo com a natureza do impedimento.</p>
+        </div>
+      </div>
+
+      <div class="c-section sr" id="q-s8">
+        <h2>8. Abono de Tempo e Dificuldades</h2>
+        <div class="ibox ok">
+          <span class="ibox-ico">›</span>
+          <p><strong>Regra de Ouro:</strong> O abono é de <strong>TEMPO, não de ticket</strong>. Mesmo que uma dificuldade seja reconhecida, o abono incide somente sobre o período em que a equipe foi efetivamente prejudicada.</p>
+        </div>
+        <h3 style="color:var(--campo-l)">O que pode ser abonado:</h3>
+        <ul>
+          <li>Falha de energia sem flag GMG ativo no sistema</li>
+          <li>Falha de transmissão (TX alugada) com abertura de WO e registro de HH</li>
+          <li>Impedimentos de responsabilidade da TIM ou de terceiros</li>
+          <li>Condições climáticas extremas que impeçam o acesso ao site</li>
+        </ul>
+        <h3 style="color:#F87171">O que NÃO pode ser abonado (falhas operacionais TLP):</h3>
+        <ul>
+          <li>Demora no início das tratativas ou no diagnóstico</li>
+          <li>Problemas no veículo / demora no deslocamento</li>
+          <li>Falha no despacho ou falta de ferramenta</li>
+          <li>TSK sem atualização</li>
+        </ul>
+        <div class="ibox info">
+          <span class="ibox-ico">›</span>
+          <p><strong>Exemplo de pleito preciso:</strong> o acesso ao site ficou bloqueado das 10:00 às 11:20, com foto e registro no ticket no mesmo horário. Pleiteie <strong>1h20</strong> de abono, e não o ticket inteiro.</p>
+        </div>
+        <table class="data-tbl">
+          <thead><tr><th>Princípio</th><th>O que significa</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Evidência Obrigatória</strong></td><td>Sem evidência no ticket no momento da ocorrência, não há abono</td></tr>
+            <tr><td><strong>Paralisação Imediata</strong></td><td>Suspender ou tramitar o ticket imediatamente ao encontrar dificuldade</td></tr>
+            <tr><td><strong>Pleito Preciso</strong></td><td>Pleitear exatamente o tempo de impedimento — nem mais, nem menos</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="c-section sr" id="q-s9">
+        <h2>9. Checklist do Atendimento Perfeito</h2>
+        <p>Use este checklist como guia em cada atendimento para garantir conformidade com o SLA:</p>
+        <h3>Antes de Começar</h3>
+        <ul class="checklist">
+          <li>Confirmar se o ticket está dentro da franquia</li>
+          <li>Identificar o modelo (FMMT ou FMO) e a prioridade</li>
+          <li>Considerar o acréscimo de distância (+1h a cada 100 km)</li>
+          <li>Calcular o limite de acionamento (SLA × 0,20)</li>
+        </ul>
+        <h3 style="margin-top:18px">Durante o Atendimento</h3>
+        <ul class="checklist">
+          <li>Acionar dentro dos 20% do SLA</li>
+          <li>Registrar localização e horário no acionamento</li>
+          <li>Realizar CA (Check-in) ao chegar no site</li>
+          <li>Declarar condições encontradas e diagnóstico detalhado</li>
+          <li>Registrar evidências fotográficas e textuais</li>
+          <li>Registrar prazo estimado de solução</li>
+          <li>Paralisar / Tramitar imediatamente ao encontrar dificuldade</li>
+        </ul>
+        <h3 style="margin-top:18px">No Encerramento</h3>
+        <ul class="checklist">
+          <li>Registrar a solução aplicada e o prazo de estabilização</li>
+          <li>Anexar as evidências fotográficas (antes e depois)</li>
+          <li>Conferir se suspensões e tramitações foram feitas na hora certa</li>
+        </ul>
+        <h3 style="margin-top:18px">Em Caso de Dificuldade</h3>
+        <ul class="checklist">
+          <li>Identificar quem é o próximo responsável</li>
+          <li>Se TIM: Tramitar (NotDone) para fila TIM</li>
+          <li>Se TLP com impedimento: Suspender como Agendado Data Futura</li>
+          <li>Pleitar apenas o tempo efetivamente impactado</li>
+          <li>Nunca registrar dificuldade retroativamente</li>
+        </ul>
+        <div class="ibox ok" style="margin-top:20px">
+          <span class="ibox-ico">›</span>
+          <p>Seguir este checklist em todos os atendimentos garante conformidade com o SLA e maximiza a elegibilidade para abonos quando necessário.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 TLP – Conectados com o Futuro. Todos os direitos reservados.</span>
+  <span>Portal SAP – Sistema de Apoio Profissional</span>
+</footer>
+
+<!-- DEV CREDIT BAR -->
+<div class="footer-dev">
+  <p class="footer-dev-title">Equipe de Desenvolvimento</p>
+  <div class="footer-dev-row">
+    <div class="footer-dev-item">
+      <span class="footer-dev-role">Dev:</span>
+      <span class="footer-dev-name">Lucas Infante</span>
+      <span class="footer-dev-email">&lt;lucas.esao7751@gmail.com&gt;</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// Navegação: volta para as telas do index.html
+function goTo(page) { location.href = page === 'home' ? 'index.html' : 'index.html#' + page; }
+
+function scrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Theme toggle
+let theme = (() => { try { return localStorage.getItem('sap-theme') || 'dark'; } catch{ return 'dark'; } })();
+function applyTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  var s=document.getElementById('themeSun'),m=document.getElementById('themeMoon');if(s&&m){if(t==='dark'){s.style.display='';m.style.display='none';}else{s.style.display='none';m.style.display='';} }
+  try { localStorage.setItem('sap-theme', t); } catch{}
+}
+function toggleTheme() {
+  theme = theme === 'dark' ? 'light' : 'dark';
+  applyTheme(theme);
+}
+applyTheme(theme);
+
+// Bidirectional scroll reveal
+const srObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    e.target.classList.toggle('sr-in', e.isIntersecting);
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+function initSR() {
+  document.querySelectorAll('.view.active .sr, .view.active .sr-left, .view.active .sr-right, .view.active .sr-scale').forEach(el => {
+    srObs.observe(el);
+  });
+}
+
+setTimeout(initSR, 80);
+
+// ── Leitura: progresso, índice ativo, resumos, navegação e quiz ──
+(function() {
+  const SUM = {
+    'q-s1': ['Só tickets dentro da franquia entram na avaliação de prazo.'],
+    'q-s2': ['FMMT: P1 4h, P2 6h, P3 12h, P4 24h, P5 48h.', 'Soma-se +1h a cada 100 km entre o CM e o site.'],
+    'q-s3': ['FMO: alta 4h, média 6h, baixa 24h.', 'O FMO não tem P3 nem P5: confirme o modelo antes de ler o prazo.'],
+    'q-s4': ['Acionar em até 20% do SLA (ex.: P1 em 48 minutos, P5 em 9h36).', 'Fórmula: SLA × 0,20.'],
+    'q-s5': ['O relógio só corre em Iniciado e Não Iniciado; pausa em suspensão e tramitação.', 'O tempo pausado desloca o vencimento do SLA.'],
+    'q-s6': ['Registre tudo no momento em que acontece. Registro retroativo não é aceito.'],
+    'q-s7': ['Suspensão = impedimento da TLP. Tramitação (NotDone) = dependência de terceiro.'],
+    'q-s8': ['O abono é de tempo, não de ticket, e exige evidência contemporânea.'],
+    'q-s9': ['Antes, durante e no encerramento: franquia, 20% do SLA, evidências e paralisação imediata.']
+  };
+  const QUIZ = [
+    { q: 'Para que serve o backhaul?', o: ['Amplificar o sinal na antena', 'Conectar a ERB ao core da rede', 'Fornecer energia ao site', 'Definir a área da célula'], a: 1, e: 'Backhaul é o link (fibra, rádio ou satélite) entre a ERB e o core.' },
+    { q: 'O que indica um sinal de -85 dBm?', o: ['Sinal excelente', 'Potência de referência (1 mW)', 'Sinal fraco, borda de cobertura', 'Cobertura inexistente'], a: 2, e: '-85 dBm é sinal fraco, típico de borda de cobertura.' },
+    { q: 'Qual fibra é indicada para backbones e cabos submarinos?', o: ['Multimodo Step Index', 'Multimodo Graded Index', 'Monomodo', 'Par trançado'], a: 2, e: 'A monomodo tem núcleo de ~9 µm e alcança centenas de km.' },
+    { q: 'Qual órbita é usada pela navegação GPS/GNSS?', o: ['LEO', 'MEO', 'GEO', 'Nenhuma, é terrestre'], a: 1, e: 'GPS/GNSS usa órbita média (MEO).' },
+    { q: 'Quantos pares de fios seriam necessários para ligar 1.000 assinantes sem central?', o: ['1.000', '10.000', '499.500', '999.000'], a: 2, e: 'L = N×(N−1)/2 = 1.000×999/2 = 499.500.' }
+  ];
+  const store = (k, v) => { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || '[]'); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return []; } };
+  const readers = [];
+
+  function setup(viewId) {
+    const view = document.getElementById(viewId);
+    if (!view) return;
+    const secs = Array.from(view.querySelectorAll('.c-section'));
+    const links = Array.from(view.querySelectorAll('.sb-nav a'));
+    const key = 'sap-read-' + viewId;
+    const done = new Set(store(key));
+    const words = view.querySelector('.c-main').textContent.split(/\s+/).length;
+    const meta = view.querySelector('.read-meta');
+    if (meta) meta.innerHTML = '<span class="rm-chip">⏱ ' + Math.max(1, Math.round(words / 190)) + ' min de leitura</span><span class="rm-chip">' + secs.length + ' seções</span>';
+
+    secs.forEach((s, i) => {
+      if (SUM[s.id]) {
+        const r = document.createElement('div');
+        r.className = 'recap';
+        r.innerHTML = '<h4>Em resumo</h4><ul>' + SUM[s.id].map(t => '<li>' + t + '</li>').join('') + '</ul>';
+        s.appendChild(r);
+      }
+      const nav = document.createElement('div');
+      nav.className = 'sec-nav';
+      if (i > 0) { const b = document.createElement('button'); b.textContent = '← ' + (secs[i - 1].querySelector('h2') || {}).textContent; b.onclick = () => secs[i - 1].scrollIntoView({ behavior: 'smooth' }); nav.appendChild(b); }
+      if (i < secs.length - 1) { const b = document.createElement('button'); b.className = 'sn-next'; b.textContent = (secs[i + 1].querySelector('h2') || {}).textContent + ' →'; b.onclick = () => secs[i + 1].scrollIntoView({ behavior: 'smooth' }); nav.appendChild(b); }
+      s.appendChild(nav);
+    });
+
+    function update() {
+      let cur = 0;
+      secs.forEach((s, i) => {
+        const r = s.getBoundingClientRect();
+        if (r.top <= 140) cur = i;
+        if (r.bottom <= window.innerHeight * 0.9 && r.bottom > 0) done.add(s.id);
+      });
+      const atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      if (atEnd) done.add(secs[secs.length - 1].id);
+      links.forEach((a, i) => { a.classList.toggle('cur', i === cur); a.classList.toggle('read', !!secs[i] && done.has(secs[i].id)); });
+      const pct = Math.round(done.size / secs.length * 100);
+      const bar = view.querySelector('.sb-prog span'), lbl = view.querySelector('.sb-prog-l');
+      if (bar) bar.style.width = pct + '%';
+      if (lbl) lbl.textContent = pct + '% concluído (' + done.size + ' de ' + secs.length + ')';
+      store(key, Array.from(done));
+    }
+    readers.push({ view, update });
+  }
+
+  function onScroll() {
+    const active = readers.find(r => r.view.classList.contains('active'));
+    if (active) active.update();
+  }
+  let tick = false;
+  window.addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(() => { onScroll(); tick = false; }); } }, { passive: true });
+  window.addEventListener('hashchange', () => setTimeout(onScroll, 120));
+  document.addEventListener('click', () => setTimeout(onScroll, 150));
+
+  function buildQuiz() {
+    const box = document.getElementById('quiz-mod1');
+    if (!box) return;
+    box.innerHTML = '';
+    let score = 0;
+    const sc = document.createElement('div');
+    sc.className = 'qz-score';
+    sc.textContent = '0 / ' + QUIZ.length + ' corretas';
+    box.appendChild(sc);
+    QUIZ.forEach((q, qi) => {
+      const d = document.createElement('div');
+      d.className = 'qz-q';
+      d.innerHTML = '<p><strong>' + (qi + 1) + '. ' + q.q + '</strong></p>';
+      const opts = document.createElement('div');
+      opts.className = 'qz-opts';
+      const fb = document.createElement('div');
+      fb.className = 'qz-fb';
+      q.o.forEach((t, oi) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'qz-opt';
+        b.textContent = t;
+        b.onclick = () => {
+          if (d.dataset.done) return;
+          d.dataset.done = 1;
+          if (oi === q.a) { b.classList.add('ok'); score++; } else { b.classList.add('bad'); opts.children[q.a].classList.add('ok'); }
+          fb.textContent = q.e;
+          fb.style.display = 'block';
+          sc.textContent = score + ' / ' + QUIZ.length + ' corretas';
+        };
+        opts.appendChild(b);
+      });
+      d.appendChild(opts);
+      d.appendChild(fb);
+      box.appendChild(d);
+    });
+    const rs = document.createElement('button');
+    rs.className = 'qz-reset';
+    rs.textContent = 'Refazer teste';
+    rs.onclick = buildQuiz;
+    box.appendChild(rs);
+  }
+
+  setup('v-campo-qual');
+  setTimeout(onScroll, 200);
+})();
+
+</script>

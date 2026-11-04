@@ -1,0 +1,1258 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Treinamento TLP — Módulo 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06090F; --surf:#0D1525; --surf2:#121E35;
+  --border:rgba(150,180,230,.10); --text:#D4DFF0; --muted:#6B7D96;
+  --accent:#C85210; --orange:#E05E14;
+  --r:12px; color-scheme:dark;
+}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){
+  --bg:#F4F7FC; --surf:#fff; --surf2:#EBF0F8;
+  --border:rgba(20,40,100,.09); --text:#111929; --muted:#506070;
+  --accent:#B84A0A; --orange:#D4560E; color-scheme:light;
+}}
+:root[data-theme="light"]{
+  --bg:#F4F7FC; --surf:#fff; --surf2:#EBF0F8;
+  --border:rgba(20,40,100,.09); --text:#111929; --muted:#506070;
+  --accent:#B84A0A; --orange:#D4560E; color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;padding-inline:0}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;border-radius:8px}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px}
+
+/* HEADER */
+.tut-hdr{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 48px;
+  background:rgba(6,9,15,.92);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .tut-hdr{background:rgba(244,247,252,.92)}}
+:root[data-theme="light"] .tut-hdr{background:rgba(244,247,252,.92)}
+.hdr-logo{display:flex;align-items:center;gap:12px}
+.hdr-logo svg{width:64px;height:26px;flex-shrink:0}
+.hdr-logo-tag{font-size:.6rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);border-left:1px solid var(--border);padding-left:12px}
+.hdr-step{font-size:.75rem;color:var(--muted);font-weight:600;letter-spacing:.06em}
+.theme-btn{width:32px;height:32px;border-radius:7px;border:1px solid var(--border);background:var(--surf);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:color .2s;padding:0}
+.theme-btn:hover{color:var(--text)}
+:root[data-theme="light"] .theme-btn{border-color:rgba(20,40,100,.25);background:var(--surf2);color:var(--text)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]) .theme-btn{border-color:rgba(20,40,100,.25);background:var(--surf2);color:var(--text)}}
+
+/* CHAPTERS NAV */
+.chapters{display:flex;gap:6px;align-items:center}
+.chap-dot{width:8px;height:8px;border-radius:50%;background:rgba(150,180,230,.18);border:none;padding:0;-webkit-appearance:none;appearance:none;cursor:pointer;transition:background .25s,transform .25s,opacity .25s;flex-shrink:0}
+.chap-dot.done{background:var(--accent);opacity:.5}
+.chap-dot.active{background:var(--accent);transform:scale(1.5);opacity:1}
+
+/* HERO */
+.hero-screen{
+  min-height:88vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px;
+  position:relative;overflow:hidden;
+}
+.hero-screen::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 30%,rgba(200,82,16,.10),transparent);
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:5px 16px;border-radius:999px;
+  border:1px solid rgba(200,82,16,.3);background:rgba(200,82,16,.08);
+  font-size:.72rem;font-weight:700;color:var(--accent);
+  letter-spacing:.08em;text-transform:uppercase;margin-bottom:32px;
+}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.4}}
+.hero-title{font-family:'Sora',sans-serif;font-size:clamp(2rem,5.5vw,3.6rem);font-weight:800;line-height:1.1;letter-spacing:-.03em;margin-bottom:20px;text-wrap:balance}
+.hero-title em{font-style:normal;color:var(--accent)}
+.hero-sub{font-size:1rem;color:var(--muted);max-width:520px;margin-bottom:40px;line-height:1.8}
+.hero-start{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:11px 26px;border-radius:9px;
+  background:linear-gradient(135deg,var(--accent),var(--orange));
+  color:white;font-weight:700;font-size:1rem;cursor:pointer;
+  border:none;font-family:'Inter',sans-serif;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 8px 32px rgba(200,82,16,.3);
+}
+.hero-start:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(200,82,16,.4)}
+
+/* CHAPTERS */
+.chapter{max-width:980px;margin:0 auto;padding:80px 32px}
+.chapter-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.eyebrow-num{
+  width:28px;height:28px;border-radius:8px;
+  background:rgba(200,82,16,.15);color:var(--accent);
+  font-size:.75rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.eyebrow-label{font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.chapter h2{font-family:'Sora',sans-serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:800;line-height:1.2;letter-spacing:-.02em;margin-bottom:20px}
+.chapter h2 em{font-style:normal;color:var(--accent)}
+.chapter p{color:var(--muted);font-size:.97rem;line-height:1.85;margin-bottom:16px}
+.chapter p strong{color:var(--text);font-weight:600}
+.chapter p:last-child{margin-bottom:0}
+
+/* CALLOUT BOXES */
+.callout{
+  border-radius:10px;padding:16px 20px;
+  display:flex;gap:14px;align-items:flex-start;
+  margin:24px 0;font-size:.92rem;line-height:1.7;
+}
+.callout.info{background:rgba(150,180,230,.07);border-left:3px solid rgba(150,180,230,.35)}
+.callout.tip{background:rgba(150,180,230,.07);border-left:3px solid rgba(150,180,230,.35)}
+.callout.warn{background:rgba(200,82,16,.08);border-left:3px solid var(--accent)}
+.callout.fun{background:rgba(150,180,230,.07);border-left:3px solid rgba(150,180,230,.35)}
+.callout-ico{font-size:.95rem;font-weight:700;flex-shrink:0;margin-top:2px;color:var(--accent);opacity:.9;min-width:16px;text-align:center}
+.callout p{margin:0;color:var(--muted)}
+.callout p strong{color:var(--text)}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;margin:24px 0}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{background:var(--surf2);color:var(--text);font-weight:700;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border)}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--muted);vertical-align:top}
+td strong{color:var(--text)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(150,180,230,.03)}
+.badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.73rem;font-weight:700;letter-spacing:.04em}
+.badge-p1{background:rgba(220,60,60,.15);color:#E08080;border:1px solid rgba(220,60,60,.2)}
+.badge-p2{background:rgba(200,130,16,.15);color:#E0A060;border:1px solid rgba(200,130,16,.2)}
+.badge-p3{background:rgba(150,180,230,.12);color:#9BB5D4;border:1px solid rgba(150,180,230,.2)}
+.badge-p4{background:rgba(100,150,100,.12);color:#90B890;border:1px solid rgba(100,150,100,.2)}
+.badge-p5{background:rgba(120,120,120,.10);color:#909090;border:1px solid rgba(120,120,120,.15)}
+
+/* STEP FLOW */
+.step-flow{display:flex;flex-direction:column;gap:0;margin:24px 0}
+.step-item{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--border)}
+.step-item:last-child{border-bottom:none}
+.step-num{
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(200,82,16,.15);border:1px solid rgba(200,82,16,.25);
+  color:var(--accent);font-size:.8rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.step-body strong{display:block;color:var(--text);font-size:.95rem;margin-bottom:4px}
+.step-body p{font-size:.88rem;color:var(--muted);margin:0;line-height:1.65}
+
+/* CATEGORY GRID */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:24px 0}
+.cat-card{background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:18px}
+.cat-card-head{font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.cat-card h3{font-size:.97rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.cat-card p{font-size:.85rem;color:var(--muted);margin:0;line-height:1.65}
+
+/* IMAGE PANELS */
+.img-panel{margin:28px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--surf)}
+.img-caption{padding:10px 16px;font-size:.75rem;color:var(--muted);text-align:center;border-top:1px solid var(--border)}
+
+/* QUIZ */
+.quiz-section{background:var(--surf);border:1px solid var(--border);border-radius:12px;padding:28px;margin:32px 0}
+.quiz-q{font-weight:700;font-size:.97rem;margin-bottom:16px}
+.quiz-opts{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{
+  padding:12px 16px;border-radius:8px;
+  border:1px solid var(--border);background:var(--surf2);
+  cursor:pointer;font-size:.9rem;color:var(--muted);
+  transition:all .2s;text-align:left;font-family:'Inter',sans-serif;
+}
+.quiz-opt:hover{color:var(--text);border-color:var(--muted)}
+.quiz-opt.correct{background:rgba(150,210,150,.1);border-color:rgba(150,210,150,.4);color:#9FD4A5}
+.quiz-opt.wrong{background:rgba(220,80,80,.1);border-color:rgba(220,80,80,.35);color:#E08080}
+.quiz-result{margin-top:12px;font-size:.88rem;font-weight:600;min-height:24px}
+
+/* MINI CHECK */
+.mini-check{background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:20px 24px;margin:32px 0 0 0}
+.mini-check-title{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.mc-q{font-size:.95rem;font-weight:600;color:var(--text);margin-bottom:10px}
+.mc-opts{display:flex;flex-direction:column;gap:7px;margin-bottom:8px}
+.mc-opt{padding:10px 14px;border-radius:7px;border:1px solid var(--border);background:var(--surf);color:var(--muted);font-size:.88rem;cursor:pointer;text-align:left;font-family:'Inter',sans-serif;transition:all .18s}
+.mc-opt:hover{color:var(--text);border-color:var(--muted)}
+.mc-opt.correct{background:rgba(150,210,150,.1);border-color:rgba(150,210,150,.4);color:#9FD4A5}
+.mc-opt.wrong{background:rgba(220,80,80,.1);border-color:rgba(220,80,80,.35);color:#E08080}
+.mc-res{font-size:.82rem;font-weight:600;min-height:20px;margin-top:4px;color:var(--muted)}
+.mc-sep{border:none;border-top:1px solid var(--border);margin:24px 0}
+
+/* DIVIDER */
+.div-chapter{border:none;border-top:1px solid var(--border);margin:0;opacity:.5}
+
+/* FINISH SCREEN */
+.finish-screen{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 24px}
+.finish-screen h2{font-family:'Sora',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;margin-bottom:16px}
+.finish-screen p{color:var(--muted);max-width:480px;font-size:.97rem;line-height:1.8;margin-bottom:32px}
+
+/* SCROLL REVEAL */
+.sr{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.sr.in{opacity:1;transform:none}
+.chapter h2.sr{transform:translateY(20px);filter:blur(4px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1),filter .6s ease}
+.chapter h2.sr.in{transform:none!important;filter:none}
+
+/* RESP */
+@media(max-width:640px){
+  /* HEADER */
+  .tut-hdr{padding:10px 16px}
+  .hdr-logo-tag{display:none}
+  .hdr-logo svg{width:50px;height:20px}
+  /* HERO */
+  .hero-screen{padding:36px 16px 28px}
+  .hero-sub{max-width:100%;font-size:.92rem;margin-bottom:26px}
+  .hero-btn{padding:11px 20px;font-size:.92rem}
+  /* CAPÍTULOS */
+  .chapter{padding:36px 16px}
+  .callout{padding:12px 14px;gap:10px;font-size:.88rem}
+  /* GRIDS */
+  .cat-grid{grid-template-columns:1fr}
+  /* TABELAS */
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  th,td{white-space:nowrap}
+  /* STEPS */
+  .step-item{gap:12px}
+  /* MINI-CHECK */
+  .mini-check{padding:14px 16px}
+  /* QUIZ */
+  .quiz-section{padding:18px 14px}
+  .quiz-opts{gap:7px}
+  /* CONCLUSÃO */
+  .finish-screen{padding:40px 16px}
+}
+
+/* TÍTULOS MAIÚSCULO */
+h1,h2,h3,.chapter h2,.cat-card h3,.compare-card h3,.step-label,.quiz-q,.mc-q {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ════ HERO SCREEN UPGRADE ════════════════════════════════════════════════ */
+.hero-screen { position:relative; overflow:hidden; }
+
+
+.hero-glow-bg {
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 75% 65% at 65% 30%,rgba(200,82,16,.058),transparent 70%);
+}
+.hero-badge,.hero-title,.hero-sub { position:relative;z-index:1; }
+.hero-screen .hero-start         { position:relative;z-index:1; }
+
+/* word-up reveal */
+.hero-line { display:block; overflow:hidden; padding-bottom:.05em; }
+.hero-word {
+  display:inline-block;
+  transform:translateY(108%) skewY(3deg);
+  opacity:0;
+  animation:hwUp .92s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes hwUp { to { transform:translateY(0) skewY(0deg); opacity:1; } }
+
+/* sub + button fade-in on load */
+.hero-screen .hero-sub   { opacity:0; animation:hsFade .65s .72s cubic-bezier(.16,1,.3,1) forwards; }
+.hero-screen .hero-start { opacity:0; animation:hsFade .65s .94s cubic-bezier(.16,1,.3,1) forwards; }
+@keyframes hsFade {
+  from { opacity:0; transform:translateY(14px); }
+  to   { opacity:1; transform:none; }
+}
+
+/* badge pulse orange */
+.hero-badge .pulse {
+  background:var(--accent) !important;
+  box-shadow:0 0 8px var(--accent) !important;
+  animation:accPulse 2.2s ease infinite !important;
+}
+@keyframes accPulse {
+  0%,100% { opacity:1; box-shadow:0 0 8px var(--accent); }
+  50%      { opacity:.18; box-shadow:0 0 2px transparent; }
+}
+
+/* ════ SR REFINEMENT ═══════════════════════════════════════════════════════ */
+/* smoother easing + smaller Y offset for body text */
+
+/* ════ MÓDULO 1 — complementos ═════════════════════════════════════════════ */
+.chapter h3{font-family:'Sora',sans-serif;font-size:1.02rem;font-weight:700;color:var(--text);margin:30px 0 12px;line-height:1.3}
+.chapter ul,.chapter ol{color:var(--muted);font-size:.95rem;line-height:1.8;margin:0 0 20px 22px}
+.chapter li{margin-bottom:6px;padding-left:4px}
+.chapter li::marker{color:var(--accent);font-weight:700}
+.chapter li strong{color:var(--text);font-weight:600}
+.callout.ok{background:rgba(150,210,150,.07);border-left:3px solid rgba(150,210,150,.45)}
+.callout.ok .callout-ico{color:#9FD4A5}
+.img-panel{padding:6px 0 0}
+.img-panel svg{display:block;width:100%;height:auto;padding:14px 12px 6px}
+.hero-sub{max-width:600px}
+@media(max-width:640px){
+  .chapters{display:none}
+  .chapter ul,.chapter ol{margin-left:18px}
+  .img-panel svg{padding:10px 6px 4px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="tut-hdr">
+  <div class="hdr-logo">
+    <a href="index.html#cci" style="display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border:1px solid var(--border);border-radius:7px;background:var(--surf);transition:color .2s" title="Voltar ao portal">&#8592; Portal</a>
+    <svg viewBox="0 0 64 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="hg1" x1="0" y1="26" x2="64" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="#C84A08"/><stop offset=".55" stop-color="#E05E14"/><stop offset="1" stop-color="#F5A020"/></linearGradient></defs>
+      <rect width="64" height="26" rx="4" fill="url(#hg1)"/>
+      <text x="32" y="19" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="14" fill="white" text-anchor="middle" letter-spacing="2">TLP</text>
+    </svg>
+    <span class="hdr-logo-tag">Módulo 1 · Introdução</span>
+  </div>
+  <div class="chapters" id="chapDots"></div>
+  <div style="display:flex;align-items:center;gap:12px">
+    <span class="hdr-step" id="stepLabel">Início</span>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn" title="Alternar tema"><svg id="themeSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg><svg id="themeMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="display:none"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
+  </div>
+</header>
+
+<!-- ═════ HERO ═════ -->
+<section class="hero-screen" data-chap="0">
+  <div class="hero-glow-bg"></div>
+  <div class="hero-badge"><span class="pulse"></span>Módulo 1 · Introdução</div>
+  <h1 class="hero-title">
+    <span class="hero-line"><span class="hero-word" style="animation-delay:.20s">Introdução a</span></span>
+    <span class="hero-line"><span class="hero-word" style="animation-delay:.38s"><em>Telecomunicações</em></span></span>
+  </h1>
+  <p class="hero-sub">Conceitos fundamentais para entender a infraestrutura de telecomunicações: ERBs, meios de transmissão, fibra óptica, satélites, centrais de comutação e a evolução das redes celulares.</p>
+  <button class="hero-start" onclick="scrollToChapter(1)">Começar treinamento</button>
+</section>
+
+<!-- ═════ CAP 1: Conceitos Gerais ═════ -->
+<div class="chapter" data-chap="1">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">1</span>
+    <span class="eyebrow-label">Conceitos Gerais</span>
+  </div>
+  <h2 class="sr">Conceitos de <em>Telecomunicações</em></h2>
+  <p class="sr">As telecomunicações surgiram quando o ser humano passou a buscar formas de comunicar informações à distância, superando os limites da voz e da visão direta. A evolução foi gradual e acompanhou avanços científicos, elétricos e eletrônicos.</p>
+  <div class="callout info sr">
+  <span class="callout-ico">›</span>
+  <p><strong>Definição:</strong> Telecomunicação é toda transmissão, emissão ou recepção de sinais, escrita, imagens, sons ou informações de qualquer natureza por fio, radioeletricidade, meios ópticos ou outros sistemas eletromagnéticos.</p>
+  </div>
+  <p class="sr">A evolução das telecomunicações inclui marcos como a invenção do telégrafo, do telefone, do rádio e, mais recentemente, a internet e as redes móveis de alta velocidade.</p>
+  <h3 class="sr">Linha do tempo</h3>
+  <div class="tbl-wrap sr">
+  <table>
+  <thead><tr><th>Marco</th><th>Época</th><th>O que mudou</th></tr></thead>
+  <tbody>
+  <tr><td><strong>Telégrafo</strong></td><td>Século XIX</td><td>Primeira comunicação elétrica à distância (código Morse)</td></tr>
+  <tr><td><strong>Telefone</strong></td><td>1876</td><td>Transmissão da voz por fios</td></tr>
+  <tr><td><strong>Rádio</strong></td><td>Final do século XIX</td><td>Comunicação sem fio por ondas eletromagnéticas</td></tr>
+  <tr><td><strong>Telefonia celular</strong></td><td>1970s</td><td>Mobilidade: o usuário se move e a chamada continua</td></tr>
+  <tr><td><strong>Internet e banda larga</strong></td><td>1990s em diante</td><td>Dados, vídeo e serviços em rede global</td></tr>
+  </tbody>
+  </table>
+  </div>
+  <h3 class="sr">Elementos de um sistema de comunicação</h3>
+  <ul class="sr">
+  <li><strong>Emissor:</strong> origem da informação (voz, dados, imagem)</li>
+  <li><strong>Transmissor:</strong> converte a informação em sinal adequado ao meio</li>
+  <li><strong>Canal / meio:</strong> caminho físico ou espaço por onde o sinal viaja</li>
+  <li><strong>Receptor:</strong> recupera a informação original</li>
+  <li><strong>Ruído:</strong> interferência que degrada o sinal ao longo do caminho</li>
+  </ul>
+
+  <div class="callout tip sr">
+    <span class="callout-ico">›</span>
+    <p><strong>Em resumo:</strong> Telecomunicação = transmitir informação à distância por fio, rádio, luz ou outros meios eletromagnéticos. A evolução vai do telégrafo à internet móvel.</p>
+  </div>
+
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 2: Evolução da Rede Celular ═════ -->
+<div class="chapter" data-chap="2">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">2</span>
+    <span class="eyebrow-label">Evolução da Rede Celular</span>
+  </div>
+  <h2 class="sr">Evolução da <em>Rede Celular</em></h2>
+  <p class="sr">As redes celulares evoluíram em gerações, cada uma com maior capacidade, velocidade e menor latência.</p>
+
+        <!-- SVG: 5G evolution bar chart -->
+  <div class="img-panel sr">
+          <svg viewBox="0 0 520 180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Evolução das gerações celulares">
+            <defs>
+              <linearGradient id="g1g" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#8895A7"/><stop offset="100%" stop-color="#5BAAD0"/></linearGradient>
+              <linearGradient id="g5g" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#E8560A"/><stop offset="100%" stop-color="#F5A623"/></linearGradient>
+            </defs>
+            <!-- bars -->
+            <rect x="28"  y="148" width="50" height="12" rx="3" fill="url(#g1g)" opacity=".5"/>
+            <rect x="113" y="136" width="50" height="24" rx="3" fill="url(#g1g)" opacity=".65"/>
+            <rect x="198" y="112" width="50" height="48" rx="3" fill="url(#g1g)" opacity=".8"/>
+            <rect x="283" y="76"  width="50" height="84" rx="3" fill="url(#g1g)"/>
+            <rect x="368" y="20"  width="50" height="140" rx="3" fill="url(#g5g)"/>
+            <!-- labels below -->
+            <text x="53"  y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#8895A7">1G</text>
+            <text x="138" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#8895A7">2G</text>
+            <text x="223" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#8895A7">3G</text>
+            <text x="308" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#8895A7">4G</text>
+            <text x="393" y="170" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="800" fill="#E8560A">5G</text>
+            <!-- speed labels -->
+            <text x="53"  y="143" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#5BAAD0">0.01M</text>
+            <text x="138" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#5BAAD0">0.3M</text>
+            <text x="223" y="106" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#5BAAD0">7M</text>
+            <text x="308" y="70"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#5BAAD0">100M</text>
+            <text x="393" y="14"  text-anchor="middle" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#F5A623">10 Gbps</text>
+            <!-- axis label -->
+            <text x="460" y="90" font-family="Inter,sans-serif" font-size="10" fill="#5A6A82" transform="rotate(-90,460,90)" text-anchor="middle">Velocidade</text>
+          </svg>
+  <p class="img-caption">Evolução da velocidade por geração de rede celular</p>
+  </div>
+
+  <div class="tbl-wrap sr">
+  <table>
+  <thead><tr><th>Geração</th><th>Tecnologia</th><th>Características</th></tr></thead>
+  <tbody>
+  <tr><td><strong>1G</strong></td><td>AMPS</td><td>Comunicação analógica de voz</td></tr>
+  <tr><td><strong>2G</strong></td><td>GSM / CDMA</td><td>Voz digital + SMS + dados básicos</td></tr>
+  <tr><td><strong>3G</strong></td><td>UMTS / WCDMA</td><td>Dados móveis, vídeo chamada</td></tr>
+  <tr><td><strong>4G</strong></td><td>LTE</td><td>Alta velocidade, streaming de vídeo</td></tr>
+  <tr><td><strong>5G</strong></td><td>NR (New Radio)</td><td>Ultra baixa latência, IoT massivo, 10+ Gbps</td></tr>
+  </tbody>
+  </table>
+  </div>
+  <div class="callout warn sr">
+  <span class="callout-ico">!</span>
+  <p>O <strong>5G</strong> representa uma revolução com latências abaixo de 1ms, possibilitando veículos autônomos, cirurgias remotas e cidades inteligentes.</p>
+  </div>
+  <h3 class="sr">Os três pilares do 5G</h3>
+  <div class="tbl-wrap sr">
+  <table>
+  <thead><tr><th>Pilar</th><th>Sigla</th><th>Foco</th><th>Exemplo</th></tr></thead>
+  <tbody>
+  <tr><td><strong>Banda larga móvel avançada</strong></td><td>eMBB</td><td>Alta velocidade e capacidade</td><td>Vídeo em 4K, realidade aumentada</td></tr>
+  <tr><td><strong>Comunicação ultraconfiável e de baixa latência</strong></td><td>URLLC</td><td>Resposta quase instantânea</td><td>Cirurgia remota, veículos autônomos</td></tr>
+  <tr><td><strong>IoT massivo</strong></td><td>mMTC</td><td>Muitos dispositivos por área</td><td>Sensores urbanos, medidores inteligentes</td></tr>
+  </tbody>
+  </table>
+  </div>
+  <div class="callout info sr">
+  <span class="callout-ico">›</span>
+  <p><strong>Handover:</strong> é a troca de célula durante uma chamada ou sessão de dados, sem que o usuário perceba. Depende de ERBs vizinhas bem configuradas e com cobertura sobreposta.</p>
+  </div>
+
+  <div class="callout tip sr">
+    <span class="callout-ico">›</span>
+    <p><strong>Em resumo:</strong> Cada geração (1G a 5G) trouxe mais velocidade e menos latência. 5G: latência abaixo de 1 ms e velocidades de 10+ Gbps.</p>
+  </div>
+
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 3: Estações Rádio Base ═════ -->
+<div class="chapter" data-chap="3">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">3</span>
+    <span class="eyebrow-label">Estações Rádio Base</span>
+  </div>
+  <h2 class="sr">Estações <em>Rádio Base</em> (ERBs)</h2>
+  <p class="sr">As Estações Rádio Base são o elo entre os dispositivos móveis dos usuários e a rede principal da operadora (core network). São instaladas em torres, prédios e postes e cobrem uma área chamada <strong>célula</strong>.</p>
+
+        <!-- SVG: ERB Tower diagram -->
+  <div class="img-panel sr">
+          <svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagrama de ERB">
+            <!-- Tower structure -->
+            <line x1="200" y1="30" x2="180" y2="190" stroke="#5BAAD0" stroke-width="3" stroke-linecap="round"/>
+            <line x1="200" y1="30" x2="220" y2="190" stroke="#5BAAD0" stroke-width="3" stroke-linecap="round"/>
+            <line x1="180" y1="190" x2="220" y2="190" stroke="#5BAAD0" stroke-width="3"/>
+            <!-- Cross braces -->
+            <line x1="183" y1="160" x2="217" y2="160" stroke="#5BAAD0" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5"/>
+            <line x1="186" y1="130" x2="214" y2="130" stroke="#5BAAD0" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5"/>
+            <line x1="189" y1="100" x2="211" y2="100" stroke="#5BAAD0" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5"/>
+            <line x1="192" y1="70"  x2="208" y2="70"  stroke="#5BAAD0" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5"/>
+            <!-- Antennas at top -->
+            <rect x="190" y="18" width="8" height="20" rx="2" fill="#E8560A"/>
+            <rect x="200" y="15" width="8" height="23" rx="2" fill="#F5A623"/>
+            <rect x="210" y="18" width="8" height="20" rx="2" fill="#E8560A"/>
+            <!-- RRU boxes on tower -->
+            <rect x="183" y="75" width="14" height="22" rx="3" fill="#1A6BB5" opacity=".85"/>
+            <text x="190" y="89" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" font-weight="700" fill="white">RRU</text>
+            <rect x="203" y="75" width="14" height="22" rx="3" fill="#1A6BB5" opacity=".85"/>
+            <text x="210" y="89" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" font-weight="700" fill="white">RRH</text>
+            <!-- BBU cabinet at base -->
+            <rect x="178" y="192" width="44" height="22" rx="3" fill="#1E2631" stroke="#5BAAD0" stroke-width="1"/>
+            <text x="200" y="206" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#5BAAD0">BBU</text>
+
+            <!-- Cell coverage area (partial arc) -->
+            <path d="M 200,30 Q 350,90 380,190" stroke="#E8560A" stroke-width="1.5" stroke-dasharray="6,4" fill="none" opacity=".4"/>
+            <path d="M 200,30 Q 50,90 20,190"  stroke="#E8560A" stroke-width="1.5" stroke-dasharray="6,4" fill="none" opacity=".4"/>
+
+            <!-- Labels -->
+            <text x="230" y="28" font-family="Inter,sans-serif" font-size="10" fill="#E8560A" font-weight="600">Antenas</text>
+            <text x="230" y="86" font-family="Inter,sans-serif" font-size="10" fill="#5BAAD0" font-weight="600">RRU / RRH</text>
+            <text x="230" y="204" font-family="Inter,sans-serif" font-size="10" fill="#5BAAD0" font-weight="600">BBU</text>
+            <text x="360" y="185" font-family="Inter,sans-serif" font-size="9" fill="#E8560A" opacity=".7">Área de</text>
+            <text x="360" y="197" font-family="Inter,sans-serif" font-size="9" fill="#E8560A" opacity=".7">Cobertura</text>
+
+            <!-- Backhaul arrow -->
+            <line x1="222" y1="203" x2="300" y2="203" stroke="#4CAF82" stroke-width="2" marker-end="url(#arr)"/>
+            <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#4CAF82"/></marker></defs>
+            <text x="260" y="196" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#4CAF82" font-weight="600">Backhaul</text>
+            <text x="310" y="207" font-family="Inter,sans-serif" font-size="9" fill="#4CAF82">Core</text>
+          </svg>
+  <p class="img-caption">Diagrama simplificado de uma Estação Rádio Base com seus componentes</p>
+  </div>
+
+  <p class="sr">A divisão do território em células permite o reuso de frequências e o aumento da capacidade total da rede.</p>
+  <h3 class="sr">Setorização</h3>
+  <p class="sr">Uma ERB normalmente é dividida em <strong>setores</strong> (comum: 3 setores de 120°), cada um com suas próprias antenas. Isso aumenta a capacidade e reduz a interferência entre áreas atendidas pelo mesmo site.</p>
+  <h3 class="sr">Tipos de site</h3>
+  <div class="tbl-wrap sr">
+  <table>
+  <thead><tr><th>Tipo</th><th>Onde fica</th><th>Característica</th></tr></thead>
+  <tbody>
+  <tr><td><strong>Greenfield</strong></td><td>Terreno com torre própria</td><td>Maior altura e alcance; estrutura e energia completas</td></tr>
+  <tr><td><strong>Rooftop</strong></td><td>Topo de prédios</td><td>Comum em áreas urbanas densas; acesso depende do condomínio</td></tr>
+  <tr><td><strong>Poste / small cell</strong></td><td>Mobiliário urbano</td><td>Cobertura localizada e reforço de capacidade</td></tr>
+  </tbody>
+  </table>
+  </div>
+  <h3 class="sr">Fluxo do sinal</h3>
+  <ol class="sr">
+  <li>O celular se conecta à antena do setor com melhor sinal.</li>
+  <li>A RRU/RRH converte e amplifica o sinal de rádio.</li>
+  <li>A BBU processa os dados em banda base.</li>
+  <li>O backhaul leva o tráfego até o core da operadora.</li>
+  </ol>
+  <h3 class="sr">Componentes principais de uma ERB:</h3>
+  <ul class="sr">
+  <li><strong>Antenas:</strong> responsáveis pela cobertura de rádio no setor</li>
+  <li><strong>RRU / RRH:</strong> Unidade de Rádio Remota — processa e amplifica o sinal</li>
+  <li><strong>BBU:</strong> Unidade de Banda Base — processa dados digitais</li>
+  <li><strong>Backhaul:</strong> link que conecta a ERB ao core da rede (fibra, rádio ou satélite)</li>
+  <li><strong>Energia:</strong> retificadores, baterias e grupo gerador (GMG)</li>
+  </ul>
+  <div class="callout ok sr">
+  <span class="callout-ico">›</span>
+  <p>A manutenção adequada de cada ERB é essencial para garantir a qualidade do sinal e o cumprimento dos SLAs contratuais.</p>
+  </div>
+
+  <div class="callout tip sr">
+    <span class="callout-ico">›</span>
+    <p><strong>Em resumo:</strong> A ERB liga o celular à rede e cobre uma área chamada célula. Componentes: antenas, RRU/RRH, BBU, backhaul e energia (retificadores, baterias, GMG).</p>
+  </div>
+
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 4: Meios de Transmissão ═════ -->
+<div class="chapter" data-chap="4">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">4</span>
+    <span class="eyebrow-label">Meios de Transmissão</span>
+  </div>
+  <h2 class="sr">Meios de <em>Transmissão</em></h2>
+  <p class="sr"><strong>Meio de Transmissão</strong> é o suporte físico ou o espaço por onde os sinais viajam entre dispositivos.</p>
+  <h3 class="sr">Comparativo dos meios</h3>
+  <div class="tbl-wrap sr">
+  <table>
+  <thead><tr><th>Meio</th><th>Vantagem</th><th>Limitação</th><th>Uso típico</th></tr></thead>
+  <tbody>
+  <tr><td><strong>Fibra óptica</strong></td><td>Altíssima capacidade, baixa atenuação, imune a interferência eletromagnética</td><td>Instalação e emendas exigem técnica e equipamento</td><td>Backbone, backhaul, cabos submarinos</td></tr>
+  <tr><td><strong>Rádio / micro-ondas</strong></td><td>Implantação rápida, sem obra de cabeamento</td><td>Exige visada direta; sensível a chuva e obstáculos</td><td>Backhaul de ERBs</td></tr>
+  <tr><td><strong>Satélite</strong></td><td>Cobertura em áreas remotas</td><td>Maior latência (principalmente GEO) e custo</td><td>Locais sem infraestrutura terrestre</td></tr>
+  <tr><td><strong>Cabo coaxial</strong></td><td>Boa blindagem para distâncias médias</td><td>Capacidade menor que a fibra</td><td>TV a cabo, distribuição de sinal</td></tr>
+  <tr><td><strong>Par trançado</strong></td><td>Barato e simples</td><td>Atenuação alta com a distância</td><td>Redes locais (LAN)</td></tr>
+  </tbody>
+  </table>
+  </div>
+  <h3 class="sr">🔵 Guiados (Conduzidos)</h3>
+  <ul class="sr">
+  <li><strong>Fibra Óptica:</strong> Pulsos de luz em filamentos de vidro/silica. Ideal para longas distâncias e alta velocidade — usada em backbones e cabos submarinos.</li>
+  <li><strong>Cabo Coaxial:</strong> Sinais elétricos em cobre com blindagem, usado em TV a cabo e distribuidores de sinal.</li>
+  <li><strong>Par Trançado:</strong> Dois fios de cobre entrelaçados, comum em redes locais (LAN). Sofre atenuação com a distância.</li>
+  </ul>
+  <h3 class="sr">🔴 Não Guiados (Sem Fio)</h3>
+  <ul class="sr">
+  <li><strong>Rádio / Micro-ondas:</strong> Para backhaul de ERBs e links ponto a ponto de longa distância.</li>
+  <li><strong>Satélite:</strong> Cobre áreas remotas sem infraestrutura terrestre.</li>
+  <li><strong>Wi-Fi / Bluetooth:</strong> Curto alcance para ambientes locais.</li>
+  </ul>
+  <div class="tbl-wrap sr">
+  <table>
+  <thead><tr><th>Conceito</th><th>Definição</th></tr></thead>
+  <tbody>
+  <tr><td><strong>Backbone</strong></td><td>Infraestrutura central das operadoras, transporta grandes volumes por longas distâncias</td></tr>
+  <tr><td><strong>Largura de Banda</strong></td><td>Quantidade de dados transmitidos por unidade de tempo (Mbps, Gbps)</td></tr>
+  <tr><td><strong>Latência</strong></td><td>Atraso na transmissão do sinal — crucial para aplicações em tempo real</td></tr>
+  <tr><td><strong>Atenuação</strong></td><td>Perda de potência do sinal ao longo do percurso</td></tr>
+  </tbody>
+  </table>
+  </div>
+
+  <div class="callout tip sr">
+    <span class="callout-ico">›</span>
+    <p><strong>Em resumo:</strong> Meios guiados: fibra, coaxial e par trançado. Não guiados: rádio, satélite e Wi-Fi. Backbone, largura de banda, latência e atenuação são os conceitos-base.</p>
+  </div>
+
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 5: dB e dBm ═════ -->
+<div class="chapter" data-chap="5">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">5</span>
+    <span class="eyebrow-label">dB e dBm</span>
+  </div>
+  <h2 class="sr">Conceito de <em>dB e dBm</em></h2>
+  <h3 class="sr">Decibel (dB)</h3>
+  <p class="sr">O decibel (dB) é o logaritmo da relação de duas potências, utilizado para indicar <strong>ganho</strong> ou <strong>perda (atenuação)</strong> de sinal.</p>
+  <div class="callout info sr">
+  <span class="callout-ico">›</span>
+  <p><strong>Fórmula:</strong> dB = 10 × log₁₀ (P₂ / P₁) — onde P₁ e P₂ são as potências comparadas. Valores positivos = ganho; negativos = perda.</p>
+  </div>
+  <h3 class="sr">dBm</h3>
+  <p class="sr">O dBm é o logaritmo da relação entre uma potência e <strong>1 mW</strong> (referência). Indica valores absolutos de potência de sinal.</p>
+  <h3 class="sr">Regras práticas</h3>
+  <div class="tbl-wrap sr">
+  <table>
+  <thead><tr><th>Variação</th><th>Efeito na potência</th></tr></thead>
+  <tbody>
+  <tr><td><strong>+3 dB</strong></td><td>Potência aproximadamente dobra</td></tr>
+  <tr><td><strong>−3 dB</strong></td><td>Potência cai aproximadamente pela metade</td></tr>
+  <tr><td><strong>+10 dB</strong></td><td>Potência multiplicada por 10</td></tr>
+  <tr><td><strong>−10 dB</strong></td><td>Potência dividida por 10</td></tr>
+  <tr><td><strong>30 dBm</strong></td><td>1 W</td></tr>
+  </tbody>
+  </table>
+  </div>
+  <div class="callout info sr">
+  <span class="callout-ico">›</span>
+  <p><strong>Exemplo:</strong> um sinal de 0 dBm (1 mW) que atravessa um cabo com 3 dB de perda chega com −3 dBm, ou seja, cerca de metade da potência original. Perdas e ganhos em dB simplesmente se somam ao longo do enlace.</p>
+  </div>
+  <div class="tbl-wrap sr">
+  <table>
+  <thead><tr><th>Valor dBm</th><th>Interpretação</th><th>Situação</th></tr></thead>
+  <tbody>
+  <tr><td>0 dBm</td><td>1 mW</td><td>Potência de referência</td></tr>
+  <tr><td>-50 dBm</td><td>Sinal excelente</td><td>Próximo à antena</td></tr>
+  <tr><td>-70 dBm</td><td>Sinal bom</td><td>Cobertura normal</td></tr>
+  <tr><td>-85 dBm</td><td>Sinal fraco</td><td>Borda de cobertura</td></tr>
+  <tr><td>-100 dBm</td><td>Sinal crítico</td><td>Sem cobertura efetiva</td></tr>
+  </tbody>
+  </table>
+  </div>
+
+  <div class="callout tip sr">
+    <span class="callout-ico">›</span>
+    <p><strong>Em resumo:</strong> dB mede ganho ou perda entre duas potências; dBm mede potência absoluta (0 dBm = 1 mW). Quanto mais negativo o dBm, mais fraco o sinal.</p>
+  </div>
+
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 6: Central de Comutação ═════ -->
+<div class="chapter" data-chap="6">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">6</span>
+    <span class="eyebrow-label">Central de Comutação</span>
+  </div>
+  <h2 class="sr">Central de <em>Comutação</em></h2>
+  <p class="sr">A central de comutação interliga os assinantes de uma rede telefônica, criando circuitos de comunicação sob demanda, eliminando a necessidade de fios diretos entre cada par de usuários.</p>
+  <div class="tbl-wrap sr">
+  <table>
+  <thead><tr><th>Sistema</th><th>Descrição</th><th>Exemplo</th></tr></thead>
+  <tbody>
+  <tr><td><strong>Centralizado</strong></td><td>Comutação em ponto central — reduz drasticamente a quantidade de pares de fio</td><td>Central telefônica moderna</td></tr>
+  <tr><td><strong>Descentralizado</strong></td><td>Cada assinante conectado diretamente: L = N×(N-1)/2 pares necessários</td><td>Inviável em escala</td></tr>
+  </tbody>
+  </table>
+  </div>
+  <div class="callout warn sr">
+  <span class="callout-ico">!</span>
+  <p><strong>Exemplo:</strong> Para 1.000 assinantes sem central = <strong>499.500 pares de fios</strong>. Com central telefônica, o número cai para centenas de pares.</p>
+  </div>
+  <p class="sr">Marcos históricos: Primeira Central Telefônica em Estocolmo, Suécia (1883). No Brasil, a primeira central foi instalada em 1884.</p>
+  <h3 class="sr">Comutação por circuito × por pacotes</h3>
+  <div class="tbl-wrap sr">
+  <table>
+  <thead><tr><th>Tipo</th><th>Como funciona</th><th>Característica</th></tr></thead>
+  <tbody>
+  <tr><td><strong>Por circuito</strong></td><td>Reserva um caminho dedicado durante toda a chamada</td><td>Qualidade constante, mas o recurso fica ocupado mesmo em silêncio</td></tr>
+  <tr><td><strong>Por pacotes</strong></td><td>Divide a informação em pacotes que seguem caminhos diversos</td><td>Uso eficiente da rede; base da internet e das redes 4G/5G</td></tr>
+  </tbody>
+  </table>
+  </div>
+
+  <div class="callout tip sr">
+    <span class="callout-ico">›</span>
+    <p><strong>Em resumo:</strong> A central de comutação evita ligar cada assinante a todos os outros. Sem central: L = N×(N−1)/2 pares (499.500 para 1.000 assinantes).</p>
+  </div>
+
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 7: Fibra Óptica ═════ -->
+<div class="chapter" data-chap="7">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">7</span>
+    <span class="eyebrow-label">Fibra Óptica</span>
+  </div>
+  <h2 class="sr">Fibra <em>Óptica</em></h2>
+  <p class="sr">A fibra óptica transmite informação por <strong>pulsos de luz</strong> em filamentos de vidro ou plástico, usando o princípio de reflexão total interna. É o principal meio de transmissão de alta capacidade no mundo.</p>
+
+        <!-- SVG: Fiber optic types -->
+  <div class="img-panel sr">
+          <svg viewBox="0 0 520 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tipos de fibra óptica e reflexão total interna">
+
+            <!-- Title labels for each fiber type -->
+            <text x="88"  y="18" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#5BAAD0">Step Index</text>
+            <text x="88"  y="28" text-anchor="middle" font-family="Inter,sans-serif" font-size="8"  fill="#8895A7">Multimodo</text>
+            <text x="262" y="18" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#4CAF82">Graded Index</text>
+            <text x="262" y="28" text-anchor="middle" font-family="Inter,sans-serif" font-size="8"  fill="#8895A7">Multimodo</text>
+            <text x="435" y="18" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#E8560A">Single Mode</text>
+            <text x="435" y="28" text-anchor="middle" font-family="Inter,sans-serif" font-size="8"  fill="#8895A7">Monomodo</text>
+
+            <!-- ── TYPE 1: Step Index Multimode ── -->
+            <!-- Jacket (outer) -->
+            <rect x="20" y="38" width="136" height="80" rx="8" fill="#1E2631" stroke="#8895A7" stroke-width="1" opacity=".7"/>
+            <!-- Cladding -->
+            <rect x="28" y="46" width="120" height="64" rx="5" fill="#1A3048"/>
+            <!-- Core (wide) -->
+            <rect x="36" y="54" width="104" height="48" rx="3" fill="#0D1F30"/>
+            <!-- Light rays: straight/bouncing sharp angles -->
+            <polyline points="36,62 70,78 104,62 138,78" fill="none" stroke="#5BAAD0" stroke-width="1.8" stroke-linecap="round" opacity=".9"/>
+            <polyline points="36,70 68,56 100,70 132,56" fill="none" stroke="#5BAAD0" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+            <polyline points="36,78 80,60 124,78" fill="none" stroke="#5BAAD0" stroke-width="1.2" stroke-linecap="round" opacity=".5"/>
+            <!-- Core label -->
+            <text x="88" y="82" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5BAAD0" opacity=".6">Núcleo ~62.5 µm</text>
+
+            <!-- Cross-section circle Step Index -->
+            <circle cx="88" cy="152" r="34" fill="#1E2631" stroke="#8895A7" stroke-width="1"/>
+            <circle cx="88" cy="152" r="26" fill="#1A3048"/>
+            <circle cx="88" cy="152" r="18" fill="#0D1F30"/>
+            <text x="88" y="156" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" fill="#5BAAD0">core</text>
+            <!-- Labels -->
+            <line x1="106" y1="144" x2="122" y2="136" stroke="#8895A7" stroke-width="0.8" opacity=".5"/>
+            <text x="124" y="134" font-family="Inter,sans-serif" font-size="7" fill="#8895A7">casca</text>
+            <line x1="114" y1="152" x2="126" y2="152" stroke="#8895A7" stroke-width="0.8" opacity=".5"/>
+            <text x="128" y="155" font-family="Inter,sans-serif" font-size="7" fill="#8895A7">jaqueta</text>
+
+            <!-- Stats -->
+            <text x="88" y="202" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#5BAAD0">Até 100 Mbps / 2 km</text>
+            <text x="88" y="215" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#8895A7" opacity=".7">Alta dispersão modal</text>
+
+            <!-- ── TYPE 2: Graded Index Multimode ── -->
+            <rect x="194" y="38" width="136" height="80" rx="8" fill="#1E2631" stroke="#4CAF82" stroke-width="1" opacity=".7"/>
+            <rect x="202" y="46" width="120" height="64" rx="5" fill="#1A3048"/>
+            <rect x="210" y="54" width="104" height="48" rx="3" fill="#0D1F30"/>
+            <!-- Light rays: gently curved (graded index bends them) -->
+            <path d="M210,59 Q245,74 262,74 Q279,74 314,59" fill="none" stroke="#4CAF82" stroke-width="1.8" stroke-linecap="round" opacity=".9"/>
+            <path d="M210,73 Q235,63 262,62 Q289,63 314,73" fill="none" stroke="#4CAF82" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+            <path d="M210,79 Q240,69 262,68 Q284,69 314,79" fill="none" stroke="#4CAF82" stroke-width="1.2" stroke-linecap="round" opacity=".5"/>
+            <text x="262" y="82" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#4CAF82" opacity=".6">Núcleo ~50 µm</text>
+
+            <circle cx="262" cy="152" r="34" fill="#1E2631" stroke="#4CAF82" stroke-width="1"/>
+            <circle cx="262" cy="152" r="26" fill="#1A3048"/>
+            <!-- Gradient fill approximation with concentric circles -->
+            <circle cx="262" cy="152" r="22" fill="#122B1E" opacity=".5"/>
+            <circle cx="262" cy="152" r="16" fill="#0D1F30"/>
+            <circle cx="262" cy="152" r="10" fill="#163326" opacity=".8"/>
+            <text x="262" y="156" text-anchor="middle" font-family="Inter,sans-serif" font-size="7" fill="#4CAF82">core</text>
+            <text x="262" y="202" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#4CAF82">1 Gbps / 550 m</text>
+            <text x="262" y="215" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#8895A7" opacity=".7">Menor dispersão modal</text>
+
+            <!-- ── TYPE 3: Single Mode ── -->
+            <rect x="367" y="38" width="136" height="80" rx="8" fill="#1E2631" stroke="#E8560A" stroke-width="1" opacity=".7"/>
+            <rect x="375" y="46" width="120" height="64" rx="5" fill="#1A3048"/>
+            <!-- Very thin core -->
+            <rect x="383" y="63" width="104" height="14" rx="2" fill="#0D1F30"/>
+            <!-- Single straight light ray -->
+            <line x1="383" y1="70" x2="487" y2="70" stroke="#F5A623" stroke-width="2" stroke-linecap="round" opacity=".95"/>
+            <!-- Glow effect -->
+            <line x1="383" y1="70" x2="487" y2="70" stroke="#E8560A" stroke-width="5" stroke-linecap="round" opacity=".2"/>
+            <text x="435" y="83" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#E8560A" opacity=".7">Núcleo ~9 µm</text>
+
+            <circle cx="435" cy="152" r="34" fill="#1E2631" stroke="#E8560A" stroke-width="1"/>
+            <circle cx="435" cy="152" r="26" fill="#1A3048"/>
+            <circle cx="435" cy="152" r="4" fill="#E8560A" opacity=".9"/>
+            <circle cx="435" cy="152" r="7" fill="#E8560A" opacity=".2"/>
+            <text x="435" y="202" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#E8560A">10+ Gbps / 100+ km</text>
+            <text x="435" y="215" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#8895A7" opacity=".7">Um único modo de luz</text>
+
+            <!-- Bottom legend: principle of TIR -->
+            <line x1="20" y1="232" x2="500" y2="232" stroke="#8895A7" stroke-width="0.5" opacity=".3"/>
+            <text x="260" y="247" text-anchor="middle" font-family="Inter,sans-serif" font-size="8" fill="#8895A7" opacity=".7">Princípio: reflexão total interna mantém a luz confinada no núcleo em todos os tipos</text>
+          </svg>
+  <p class="img-caption">Corte transversal e propagação da luz nos três tipos de fibra óptica</p>
+  </div>
+
+  <h3 class="sr">Estrutura da fibra</h3>
+  <ul class="sr">
+  <li><strong>Núcleo (core):</strong> parte central por onde a luz se propaga</li>
+  <li><strong>Casca (cladding):</strong> camada com índice de refração menor, que mantém a luz confinada no núcleo</li>
+  <li><strong>Revestimento (coating):</strong> proteção mecânica do vidro</li>
+  <li><strong>Capa externa:</strong> proteção do cabo contra umidade, tração e roedores</li>
+  </ul>
+  <h3 class="sr">Conectores e emendas</h3>
+  <ul class="sr">
+  <li><strong>Conectores comuns:</strong> SC, LC e FC, usados em DIOs, switches e equipamentos de transmissão</li>
+  <li><strong>Emenda por fusão:</strong> une duas fibras com arco elétrico, com baixa perda</li>
+  <li><strong>Emenda mecânica:</strong> alinhamento por encaixe, mais rápida e com perda um pouco maior</li>
+  </ul>
+  <div class="callout warn sr">
+  <span class="callout-ico">!</span>
+  <p><strong>Cuidados em campo:</strong> nunca olhe diretamente para a ponta de uma fibra ou conector ativo (a luz laser é invisível e pode ferir a vista), respeite o raio mínimo de curvatura e mantenha os conectores limpos e com as tampas de proteção. Sujeira e curvas fechadas aumentam a atenuação.</p>
+  </div>
+  <h3 class="sr">Tipos de Fibra</h3>
+  <ul class="sr">
+  <li><strong>Multimodo de índice degrau (Step Index):</strong> Núcleo com índice de refração constante. Primeira a ser aplicada, mais simples de fabricar. Alta dispersão — menor largura de banda.</li>
+  <li><strong>Multimodo de índice gradual (Graded Index):</strong> Índice de refração diminui do centro à casca, reduzindo dispersão. Usada em LANs:
+  <ul class="sr">
+  <li>Até 2 km — 100 Mbps</li>
+  <li>Até 550 m — 1 Gbps (fibra 50/125)</li>
+  <li>Até 300 m — 10 Gbps</li>
+  </ul>
+  </li>
+  <li><strong>Monomodo (Single Mode):</strong> Núcleo estreito (~9 µm), único modo de propagação. Altíssima capacidade e distâncias de centenas de km. Usada em backbones e cabos submarinos.</li>
+  </ul>
+  <div class="callout ok sr">
+  <span class="callout-ico">›</span>
+  <p>Cabos de fibra óptica submarinos conectam continentes, transportando a maior parte do tráfego de internet mundial com capacidades de Terabits por segundo.</p>
+  </div>
+
+  <div class="callout tip sr">
+    <span class="callout-ico">›</span>
+    <p><strong>Em resumo:</strong> A fibra guia pulsos de luz por reflexão total interna. Step Index e Graded Index são multimodo; a monomodo atinge centenas de km.</p>
+  </div>
+
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 8: Satélites ═════ -->
+<div class="chapter" data-chap="8">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">8</span>
+    <span class="eyebrow-label">Satélites</span>
+  </div>
+  <h2 class="sr">Satélites <em>Artificiais</em></h2>
+  <p class="sr">Satélites permitem comunicações superando barreiras geográficas. São classificados por altitude de órbita:</p>
+
+        <!-- SVG: Satellite orbits -->
+  <div class="img-panel sr">
+          <svg viewBox="0 0 520 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Órbitas satelitais">
+            <!-- Earth -->
+            <circle cx="260" cy="110" r="28" fill="#1A6BB5" opacity=".85"/>
+            <circle cx="260" cy="110" r="28" fill="none" stroke="#5BAAD0" stroke-width="1.5" opacity=".4"/>
+            <text x="260" y="115" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="white">Terra</text>
+
+            <!-- LEO orbit -->
+            <ellipse cx="260" cy="110" rx="60" ry="42" fill="none" stroke="#4CAF82" stroke-width="1.5" stroke-dasharray="5,3" opacity=".7"/>
+            <!-- LEO satellite -->
+            <circle cx="316" cy="84" r="5" fill="#4CAF82"/>
+            <line x1="316" y1="79" x2="316" y2="68" stroke="#4CAF82" stroke-width="1.5"/>
+            <line x1="308" y1="84" x2="297" y2="84" stroke="#4CAF82" stroke-width="1.5"/>
+            <line x1="324" y1="84" x2="335" y2="84" stroke="#4CAF82" stroke-width="1.5"/>
+            <text x="340" y="70" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#4CAF82">LEO</text>
+            <text x="340" y="81" font-family="Inter,sans-serif" font-size="8" fill="#4CAF82" opacity=".8">~800 km</text>
+
+            <!-- MEO orbit -->
+            <ellipse cx="260" cy="110" rx="105" ry="72" fill="none" stroke="#F5A623" stroke-width="1.5" stroke-dasharray="7,4" opacity=".6"/>
+            <!-- MEO satellite -->
+            <circle cx="362" cy="66" r="5" fill="#F5A623"/>
+            <line x1="362" y1="61" x2="362" y2="50" stroke="#F5A623" stroke-width="1.5"/>
+            <line x1="354" y1="66" x2="343" y2="66" stroke="#F5A623" stroke-width="1.5"/>
+            <line x1="370" y1="66" x2="381" y2="66" stroke="#F5A623" stroke-width="1.5"/>
+            <text x="386" y="52" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#F5A623">MEO</text>
+            <text x="386" y="63" font-family="Inter,sans-serif" font-size="8" fill="#F5A623" opacity=".8">~20.000 km</text>
+
+            <!-- GEO orbit -->
+            <ellipse cx="260" cy="110" rx="155" ry="100" fill="none" stroke="#E8560A" stroke-width="1.5" stroke-dasharray="9,5" opacity=".55"/>
+            <!-- GEO satellite -->
+            <circle cx="413" cy="57" r="6" fill="#E8560A"/>
+            <line x1="413" y1="51" x2="413" y2="38" stroke="#E8560A" stroke-width="1.5"/>
+            <line x1="404" y1="57" x2="390" y2="57" stroke="#E8560A" stroke-width="1.5"/>
+            <line x1="422" y1="57" x2="436" y2="57" stroke="#E8560A" stroke-width="1.5"/>
+            <text x="438" y="34" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#E8560A">GEO</text>
+            <text x="438" y="46" font-family="Inter,sans-serif" font-size="8" fill="#E8560A" opacity=".8">~35.786 km</text>
+
+            <!-- Legend -->
+            <circle cx="30" cy="30" r="4" fill="#4CAF82"/><text x="40" y="34" font-family="Inter,sans-serif" font-size="9" fill="#4CAF82">Starlink / imagens</text>
+            <circle cx="30" cy="50" r="4" fill="#F5A623"/><text x="40" y="54" font-family="Inter,sans-serif" font-size="9" fill="#F5A623">GPS / GNSS</text>
+            <circle cx="30" cy="70" r="4" fill="#E8560A"/><text x="40" y="74" font-family="Inter,sans-serif" font-size="9" fill="#E8560A">TV / Internet rural</text>
+          </svg>
+  <p class="img-caption">Classificação de satélites por altitude orbital: LEO, MEO e GEO</p>
+  </div>
+
+  <div class="tbl-wrap sr">
+  <table>
+  <thead><tr><th>Órbita</th><th>Altitude</th><th>Latência</th><th>Uso</th></tr></thead>
+  <tbody>
+  <tr><td><strong>LEO</strong></td><td>160 – 2.000 km</td><td>~20–40 ms</td><td>Internet (Starlink), imagens de alta res.</td></tr>
+  <tr><td><strong>MEO</strong></td><td>2.000 – 35.000 km</td><td>~80–140 ms</td><td>Navegação GPS / GNSS</td></tr>
+  <tr><td><strong>GEO</strong></td><td>~35.786 km</td><td>~600 ms</td><td>TV, telefonia, internet rural</td></tr>
+  </tbody>
+  </table>
+  </div>
+  <h3 class="sr">Principais locais de lançamento</h3>
+  <ul class="sr">
+  <li><strong>Cabo Canaveral (EUA):</strong> Kennedy Space Center — principal base americana</li>
+  <li><strong>Kourou (Guiana Francesa):</strong> Operado pela ESA — muito próximo ao Equador</li>
+  <li><strong>Baikonur (Cazaquistão):</strong> Base russa histórica</li>
+  <li><strong>Alcântara (Brasil):</strong> Centro de Lançamento do Maranhão — também próximo ao Equador</li>
+  </ul>
+  <div class="callout info sr">
+  <span class="callout-ico">›</span>
+  <p>Lançamentos próximos ao Equador aproveitam a rotação terrestre (~1.670 km/h), economizando combustível e aumentando a carga útil dos foguetes.</p>
+  </div>
+
+  <div class="callout tip sr">
+    <span class="callout-ico">›</span>
+    <p><strong>Em resumo:</strong> LEO (~800 km) para internet e imagens, MEO para GPS/GNSS, GEO (~35.786 km) para TV e internet rural. Quanto maior a órbita, maior a latência.</p>
+  </div>
+
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 9: Glossário ═════ -->
+<div class="chapter" data-chap="9">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">9</span>
+    <span class="eyebrow-label">Glossário</span>
+  </div>
+  <h2 class="sr"><em>Glossário</em></h2>
+  <p class="sr">Termos que aparecem ao longo do módulo e no dia a dia da operação.</p>
+  <div class="tbl-wrap sr">
+  <table>
+  <thead><tr><th>Termo</th><th>Significado</th></tr></thead>
+  <tbody>
+  <tr><td><strong>ERB</strong></td><td>Estação Rádio Base: elo entre o celular e a rede da operadora</td></tr>
+  <tr><td><strong>BBU</strong></td><td>Unidade de Banda Base: processa os dados digitais da ERB</td></tr>
+  <tr><td><strong>RRU / RRH</strong></td><td>Unidade de rádio remota, instalada perto das antenas</td></tr>
+  <tr><td><strong>Backhaul</strong></td><td>Link que leva o tráfego da ERB até o core da rede</td></tr>
+  <tr><td><strong>Core</strong></td><td>Núcleo da rede da operadora, onde o tráfego é roteado e controlado</td></tr>
+  <tr><td><strong>Backbone</strong></td><td>Infraestrutura central de longa distância e alta capacidade</td></tr>
+  <tr><td><strong>GMG</strong></td><td>Grupo Motor Gerador: energia de contingência do site</td></tr>
+  <tr><td><strong>Latência</strong></td><td>Atraso entre o envio e a chegada do sinal</td></tr>
+  <tr><td><strong>Atenuação</strong></td><td>Perda de potência do sinal ao longo do caminho</td></tr>
+  <tr><td><strong>dB / dBm</strong></td><td>Relação entre potências / potência absoluta referenciada a 1 mW</td></tr>
+  <tr><td><strong>LEO / MEO / GEO</strong></td><td>Órbitas baixa, média e geoestacionária dos satélites</td></tr>
+  </tbody>
+  </table>
+  </div>
+
+</div>
+
+<hr class="div-chapter">
+
+<!-- ═════ CAP 10: Quiz ═════ -->
+<div class="chapter" data-chap="10">
+  <div class="chapter-eyebrow sr">
+    <span class="eyebrow-num">10</span>
+    <span class="eyebrow-label">Quiz</span>
+  </div>
+  <h2 class="sr">Teste <em>rápido</em></h2>
+  <p class="sr">Cinco perguntas para fixar o conteúdo do Módulo 1. Sem nota, sem pressão — escolha uma alternativa para ver a explicação.</p>
+
+  <div class="quiz-section sr" id="q1" data-exp="Backhaul é o link (fibra, rádio ou satélite) entre a ERB e o core.">
+    <div class="quiz-q">1. Para que serve o backhaul?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q1',false)">Amplificar o sinal na antena</button>
+      <button class="quiz-opt" onclick="answer(this,'q1',true)">Conectar a ERB ao core da rede</button>
+      <button class="quiz-opt" onclick="answer(this,'q1',false)">Fornecer energia ao site</button>
+      <button class="quiz-opt" onclick="answer(this,'q1',false)">Definir a área da célula</button>
+    </div>
+    <div class="quiz-result" id="q1-res"></div>
+  </div>
+
+  <div class="quiz-section sr" id="q2" data-exp="-85 dBm é sinal fraco, típico de borda de cobertura.">
+    <div class="quiz-q">2. O que indica um sinal de -85 dBm?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q2',false)">Sinal excelente</button>
+      <button class="quiz-opt" onclick="answer(this,'q2',false)">Potência de referência (1 mW)</button>
+      <button class="quiz-opt" onclick="answer(this,'q2',true)">Sinal fraco, borda de cobertura</button>
+      <button class="quiz-opt" onclick="answer(this,'q2',false)">Cobertura inexistente</button>
+    </div>
+    <div class="quiz-result" id="q2-res"></div>
+  </div>
+
+  <div class="quiz-section sr" id="q3" data-exp="A monomodo tem núcleo de ~9 µm e alcança centenas de km.">
+    <div class="quiz-q">3. Qual fibra é indicada para backbones e cabos submarinos?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q3',false)">Multimodo Step Index</button>
+      <button class="quiz-opt" onclick="answer(this,'q3',false)">Multimodo Graded Index</button>
+      <button class="quiz-opt" onclick="answer(this,'q3',true)">Monomodo</button>
+      <button class="quiz-opt" onclick="answer(this,'q3',false)">Par trançado</button>
+    </div>
+    <div class="quiz-result" id="q3-res"></div>
+  </div>
+
+  <div class="quiz-section sr" id="q4" data-exp="GPS/GNSS usa órbita média (MEO).">
+    <div class="quiz-q">4. Qual órbita é usada pela navegação GPS/GNSS?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q4',false)">LEO</button>
+      <button class="quiz-opt" onclick="answer(this,'q4',true)">MEO</button>
+      <button class="quiz-opt" onclick="answer(this,'q4',false)">GEO</button>
+      <button class="quiz-opt" onclick="answer(this,'q4',false)">Nenhuma, é terrestre</button>
+    </div>
+    <div class="quiz-result" id="q4-res"></div>
+  </div>
+
+  <div class="quiz-section sr" id="q5" data-exp="L = N×(N−1)/2 = 1.000×999/2 = 499.500.">
+    <div class="quiz-q">5. Quantos pares de fios seriam necessários para ligar 1.000 assinantes sem central?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="answer(this,'q5',false)">1.000</button>
+      <button class="quiz-opt" onclick="answer(this,'q5',false)">10.000</button>
+      <button class="quiz-opt" onclick="answer(this,'q5',true)">499.500</button>
+      <button class="quiz-opt" onclick="answer(this,'q5',false)">999.000</button>
+    </div>
+    <div class="quiz-result" id="q5-res"></div>
+  </div>
+
+</div>
+
+
+<!-- ═════ FINISH ═════ -->
+<div class="finish-screen" data-chap="11">
+  <div style="font-size:1.8rem;margin-bottom:20px;color:var(--accent)">✓</div>
+  <h2>Módulo 1 <em style="color:var(--accent)">concluído!</em></h2>
+  <p>Agora você conhece a base da infraestrutura de telecomunicações: ERBs, meios de transmissão, dB e dBm, fibra óptica e satélites. No próximo módulo, vamos para a operação do dia a dia.</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:32px">
+    <button class="hero-start" onclick="window.location.href='index.html#cci'">← Voltar ao Menu</button>
+    <button class="hero-start" onclick="window.location.href='tutorial-tlp-mod2.html'">Módulo 2 →</button>
+    <button class="hero-start" style="background:var(--surf2);color:var(--muted);box-shadow:none" onclick="scrollToChapter(0)">Rever este módulo</button>
+  </div>
+</div>
+
+<script>
+/* ── Theme ── */
+function toggleTheme(){
+  const r=document.documentElement;const b=document.getElementById('themeBtn');
+  if(r.dataset.theme==='light'){r.removeAttribute('data-theme');var s=document.getElementById('themeSun'),m=document.getElementById('themeMoon');if(s)s.style.display='';if(m)m.style.display='none';}
+  else{r.dataset.theme='light';var s=document.getElementById('themeSun'),m=document.getElementById('themeMoon');if(s)s.style.display='none';if(m)m.style.display='';}
+}
+try{const t=localStorage.getItem('tlpTheme1');if(t){document.documentElement.dataset.theme=t;const s=document.getElementById('themeSun'),m=document.getElementById('themeMoon');if(s&&m){if(t==='light'){s.style.display='none';m.style.display='';}else{s.style.display='';m.style.display='none';}}}}catch(e){}
+
+/* ── Chapters ── */
+const chapters=[...document.querySelectorAll('[data-chap]')];
+const chapNames=['Início','Conceitos Gerais','Evolução da Rede Celular','Estações Rádio Base','Meios de Transmissão','dB e dBm','Central de Comutação','Fibra Óptica','Satélites','Glossário','Quiz','Conclusão'];
+const dots=document.getElementById('chapDots');
+const stepLbl=document.getElementById('stepLabel');
+chapters.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='chap-dot';d.title=chapNames[i]||'Cap '+(i+1);
+  d.onclick=()=>scrollToChapter(i);
+  dots.appendChild(d);
+});
+function scrollToChapter(n){chapters[n]?.scrollIntoView({behavior:'smooth'})}
+function updateDots(){
+  let cur=0;
+  chapters.forEach((c,i)=>{const r=c.getBoundingClientRect();if(r.top<=120)cur=i;});
+  dots.querySelectorAll('.chap-dot').forEach((d,i)=>{
+    d.classList.toggle('active',i===cur);
+    d.classList.toggle('done',i<cur);
+  });
+  stepLbl.textContent=chapNames[cur]||'';
+}
+window.addEventListener('scroll',updateDots,{passive:true});
+updateDots();
+
+/* ── Scroll Reveal ── */
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});},{threshold:.12});
+document.querySelectorAll('.sr').forEach(el=>io.observe(el));
+
+/* ── Quiz ── */
+function answer(btn,qId,correct){
+  const sec=document.getElementById(qId);
+  if(!sec||sec.dataset.done)return;
+  sec.dataset.done='1';
+  const opts=[...sec.querySelectorAll('.quiz-opt')];
+  opts.forEach(b=>b.disabled=true);
+  const res=document.getElementById(qId+'-res');
+  const exp=sec.dataset.exp||'';
+  if(correct){btn.classList.add('correct');res.textContent='Correto! '+exp;res.style.color='#9FD4A5';}
+  else{
+    btn.classList.add('wrong');
+    opts.forEach(b=>{if(/,true\)/.test(b.getAttribute('onclick')||''))b.classList.add('correct');});
+    res.textContent='Não exatamente. '+exp;res.style.color='#E08080';
+  }
+}
+function mc(btn,mcId,correct){
+  const sec=document.getElementById(mcId);
+  if(!sec||sec.dataset.done)return;
+  sec.dataset.done='1';
+  sec.querySelectorAll('.mc-opt').forEach(b=>b.disabled=true);
+  const res=sec.querySelector('.mc-res');
+  if(correct){btn.classList.add('correct');res.textContent='Correto!';res.style.color='#9FD4A5';}
+  else{btn.classList.add('wrong');res.textContent='Não exatamente — veja a explicação acima.';res.style.color='#E08080';}
+}
+</script>
+
+<style>
+/* ── ADMIN EDIT MODE ──────────────────────────────────────── */
+#adm-btn{position:fixed;bottom:20px;right:20px;width:34px;height:34px;border-radius:8px;background:var(--surf);border:1px solid var(--border);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:9998;opacity:.22;transition:opacity .2s,color .2s;padding:0}
+#adm-btn:hover{opacity:1;color:var(--text)}
+body.edit-mode #adm-btn{display:none}
+#adm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .22s}
+#adm-overlay.open{opacity:1;pointer-events:all}
+#adm-modal{background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:30px;width:300px;max-width:88vw;display:flex;flex-direction:column;gap:14px}
+.adm-mt{font-family:'Sora',sans-serif;font-size:.95rem;font-weight:700;color:var(--text)}
+.adm-ms{font-size:.82rem;color:var(--muted);margin:0;line-height:1.5}
+#adm-pwd{width:100%;box-sizing:border-box;padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surf2);color:var(--text);font-family:'Inter',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s}
+#adm-pwd:focus{border-color:var(--accent)}
+.adm-br{display:flex;gap:8px}
+.adm-b{flex:1;padding:9px 0;border-radius:8px;font-family:'Inter',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .18s}
+.adm-b:hover{color:var(--text);border-color:var(--muted)}
+.adm-b.prim{background:linear-gradient(135deg,var(--accent),var(--orange));color:white;border-color:transparent}
+.adm-b.prim:hover{opacity:.88}
+#adm-err{font-size:.78rem;color:#E08080;min-height:16px}
+#adm-bar{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--surf);border:1px solid var(--border);border-radius:10px;padding:9px 14px;display:flex;gap:8px;align-items:center;z-index:9998;box-shadow:0 8px 32px rgba(0,0,0,.35);opacity:0;pointer-events:none;transition:opacity .2s;white-space:nowrap}
+body.edit-mode #adm-bar{opacity:1;pointer-events:all}
+#adm-lbl{font-size:.7rem;font-weight:700;color:var(--accent);letter-spacing:.08em;text-transform:uppercase;padding-right:8px;border-right:1px solid var(--border)}
+.adm-bb{padding:7px 12px;border-radius:7px;font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surf2);color:var(--muted);transition:all .15s}
+.adm-bb:hover{color:var(--text);border-color:var(--muted)}
+.adm-bb.sv{background:linear-gradient(135deg,var(--accent),var(--orange));color:white;border-color:transparent}
+.adm-bb.sv:hover{opacity:.88}
+#adm-toast{font-size:.75rem;color:#9FD4A5;min-width:50px;text-align:center;transition:opacity .3s;opacity:0}
+[data-editable]{border-radius:3px}
+body.edit-mode [data-editable]{outline:1.5px dashed rgba(200,82,16,.22);cursor:text}
+body.edit-mode [data-editable]:hover{outline-color:rgba(200,82,16,.5)}
+body.edit-mode [data-editable]:focus{outline:1.5px solid rgba(200,82,16,.65);background:rgba(200,82,16,.03)}
+body.edit-mode [data-editable]:empty::before{content:'(vazio)';color:var(--muted);opacity:.4;font-style:italic}
+</style>
+
+<div id="adm-overlay">
+  <div id="adm-modal">
+    <div class="adm-mt">Modo Administrador</div>
+    <p class="adm-ms">Digite a senha para ativar a edição de conteúdo nesta página.</p>
+    <input type="password" id="adm-pwd" placeholder="Senha" onkeydown="if(event.key==='Enter')admSubmit()">
+    <div class="adm-br">
+      <button class="adm-b" onclick="admClose()">Cancelar</button>
+      <button class="adm-b prim" onclick="admSubmit()">Entrar</button>
+    </div>
+    <div id="adm-err"></div>
+  </div>
+</div>
+
+<div id="adm-bar">
+  <span id="adm-lbl">Editando</span>
+  <button class="adm-bb sv" onclick="admSave()">Salvar</button>
+  <button class="adm-bb" onclick="admExport()">Exportar HTML</button>
+  <button class="adm-bb" onclick="admReset()">Resetar</button>
+  <button class="adm-bb" onclick="admExit()">Sair</button>
+  <span id="adm-toast">Salvo ✓</span>
+</div>
+
+<button id="adm-btn" onclick="admOpen()" title="Administrador">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+</button>
+
+<script>
+(function(){
+var PAGE='mod1',HASH='9b378c73982d24f1ffba37384dce17a3385311d7a880ac58910e8060f630cc77',B64H='b64:VExQQDIwMjY=',LS='tlp_edit_'+PAGE;
+var SEL='.chapter h2,.chapter > p,.chapter .callout p,.chapter .step-body p,.chapter .cat-card h3,.chapter .cat-card p,.chapter .compare-card h3,.chapter .compare-card li,.chapter .quiz-q,.chapter .mc-q,.chapter h3,.chapter li,.chapter td,.chapter th,.chapter .img-caption,.hero-title,.hero-sub,.finish-screen h2,.finish-screen p';
+
+async function sha256(s){
+  try{
+    if(crypto&&crypto.subtle){
+      var b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+      return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0');}).join('');
+    }
+  }catch(e){}
+  return 'b64:'+btoa(s);
+}
+function els(){return document.querySelectorAll('[data-editable]');}
+
+// Auto-tag editable elements
+(function tag(){
+  var i=0;
+  document.querySelectorAll(SEL).forEach(function(el){
+    if(!el.closest('#adm-overlay,#adm-bar,#adm-btn')){el.dataset.editable=i++;}
+  });
+})();
+
+// Restore saved content
+(function load(){
+  try{
+    var saved=JSON.parse(localStorage.getItem(LS)||'{}');
+    Object.keys(saved).forEach(function(k){
+      var el=document.querySelector('[data-editable="'+k+'"]');
+      if(el)el.innerHTML=saved[k];
+    });
+  }catch(e){}
+})();
+
+window.admOpen=function(){
+  document.getElementById('adm-overlay').classList.add('open');
+  setTimeout(function(){document.getElementById('adm-pwd').focus();},80);
+};
+window.admClose=function(){
+  document.getElementById('adm-overlay').classList.remove('open');
+  document.getElementById('adm-pwd').value='';
+  document.getElementById('adm-err').textContent='';
+};
+window.admSubmit=async function(){
+  var pwd=document.getElementById('adm-pwd').value;
+  if(!pwd)return;
+  var h=await sha256(pwd);
+  if(h===HASH||h===B64H){admClose();admEnter();}
+  else{document.getElementById('adm-err').textContent='Senha incorreta.';document.getElementById('adm-pwd').value='';document.getElementById('adm-pwd').focus();}
+};
+function admEnter(){
+  document.body.classList.add('edit-mode');
+  els().forEach(function(el){el.contentEditable='true';});
+  document.querySelectorAll('.quiz-opt,.mc-opt').forEach(function(b){b.disabled=true;b.style.pointerEvents='none';});
+}
+window.admExit=function(){
+  document.body.classList.remove('edit-mode');
+  els().forEach(function(el){el.contentEditable='false';el.removeAttribute('contenteditable');});
+  document.querySelectorAll('.quiz-opt,.mc-opt').forEach(function(b){b.disabled=false;b.style.pointerEvents='';});
+};
+window.admSave=function(){
+  var data={};
+  els().forEach(function(el){data[el.dataset.editable]=el.innerHTML;});
+  try{
+    localStorage.setItem(LS,JSON.stringify(data));
+    var t=document.getElementById('adm-toast');
+    t.style.opacity='1';setTimeout(function(){t.style.opacity='0';},2200);
+  }catch(e){alert('Erro ao salvar: '+e.message);}
+};
+window.admReset=function(){
+  if(!confirm('Resetar todo o conteúdo desta página para o texto original?'))return;
+  try{localStorage.removeItem(LS);}catch(e){}
+  location.reload();
+};
+window.admExport=function(){
+  admSave();
+  var wasEditing=document.body.classList.contains('edit-mode');
+  els().forEach(function(el){el.removeAttribute('contenteditable');});
+  document.body.classList.remove('edit-mode');
+  var html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+  if(wasEditing){document.body.classList.add('edit-mode');els().forEach(function(el){el.contentEditable='true';});}
+  var blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='modulo1-editado.html';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+};
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&document.getElementById('adm-overlay').classList.contains('open'))admClose();
+});
+})();
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 3 — Atendimentos GMG · Portal SAP TLP</title>
+<script>try{var t=localStorage.getItem('sap2-theme');t=t?JSON.parse(t):(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/sap.css">
+</head>
+<body data-root="../" data-page="cci" data-mod="m3">
+
+<section class="mod-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Início</a> / <a href="../index.html#cci">CCI</a> / Módulo 3</div>
+    <h1>Atendimentos GMG</h1>
+    <p class="lede">Do acionamento à aprovação no Portal Operations: classificações, carimbo padrão, Controle de Acesso, protocolo de energia, SLA e abono.</p>
+    <div class="mod-facts"><span><b>Etapa 4</b> de 4 da trilha CCI</span><span><b>~35 min</b> de leitura</span><span><b>10</b> perguntas no final</span><span data-signal-text="m3"></span></div>
+  </div>
+</section>
+
+<div class="wrap mod" id="conteudo">
+<aside class="toc" id="toc" aria-label="Índice do módulo"></aside>
+<main>
+
+<section class="chapter" id="fundamentos" data-title="Por que o GMG importa">
+  <span class="chapter-num">Capítulo 1</span>
+  <h2>O que é o GMG e por que ele importa</h2>
+  <p>Falha de energia AC é a <strong>principal causa de indisponibilidade</strong> da rede TIM. Quando a energia comercial cai, o site vive da bateria por um tempo limitado. O <strong>GMG (Grupo Motor Gerador)</strong> mantém o site no ar até a energia voltar.</p>
+  <p>Para a TLP, o GMG também é receita: <strong>o registro correto do atendimento é o que garante o pagamento</strong> pelo deslocamento e pelo uso do equipamento. Sem registro, não há pagamento.</p>
+  <div class="note"><p><strong>Célula de GMG (24 h):</strong> <a href="tel:+5521988633230">+55 21 98863-3230</a>. Todo atendimento GMG é acompanhado ativamente pelo CCI.</p></div>
+</section>
+
+<section class="chapter" id="tipos" data-title="Móvel × Fixo">
+  <span class="chapter-num">Capítulo 2</span>
+  <h2>GMG Móvel × GMG Fixo</h2>
+  <p>O fluxo de controle e faturamento é totalmente diferente. Confundir os dois gera perda de receita ou trabalho desnecessário.</p>
+  <div class="compare">
+    <div class="card warn"><span class="who">Controlado pelo CCI</span><h4>GMG Móvel</h4><ul><li>Equipamento da <strong>TLP</strong></li><li>Levado ao site quando falta energia</li><li>Faturado por <strong>KM rodado e tempo de uso</strong></li><li>CCI acompanha de ponta a ponta</li></ul></div>
+    <div class="card"><span class="who">Controlado pela Sala Técnica</span><h4>GMG Fixo (estacionário)</h4><ul><li>Equipamento da <strong>TIM</strong>, já instalado</li><li>TLP abastece com diesel</li><li>Faturado por <strong>nota fiscal de diesel</strong></li><li>CCI só registra “GMG FIXO” no diário</li></ul></div>
+  </div>
+  <div class="recap"><b>Regra objetiva</b>O CCI só controla GMG Móvel. Achou GMG Fixo? Registre “GMG FIXO” no diário de trabalho e encerre. Diesel é com a Sala Técnica.</div>
+</section>
+
+<section class="chapter" id="classificacoes" data-title="As 5 classificações">
+  <span class="chapter-num">Capítulo 3</span>
+  <h2>As cinco classificações do atendimento</h2>
+  <p>Cada atendimento recebe uma classificação no formulário. A errada compromete o pagamento e pode invalidar o atendimento perante a TIM.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Classificação</th><th>Quando usar</th><th>Exigências</th></tr>
+    <tr><td>Em Deslocamento</td><td>Status inicial de todo atendimento: o técnico saiu do CM rumo ao site</td><td>Preencher no momento da saída — garante a receita do KM</td></tr>
+    <tr><td>GMG Instalado</td><td>O GMG chegou e foi acoplado ao site</td><td>CA aberta, protocolo da concessionária, início e fim de cada acoplagem, carimbo a cada 2 h</td></tr>
+    <tr><td>Apenas Deslocamento</td><td>O GMG foi levado, mas não instalado: a energia voltou depois que a equipe saiu</td><td>CA aberta em até 15 min após a chegada; KM de ida e volta</td></tr>
+    <tr><td>GMG Não Utilizado</td><td>Ninguém saiu: a falha normalizou na triagem, antes de o técnico deixar o CM</td><td>Geralmente com SLA já fora do prazo</td></tr>
+    <tr><td>Visita FMMT</td><td>Sem GMG, mas houve intervenção TLP; a falha não era de energia e o ticket está no SLA</td><td>Retorna o ticket à franquia como atendimento válido</td></tr>
+  </table></div>
+  <figure>
+    <svg viewBox="0 0 640 250" role="img" aria-label="Árvore de decisão: o técnico saiu do CM? Se não, GMG Não Utilizado. Se sim, o GMG foi acoplado? Se sim, GMG Instalado; se não, Apenas Deslocamento">
+      <g style="font:700 13px var(--body)" text-anchor="middle">
+        <rect x="220" y="14" width="200" height="44" rx="22" style="fill:var(--ink)"/><text x="320" y="41" style="fill:var(--paper)">O técnico saiu do CM?</text>
+        <rect x="30" y="110" width="200" height="44" rx="10" style="fill:var(--surface);stroke:var(--ink-3)" stroke-width="2"/><text x="130" y="137" style="fill:var(--ink)">GMG Não Utilizado</text>
+        <rect x="410" y="110" width="200" height="44" rx="22" style="fill:var(--ink)"/><text x="510" y="137" style="fill:var(--paper)">O GMG foi acoplado?</text>
+        <rect x="300" y="196" width="160" height="44" rx="10" style="fill:var(--surface);stroke:var(--ok)" stroke-width="2"/><text x="380" y="223" style="fill:var(--ink)">GMG Instalado</text>
+        <rect x="470" y="196" width="160" height="44" rx="10" style="fill:var(--surface);stroke:var(--flame)" stroke-width="2"/><text x="550" y="223" style="fill:var(--ink)">Apenas Deslocamento</text>
+        <g style="fill:var(--ink-3)" font-weight="400"><text x="200" y="88">não</text><text x="440" y="88">sim</text><text x="420" y="182">sim</text><text x="565" y="182">não</text></g>
+      </g>
+      <g style="stroke:var(--ink-3)" stroke-width="2" fill="none"><path d="M280 58 L150 108"/><path d="M360 58 L490 108"/><path d="M480 154 L400 194"/><path d="M540 154 L550 194"/></g>
+    </svg>
+    <figcaption>Para falha de energia com GMG Móvel. Falha que não é de energia, com ticket no SLA, vira Visita FMMT.</figcaption>
+  </figure>
+  <div class="note alarm"><p><strong>Regra de ouro:</strong> se o técnico saiu do CM, houve deslocamento. Use <strong>Apenas Deslocamento</strong>, nunca “GMG Não Utilizado” — senão a receita do KM se perde.</p></div>
+</section>
+
+<section class="chapter" id="carimbo" data-title="Carimbo e CA">
+  <span class="chapter-num">Capítulo 4</span>
+  <h2>Carimbo padrão e Controle de Acesso</h2>
+  <p>O <strong>carimbo padrão</strong> é o registro obrigatório em todos os tickets de GMG. Sem ele, o Portal Operations pode invalidar o atendimento.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Campo</th><th>O que preencher</th></tr>
+    <tr><td>Técnico</td><td>Nome completo do responsável em campo</td></tr>
+    <tr><td>Contato</td><td>Telefone do técnico</td></tr>
+    <tr><td>Ação</td><td>O que foi feito no site</td></tr>
+    <tr><td>TSK / CA / Site</td><td>Identificadores do ticket, da CA e do site</td></tr>
+    <tr><td>Deslocamento</td><td>Data e hora de início e fim do trajeto</td></tr>
+    <tr><td>Instalação</td><td>Data e hora em que o GMG foi acoplado e retirado</td></tr>
+    <tr><td>KM ida e volta</td><td>Distância total percorrida — base do faturamento</td></tr>
+  </table></div>
+  <div class="note warn"><p><strong>A cada 2 horas</strong> com o GMG acoplado, o carimbo deve ser atualizado e enviado no ticket. Acoplou às 08h00? Carimbos às 10h00, 12h00, 14h00…</p></div>
+
+  <h3>Controle de Acesso (CA)</h3>
+  <p>A TIM só reconhece a visita se houver <strong>CA registrada durante todo o atendimento</strong>. Sem CA, não há reconhecimento nem pagamento.</p>
+  <ol class="steps">
+    <li><h4>Abrir a CA ao chegar</h4><p>Tolerância máxima de <strong>15 minutos</strong> após a chegada. A CA é a prova de presença no local.</p></li>
+    <li><h4>Foto com timestamp no acoplamento</h4><p>No momento de acoplar o GMG, anexar ao ticket foto com data, hora e geolocalização.</p></li>
+    <li><h4>Nova CA se trocar o técnico</h4><p>A CA é individual. O substituto abre a própria CA; ninguém abre CA em nome de outro.</p></li>
+    <li><h4>Encerrar a CA ao final</h4><p>Até <strong>15 minutos</strong> após o fim do uso do GMG.</p></li>
+  </ol>
+</section>
+
+<section class="chapter" id="energia" data-title="Protocolo de energia">
+  <span class="chapter-num">Capítulo 5</span>
+  <h2>Protocolo da Célula de Energia</h2>
+  <ol class="steps">
+    <li><h4>Confirmar a falha de AC</h4><p>Verificar a ausência de energia comercial e acionar a concessionária. O ticket precisa ter o <strong>número do protocolo</strong> e o prazo de normalização, atualizados a cada 3 horas.</p></li>
+    <li><h4>Verificar a FLAG de GMG</h4><p>Sem FLAG: tramitar (NotDone para Field) para a TIM decidir se quer GMG Móvel. O ticket aguarda na fila da TIM por até 3 horas.</p></li>
+    <li><h4>Instalar o GMG quando houver FLAG</h4><p>Formulário em <strong>Em Deslocamento</strong> ao sair do CM, atualizado para <strong>GMG Instalado</strong> após o acoplamento.</p></li>
+  </ol>
+  <h3>GMG acoplado por mais de 24 horas</h3>
+  <p>Ao completar 24 horas de acoplagem no mesmo site (contínuas ou somadas), é obrigatório enviar e-mail para <a href="mailto:nw_isoc_gmg@timbrasil.com.br">nw_isoc_gmg@timbrasil.com.br</a> — e <strong>reenviar todo dia</strong> enquanto o GMG continuar instalado.</p>
+  <ul class="checklist">
+    <li><label><input type="checkbox" disabled checked><span>Número e identificação do site</span></label></li>
+    <li><label><input type="checkbox" disabled checked><span>Data e hora de início da instalação</span></label></li>
+    <li><label><input type="checkbox" disabled checked><span>Tempo total acoplado até o momento</span></label></li>
+    <li><label><input type="checkbox" disabled checked><span>Status atual do GMG (inclusive nível de combustível)</span></label></li>
+    <li><label><input type="checkbox" disabled checked><span>Previsão de normalização da energia comercial</span></label></li>
+    <li><label><input type="checkbox" disabled checked><span>Atualização da CA vigente</span></label></li>
+  </ul>
+</section>
+
+<section class="chapter" id="sla" data-title="SLA e abono">
+  <span class="chapter-num">Capítulo 6</span>
+  <h2>SLA, suspensão × tramitação e abono</h2>
+  <p>O cumprimento do SLA começa com o acionamento nos primeiros <strong>20% do prazo</strong>. Tabela completa e simulações na <a href="../consulta/calculadora-sla.html">Calculadora de SLA</a>.</p>
+  <h3>Suspensão ou tramitação?</h3>
+  <p>A pergunta é uma só: <strong>quem é o próximo responsável pela ação?</strong></p>
+  <div class="compare">
+    <div class="card info"><span class="who">Próximo responsável: TIM ou terceiro</span><h4>Tramitação (NotDone)</h4><ul><li>Ticket vai para a fila TIM</li><li>Relógio da TLP para enquanto estiver lá</li><li>Use ao aguardar decisão ou ação da TIM</li></ul></div>
+    <div class="card warn"><span class="who">Próximo responsável: TLP</span><h4>Suspensão (Agendado Data Futura)</h4><ul><li>Ticket fica na fila TLP</li><li>Relógio congelado até a retomada</li><li>Use quando o impedimento é da TLP e o próximo passo também</li></ul></div>
+  </div>
+  <h3>O que pode e o que não pode ser abonado</h3>
+  <p>Depois do encerramento, o Portal Operations audita o ticket e a TIM aprova ou reprova. Reprovações podem ser pleiteadas — e a chance depende da qualidade do registro feito na hora.</p>
+  <div class="compare">
+    <div class="card ok"><h4>Pode ser abonado</h4><ul><li>Falha sistêmica que impediu o registro no formulário ou diário</li><li>KM incorreto, com evidência do uso</li><li>GMG acoplado antes da abertura do ticket, a pedido da TIM</li><li>CA aberta antes ou depois, com dificuldade justificável</li><li>Tempo aplicado incorreto, com evidência</li></ul></div>
+    <div class="card alarm"><h4>Não pode ser abonado</h4><ul><li>Atraso para iniciar o acionamento</li><li>Atraso no mapeamento da TSK no TOA</li><li>Falta de técnico disponível</li><li>Demora no diagnóstico ou nas tratativas</li><li>Problema no veículo, despacho ou ferramenta TLP</li><li>TSK sem atualização</li></ul></div>
+  </div>
+  <div class="note"><p>Encontrou dificuldade? <strong>Paralise o ticket na hora</strong> (suspenda ou tramite). O pleito cobre exatamente o período impactado.</p></div>
+</section>
+
+<section class="chapter" id="casos" data-title="Casos e checklist">
+  <span class="chapter-num">Capítulo 7</span>
+  <h2>Casos práticos e checklist</h2>
+  <div class="tbl-wrap"><table>
+    <tr><th>Situação</th><th>Resposta correta</th></tr>
+    <tr><td>GMG levado; ao chegar, a energia já tinha voltado</td><td>CA em até 15 min, <strong>Apenas Deslocamento</strong>, KM de ida e volta</td></tr>
+    <tr><td>Falha normalizou na triagem, antes de sair do CM</td><td><strong>GMG Não Utilizado</strong></td></tr>
+    <tr><td>Energia voltou com o GMG acoplado; técnico desacoplou</td><td><strong>GMG Instalado</strong> — houve acoplamento efetivo</td></tr>
+    <tr><td>GMG acoplado há 26 h</td><td>E-mail para nw_isoc_gmg@timbrasil.com.br, repetido diariamente com CA atualizada</td></tr>
+    <tr><td>Falha não era de energia, ticket no SLA</td><td><strong>Visita FMMT</strong></td></tr>
+  </table></div>
+  <h3>Checklist do atendimento GMG</h3>
+  <p>Marque durante o atendimento. Fica salvo neste navegador.</p>
+  <ul class="checklist" data-checklist="gmg">
+    <li><label><input type="checkbox"><span>Identificar se é GMG Móvel ou Fixo</span></label></li>
+    <li><label><input type="checkbox"><span>Formulário “Em Deslocamento” na saída do CM</span></label></li>
+    <li><label><input type="checkbox"><span>Protocolo da concessionária registrado no ticket</span></label></li>
+    <li><label><input type="checkbox"><span>Verificar a FLAG de GMG</span></label></li>
+    <li><label><input type="checkbox"><span>CA aberta em até 15 min após a chegada</span></label></li>
+    <li><label><input type="checkbox"><span>Foto com timestamp no acoplamento</span></label></li>
+    <li><label><input type="checkbox"><span>Carimbo padrão preenchido no ticket</span></label></li>
+    <li><label><input type="checkbox"><span>Carimbo atualizado a cada 2 h</span></label></li>
+    <li><label><input type="checkbox"><span>E-mail à TIM se passar de 24 h</span></label></li>
+    <li><label><input type="checkbox"><span>Classificação final correta</span></label></li>
+    <li><label><input type="checkbox"><span>CA encerrada em até 15 min após o fim</span></label></li>
+  </ul>
+  <button type="button" class="btn btn-ghost" data-clear="gmg">Limpar checklist</button>
+  <div class="note"><p>Na dúvida, acione a Célula CCI antes de agir: <a href="tel:+5521988633230">+55 21 98863-3230</a>.</p></div>
+</section>
+
+<section class="chapter" id="erros" data-title="Erros que custam caro">
+  <span class="chapter-num">Capítulo extra</span>
+  <h2>Os erros de GMG que mais custam caro</h2>
+  <div class="tbl-wrap"><table>
+    <tr><th>Erro</th><th>Impacto</th></tr>
+    <tr><td>Usar “GMG Não Utilizado” quando o técnico já saiu do CM</td><td>Perde a receita do KM rodado</td></tr>
+    <tr><td>Esquecer o formulário “Em Deslocamento” na saída</td><td>Deslocamento sem registro, sem pagamento</td></tr>
+    <tr><td>Carimbo atrasado com o GMG acoplado</td><td>Pendência na auditoria; risco de reprovação</td></tr>
+    <tr><td>CA aberta por um técnico em nome de outro</td><td>Visita invalidada pela TIM</td></tr>
+    <tr><td>Não enviar o e-mail após 24 h acoplado</td><td>Descumprimento de protocolo</td></tr>
+    <tr><td>Controlar GMG Fixo como se fosse Móvel</td><td>Trabalho duplicado com a Sala Técnica</td></tr>
+  </table></div>
+  <div class="note"><p>Para entender por que o site depende do GMG, veja <a href="energia.html">Energia no site</a>.</p></div>
+</section>
+
+<section class="chapter" id="quiz" data-title="Teste rápido">
+  <span class="chapter-num">Capítulo 8</span>
+  <h2>Teste rápido</h2>
+  <p>Acerte 7 de 10 para concluir a trilha CCI.</p>
+  <script type="application/json" class="quiz-data">[
+    {"q":"Qual a principal consequência de não registrar corretamente um atendimento GMG?","o":["O site fica sem cobertura","O atendimento não é pago","O técnico recebe advertência automática"],"a":1,"e":"O registro é o que garante o pagamento do deslocamento e do uso."},
+    {"q":"O site tem gerador já instalado e a energia caiu. O que o CCI faz?","o":["Abre formulário de GMG Instalado","Aciona um GMG Móvel","Registra “GMG FIXO” no diário e deixa o diesel com a Sala Técnica"],"a":2,"e":"GMG Fixo é da TIM; o CCI só registra."},
+    {"q":"GMG levado ao site; ao chegar, a energia tinha voltado e nada foi acoplado. Classificação?","o":["GMG Instalado","Apenas Deslocamento","GMG Não Utilizado","Visita FMMT"],"a":1,"e":"Houve deslocamento, mas não acoplamento."},
+    {"q":"Energia voltou antes de o técnico sair do CM. Classificação?","o":["Apenas Deslocamento","GMG Não Utilizado","GMG Instalado","Não registrar"],"a":1,"e":"Sem saída do CM não há deslocamento."},
+    {"q":"A energia voltou com o GMG acoplado e o técnico desacoplou. Classificação?","o":["Apenas Deslocamento","GMG Não Utilizado","GMG Instalado","Visita FMMT"],"a":2,"e":"Houve acoplamento efetivo."},
+    {"q":"Técnico A ficou 5 h e foi substituído pelo B por mais 3 h. Como fica a CA?","o":["Uma CA do A cobrindo tudo","Uma CA para cada técnico, cada uma no seu período","Uma CA do B no final"],"a":1,"e":"CA é individual."},
+    {"q":"GMG acoplado às 08h00. São 10h10 e não houve carimbo. O que isso significa?","o":["Está no prazo","Há pendência: o carimbo das 10h00 está atrasado","O sistema registra sozinho"],"a":1,"e":"Carimbo a cada 2 h: 10h00, 12h00…"},
+    {"q":"GMG acoplado há 30 h contínuas. Além do carimbo a cada 2 h, o que é obrigatório?","o":["Nada","E-mail para nw_isoc_gmg@timbrasil.com.br, reenviado diariamente com a CA atualizada","Desacoplar e instalar outro"],"a":1,"e":"Acima de 24 h, o e-mail diário é obrigatório. Acompanhar o combustível também é boa prática."},
+    {"q":"Faltou técnico para um P1 e o ticket perdeu SLA. Pode ser abonado?","o":["Sim, foi imprevisto","Não, falta de técnico é responsabilidade da TLP","Depende da prioridade"],"a":1,"e":"Falta de técnico não é aceita como dificuldade."},
+    {"q":"O ticket aguarda a TIM decidir se quer GMG Móvel. Suspender ou tramitar?","o":["Suspender (Agendado Data Futura)","Tramitar (NotDone)","Nenhum, deixar como está"],"a":1,"e":"Próximo responsável é a TIM: tramitação."}
+  ]</script>
+</section>
+
+<section class="chapter" id="fim" data-title="Conclusão">
+  <div class="finish">
+    <span class="signal" data-signal="m3" role="img"><i></i><i></i><i></i><i></i></span>
+    <div>
+      <h2>Trilha CCI completa</h2>
+      <p>Você conhece o processo GMG de ponta a ponta. Cada campo preenchido corretamente é receita garantida. Para revisar prazos e abonos do ponto de vista do campo, veja o guia de SLA.</p>
+      <div class="cta"><a class="btn btn-primary" href="../campo/sla-atendimento.html">Abrir guia de SLA</a><a class="btn btn-ghost" href="../index.html#cci">Voltar à trilha</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/sap.js"></script>
+</body>
+</html>

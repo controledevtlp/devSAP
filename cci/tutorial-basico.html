@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tutorial básico — CCI · Portal SAP TLP</title>
+<script>try{var t=localStorage.getItem('sap2-theme');t=t?JSON.parse(t):(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/sap.css">
+</head>
+<body data-root="../" data-page="cci" data-mod="tutorial">
+
+<section class="mod-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Início</a> / <a href="../index.html#cci">CCI</a> / Tutorial básico</div>
+    <h1>Seu primeiro dia no CCI</h1>
+    <p class="lede">Do zero: o que é um site, por que ele cai, o que é um concentrador e o que exatamente você faz durante o turno. Leitura curta, sem jargão desnecessário.</p>
+    <div class="mod-facts"><span><b>Etapa 1</b> de 4 da trilha CCI</span><span><b>~20 min</b> de leitura</span><span><b>10</b> perguntas no final</span><span data-signal-text="tutorial"></span></div>
+  </div>
+</section>
+
+<div class="wrap mod" id="conteudo">
+<aside class="toc" id="toc" aria-label="Índice do módulo"></aside>
+<main>
+
+<section class="chapter" id="missao" data-title="A missão do CCI">
+  <span class="chapter-num">Capítulo 1</span>
+  <h2>O que o CCI faz, afinal?</h2>
+  <p>CCI significa <strong>Centro de Controle e Inteligência</strong>. É aqui que você vai trabalhar.</p>
+  <p>A missão cabe em uma frase: <strong>monitorar a rede e acionar a equipe de campo para resolver as falhas</strong> — dentro do prazo que o contrato exige.</p>
+  <p>Os técnicos vão fisicamente até o local consertar. O CCI é quem vê o problema primeiro, decide quem vai, com que urgência, e acompanha até o fim.</p>
+  <div class="cards">
+    <div class="card info"><h4>Onde estamos</h4><p>SP, RJ, MG e Sul do país</p></div>
+    <div class="card info"><h4>Nosso time</h4><p>Mais de 150 colaboradores ativos</p></div>
+    <div class="card info"><h4>Nossos clientes</h4><p>TIM, ATC e Claro</p></div>
+  </div>
+  <h3>As frentes de trabalho</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>Frente</th><th>O que faz</th></tr>
+    <tr><td>Online (corretiva)</td><td>Chamados em tempo real: um site caiu e precisa ser resolvido agora.</td></tr>
+    <tr><td>Offline</td><td>Preventivas, obras e controle de acesso — atividades planejadas, sem emergência.</td></tr>
+    <tr><td>Apoio</td><td>PCP, Governança, Qualidade e Medição: garantem que o processo funcione e que os números estejam certos.</td></tr>
+  </table></div>
+  <div class="recap"><b>Guarde isto</b>O objetivo de todos aqui é o mesmo: atendimento com excelência e dentro das metas contratuais.</div>
+</section>
+
+<section class="chapter" id="sites" data-title="O que é um site">
+  <span class="chapter-num">Capítulo 2</span>
+  <h2>O que é um site?</h2>
+  <p>Sabe aquela antena no alto de um prédio ou numa torre na beira da estrada? Isso é um <strong>site</strong> (também chamado de ERB — Estação Rádio Base).</p>
+  <p>Cada site cobre uma área com sinal de celular. Pense num “ponto de Wi-Fi gigante” capaz de cobrir bairros ou cidades inteiras. Os sites também se comunicam entre si e com a central da operadora — é assim que a sua ligação chega do outro lado.</p>
+  <figure>
+    <svg viewBox="0 0 640 200" role="img" aria-label="Três sites lado a lado, cada um com sua área de cobertura, ligados entre si">
+      <g style="fill:var(--ok);opacity:.12"><circle cx="120" cy="120" r="80"/><circle cx="320" cy="120" r="80"/><circle cx="520" cy="120" r="80"/></g>
+      <g style="stroke:var(--ok)" stroke-width="2.5"><line x1="120" y1="110" x2="320" y2="110"/><line x1="320" y1="110" x2="520" y2="110"/></g>
+      <g style="fill:var(--surface);stroke:var(--ink)" stroke-width="2"><path d="M110 130 L120 80 L130 130Z"/><path d="M310 130 L320 80 L330 130Z"/><path d="M510 130 L520 80 L530 130Z"/></g>
+      <g style="font:700 13px var(--body);fill:var(--ink-2)" text-anchor="middle"><text x="120" y="160">Site A</text><text x="320" y="160">Site B</text><text x="520" y="160">Site C</text><text x="220" y="100">~15 km</text><text x="420" y="100">~12 km</text></g>
+    </svg>
+    <figcaption>Cada site cobre a própria área e repassa o tráfego para os vizinhos.</figcaption>
+  </figure>
+  <p>O sinal 2G, 3G, 4G e 5G do celular de milhões de pessoas depende desses sites funcionando. Agora você faz parte dessa operação.</p>
+</section>
+
+<section class="chapter" id="geracoes" data-title="Do 2G ao 5G">
+  <span class="chapter-num">Capítulo 3</span>
+  <h2>Do 2G ao 5G</h2>
+  <p>Cada “G” é uma geração de rede celular. Cada nova geração trouxe mais velocidade e menos atraso (latência). Escolha uma geração para ver os detalhes:</p>
+  <div class="gen-pick" role="group" aria-label="Gerações de rede">
+    <button type="button" data-g="0" aria-pressed="false">2G</button>
+    <button type="button" data-g="1" aria-pressed="false">3G</button>
+    <button type="button" data-g="2" aria-pressed="true">4G</button>
+    <button type="button" data-g="3" aria-pressed="false">5G</button>
+  </div>
+  <div class="gen-panel" id="genPanel" aria-live="polite"></div>
+  <div class="note"><p><strong>Na TLP, o foco é 4G e 5G.</strong> Manter essas redes no ar é o coração do contrato.</p></div>
+</section>
+
+<section class="chapter" id="queda" data-title="Quando um site cai">
+  <span class="chapter-num">Capítulo 4</span>
+  <h2>O que acontece quando um site cai?</h2>
+  <p>Quando um site para de funcionar, toda a área que ele cobre fica <strong>sem sinal</strong>. As pessoas daquela região não conseguem ligar, mandar mensagem nem usar internet móvel.</p>
+  <div class="cards">
+    <div class="card alarm"><h4>Queda de energia</h4><p>A causa mais comum. Sem energia comercial e sem bateria/gerador, o site apaga.</p></div>
+    <div class="card alarm"><h4>Queima de hardware</h4><p>Placa ou módulo com defeito. Exige troca física.</p></div>
+    <div class="card alarm"><h4>Furto e vandalismo</h4><p>Cabos, baterias e equipamentos levados ou danificados.</p></div>
+    <div class="card alarm"><h4>Clima</h4><p>Chuva forte, raio e vento afetam energia, rádio e acesso ao local.</p></div>
+  </div>
+  <div class="recap"><b>Seu papel aqui</b>Perceber que o site caiu, entender a causa provável e acionar a equipe certa o mais rápido possível — dentro do prazo do SLA.</div>
+</section>
+
+<section class="chapter" id="concentrador" data-title="O concentrador">
+  <span class="chapter-num">Capítulo 5</span>
+  <h2>O que é um concentrador?</h2>
+  <p><strong>Concentrador</strong> é um site que faz a transmissão de outros sites. Os vizinhos dependem dele para “falar” com a rede.</p>
+  <figure>
+    <svg viewBox="0 0 640 230" role="img" aria-label="Um concentrador ligado a quatro sites. Quando ele cai, os quatro perdem sinal ao mesmo tempo">
+      <g style="stroke:var(--alarm)" stroke-width="2.5" stroke-dasharray="6 6"><line x1="320" y1="115" x2="110" y2="50"/><line x1="320" y1="115" x2="110" y2="180"/><line x1="320" y1="115" x2="530" y2="50"/><line x1="320" y1="115" x2="530" y2="180"/></g>
+      <g style="fill:var(--alarm);opacity:.1"><circle cx="110" cy="50" r="40"/><circle cx="110" cy="180" r="40"/><circle cx="530" cy="50" r="40"/><circle cx="530" cy="180" r="40"/></g>
+      <g style="fill:var(--surface);stroke:var(--ink)" stroke-width="2"><circle cx="110" cy="50" r="14"/><circle cx="110" cy="180" r="14"/><circle cx="530" cy="50" r="14"/><circle cx="530" cy="180" r="14"/></g>
+      <g style="fill:var(--alarm)"><circle cx="110" cy="50" r="6"/><circle cx="110" cy="180" r="6"/><circle cx="530" cy="50" r="6"/><circle cx="530" cy="180" r="6"/></g>
+      <rect x="270" y="88" width="100" height="54" rx="10" style="fill:var(--alarm)"/>
+      <text x="320" y="113" text-anchor="middle" style="font:800 14px var(--display);fill:#fff">CONC.</text>
+      <text x="320" y="131" text-anchor="middle" style="font:700 11px var(--body);fill:#fff">fora do ar</text>
+      <g style="font:700 12px var(--body);fill:var(--ink-2)" text-anchor="middle"><text x="110" y="108">Site A</text><text x="110" y="226">Site B</text><text x="530" y="108">Site C</text><text x="530" y="226">Site D</text></g>
+    </svg>
+    <figcaption>Falha em cascata: o concentrador cai e os quatro sites dependentes perdem sinal juntos.</figcaption>
+  </figure>
+  <p>Se um site comum cai, um bairro fica sem sinal. Se um concentrador cai, <strong>uma cidade inteira — ou várias — pode ficar sem cobertura</strong>. Por isso concentradores têm prioridade máxima de atendimento (P1).</p>
+  <div class="note warn"><p><strong>Como reconhecer:</strong> nas ferramentas de monitoramento o concentrador aparece com ícone ou flag própria. O CCI mantém a lista atualizada dos concentradores de cada área.</p></div>
+</section>
+
+<section class="chapter" id="papel" data-title="Seu papel: 3 verbos">
+  <span class="chapter-num">Capítulo 6</span>
+  <h2>Assistente de Monitoramento em 3 verbos</h2>
+  <p>O trabalho do Assistente de Monitoramento se resume a <strong>monitorar, escalonar e validar</strong>.</p>
+  <div class="cards">
+    <div class="card info"><h4>Monitorar = ver</h4><p>Tickets chegando, em andamento ou atrasados; sites fora e alarmes críticos; a jornada dos técnicos (saiu, chegou, terminou?).</p></div>
+    <div class="card warn"><h4>Escalonar = avisar</h4><p>Desvio de processo, técnico que não avança, prazo estourando ou falha que precisa da gestão. Você leva o problema a quem resolve.</p></div>
+    <div class="card ok"><h4>Validar = confirmar</h4><p>Conferir se o sistema bate com a realidade: triagem do backlog, alarme verdadeiro ou falso, motivo de uma rejeição improdutiva.</p></div>
+  </div>
+</section>
+
+<section class="chapter" id="fluxo" data-title="O fluxo do turno">
+  <span class="chapter-num">Capítulo 7</span>
+  <h2>Como é o turno na prática</h2>
+  <p>Esse ciclo se repete o turno inteiro:</p>
+  <ol class="steps">
+    <li><h4>Monitorar continuamente</h4><p>Acompanhe as ferramentas de alarme em tempo real: quedas de site, alertas de energia, falhas de transmissão e backlog.</p></li>
+    <li><h4>Identificar e classificar</h4><p>Qual site caiu? Qual a causa provável? É concentrador? Qual a prioridade (P1 a P5)?</p></li>
+    <li><h4>Acionar dentro de 20% do SLA</h4><p>O técnico precisa ser acionado no começo do prazo. Num P1 de 4 horas, você tem <strong>48 minutos</strong> para acionar.</p></li>
+    <li><h4>Acompanhar e encerrar</h4><p>Acompanhe o técnico, registre cada marco no sistema e garanta que o ticket feche com todas as evidências.</p></li>
+  </ol>
+  <p>Com o tempo você pega o ritmo e começa a ver padrões: certos sites caem mais, certas regiões sofrem mais com energia.</p>
+</section>
+
+<section class="chapter" id="ferramentas" data-title="Ferramentas">
+  <span class="chapter-num">Capítulo 8</span>
+  <h2>As ferramentas do dia a dia</h2>
+  <p>Você vai usar várias ferramentas ao mesmo tempo. Não precisa decorar tudo agora — basta saber <strong>para que serve cada uma</strong>.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Ferramenta</th><th>De quem</th><th>Para que serve</th></tr>
+    <tr><td>Smart Service</td><td>TIM</td><td>Tickets de manutenção (ServiceNow): status, responsável e prazo de cada chamado.</td></tr>
+    <tr><td>TOA / WFM</td><td>TIM</td><td>Força de trabalho em campo: técnico disponível, localização, rota e jornada.</td></tr>
+    <tr><td>Gênesis</td><td>TIM</td><td>Sites fora em tempo real: hora da falha, tempo de indisponibilidade, cidade e ticket.</td></tr>
+    <tr><td>Grafana</td><td>TIM</td><td>Gráficos e histórico para ver tendências da rede.</td></tr>
+    <tr><td>Netcool</td><td>TIM</td><td>Alarmes ativos da rede; pode gerar ticket automático no Smart Service.</td></tr>
+    <tr><td>TAIS</td><td>TIM</td><td>Chatbot para consultas rápidas: alarmes, histórico, endereço e backups do site.</td></tr>
+    <tr><td>4FIELD</td><td>TIM</td><td>Indicadores de backlog, eficiência e produtividade.</td></tr>
+    <tr><td>Portal TLP</td><td>TLP</td><td>Painel Online, Monitora, Auto Tracking, BaseCheck, InfoSite e relatórios.</td></tr>
+    <tr><td>Portal SN2</td><td>TLP</td><td>Análises do Suporte N2: o ticket vai para campo ou fecha remotamente?</td></tr>
+  </table></div>
+  <p><a href="../consulta/ferramentas.html">Ver as telas de cada ferramenta</a></p>
+</section>
+
+<section class="chapter" id="pessoas" data-title="Com quem você fala">
+  <span class="chapter-num">Capítulo 9</span>
+  <h2>Com quem você fala no dia a dia</h2>
+  <p>O trabalho no CCI nunca é solitário. A conversa acontece por WhatsApp, Teams ou telefone — e saber quem faz o quê acelera tudo.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Área</th><th>Quem é</th><th>Quando entra</th></tr>
+    <tr><td>ISOC / DSOC</td><td>NOC da TIM — analistas técnicos</td><td>Análises profundas, testes e troubleshooting quando a causa não é óbvia.</td></tr>
+    <tr><td>FIELD (TIM)</td><td>Área dentro do ISOC/DSOC</td><td>Tracking dos tickets prioritários e escalonamentos entre áreas.</td></tr>
+    <tr><td>Layer</td><td>Gestores regionais da TIM</td><td>Falhas críticas que pedem decisão gerencial.</td></tr>
+    <tr><td>Operação TLP</td><td>Técnicos de campo</td><td>Vão até o site. Você fala com eles o turno todo.</td></tr>
+    <tr><td>Suporte N2</td><td>Equipe técnica do próprio CCI</td><td>Testa o site remotamente e decide se o técnico precisa mesmo ir.</td></tr>
+  </table></div>
+  <div class="note"><p>É normal participar de vários grupos de WhatsApp e Teams ao mesmo tempo, um por frente de trabalho. Em poucos dias você sabe quem é quem.</p></div>
+</section>
+
+<section class="chapter" id="semana" data-title="Sua primeira semana">
+  <span class="chapter-num">Capítulo extra</span>
+  <h2>Sua primeira semana</h2>
+  <ol class="steps">
+    <li><h4>Dia 1 — Acessos</h4><p>Confirme login em Smart Service, TOA, Gênesis, TAIS e Portal TLP. Entre nos grupos de WhatsApp/Teams do seu turno.</p></li>
+    <li><h4>Dias 2 e 3 — Acompanhar</h4><p>Sente ao lado de um operador experiente. Observe como ele lê um alarme e decide a prioridade.</p></li>
+    <li><h4>Dia 4 — Primeiros tickets</h4><p>Trate chamados simples (P4/P5) com supervisão. Use a <a href="../consulta/calculadora-sla.html">Calculadora de SLA</a> para conferir prazos.</p></li>
+    <li><h4>Dia 5 — Revisar</h4><p>Refaça os testes da trilha e anote dúvidas para levar ao supervisor.</p></li>
+  </ol>
+  <div class="note ok"><p><strong>Pergunte sempre.</strong> No CCI, perguntar cedo custa minutos; errar uma prioridade pode custar o SLA.</p></div>
+</section>
+
+<section class="chapter" id="quiz" data-title="Teste rápido">
+  <span class="chapter-num">Capítulo 10</span>
+  <h2>Teste rápido</h2>
+  <p>Acerte 7 de 10 para concluir esta etapa. Sem pressão: dá para refazer quantas vezes quiser.</p>
+  <script type="application/json" class="quiz-data">[
+    {"q":"O que é um “site” na linguagem da TLP?","o":["Um sistema de computador da operadora","Uma torre/antena que cobre uma área com sinal","Um ticket aberto no sistema"],"a":1,"e":"Site (ou ERB) é a estrutura com antenas que leva sinal de celular a uma área."},
+    {"q":"O que é um concentrador?","o":["Um amplificador de Wi-Fi","O supervisor do turno","Um site responsável pela transmissão de outros sites"],"a":2,"e":"Se o concentrador cai, todos os sites que dependem dele caem juntos."},
+    {"q":"Chegou um P1 agora. Quanto tempo você tem para acionar o técnico?","o":["2 horas","48 minutos","1 hora"],"a":1,"e":"20% de 4 horas = 48 minutos."},
+    {"q":"Para que serve o Gênesis?","o":["Criar tickets","Acompanhar sites fora em tempo real","Controlar a jornada dos técnicos"],"a":1,"e":"Tickets ficam no Smart Service; jornada dos técnicos no TOA/WFM."},
+    {"q":"Quais são os 3 verbos do Assistente de Monitoramento?","o":["Analisar, reportar e fechar","Monitorar, escalonar e validar","Planejar, executar e revisar"],"a":1,"e":"Ver, avisar e confirmar."},
+    {"q":"Quais contratos o CCI TLP atende hoje?","o":["TIM, Vivo e Oi","TIM, ATC e Claro","Claro, TIM e IHS"],"a":1,"e":"TIM, ATC e Claro."},
+    {"q":"Quais gerações de rede são o foco da TLP?","o":["2G e 3G","4G e 5G","Só 5G"],"a":1,"e":"4G e 5G são o coração do contrato."},
+    {"q":"O concentrador caiu. O que acontece com os sites que dependem dele?","o":["Nada, só o concentrador perde sinal","Todos perdem sinal ao mesmo tempo","Entram em modo de baixa potência"],"a":1,"e":"É a falha em cascata — por isso concentrador é P1."},
+    {"q":"Qual a primeira ação ao receber um alarme de site fora?","o":["Fechar o ticket","Esperar 30 minutos para ver se volta sozinho","Identificar o site, ver a causa e acionar a equipe certa dentro do prazo"],"a":2,"e":"Esperar consome o prazo de acionamento (20% do SLA)."},
+    {"q":"O que é SLA no contexto do CCI?","o":["Um sistema de localização de antenas","O prazo contratual máximo para resolver uma falha","Um relatório enviado ao cliente"],"a":1,"e":"SLA é o acordo de nível de serviço — o prazo que o contrato exige."}
+  ]</script>
+</section>
+
+<section class="chapter" id="fim" data-title="Próxima etapa">
+  <div class="finish">
+    <span class="signal" data-signal="tutorial" role="img"><i></i><i></i><i></i><i></i></span>
+    <div>
+      <h2>Base pronta</h2>
+      <p>Você já sabe o que é um site, por que ele cai e qual é o seu papel. Agora vamos entender a infraestrutura por trás: ERBs, fibra, rádio, satélite e dBm.</p>
+      <div class="cta"><a class="btn btn-primary" href="modulo-1.html">Ir para o Módulo 1</a><a class="btn btn-ghost" href="../index.html#cci">Voltar à trilha</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var G=[
+    {n:'2G',ano:'1991',vel:'~64 kbps',lat:'~500 ms',uso:'Voz digital e SMS',tec:'GSM / CDMA'},
+    {n:'3G',ano:'2001',vel:'~3,6 Mbps',lat:'~100 ms',uso:'Internet móvel e videochamada',tec:'UMTS / WCDMA'},
+    {n:'4G',ano:'2009',vel:'~100 Mbps',lat:'~30 ms',uso:'Streaming e apps',tec:'LTE'},
+    {n:'5G',ano:'2019+',vel:'até 20 Gbps (pico)',lat:'menos de 1 ms (ideal)',uso:'IoT massivo, baixa latência',tec:'NR (New Radio)'}];
+  var p=document.getElementById('genPanel'),bs=document.querySelectorAll('.gen-pick button');
+  function show(i){var g=G[i];bs.forEach(function(b,j){b.setAttribute('aria-pressed',i===j)});
+    p.innerHTML='<h3 style="margin:0">'+g.n+' — '+g.uso+'</h3><dl><div><dt>Lançamento</dt><dd>'+g.ano+'</dd></div><div><dt>Velocidade</dt><dd>'+g.vel+'</dd></div><div><dt>Latência</dt><dd>'+g.lat+'</dd></div><div><dt>Tecnologia</dt><dd>'+g.tec+'</dd></div></dl>';}
+  bs.forEach(function(b){b.addEventListener('click',function(){show(+b.dataset.g)})});show(2);
+})();
+</script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/sap.js"></script>
+</body>
+</html>

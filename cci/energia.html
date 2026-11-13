@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Energia no site · Portal SAP TLP</title>
+<script>try{var t=localStorage.getItem('sap2-theme');t=t?JSON.parse(t):(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/sap.css">
+</head>
+<body data-root="../" data-page="cci" data-mod="energia">
+
+<section class="mod-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Início</a> / <a href="../index.html#cci">CCI</a> / Energia no site</div>
+    <h1>Energia no site: do poste à bateria</h1>
+    <p class="lede">Falha de energia é a principal causa de queda. Entenda o caminho da energia, quanto tempo a bateria segura, o que cada alarme significa e quando o GMG entra.</p>
+    <div class="mod-facts"><span><b>Aprofundamento</b> da trilha CCI</span><span><b>~20 min</b> de leitura</span><span><b>7</b> perguntas no final</span><span data-signal-text="energia"></span></div>
+  </div>
+</section>
+
+<div class="wrap mod" id="conteudo">
+<aside class="toc" id="toc" aria-label="Índice do módulo"></aside>
+<main>
+
+<section class="chapter" id="caminho" data-title="O caminho da energia">
+  <span class="chapter-num">Capítulo 1</span>
+  <h2>O caminho da energia</h2>
+  <figure>
+    <svg viewBox="0 0 660 200" role="img" aria-label="Concessionária e GMG alimentam o quadro AC, que vai ao retificador. O retificador gera −48 V DC para os equipamentos e mantém as baterias carregadas">
+      <defs><marker id="ae" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" style="fill:var(--ink-3)"/></marker></defs>
+      <g style="font:700 13px var(--body)" text-anchor="middle">
+        <rect x="10" y="30" width="120" height="44" rx="10" style="fill:var(--sun)"/><text x="70" y="57" style="fill:#1B2130">Concessionária</text>
+        <rect x="10" y="126" width="120" height="44" rx="10" style="fill:color-mix(in srgb,var(--flame) 85%,#000);"/><text x="70" y="153" style="fill:#fff">GMG</text>
+        <rect x="180" y="78" width="110" height="44" rx="10" style="fill:var(--surface);stroke:var(--ink)" stroke-width="2"/><text x="235" y="105" style="fill:var(--ink)">Quadro AC</text>
+        <rect x="340" y="78" width="120" height="44" rx="10" style="fill:var(--cci)"/><text x="400" y="105" style="fill:#fff">Retificador</text>
+        <rect x="520" y="30" width="130" height="44" rx="10" style="fill:var(--ok)"/><text x="585" y="57" style="fill:#fff">Equipamentos</text>
+        <rect x="520" y="126" width="130" height="44" rx="10" style="fill:var(--ink)"/><text x="585" y="153" style="fill:var(--paper)">Baterias</text>
+        <text x="400" y="142" style="fill:var(--ink-3);font-weight:400;font-size:12px">saída −48 V DC</text>
+        <text x="235" y="142" style="fill:var(--ink-3);font-weight:400;font-size:12px">entrada AC</text>
+      </g>
+      <g style="stroke:var(--ink-3)" stroke-width="2" fill="none" marker-end="url(#ae)">
+        <path d="M130 52 C160 52 160 92 178 96"/><path d="M130 148 C160 148 160 108 178 104"/>
+        <path d="M290 100 H338"/><path d="M460 92 C495 80 495 56 518 52"/><path d="M460 108 C495 120 495 144 518 148"/>
+      </g>
+    </svg>
+    <figcaption>Com AC presente, o retificador alimenta os equipamentos e carrega as baterias. Sem AC, as baterias assumem.</figcaption>
+  </figure>
+  <div class="tbl-wrap"><table>
+    <tr><th>Elemento</th><th>Função</th></tr>
+    <tr><td>Concessionária</td><td>Energia comercial (AC). Quando falha, abre-se protocolo com ela.</td></tr>
+    <tr><td>Quadro AC</td><td>Distribui a energia e faz a transferência para o GMG quando há gerador.</td></tr>
+    <tr><td>Retificador</td><td>Converte AC em DC (tipicamente −48 V), alimenta os equipamentos e mantém as baterias em flutuação.</td></tr>
+    <tr><td>Baterias</td><td>Assumem a carga quando falta AC. A autonomia varia por site (carga, quantidade e estado das baterias).</td></tr>
+    <tr><td>GMG</td><td>Gera AC quando a falta é longa. Fixo (TIM) ou Móvel (TLP) — ver <a href="modulo-3.html#tipos">Módulo 3</a>.</td></tr>
+  </table></div>
+</section>
+
+<section class="chapter" id="autonomia" data-title="Autonomia da bateria">
+  <span class="chapter-num">Capítulo 2</span>
+  <h2>A corrida contra a bateria</h2>
+  <p>Quando a energia comercial cai, o site <strong>não cai na hora</strong>: ele passa a viver da bateria. Esse intervalo é a sua janela para agir antes de virar indisponibilidade.</p>
+  <figure>
+    <svg viewBox="0 0 640 150" role="img" aria-label="Linha do tempo: falha de AC, site na bateria, bateria baixa, site cai. Com GMG a tempo, o site não cai">
+      <rect x="20" y="50" width="600" height="26" rx="6" style="fill:var(--surface-2);stroke:var(--line)"/>
+      <rect x="20" y="50" width="380" height="26" rx="6" style="fill:color-mix(in srgb,var(--sun) 55%,transparent)"/>
+      <rect x="400" y="50" width="110" height="26" style="fill:color-mix(in srgb,var(--flame) 70%,transparent)"/>
+      <rect x="510" y="50" width="110" height="26" rx="6" style="fill:var(--alarm)"/>
+      <g style="font:700 12px var(--body);fill:var(--ink)"><text x="20" y="40">Falha de AC</text><text x="400" y="40">Bateria baixa</text><text x="510" y="40">Site cai</text></g>
+      <g style="font:400 12px var(--body);fill:var(--ink-2)"><text x="30" y="68">Site no ar, na bateria</text><text x="408" y="68" style="fill:#fff">alarme crítico</text><text x="520" y="68" style="fill:#fff">indisponível</text></g>
+      <path d="M260 100 V82" style="stroke:var(--ok)" stroke-width="3"/>
+      <text x="260" y="120" text-anchor="middle" style="font:700 12px var(--body);fill:var(--ok)">GMG acoplado aqui = site não cai</text>
+    </svg>
+    <figcaption>Ilustrativo. A autonomia real depende de cada site — consulte o histórico e os alarmes.</figcaption>
+  </figure>
+  <div class="note warn"><p><strong>Na prática:</strong> o alarme de “falha de AC” já é um aviso de queda futura. Acompanhe a tensão da bateria e acione cedo — principalmente em concentradores.</p></div>
+</section>
+
+<section class="chapter" id="alarmes" data-title="Alarmes de energia">
+  <span class="chapter-num">Capítulo 3</span>
+  <h2>Os alarmes de energia e o que fazer</h2>
+  <div class="tbl-wrap"><table>
+    <tr><th>Alarme</th><th>O que significa</th><th>Ação do CCI</th></tr>
+    <tr><td>Falha de AC</td><td>Sem energia comercial; site na bateria</td><td>Confirmar com a concessionária (protocolo), verificar FLAG de GMG, avaliar urgência pela autonomia</td></tr>
+    <tr><td>Bateria em descarga / baixa</td><td>A autonomia está acabando</td><td>Priorizar: queda iminente. Acionar ou escalar</td></tr>
+    <tr><td>Falha de retificador</td><td>Módulo retificador com defeito; bateria pode estar segurando o site</td><td>Acionar campo com sobressalente</td></tr>
+    <tr><td>Alta temperatura</td><td>Ar-condicionado ou ventilação com falha</td><td>Acionar: calor degrada equipamentos e bateria</td></tr>
+    <tr><td>Porta aberta / intrusão</td><td>Acesso ao site sem CA correspondente</td><td>Verificar CA ativa; se não houver, acionar segurança</td></tr>
+    <tr><td>Falha de GMG</td><td>Gerador fixo não partiu ou parou</td><td>Avaliar GMG Móvel e informar a Sala Técnica</td></tr>
+  </table></div>
+</section>
+
+<section class="chapter" id="decisao" data-title="Decidindo a urgência">
+  <span class="chapter-num">Capítulo 4</span>
+  <h2>Decidindo a urgência</h2>
+  <ol class="steps">
+    <li><h4>É concentrador?</h4><p>Se sim, o impacto é em cascata. Trate como prioridade máxima.</p></li>
+    <li><h4>Quanto falta de bateria?</h4><p>Compare o alarme com o histórico do site no Grafana/TAIS.</p></li>
+    <li><h4>Há GMG?</h4><p>Fixo: acompanhar a partida e informar a Sala Técnica. Sem fixo: verificar FLAG e fluxo do GMG Móvel.</p></li>
+    <li><h4>Qual a previsão da concessionária?</h4><p>Protocolo e prazo no ticket, atualizados a cada 3 horas.</p></li>
+  </ol>
+</section>
+
+<section class="chapter" id="quiz" data-title="Teste rápido">
+  <span class="chapter-num">Capítulo 5</span>
+  <h2>Teste rápido</h2>
+  <script type="application/json" class="quiz-data">[
+    {"q":"O que faz o retificador?","o":["Gera energia a diesel","Converte AC em DC e carrega as baterias","Distribui o sinal de rádio"],"a":1,"e":"Tipicamente entrega −48 V DC."},
+    {"q":"A energia comercial caiu. O site cai na hora?","o":["Sim","Não, passa a viver da bateria","Só se for rooftop"],"a":1,"e":"A bateria dá uma janela para agir."},
+    {"q":"Alarme de bateria baixa num concentrador. Prioridade?","o":["Baixa","Máxima: queda iminente com impacto em cascata","Aguardar"],"a":1,"e":"Concentrador + bateria acabando = agir já."},
+    {"q":"Alarme de porta aberta sem CA ativa. O que fazer?","o":["Ignorar","Verificar CA e acionar segurança se não houver","Fechar o ticket"],"a":1,"e":"Pode ser intrusão ou furto em andamento."},
+    {"q":"Com que frequência atualizar o protocolo da concessionária no ticket?","o":["A cada 3 horas","Uma vez por dia","Só no encerramento"],"a":0,"e":"Conforme o protocolo da Célula de Energia."},
+    {"q":"Por que alta temperatura é um alarme importante?","o":["Não é importante","Calor degrada equipamentos e baterias","Só afeta o conforto do técnico"],"a":1,"e":"Pode evoluir para queda."},
+    {"q":"O GMG fixo não partiu. Quem é informado além do campo?","o":["Sala Técnica","Ninguém","Apenas o cliente final"],"a":0,"e":"GMG Fixo é controlado pela Sala Técnica."}
+  ]</script>
+</section>
+
+<section class="chapter" id="fim" data-title="Conclusão">
+  <div class="finish">
+    <span class="signal" data-signal="energia" role="img"><i></i><i></i><i></i><i></i></span>
+    <div><h2>Energia entendida</h2><p>Agora você lê um alarme de energia como uma contagem regressiva. Revise o processo GMG para fechar o ciclo.</p>
+      <div class="cta"><a class="btn btn-primary" href="modulo-3.html">Módulo 3 · GMG</a><a class="btn btn-ghost" href="../index.html#cci">Voltar à trilha</a></div></div>
+  </div>
+</section>
+
+</main>
+</div>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/sap.js"></script>
+</body>
+</html>

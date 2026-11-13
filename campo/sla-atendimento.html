@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SLA de Atendimento — Contrato TIM · Portal SAP TLP</title>
+<script>try{var t=localStorage.getItem('sap2-theme');t=t?JSON.parse(t):(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/sap.css">
+</head>
+<body data-root="../" data-page="campo" data-mod="sla">
+
+<section class="mod-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Início</a> / <a href="../index.html#campo">Campo</a> / SLA de Atendimento</div>
+    <h1>SLA de Atendimento no contrato TIM</h1>
+    <p class="lede">Franquia, prazos FMMT e FMO, regra dos 20%, relógio do SLA, registro, suspensão × tramitação e abono — tudo o que decide se um atendimento conta a favor ou contra.</p>
+    <div class="mod-facts"><span><b>Qualidade Operacional</b></span><span><b>~25 min</b> de leitura</span><span><b>8</b> perguntas no final</span><span data-signal-text="sla"></span></div>
+  </div>
+</section>
+
+<div class="wrap mod" id="conteudo">
+<aside class="toc" id="toc" aria-label="Índice do guia"></aside>
+<main>
+
+<section class="chapter" id="franquia" data-title="Franquia">
+  <span class="chapter-num">Seção 1</span>
+  <h2>Primeiro: o ticket está na franquia?</h2>
+  <p>Só tickets <strong>dentro da franquia</strong> são avaliados pelo prazo. Antes de qualquer conta de tempo, confira a elegibilidade.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Fica fora da franquia</th><th>Significado</th></tr>
+    <tr><td>GMG</td><td>Preditiva ou preventiva com piora no índice de falhas do END ID</td></tr>
+    <tr><td>Cancelado</td><td>Ticket cancelado antes do encerramento</td></tr>
+    <tr><td>Perda de garantia</td><td>Casos pagos em franquia complementar</td></tr>
+    <tr><td>Repetida Campo 72h</td><td>Falha que volta em até 72 h após o atendimento anterior</td></tr>
+    <tr><td>Encerrado pelo Centralizado</td><td>Finalizado direto pela equipe centralizada</td></tr>
+  </table></div>
+  <div class="note"><p><strong>Exemplo:</strong> o site volta a falhar 40 h depois de um atendimento. Está dentro das 72 h, então o ticket é “Repetida Campo 72h” e sai da franquia.</p></div>
+  <ol class="steps">
+    <li><h4>Cancelado ou encerrado pelo Centralizado?</h4><p>Se sim, fora da franquia.</p></li>
+    <li><h4>Reincidência em até 72 h?</h4><p>Compare com o último atendimento do mesmo site.</p></li>
+    <li><h4>Flag de GMG ou perda de garantia?</h4><p>Só depois disso analise o prazo.</p></li>
+  </ol>
+</section>
+
+<section class="chapter" id="fmmt" data-title="Prazos FMMT">
+  <span class="chapter-num">Seção 2</span>
+  <h2>Prazos no modelo FMMT</h2>
+  <p>No <strong>FMMT</strong> (Field Maintenance Management Team), os chamados vão de P1 a P5, cada um com prazo fixo.</p>
+  <figure>
+    <svg viewBox="0 0 640 230" role="img" aria-label="Barras de prazo por prioridade: P1 4h, P2 6h, P3 12h, P4 24h, P5 48h. O trecho inicial de cada barra marca os 20% para acionar">
+      <g style="font:400 11px var(--body);fill:var(--ink-3)" text-anchor="middle"><text x="70" y="220">0 h</text><text x="200" y="220">12 h</text><text x="330" y="220">24 h</text><text x="460" y="220">36 h</text><text x="590" y="220">48 h</text></g>
+      <g style="stroke:var(--line)"><line x1="70" y1="10" x2="70" y2="205"/><line x1="200" y1="10" x2="200" y2="205"/><line x1="330" y1="10" x2="330" y2="205"/><line x1="460" y1="10" x2="460" y2="205"/><line x1="590" y1="10" x2="590" y2="205"/></g>
+      <g style="font:800 13px var(--display)">
+        <text x="20" y="34" style="fill:var(--alarm)">P1</text><text x="20" y="72" style="fill:var(--flame-ink)">P2</text><text x="20" y="110" style="fill:var(--ink)">P3</text><text x="20" y="148" style="fill:var(--cci)">P4</text><text x="20" y="186" style="fill:var(--ink-3)">P5</text>
+      </g>
+      <g style="fill:var(--sun)"><rect x="70" y="20" width="43" height="20" rx="3"/><rect x="70" y="58" width="65" height="20" rx="3"/><rect x="70" y="96" width="130" height="20" rx="3"/><rect x="70" y="134" width="260" height="20" rx="3"/><rect x="70" y="172" width="520" height="20" rx="3"/></g>
+      <g style="fill:var(--flame)"><rect x="70" y="20" width="9" height="20" rx="2"/><rect x="70" y="58" width="13" height="20" rx="2"/><rect x="70" y="96" width="26" height="20" rx="2"/><rect x="70" y="134" width="52" height="20" rx="2"/><rect x="70" y="172" width="104" height="20" rx="2"/></g>
+      <g style="font:700 12px var(--body);fill:var(--ink-2)"><text x="120" y="35">4 h</text><text x="142" y="73">6 h</text><text x="207" y="111">12 h</text><text x="337" y="149">24 h</text><text x="540" y="187" style="fill:#1B2130">48 h</text></g>
+    </svg>
+    <figcaption>Laranja: janela de acionamento (20% do SLA). Amarelo: restante do prazo.</figcaption>
+  </figure>
+  <div class="tbl-wrap"><table>
+    <tr><th>Prioridade</th><th>Prazo</th><th>Acionar em até</th><th>Descrição</th></tr>
+    <tr><td><span class="prio p1">P1 Crítico</span></td><td>4 h</td><td>48 min</td><td>Impacto total na rede</td></tr>
+    <tr><td><span class="prio p2">P2 Alto</span></td><td>6 h</td><td>72 min</td><td>Alto impacto, despacho rápido</td></tr>
+    <tr><td><span class="prio p3">P3 Médio</span></td><td>12 h</td><td>2h24</td><td>Impacto intermediário</td></tr>
+    <tr><td><span class="prio p4">P4 Baixo</span></td><td>24 h</td><td>4h48</td><td>Baixo impacto; a regra dos 20% continua valendo</td></tr>
+    <tr><td><span class="prio p5">P5 Planejado</span></td><td>48 h</td><td>9h36</td><td>Atividades planejadas</td></tr>
+  </table></div>
+  <h3>Acréscimo por distância</h3>
+  <p><strong>+1 hora a cada 100 km</strong> entre o CM e o site, conforme cadastro NGNIS TIM. Site a 200 km: P1 vira 6 h, P2 vira 8 h, P4 vira 26 h.</p>
+  <div class="note warn"><p>Confirme a distância cadastrada e a regra de arredondamento no NGNIS TIM antes de considerar o acréscimo.</p></div>
+</section>
+
+<section class="chapter" id="fmo" data-title="Prazos FMO">
+  <span class="chapter-num">Seção 3</span>
+  <h2>Prazos no modelo FMO</h2>
+  <p>No <strong>FMO</strong> (Field Maintenance Operations) há só três níveis.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Nível</th><th>Prazo</th><th>Acionar em até</th><th>Equivale no FMMT</th></tr>
+    <tr><td>Alta</td><td>4 h</td><td>48 min</td><td>P1</td></tr>
+    <tr><td>Média</td><td>6 h</td><td>72 min</td><td>P2</td></tr>
+    <tr><td>Baixa</td><td>24 h</td><td>4h48</td><td>P4</td></tr>
+  </table></div>
+  <div class="note"><p><strong>Confira o modelo antes de ler o prazo.</strong> Não existe P3 nem P5 em chamado FMO.</p></div>
+</section>
+
+<section class="chapter" id="acionamento" data-title="Regra dos 20%">
+  <span class="chapter-num">Seção 4</span>
+  <h2>Regra de acionamento: 20% do SLA</h2>
+  <p>Todo chamado deve ter o técnico acionado em até <strong>20% do prazo</strong>, contado da abertura no sistema. Acionar perto do vencimento não serve.</p>
+  <p><strong>Tempo de acionamento = SLA × 0,20</strong></p>
+  <div class="note ok"><p><strong>Exemplo:</strong> P2 aberto às 08:00 (vence às 14:00). Limite de acionamento: 72 min — técnico despachado até <strong>09:12</strong>.</p></div>
+  <p><a class="btn btn-ghost" href="../consulta/calculadora-sla.html">Calcular um chamado real</a></p>
+</section>
+
+<section class="chapter" id="relogio" data-title="Relógio do SLA">
+  <span class="chapter-num">Seção 5</span>
+  <h2>Quando o relógio corre e quando para</h2>
+  <p>O tempo <strong>só corre</strong> com o ticket em <strong>Iniciado</strong> ou <strong>Não Iniciado</strong> — na fila da TLP e sem paralisação.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Status</th><th>Relógio</th><th>O que fazer</th></tr>
+    <tr><td>Não Iniciado</td><td><span class="prio" style="color:var(--flame-ink)">Correndo</span></td><td>Acionar dentro dos 20%</td></tr>
+    <tr><td>Iniciado</td><td><span class="prio" style="color:var(--flame-ink)">Correndo</span></td><td>Atuar</td></tr>
+    <tr><td>Suspenso</td><td><span class="prio" style="color:var(--ink-3)">Parado</span></td><td>Resolver o impedimento e retomar</td></tr>
+    <tr><td>Tramitado para TIM</td><td><span class="prio" style="color:var(--ink-3)">Parado</span></td><td>Acompanhar o retorno pelo CCI</td></tr>
+  </table></div>
+  <h3>Exemplo: P2 (SLA 6 h)</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>Hora</th><th>Evento</th><th>Relógio</th></tr>
+    <tr><td>08:00</td><td>Chamado aberto, vencimento previsto 14:00</td><td>Correndo</td></tr>
+    <tr><td>09:00</td><td>Técnico acionado, dentro do limite de 09:12</td><td>Correndo</td></tr>
+    <tr><td>10:00</td><td>Impedimento do lado TLP; suspende na hora, com evidência. Consumidas 2 h</td><td>Parado</td></tr>
+    <tr><td>11:30</td><td>Impedimento resolvido, ticket retomado após 1h30 parado</td><td>Correndo</td></tr>
+    <tr><td>15:30</td><td>Novo vencimento: 4 h restantes contadas a partir da retomada</td><td>Prazo final</td></tr>
+  </table></div>
+</section>
+
+<section class="chapter" id="registro" data-title="Como registrar">
+  <span class="chapter-num">Seção 6</span>
+  <h2>Como registrar corretamente</h2>
+  <p>A qualidade do registro decide se um pleito de abono é aceito. Cada etapa é documentada <strong>no momento em que acontece</strong>.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Etapa</th><th>Registro fraco</th><th>Registro forte</th></tr>
+    <tr><td>Acionamento</td><td>“Técnico acionado”</td><td>Nome do técnico, horário exato e de onde saiu</td></tr>
+    <tr><td>Check-in (CA)</td><td>“No site”</td><td>Horário de chegada com foto da fachada ou equipamento</td></tr>
+    <tr><td>Diagnóstico</td><td>“Site fora do ar”</td><td>Condição encontrada, causa provável, foto do equipamento afetado</td></tr>
+    <tr><td>Tratativa</td><td>Nenhuma atualização</td><td>Atualização a cada passo da solução</td></tr>
+    <tr><td>Encerramento</td><td>“Normalizado”</td><td>Solução aplicada, fotos antes/depois, prazo de estabilização</td></tr>
+  </table></div>
+  <div class="note alarm"><p><strong>Registro retroativo não é aceito.</strong> Sem evidência feita na hora, o pleito é negado.</p></div>
+</section>
+
+<section class="chapter" id="suspensao" data-title="Suspensão × tramitação">
+  <span class="chapter-num">Seção 7</span>
+  <h2>Suspensão × tramitação</h2>
+  <p>Pergunte: <strong>quem é o próximo responsável pela ação?</strong></p>
+  <div class="compare">
+    <div class="card warn"><span class="who">Próximo responsável: TLP</span><h4>Suspensão (Agendado Data Futura)</h4><ul><li>Impedimento do lado TLP: agendamento, peça, acesso</li><li>TLP retoma assim que o impedimento acabar</li></ul></div>
+    <div class="card info"><span class="who">Próximo responsável: TIM ou terceiro</span><h4>Tramitação (NotDone)</h4><ul><li>Depende da TIM, provedor de TX ou concessionária</li><li>Ticket vai para a fila do responsável</li></ul></div>
+  </div>
+  <div class="note warn"><p>Suspensão errada pode deixar o SLA vencer sem chance de abono.</p></div>
+</section>
+
+<section class="chapter" id="abono" data-title="Abono de tempo">
+  <span class="chapter-num">Seção 8</span>
+  <h2>Abono: tempo, não ticket</h2>
+  <p>Mesmo com a dificuldade reconhecida, o abono cobre <strong>só o período em que a equipe foi efetivamente impedida</strong>.</p>
+  <div class="compare">
+    <div class="card ok"><h4>Pode ser abonado</h4><ul><li>Falha de energia sem flag GMG ativa no sistema</li><li>Falha de TX alugada com WO aberta e HH registrado</li><li>Impedimento de responsabilidade da TIM ou de terceiros</li><li>Clima extremo que impeça o acesso</li></ul></div>
+    <div class="card alarm"><h4>Não pode (falha operacional TLP)</h4><ul><li>Demora para iniciar tratativas ou diagnosticar</li><li>Veículo com problema ou deslocamento lento</li><li>Falha no despacho, falta de ferramenta ou de técnico</li><li>TSK sem atualização</li></ul></div>
+  </div>
+  <div class="note ok"><p><strong>Pleito preciso:</strong> acesso bloqueado das 10:00 às 11:20, com foto e registro no ticket nesse horário. Pleiteie <strong>1h20</strong> — não o ticket inteiro.</p></div>
+</section>
+
+<section class="chapter" id="checklist" data-title="Checklist">
+  <span class="chapter-num">Seção 9</span>
+  <h2>Checklist do atendimento perfeito</h2>
+  <p>Marque durante o atendimento. Fica salvo neste navegador.</p>
+  <div class="check-group">
+    <ul class="checklist" data-checklist="sla">
+      <li><h4>Antes de começar</h4></li>
+      <li><label><input type="checkbox"><span>Ticket está dentro da franquia</span></label></li>
+      <li><label><input type="checkbox"><span>Modelo (FMMT ou FMO) e prioridade identificados</span></label></li>
+      <li><label><input type="checkbox"><span>Acréscimo de distância considerado (+1 h a cada 100 km)</span></label></li>
+      <li><label><input type="checkbox"><span>Limite de acionamento calculado (SLA × 0,20)</span></label></li>
+      <li><h4>Durante</h4></li>
+      <li><label><input type="checkbox"><span>Acionado dentro dos 20%</span></label></li>
+      <li><label><input type="checkbox"><span>Horário e localização do técnico registrados no acionamento</span></label></li>
+      <li><label><input type="checkbox"><span>CA (check-in) feita ao chegar</span></label></li>
+      <li><label><input type="checkbox"><span>Condições encontradas e diagnóstico detalhado registrados</span></label></li>
+      <li><label><input type="checkbox"><span>Evidências fotográficas e textuais anexadas</span></label></li>
+      <li><label><input type="checkbox"><span>Prazo estimado de solução informado</span></label></li>
+      <li><h4>No encerramento</h4></li>
+      <li><label><input type="checkbox"><span>Solução e prazo de estabilização registrados</span></label></li>
+      <li><label><input type="checkbox"><span>Fotos de antes e depois anexadas</span></label></li>
+      <li><label><input type="checkbox"><span>Suspensões e tramitações feitas na hora certa</span></label></li>
+      <li><h4>Se houver dificuldade</h4></li>
+      <li><label><input type="checkbox"><span>Próximo responsável identificado (TIM → tramitar; TLP → suspender)</span></label></li>
+      <li><label><input type="checkbox"><span>Pleito apenas do tempo impactado, nunca registro retroativo</span></label></li>
+    </ul>
+    <button type="button" class="btn btn-ghost" data-clear="sla">Limpar checklist</button>
+  </div>
+</section>
+
+<section class="chapter" id="erros" data-title="Erros comuns">
+  <span class="chapter-num">Seção extra</span>
+  <h2>Erros comuns que fazem perder SLA</h2>
+  <ul>
+    <li><strong>Ler o prazo no modelo errado</strong> — procurar P3 num chamado FMO.</li>
+    <li><strong>Esquecer o acréscimo de distância</strong> — ou aplicá-lo sem conferir o NGNIS.</li>
+    <li><strong>Suspender “para ganhar tempo”</strong> sem impedimento real — a auditoria reprova.</li>
+    <li><strong>Deixar a dificuldade para registrar depois</strong> — registro retroativo não é aceito.</li>
+    <li><strong>Pleitear o ticket inteiro</strong> em vez do período impedido.</li>
+  </ul>
+  <p>Veja também: <a href="evidencias.html">Evidências e fotos</a> e <a href="deslocamento.html">Procedimentos de deslocamento</a>.</p>
+</section>
+
+<section class="chapter" id="quiz" data-title="Teste rápido">
+  <span class="chapter-num">Seção 10</span>
+  <h2>Teste rápido</h2>
+  <p>Acerte 6 de 8 para concluir.</p>
+  <script type="application/json" class="quiz-data">[
+    {"q":"Site volta a falhar 40 h depois de um atendimento. Como fica o ticket?","o":["Entra normalmente na franquia","Repetida Campo 72h, fora da franquia","Cancelado"],"a":1,"e":"Reincidência em até 72 h sai da franquia."},
+    {"q":"Chamado FMO de prioridade Média. Qual o prazo?","o":["4 h","6 h","12 h"],"a":1,"e":"FMO: Alta 4 h, Média 6 h, Baixa 24 h."},
+    {"q":"P1 num site a 200 km do CM. Qual o prazo final?","o":["4 h","5 h","6 h"],"a":2,"e":"4 h + 2 h (1 h a cada 100 km)."},
+    {"q":"P2 aberto às 08:00. Até que horas acionar o técnico?","o":["08:48","09:12","10:00"],"a":1,"e":"20% de 6 h = 72 min → 09:12."},
+    {"q":"Ticket tramitado para a TIM. O relógio da TLP…","o":["continua correndo","fica parado","dobra de velocidade"],"a":1,"e":"Só corre em Iniciado ou Não Iniciado."},
+    {"q":"Técnico aguarda peça que a própria TLP vai entregar. Suspender ou tramitar?","o":["Suspender (Agendado Data Futura)","Tramitar (NotDone)"],"a":0,"e":"Impedimento e próximo passo são da TLP."},
+    {"q":"Acesso bloqueado das 10:00 às 11:20, com evidência. Quanto pleitear?","o":["O ticket inteiro","1h20","2 h"],"a":1,"e":"Abono é de tempo, não de ticket."},
+    {"q":"O técnico esqueceu de registrar a chegada e quer lançar no fim do dia. Vale para abono?","o":["Sim, se tiver foto","Não, registro retroativo não é aceito","Só com autorização do CM"],"a":1,"e":"A evidência precisa ser registrada no momento."}
+  ]</script>
+</section>
+
+<section class="chapter" id="fim" data-title="Conclusão">
+  <div class="finish">
+    <span class="signal" data-signal="sla" role="img"><i></i><i></i><i></i><i></i></span>
+    <div>
+      <h2>Guia concluído</h2>
+      <p>Use a calculadora para conferir prazos reais e mantenha o checklist aberto durante os atendimentos.</p>
+      <div class="cta"><a class="btn btn-primary" href="../consulta/calculadora-sla.html">Abrir calculadora</a><a class="btn btn-ghost" href="../index.html#campo">Voltar ao Campo</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/sap.js"></script>
+</body>
+</html>

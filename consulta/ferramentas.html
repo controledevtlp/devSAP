@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ferramentas · Portal SAP TLP</title>
+<script>try{var t=localStorage.getItem('sap2-theme');t=t?JSON.parse(t):(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/sap.css">
+</head>
+<body data-root="../" data-page="ferramentas">
+
+<section class="mod-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Início</a> / Consulta / Ferramentas</div>
+    <h1>Ferramentas do CCI</h1>
+    <p class="lede">O que cada sistema mostra e quando abrir. Clique na tela para ampliar.</p>
+  </div>
+</section>
+
+<main class="wrap section" id="conteudo" style="padding-top:24px">
+  <article class="tool" id="smart-service">
+    <img data-zoom src="../img/tools/smart-service.png" alt="Tela do Smart Service com lista de tickets" loading="lazy">
+    <div><span class="owner tag cci">TIM</span><h2>Smart Service</h2>
+      <p>Sistema de tickets (ServiceNow). Cada chamado tem status, responsável e prazo. É aqui que se suspende, tramita e encerra.</p>
+      <p><strong>Abra quando:</strong> precisar do histórico do ticket, atualizar status ou registrar evidências.</p></div>
+  </article>
+  <article class="tool" id="toa">
+    <img data-zoom src="../img/tools/toa-wfm.png" alt="Tela do TOA/WFM com rotas dos técnicos" loading="lazy">
+    <div><span class="owner tag cci">TIM</span><h2>TOA / WFM</h2>
+      <p>Gestão da força de trabalho: técnico disponível, onde está, rota e jornada.</p>
+      <p><strong>Abra quando:</strong> for escolher quem acionar ou conferir se o técnico já saiu ou chegou.</p></div>
+  </article>
+  <article class="tool" id="genesis">
+    <img data-zoom src="../img/tools/genesis-alarmes.jpg" alt="Tela do Gênesis com sites fora" loading="lazy">
+    <div><span class="owner tag cci">TIM</span><h2>Gênesis</h2>
+      <p>Sites fora em tempo real: hora da falha, tempo de indisponibilidade, classificação, cidade e ticket.</p>
+      <p><strong>Abra quando:</strong> confirmar o impacto (SI ou SD) e checar se há concentrador envolvido.</p></div>
+  </article>
+  <article class="tool" id="grafana">
+    <img data-zoom src="../img/tools/grafana.png" alt="Painel do Grafana com gráficos da rede" loading="lazy">
+    <div><span class="owner tag cci">TIM</span><h2>Grafana</h2>
+      <p>Gráficos e dados históricos para enxergar tendências da rede.</p>
+      <p><strong>Abra quando:</strong> investigar reincidência ou comportamento de um site ao longo dos dias.</p></div>
+  </article>
+  <article class="tool" id="tais">
+    <img data-zoom src="../img/tools/tais-tim.png" alt="Chat do TAIS" loading="lazy">
+    <div><span class="owner tag cci">TIM</span><h2>TAIS</h2>
+      <p>Chatbot de consultas rápidas: alarmes, histórico, endereço e backups do site.</p>
+      <p><strong>Abra quando:</strong> precisar de uma informação pontual sem navegar por vários sistemas.</p></div>
+  </article>
+  <article class="tool" id="portal-tlp">
+    <img data-zoom src="../img/tools/portal-tlp-home.png" alt="Página inicial do Portal TLP" loading="lazy">
+    <div><span class="owner tag campo">TLP</span><h2>Portal TLP</h2>
+      <p>Plataforma interna: <strong>Painel Online</strong> (sites fora, causa, previsão, ID massiva), <strong>Monitora</strong> (SLAs, reincidências e falhas críticas por ANF), <strong>Auto Tracking</strong> (cruza Gênesis e tickets, agrupa massivas), Downloads, BaseCheck, InfoSite e Relatórios.</p></div>
+  </article>
+  <article class="tool" id="painel-online">
+    <img data-zoom src="../img/tools/portal-tlp-painel.png" alt="Painel Online do Portal TLP" loading="lazy">
+    <div><span class="owner tag campo">TLP</span><h2>Painel Online</h2>
+      <p>Visão consolidada dos sites fora com status, causa e previsão de normalização.</p>
+      <p><strong>Abra quando:</strong> acompanhar o turno inteiro de uma vez só.</p></div>
+  </article>
+  <div class="grid-2" style="margin-top:28px">
+    <div class="tile"><span class="tag cci">TIM</span><h3>Netcool</h3><p>Alarmes ativos da rede. Integrado ao Smart Service, pode gerar ticket automático.</p></div>
+    <div class="tile"><span class="tag cci">TIM</span><h3>4FIELD</h3><p>Backlog, eficiência e produtividade: os indicadores estão no verde ou no vermelho?</p></div>
+    <div class="tile"><span class="tag campo">TLP</span><h3>Portal SN2</h3><p>Análises do Suporte N2: o ticket vai para campo ou fecha remotamente.</p></div>
+  </div>
+</main>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/sap.js"></script>
+</body>
+</html>

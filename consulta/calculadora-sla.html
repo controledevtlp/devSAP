@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Calculadora de SLA · Portal SAP TLP</title>
+<script>try{var t=localStorage.getItem('sap2-theme');t=t?JSON.parse(t):(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/sap.css">
+</head>
+<body data-root="../" data-page="calc">
+
+<section class="mod-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Início</a> / Consulta / Calculadora de SLA</div>
+    <h1>Calculadora de SLA</h1>
+    <p class="lede">Responda às perguntas da esquerda, na ordem. Do outro lado, a calculadora mostra em linguagem simples: até que horas despachar o técnico, quando o chamado vence e como o tempo foi gasto.</p>
+  </div>
+</section>
+
+<main class="wrap section" id="conteudo">
+  <div class="calc">
+    <form class="panel" id="calcForm" onsubmit="return false">
+      <div class="fstep">
+        <span class="fstep-n">1</span>
+        <div>
+          <h3>Qual é o chamado?</h3>
+          <p class="f-why">O modelo e a prioridade definem o prazo total.</p>
+          <div class="field">
+            <span class="lbl" id="lblModelo">Modelo do contrato</span>
+            <div class="seg" role="group" aria-labelledby="lblModelo">
+              <button type="button" data-model="FMMT" aria-pressed="true">FMMT</button>
+              <button type="button" data-model="FMO" aria-pressed="false">FMO</button>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lbl" id="lblPrio">Prioridade</span>
+            <div class="prio-pick" id="prioPick" role="group" aria-labelledby="lblPrio"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fstep">
+        <span class="fstep-n">2</span>
+        <div>
+          <h3>Quando abriu e onde fica o site?</h3>
+          <p class="f-why">O relógio começa na abertura. Site longe ganha prazo extra.</p>
+          <div class="field">
+            <label for="abertura">Abertura do chamado</label>
+            <input type="datetime-local" id="abertura" step="60">
+            <button type="button" class="add-link" id="agora">Usar horário atual</button>
+          </div>
+          <div class="field">
+            <label for="km">Distância do CM até o site (km)</label>
+            <input type="number" id="km" min="0" step="1" value="0" inputmode="numeric">
+            <div class="hint">+1 h a cada 100 km completos (cadastro NGNIS TIM).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fstep">
+        <span class="fstep-n">3</span>
+        <div>
+          <h3>O que já aconteceu? <small style="font-weight:400;color:var(--ink-3)">(opcional)</small></h3>
+          <p class="f-why">Preencha conforme o atendimento avança, para ver a demora de acionamento e o deslocamento na linha do tempo.</p>
+          <div class="field">
+            <label for="acion">Técnico acionado às</label>
+            <input type="datetime-local" id="acion" step="60">
+          </div>
+          <div class="field">
+            <label for="chegada">Técnico chegou ao site às</label>
+            <input type="datetime-local" id="chegada" step="60">
+          </div>
+          <div class="field">
+            <span class="lbl">Pausas (suspensão ou tramitação)</span>
+            <div class="pauses" id="pauses"></div>
+            <button type="button" class="add-link" id="addPause">+ Adicionar pausa</button>
+            <div class="hint">Enquanto pausado, o relógio do SLA não corre.</div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div>
+      <div class="result-big">
+        <div class="r act"><small>Despachar o técnico até</small><b id="rAct">—</b><span id="rActSub" class="hint"></span></div>
+        <div class="r due"><small>O chamado vence às</small><b id="rDue">—</b><span id="rDueSub" class="hint"></span></div>
+      </div>
+      <div class="live" id="live" aria-live="polite"></div>
+      <div class="verdicts" id="verdicts"></div>
+
+      <div class="panel timeline" style="margin-top:16px">
+        <h3 style="margin-bottom:4px">Como o tempo está sendo gasto</h3>
+        <p class="hint" style="margin:0">A barra inteira é o prazo do chamado, da abertura ao vencimento. O traço “20%” marca o limite para despachar o técnico.</p>
+        <div class="tl-outer" aria-hidden="true"><div class="tl-track" id="track"></div><div class="tl-ov" id="trackOv"></div></div>
+        <div class="tl-times"><span id="tStart">—</span><span id="tEnd">—</span></div>
+        <div class="tl-legend">
+          <span style="--c:color-mix(in srgb,var(--sun) 40%,transparent)">Janela para despachar (20%)</span>
+          <span style="--c:var(--flame)">Demora até acionar</span>
+          <span style="--c:var(--alarm)">Acionamento atrasado</span>
+          <span style="--c:var(--cci)">Deslocamento</span>
+          <span style="--c:var(--ok)">Técnico no site</span>
+          <span style="--c:var(--line)">Pausado</span>
+          <span style="--c:var(--ink)">Agora</span>
+        </div>
+        <div class="tbl-wrap"><table id="events"></table></div>
+      </div>
+      <div class="note"><p>Ferramenta de apoio. O prazo oficial é o registrado no sistema da TIM. O relógio só corre em “Iniciado” ou “Não Iniciado”.</p></div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  var SLA={FMMT:[['P1','4 h',4],['P2','6 h',6],['P3','12 h',12],['P4','24 h',24],['P5','48 h',48]],FMO:[['Alta','4 h',4],['Média','6 h',6],['Baixa','24 h',24]]};
+  var st={model:'FMMT',prio:0,pauses:[]};
+  var $=function(id){return document.getElementById(id)};
+  function pad(n){return String(n).padStart(2,'0')}
+  function toLocal(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes())}
+  function fmt(d,ref){var s=pad(d.getHours())+':'+pad(d.getMinutes());if(ref&&d.toDateString()!==ref.toDateString())s+=' <span style="font-size:.45em;font-weight:700">'+pad(d.getDate())+'/'+pad(d.getMonth()+1)+'</span>';return s}
+  function fmtS(t){var d=new Date(t);return pad(d.getDate())+'/'+pad(d.getMonth()+1)+' '+pad(d.getHours())+':'+pad(d.getMinutes())}
+  function dur(ms){var neg=ms<0;ms=Math.abs(ms);var m=Math.round(ms/60000),h=Math.floor(m/60);m=m%60;return (neg?'-':'')+(h?h+'h'+(m?pad(m):''):m+' min')}
+
+  function renderPrio(){
+    $('prioPick').style.gridTemplateColumns='repeat('+SLA[st.model].length+',1fr)';
+    $('prioPick').innerHTML=SLA[st.model].map(function(p,i){return '<button type="button" data-i="'+i+'" aria-pressed="'+(i===st.prio)+'">'+p[0]+'<small>'+p[1]+'</small></button>'}).join('');
+  }
+  function renderPauses(){
+    $('pauses').innerHTML=st.pauses.map(function(p,i){return '<div class="pause-row"><input type="datetime-local" aria-label="Início da pausa '+(i+1)+'" data-i="'+i+'" data-k="s" value="'+(p.s||'')+'"><input type="datetime-local" aria-label="Fim da pausa '+(i+1)+'" data-i="'+i+'" data-k="e" value="'+(p.e||'')+'"><button type="button" class="icon-btn" data-del="'+i+'" aria-label="Remover pausa '+(i+1)+'" style="width:36px;height:36px">✕</button></div>'}).join('') || '<div class="hint">Nenhuma pausa.</div>';
+  }
+  // Avança "tempo de relógio correndo" a partir de t0, pulando pausas
+  function advance(t0,ms,pauses){
+    var t=t0, left=ms;
+    for(var i=0;i<pauses.length;i++){
+      var p=pauses[i]; if(p.e<=t) continue;
+      var s=Math.max(p.s,t);
+      if(s-t>=left) break;
+      left-=(s-t); t=p.e;
+    }
+    return t+left;
+  }
+  function calc(){
+    var ab=$('abertura').value; if(!ab){return}
+    var t0=new Date(ab).getTime();
+    var hours=SLA[st.model][st.prio][2], pLbl=SLA[st.model][st.prio][0];
+    var extra=Math.floor((+$('km').value||0)/100);
+    var total=(hours+extra)*3600000, act=hours*3600000*0.2;
+    var pauses=st.pauses.filter(function(p){return p.s&&p.e}).map(function(p){return {s:new Date(p.s).getTime(),e:new Date(p.e).getTime()}}).filter(function(p){return p.e>p.s&&p.e>t0}).sort(function(a,b){return a.s-b.s});
+    var tAct=advance(t0,act,pauses), tDue=advance(t0,total,pauses);
+    var tAcion=$('acion').value?new Date($('acion').value).getTime():null;
+    var tCheg=$('chegada').value?new Date($('chegada').value).getTime():null;
+    if(tAcion!=null&&tAcion<t0)tAcion=null;
+    if(tCheg!=null&&(tAcion==null||tCheg<tAcion))tCheg=null;
+    var ref=new Date(t0);
+    $('rAct').innerHTML=fmt(new Date(tAct),ref);
+    $('rActSub').textContent='Janela de '+dur(act)+' (20% de '+hours+' h, '+pLbl+')';
+    $('rDue').innerHTML=fmt(new Date(tDue),ref);
+    var pausedMs=pauses.reduce(function(a,p){var s=Math.max(p.s,t0),e=Math.min(p.e,tDue);return a+Math.max(0,e-s)},0);
+    $('rDueSub').textContent=hours+' h de SLA'+(extra?' + '+extra+' h de distância':'')+(pausedMs?' + '+dur(pausedMs)+' pausado':'');
+    // veredictos de acionamento e deslocamento
+    var v='';
+    if(tAcion!=null){
+      var delay=tAcion-t0, late=tAcion>tAct;
+      v+='<div class="verdict '+(late?'v-bad':'v-ok')+'"><small>Demora até acionar</small><b>'+dur(delay)+'</b><div class="v-sub">'+(late?'Estourou a janela dos 20% em '+dur(tAcion-tAct)+'.':'Dentro da janela dos 20%.')+'</div></div>';
+    }
+    if(tAcion!=null&&tCheg!=null){
+      v+='<div class="verdict v-info"><small>Deslocamento até o site</small><b>'+dur(tCheg-tAcion)+'</b><div class="v-sub">Do acionamento à chegada'+(tCheg>tDue?' — chegou após o vencimento.':'.')+'</div></div>';
+    }
+    $('verdicts').innerHTML=v;
+    // frase ao vivo
+    var now=Date.now(), live=$('live');
+    var hNow=pad(new Date(now).getHours())+':'+pad(new Date(now).getMinutes());
+    var paused=pauses.some(function(p){return now>=p.s&&now<p.e});
+    if(now<t0){live.className='live okv';live.textContent='O chamado ainda não foi aberto neste horário.'}
+    else if(paused){live.className='live warnv';live.textContent='Agora ('+hNow+'): relógio parado — há uma pausa em andamento.'}
+    else if(tAcion==null&&now<=tAct){live.className='live okv';live.textContent='Agora ('+hNow+'): faltam '+dur(tAct-now)+' para despachar o técnico.'}
+    else if(now<=tDue){live.className='live '+(tAcion!=null&&tAcion<=tAct?'okv':'warnv');live.textContent='Agora ('+hNow+'): faltam '+dur(tDue-now)+' para o chamado vencer.'}
+    else{live.className='live badv';live.textContent='Agora ('+hNow+'): SLA vencido há '+dur(now-tDue)+'. Escale ao CM se ainda não houver comunicação.'}
+    // linha do tempo
+    var span=tDue-t0, tr=$('track'), h='', ov='';
+    function seg(a,b,c,title){a=Math.max(a,t0);b=Math.min(b,tDue);var l=(a-t0)/span*100,w=(b-a)/span*100;if(w>0)h+='<div class="tl-seg '+c+'" style="left:'+l+'%;width:'+w+'%" title="'+(title||'')+'"></div>'}
+    seg(t0,tDue,'tl-rest');
+    seg(t0,tAct,'tl-win','Janela para despachar');
+    if(tAcion!=null){
+      seg(t0,Math.min(tAcion,tAct),'tl-acion','Demora até acionar');
+      if(tAcion>tAct)seg(tAct,tAcion,'tl-late','Acionamento atrasado');
+      if(tCheg!=null){
+        seg(tAcion,tCheg,'tl-disp','Deslocamento');
+        seg(tCheg,Math.min(now,tDue),'tl-work','Técnico no site');
+      }
+    }
+    pauses.forEach(function(p){seg(p.s,p.e,'tl-pause','Pausa')});
+    ov+='<div class="tl-tick" style="left:'+((tAct-t0)/span*100)+'%"></div>';
+    if(now>=t0&&now<=tDue)ov+='<div class="tl-now" style="left:'+((now-t0)/span*100)+'%"></div>';
+    tr.innerHTML=h;$('trackOv').innerHTML=ov;
+    $('tStart').textContent='Abertura · '+fmtS(t0);
+    $('tEnd').textContent='Vencimento · '+fmtS(tDue);
+    var ev=[[t0,'Chamado aberto'],[tAct,'Limite para despachar o técnico (20%)']];
+    if(tAcion!=null)ev.push([tAcion,'Técnico acionado']);
+    if(tCheg!=null)ev.push([tCheg,'Técnico chegou ao site']);
+    pauses.forEach(function(p,i){if(p.s<tDue){ev.push([Math.max(p.s,t0),'Início da pausa '+(i+1)]);ev.push([p.e,'Retomada após pausa '+(i+1)])}});
+    ev.push([tDue,'Vencimento do SLA']);
+    ev.sort(function(a,b){return a[0]-b[0]});
+    $('events').innerHTML='<tr><th>Horário</th><th>Evento</th></tr>'+ev.map(function(e){return '<tr><td>'+fmtS(e[0])+'</td><td>'+e[1]+'</td></tr>'}).join('');
+  }
+
+  document.querySelectorAll('[data-model]').forEach(function(b){b.addEventListener('click',function(){
+    st.model=b.dataset.model; st.prio=Math.min(st.prio,SLA[st.model].length-1);
+    document.querySelectorAll('[data-model]').forEach(function(x){x.setAttribute('aria-pressed',x===b)});renderPrio();calc();})});
+  $('prioPick').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;st.prio=+b.dataset.i;renderPrio();calc()});
+  $('agora').addEventListener('click',function(){$('abertura').value=toLocal(new Date());calc()});
+  ['abertura','km','acion','chegada'].forEach(function(id){$(id).addEventListener('input',calc)});
+  $('addPause').addEventListener('click',function(){st.pauses.push({s:'',e:''});renderPauses()});
+  $('pauses').addEventListener('input',function(e){var i=e.target.dataset.i;if(i==null)return;st.pauses[i][e.target.dataset.k]=e.target.value;calc()});
+  $('pauses').addEventListener('click',function(e){var d=e.target.closest('[data-del]');if(!d)return;st.pauses.splice(+d.dataset.del,1);renderPauses();calc()});
+  $('abertura').value=toLocal(new Date());
+  renderPrio();renderPauses();calc();setInterval(calc,30000);
+})();
+</script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/sap.js"></script>
+</body>
+</html>

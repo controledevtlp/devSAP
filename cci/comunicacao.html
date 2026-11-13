@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comunicação e passagem de turno · Portal SAP TLP</title>
+<script>try{var t=localStorage.getItem('sap2-theme');t=t?JSON.parse(t):(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/sap.css">
+</head>
+<body data-root="../" data-page="cci" data-mod="com">
+
+<section class="mod-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Início</a> / <a href="../index.html#cci">CCI</a> / Comunicação e passagem de turno</div>
+    <h1>Comunicação, escalonamento e passagem de turno</h1>
+    <p class="lede">Mensagem clara acelera o atendimento. Modelos prontos para copiar: acionamento, escalonamento, atualização e passagem de turno — e as regras para não se perder nos grupos.</p>
+    <div class="mod-facts"><span><b>Aprofundamento</b> da trilha CCI</span><span><b>~15 min</b> de leitura</span><span><b>6</b> perguntas no final</span><span data-signal-text="com"></span></div>
+  </div>
+</section>
+
+<div class="wrap mod" id="conteudo">
+<aside class="toc" id="toc" aria-label="Índice do módulo"></aside>
+<main>
+
+<section class="chapter" id="regras" data-title="Regras de ouro">
+  <span class="chapter-num">Capítulo 1</span>
+  <h2>As regras de ouro da mensagem</h2>
+  <div class="cards">
+    <div class="card info"><h4>Site primeiro</h4><p>Comece pelo ID do site e pelo ticket. Quem lê precisa saber de qual caso se trata em um segundo.</p></div>
+    <div class="card warn"><h4>Horário sempre</h4><p>Todo fato tem hora: “acionado 09h05”, “chegada 10h12”. É isso que vira prova de SLA.</p></div>
+    <div class="card ok"><h4>Um pedido claro</h4><p>Termine dizendo o que precisa e de quem: “Preciso de retorno do N2 até 11h”.</p></div>
+    <div class="card alarm"><h4>Grupo certo</h4><p>Cada grupo tem uma função. Assunto fora do grupo se perde e atrasa.</p></div>
+  </div>
+</section>
+
+<section class="chapter" id="modelos" data-title="Modelos prontos">
+  <span class="chapter-num">Capítulo 2</span>
+  <h2>Modelos prontos para copiar</h2>
+  <p>Modelos sugeridos. Ajuste ao padrão do seu grupo e da sua região.</p>
+
+  <h3>Carimbo de acionamento</h3>
+<pre class="tpl">🔔 ACIONAMENTO
+Site: RJ-0000 | Ticket: TSK0000000
+Prioridade: P1 (SLA 4h) | Abertura: 08h00
+Falha: Energia — falha de AC, site na bateria
+Técnico: Nome Sobrenome | Contato: (21) 9xxxx-xxxx
+Acionado às: 08h20 (limite 20%: 08h48)
+Observação: concentrador de 3 sites</pre>
+
+  <h3>Escalonamento</h3>
+<pre class="tpl">⚠️ ESCALONAMENTO
+Site: RJ-0000 | Ticket: TSK0000000 | P1
+Situação: técnico sem atualização desde 09h40
+Risco: SLA vence às 12h00 (faltam 1h50)
+Já feito: 2 tentativas de contato (09h50, 10h05)
+Preciso de: apoio da supervisão para novo técnico até 10h30</pre>
+
+  <h3>Atualização de andamento</h3>
+<pre class="tpl">📍 ATUALIZAÇÃO
+Site: RJ-0000 | Ticket: TSK0000000
+10h12 chegada ao site, CA aberta 10h15
+Diagnóstico: RRU setor 2 com defeito
+Próximo passo: troca da RRU, previsão 11h30</pre>
+
+  <h3>Passagem de turno</h3>
+<pre class="tpl">🔄 PASSAGEM DE TURNO — 18h00
+Pendências críticas:
+• RJ-0000 P1 energia — GMG acoplado 16h20, próximo carimbo 18h20
+• RJ-0000 P2 TX — tramitado p/ TIM 15h30, aguardando retorno
+Atenção:
+• Concentrador RJ-0000 com bateria baixa, acompanhar
+Encerrados no turno: 12 | Em andamento: 5</pre>
+</section>
+
+<section class="chapter" id="escalar" data-title="Quando escalar">
+  <span class="chapter-num">Capítulo 3</span>
+  <h2>Quando e para quem escalar</h2>
+  <div class="tbl-wrap"><table>
+    <tr><th>Situação</th><th>Para quem</th></tr>
+    <tr><td>Técnico sem atualização ou sem avanço</td><td>Supervisão de campo</td></tr>
+    <tr><td>Causa não identificada, precisa de teste remoto</td><td>Suporte N2</td></tr>
+    <tr><td>Análise de rede, falha sem causa óbvia</td><td>ISOC / DSOC (TIM)</td></tr>
+    <tr><td>Ticket prioritário travado entre áreas</td><td>FIELD (TIM)</td></tr>
+    <tr><td>Falha crítica que precisa de decisão gerencial</td><td>Layer (TIM) e gestão TLP</td></tr>
+    <tr><td>P1 fora do horário comercial ou SLA prestes a estourar</td><td>CM da região</td></tr>
+  </table></div>
+  <div class="note alarm"><p><strong>Nunca deixe o SLA estourar em silêncio.</strong> Escalar cedo, com fatos e horários, é sempre melhor do que justificar depois.</p></div>
+</section>
+
+<section class="chapter" id="turno" data-title="Passagem de turno">
+  <span class="chapter-num">Capítulo 4</span>
+  <h2>Passagem de turno sem perder nada</h2>
+  <ol class="steps">
+    <li><h4>Liste o que está crítico</h4><p>P1 e P2 abertos, GMG acoplado (com horário do próximo carimbo), tickets tramitados aguardando retorno.</p></li>
+    <li><h4>Diga o próximo passo de cada um</h4><p>Quem está com o caso, o que falta e até que horas.</p></li>
+    <li><h4>Avise riscos</h4><p>Concentradores com bateria baixa, previsão de chuva forte, técnico em área de risco.</p></li>
+    <li><h4>Confirme o recebimento</h4><p>O turno seguinte confirma que leu. Passagem sem confirmação não está completa.</p></li>
+  </ol>
+</section>
+
+<section class="chapter" id="quiz" data-title="Teste rápido">
+  <span class="chapter-num">Capítulo 5</span>
+  <h2>Teste rápido</h2>
+  <script type="application/json" class="quiz-data">[
+    {"q":"O que deve vir primeiro numa mensagem operacional?","o":["Bom dia a todos","ID do site e ticket","O nome do operador"],"a":1,"e":"Quem lê precisa identificar o caso imediatamente."},
+    {"q":"Técnico sem atualização há 40 min num P1. Para quem escalar?","o":["Supervisão de campo","Layer TIM","Ninguém, aguardar"],"a":0,"e":"Avanço do técnico é com a supervisão de campo."},
+    {"q":"Falha sem causa óbvia, precisa de teste remoto antes de enviar técnico. Quem aciona?","o":["Suporte N2","CM","FIELD"],"a":0,"e":"O N2 testa remotamente e decide se o técnico precisa ir."},
+    {"q":"O que não pode faltar na passagem de turno sobre um GMG acoplado?","o":["Cor do gerador","Horário do próximo carimbo","Nome do fabricante"],"a":1,"e":"Carimbo a cada 2 h; o próximo turno precisa saber quando."},
+    {"q":"A passagem de turno está completa quando…","o":["a mensagem é enviada","o turno seguinte confirma que leu","o supervisor sai"],"a":1,"e":"Sem confirmação, não há garantia de que foi recebida."},
+    {"q":"SLA vai estourar em 30 min. Melhor atitude?","o":["Escalar já, com fatos e horários","Esperar e justificar depois","Fechar o ticket"],"a":0,"e":"Nunca deixe o SLA estourar em silêncio."}
+  ]</script>
+</section>
+
+<section class="chapter" id="fim" data-title="Conclusão">
+  <div class="finish">
+    <span class="signal" data-signal="com" role="img"><i></i><i></i><i></i><i></i></span>
+    <div><h2>Comunicação afiada</h2><p>Use os modelos no dia a dia e adapte ao seu grupo.</p>
+      <div class="cta"><a class="btn btn-primary" href="energia.html">Energia no site</a><a class="btn btn-ghost" href="../index.html#cci">Voltar à trilha</a></div></div>
+  </div>
+</section>
+
+</main>
+</div>
+<script>
+document.querySelectorAll('pre.tpl').forEach(function(pre){
+  var b=document.createElement('button');b.type='button';b.className='tpl-copy';b.textContent='Copiar';
+  b.addEventListener('click',function(){
+    var t=pre.childNodes[0].textContent;
+    (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){b.textContent='Copiado';setTimeout(function(){b.textContent='Copiar'},1600)},function(){
+      var r=document.createRange();r.selectNodeContents(pre);var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selecionado: Ctrl+C';});
+  });
+  pre.appendChild(b);
+});
+</script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/sap.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Glossário · Portal SAP TLP</title>
+<script>try{var t=localStorage.getItem('sap2-theme');t=t?JSON.parse(t):(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/sap.css">
+</head>
+<body data-root="../" data-page="glossario">
+
+<section class="mod-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Início</a> / Consulta / Glossário</div>
+    <h1>Glossário da operação</h1>
+    <p class="lede">As siglas e termos que aparecem nos treinamentos, nos tickets e nos grupos — com o link para onde o assunto é explicado.</p>
+  </div>
+</section>
+
+<main class="wrap section" id="conteudo">
+  <div class="gloss-tools">
+    <input type="search" id="gq" placeholder="Filtrar termos: CA, backhaul, P1…" aria-label="Filtrar glossário">
+    <nav class="gloss-letters" id="letters" aria-label="Letras"></nav>
+  </div>
+  <dl class="gloss" id="gloss"></dl>
+</main>
+
+<script>
+(function(){
+  var T=[
+    ['4FIELD','Ferramenta TIM de indicadores de backlog, eficiência e produtividade.','cci/tutorial-basico.html#ferramentas'],
+    ['20% do SLA','Prazo para acionar o técnico: SLA × 0,20, contado da abertura.','campo/sla-atendimento.html#acionamento'],
+    ['Abono','Desconto de tempo no SLA por dificuldade aceita. É de tempo, não de ticket.','campo/sla-atendimento.html#abono'],
+    ['ANF','Área de Negócio de Field: menor unidade de gestão de campo, com sites e time próprios.','cci/modulo-2.html#regional'],
+    ['Apenas Deslocamento','Classificação GMG: o gerador foi levado, mas não acoplado.','cci/modulo-3.html#classificacoes'],
+    ['Atenuação','Perda de potência do sinal ao longo do caminho.','cci/modulo-1.html#meios'],
+    ['Auto Tracking','Módulo do Portal TLP que cruza Gênesis e tickets e agrupa massivas.','consulta/ferramentas.html'],
+    ['Backbone','Infraestrutura central de longa distância e alta capacidade.','cci/modulo-1.html#meios'],
+    ['Backhaul','Link que leva o tráfego da ERB até o core da operadora.','cci/modulo-1.html#erb'],
+    ['BBU','Unidade de Banda Base: processa os dados digitais da ERB.','cci/modulo-1.html#erb'],
+    ['CA','Controle de Acesso: registro de presença do técnico no site. Individual, aberto em até 15 min.','cci/modulo-3.html#carimbo'],
+    ['Carimbo padrão','Registro obrigatório nos tickets de GMG, atualizado a cada 2 h com o gerador acoplado.','cci/modulo-3.html#carimbo'],
+    ['CCI','Centro de Controle e Inteligência: monitora a rede e aciona o campo.','cci/tutorial-basico.html#missao'],
+    ['Célula','Área de cobertura de uma ERB.','cci/modulo-1.html#erb'],
+    ['CM','Gerente de Contrato: responsável técnico por uma região. Notificado em P1 fora do horário comercial.','cci/modulo-2.html#regional'],
+    ['Concentrador','Site que faz a transmissão de outros sites. Se cai, derruba todos os dependentes (P1).','cci/tutorial-basico.html#concentrador'],
+    ['Core','Núcleo da rede da operadora, onde o tráfego é roteado e controlado.','cci/modulo-1.html#erb'],
+    ['dB','Relação logarítmica entre duas potências: ganho ou perda.','cci/modulo-1.html#db'],
+    ['dBm','Potência absoluta com referência em 1 mW. Mais negativo = sinal mais fraco.','cci/modulo-1.html#db'],
+    ['ERB','Estação Rádio Base: elo entre o celular e a rede da operadora. O mesmo que site.','cci/modulo-1.html#erb'],
+    ['FLAG de GMG','Indicação no ticket de que a TIM quer GMG Móvel instalado.','cci/modulo-3.html#energia'],
+    ['FMMT','Field Maintenance Management Team: modelo com prioridades P1 a P5.','campo/sla-atendimento.html#fmmt'],
+    ['FMO','Field Maintenance Operations: modelo com 3 níveis (Alta, Média, Baixa).','campo/sla-atendimento.html#fmo'],
+    ['Franquia','Conjunto de tickets que entram na avaliação de prazo.','campo/sla-atendimento.html#franquia'],
+    ['Gênesis','Ferramenta TIM de sites fora em tempo real.','consulta/ferramentas.html'],
+    ['GEO / MEO / LEO','Órbitas de satélite geoestacionária, média e baixa.','cci/modulo-1.html#satelites'],
+    ['GMG','Grupo Motor Gerador: energia de contingência do site.','cci/modulo-3.html#fundamentos'],
+    ['GMG Fixo','Gerador da TIM já instalado no site. CCI só registra “GMG FIXO”.','cci/modulo-3.html#tipos'],
+    ['GMG Móvel','Gerador da TLP levado ao site. Controlado pelo CCI.','cci/modulo-3.html#tipos'],
+    ['GMG Não Utilizado','Classificação: a falha normalizou antes de o técnico sair do CM.','cci/modulo-3.html#classificacoes'],
+    ['Grafana','Gráficos e histórico da rede.','consulta/ferramentas.html'],
+    ['Handover','Troca de célula durante chamada ou sessão, sem o usuário perceber.','cci/modulo-1.html#celular'],
+    ['ISOC / DSOC','NOC da TIM: analistas que fazem testes e troubleshooting.','cci/tutorial-basico.html#pessoas'],
+    ['Latência','Atraso entre o envio e a chegada do sinal.','cci/modulo-1.html#meios'],
+    ['Layer','Gestores regionais da TIM, acionados em falhas críticas.','cci/tutorial-basico.html#pessoas'],
+    ['Netcool','Ferramenta de alarmes da rede, integrada ao Smart Service.','cci/tutorial-basico.html#ferramentas'],
+    ['NGNIS','Cadastro TIM usado para a distância CM → site (acréscimo de SLA).','campo/sla-atendimento.html#fmmt'],
+    ['NotDone','Tramitação: o ticket vai para a fila da TIM ou de terceiro.','campo/sla-atendimento.html#suspensao'],
+    ['P1 a P5','Prioridades do FMMT: 4 h, 6 h, 12 h, 24 h e 48 h.','cci/modulo-2.html#prioridade'],
+    ['Portal Operations','Onde a TIM audita e aprova ou reprova os tickets encerrados.','cci/modulo-3.html#sla'],
+    ['Portal SN2','Registro das análises do Suporte N2.','consulta/ferramentas.html'],
+    ['Portal TLP','Plataforma interna: Painel Online, Monitora, Auto Tracking, BaseCheck, InfoSite.','consulta/ferramentas.html'],
+    ['RCA','Root Cause Analysis: investigação da causa raiz.','cci/modulo-2.html#reincidencia'],
+    ['Reincidência','Nova falha no mesmo site pouco depois do atendimento.','cci/modulo-2.html#reincidencia'],
+    ['Repetida Campo 72h','Falha que volta em até 72 h; fica fora da franquia.','campo/sla-atendimento.html#franquia'],
+    ['RRU / RRH','Unidade de rádio remota, perto das antenas.','cci/modulo-1.html#erb'],
+    ['SI / SD','Site indisponível (fora) / site degradado.','cci/modulo-2.html#chamado'],
+    ['Site','Estrutura com antenas que cobre uma área com sinal. O mesmo que ERB.','cci/tutorial-basico.html#sites'],
+    ['SLA','Acordo de nível de serviço: prazo contratual para resolver uma falha.','cci/modulo-2.html#prioridade'],
+    ['Smart Service','Sistema de tickets da TIM (ServiceNow).','consulta/ferramentas.html'],
+    ['Suporte N2','Equipe técnica do CCI que testa o site remotamente.','cci/tutorial-basico.html#pessoas'],
+    ['Suspensão','Agendado Data Futura: ticket parado na fila TLP por impedimento da TLP.','campo/sla-atendimento.html#suspensao'],
+    ['TA','Tíquete de Anormalidade, aberto pela TIM.','cci/modulo-2.html#chamado'],
+    ['TAIS','Chatbot TIM de consultas rápidas sobre sites.','consulta/ferramentas.html'],
+    ['TMG / TNE / TRJ','Contratos TIM Minas Gerais, Nordeste e Rio de Janeiro/ES.','cci/modulo-2.html#regional'],
+    ['TOA / WFM','Gestão da força de trabalho: técnicos, rotas e jornada.','consulta/ferramentas.html'],
+    ['Tramitação','NotDone: ticket enviado à fila da TIM ou de terceiro.','campo/sla-atendimento.html#suspensao'],
+    ['TSK','Tarefa de campo vinculada ao ticket.','cci/modulo-3.html#carimbo'],
+    ['Visita FMMT','Classificação: houve intervenção sem GMG, falha não era de energia, ticket no SLA.','cci/modulo-3.html#classificacoes'],
+    ['APR','Análise Preliminar de Risco, feita antes de iniciar uma atividade de campo.','campo/sst.html#altura'],
+    ['ASO','Atestado de Saúde Ocupacional: indica aptidão, inclusive para trabalho em altura.','campo/sst.html#altura'],
+    ['Autonomia','Tempo que a bateria segura o site sem energia comercial. Varia por site.','cci/energia.html#autonomia'],
+    ['Bateria','Banco de baterias que assume a carga quando falta AC.','cci/energia.html#caminho'],
+    ['CA (EPI)','Certificado de Aprovação do EPI (NR-6). Não confundir com Controle de Acesso.','campo/sst.html#epi'],
+    ['Desligamento de setores','Pedido via CCI para desligar antenas antes de trabalhar perto delas.','campo/sst.html#rf'],
+    ['EPI','Equipamento de Proteção Individual: capacete, cinto, luvas, botina, óculos.','campo/sst.html#epi'],
+    ['Escalonamento','Levar um problema a quem pode resolvê-lo, com fatos e horários.','cci/comunicacao.html#escalar'],
+    ['Evidência contemporânea','Registro feito no momento do fato. Única aceita para abono.','campo/evidencias.html#porque'],
+    ['Falha de AC','Alarme de ausência de energia comercial; o site passa a viver da bateria.','cci/energia.html#alarmes'],
+    ['KM ida e volta','Distância total percorrida; base do faturamento de deslocamento.','campo/deslocamento.html#registro'],
+    ['NR-10','Norma de segurança em instalações e serviços com eletricidade.','campo/sst.html#eletrica'],
+    ['NR-35','Norma de trabalho em altura: acima de 2 m com risco de queda.','campo/sst.html#altura'],
+    ['NR-6','Norma de Equipamentos de Proteção Individual.','campo/sst.html#epi'],
+    ['Passagem de turno','Entrega das pendências críticas ao próximo turno, com confirmação de leitura.','cci/comunicacao.html#turno'],
+    ['Quadro AC','Distribui a energia alternada e transfere para o GMG.','cci/energia.html#caminho'],
+    ['Retificador','Converte AC em DC (tipicamente −48 V) e carrega as baterias.','cci/energia.html#caminho'],
+    ['RF','Radiofrequência: energia emitida pelas antenas em operação.','campo/sst.html#rf'],
+    ['Timestamp','Carimbo de data, hora e local gravado na foto.','campo/evidencias.html#boa-foto']
+  ];
+  function norm(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')}
+  T.sort(function(a,b){return norm(a[0]).localeCompare(norm(b[0]))});
+  var g=document.getElementById('gloss'),q=document.getElementById('gq'),L=document.getElementById('letters');
+  function key(t){var c=norm(t)[0];return /[a-z]/.test(c)?c.toUpperCase():'#'}
+  function render(){
+    var f=norm(q.value.trim()),last='',h='',letters=[];
+    T.forEach(function(t){
+      if(f&&norm(t[0]+' '+t[1]).indexOf(f)<0)return;
+      var k=key(t[0]);
+      if(k!==last){h+='<div class="letter" id="l-'+k+'">'+k+'</div>';last=k;letters.push(k)}
+      h+='<dt>'+t[0]+'</dt><dd>'+t[1]+' <a href="../'+t[2]+'">Ver no treinamento</a></dd>';
+    });
+    g.innerHTML=h||'<div class="empty" style="grid-column:1/-1">Nenhum termo com “'+q.value.replace(/</g,'&lt;')+'”. Tente a busca geral com Ctrl K.</div>';
+    L.innerHTML=letters.map(function(k){return '<a href="#l-'+k+'">'+k+'</a>'}).join('');
+  }
+  q.addEventListener('input',render);render();
+})();
+</script>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/sap.js"></script>
+</body>
+</html>

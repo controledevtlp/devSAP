@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Procedimentos de deslocamento · Portal SAP TLP</title>
+<script>try{var t=localStorage.getItem('sap2-theme');t=t?JSON.parse(t):(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/sap.css">
+</head>
+<body data-root="../" data-page="campo" data-mod="desl">
+
+<section class="mod-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Início</a> / <a href="../index.html#campo">Campo</a> / Procedimentos de deslocamento</div>
+    <h1>Procedimentos de deslocamento</h1>
+    <p class="lede">Do acionamento à chegada no site: como planejar a rota, o que conferir antes de sair, o que registrar no caminho e como o deslocamento afeta o SLA e o faturamento.</p>
+    <div class="mod-facts"><span><b>Operações de Campo</b></span><span><b>~20 min</b> de leitura</span><span><b>8</b> perguntas no final</span><span data-signal-text="desl"></span></div>
+  </div>
+</section>
+
+<div class="wrap mod" id="conteudo">
+<aside class="toc" id="toc" aria-label="Índice do guia"></aside>
+<main>
+
+<section class="chapter" id="porque" data-title="Por que importa">
+  <span class="chapter-num">Seção 1</span>
+  <h2>Por que o deslocamento importa tanto</h2>
+  <p>Entre o acionamento e a chegada ao site, o relógio do SLA continua correndo. Em muitos atendimentos, o deslocamento é a <strong>maior fatia do prazo</strong> — e a mais fácil de perder por falta de planejamento.</p>
+  <div class="cards">
+    <div class="card warn"><h4>SLA</h4><p>Cada minuto parado no trânsito sai do mesmo prazo de 4 h de um P1.</p></div>
+    <div class="card info"><h4>Faturamento</h4><p>No GMG, o KM de ida e volta é a base do pagamento. KM errado é receita perdida.</p></div>
+    <div class="card ok"><h4>Segurança</h4><p>Pressa ao volante não recupera prazo. Chegar bem é parte do atendimento.</p></div>
+  </div>
+  <div class="note"><p>O contrato já prevê o tempo de estrada: <strong>+1 h a cada 100 km</strong> entre o CM e o site (cadastro NGNIS TIM). Simule na <a href="../consulta/calculadora-sla.html">Calculadora de SLA</a>, que já mostra o deslocamento na barra do tempo.</p></div>
+</section>
+
+<section class="chapter" id="fluxo" data-title="Fluxo do deslocamento">
+  <span class="chapter-num">Seção 2</span>
+  <h2>O fluxo, passo a passo</h2>
+  <ol class="steps">
+    <li><h4>Receber o acionamento</h4><p>Confirme o recebimento com o CCI: site, prioridade, tipo de falha e horário. Pergunte se há restrição de acesso conhecida.</p></li>
+    <li><h4>Planejar a rota</h4><p>Escolha o trajeto mais rápido e seguro. Confira endereço e coordenadas no InfoSite/TAIS — o endereço postal de site rural costuma ser impreciso.</p></li>
+    <li><h4>Conferir veículo e material</h4><p>Combustível, ferramentas, sobressalentes prováveis para a falha informada, EPIs e carregador do celular.</p></li>
+    <li><h4>Registrar a saída</h4><p>Atualize o status no TOA (“a caminho”) e informe o CCI. Anote o KM inicial do hodômetro.</p></li>
+    <li><h4>Comunicar imprevistos na hora</h4><p>Trânsito parado, estrada bloqueada, pane: avise o CCI imediatamente, com evidência. Só o que é registrado no momento pode ser pleiteado.</p></li>
+    <li><h4>Registrar a chegada</h4><p>Status “no local” no TOA, abertura da CA em até 15 min e foto da fachada ou do acesso.</p></li>
+  </ol>
+</section>
+
+<section class="chapter" id="rota" data-title="Planejando a rota">
+  <span class="chapter-num">Seção 3</span>
+  <h2>Planejando a rota</h2>
+  <div class="tbl-wrap"><table>
+    <tr><th>Ponto</th><th>O que verificar</th></tr>
+    <tr><td>Localização exata</td><td>Coordenadas do site, não só o endereço. Use o InfoSite ou pergunte ao TAIS.</td></tr>
+    <tr><td>Acesso</td><td>Portão, chave, contato do condomínio ou do proprietário, horário permitido (comum em rooftop).</td></tr>
+    <tr><td>Condição da via</td><td>Estrada de terra após chuva, travessias, pedágio, obras.</td></tr>
+    <tr><td>Área de risco</td><td>Regiões com orientação de segurança da TLP: siga o protocolo interno antes de entrar.</td></tr>
+    <tr><td>Combustível</td><td>Postos no trajeto, sobretudo em rotas longas e à noite.</td></tr>
+  </table></div>
+  <div class="note warn"><p><strong>Dica do CCI:</strong> sites que ficam sem sinal muitas vezes deixam a região sem cobertura celular. Baixe o mapa offline antes de chegar e combine com o CCI um horário de retorno de contato.</p></div>
+</section>
+
+<section class="chapter" id="veiculo" data-title="Checklist do veículo">
+  <span class="chapter-num">Seção 4</span>
+  <h2>Antes de girar a chave</h2>
+  <p>Problema no veículo não é aceito como dificuldade para abono. Por isso a conferência é sua garantia.</p>
+  <ul class="checklist" data-checklist="veiculo">
+    <li><label><input type="checkbox"><span>Combustível suficiente para ida e volta (com folga)</span></label></li>
+    <li><label><input type="checkbox"><span>Pneus, estepe, macaco e triângulo</span></label></li>
+    <li><label><input type="checkbox"><span>Luzes, faróis e documentação do veículo</span></label></li>
+    <li><label><input type="checkbox"><span>Ferramentas e sobressalentes para a falha informada</span></label></li>
+    <li><label><input type="checkbox"><span>EPIs completos (ver guia de Saúde e Segurança)</span></label></li>
+    <li><label><input type="checkbox"><span>Celular carregado e carregador veicular</span></label></li>
+    <li><label><input type="checkbox"><span>Para GMG: equipamento fixado, cabos, combustível e reboque conferidos</span></label></li>
+  </ul>
+  <button type="button" class="btn btn-ghost" data-clear="veiculo">Limpar checklist</button>
+</section>
+
+<section class="chapter" id="registro" data-title="O que registrar">
+  <span class="chapter-num">Seção 5</span>
+  <h2>O que registrar no caminho</h2>
+  <div class="tbl-wrap"><table>
+    <tr><th>Momento</th><th>Onde</th><th>O quê</th></tr>
+    <tr><td>Saída</td><td>TOA + grupo do CCI</td><td>Horário, ponto de partida, KM inicial</td></tr>
+    <tr><td>Imprevisto</td><td>Ticket + CCI</td><td>Horário de início e fim, motivo, foto ou print (ex.: mapa com via bloqueada)</td></tr>
+    <tr><td>Chegada</td><td>TOA + CA</td><td>Horário, foto do acesso, CA aberta em até 15 min</td></tr>
+    <tr><td>Retorno (GMG)</td><td>Carimbo padrão</td><td>KM final; total de ida e volta</td></tr>
+  </table></div>
+  <div class="note alarm"><p><strong>Registro retroativo não vale.</strong> Avisar no fim do dia que “a estrada estava fechada às 10h” não sustenta pleito de abono.</p></div>
+</section>
+
+<section class="chapter" id="direcao" data-title="Direção segura">
+  <span class="chapter-num">Seção 6</span>
+  <h2>Direção segura</h2>
+  <div class="cards">
+    <div class="card alarm"><h4>Celular</h4><p>Nada de mensagem ao volante. Pare em local seguro para falar com o CCI ou atualizar o TOA.</p></div>
+    <div class="card warn"><h4>Velocidade</h4><p>Respeite os limites. O prazo é do contrato; a multa e o risco são seus.</p></div>
+    <div class="card info"><h4>Cansaço</h4><p>Em plantões longos, faça pausas. Sono ao volante é tão perigoso quanto álcool.</p></div>
+    <div class="card ok"><h4>Noite e chuva</h4><p>Reduza a velocidade, aumente a distância e informe o CCI sobre a rota.</p></div>
+  </div>
+</section>
+
+<section class="chapter" id="casos" data-title="Casos práticos">
+  <span class="chapter-num">Seção 7</span>
+  <h2>Casos práticos</h2>
+  <div class="tbl-wrap"><table>
+    <tr><th>Situação</th><th>O que fazer</th></tr>
+    <tr><td>Estrada bloqueada por acidente</td><td>Avise o CCI na hora, com foto ou print do mapa. O CCI avalia suspensão ou tramitação conforme o caso.</td></tr>
+    <tr><td>Pneu furou no caminho</td><td>Segurança primeiro. Avise o CCI para avaliar outro técnico. Não é motivo de abono.</td></tr>
+    <tr><td>Endereço não bate com o site</td><td>Use as coordenadas do InfoSite; peça apoio ao CCI antes de rodar sem rumo.</td></tr>
+    <tr><td>Chegou e o portão está trancado</td><td>Registre a chegada com foto, abra a CA, acione o contato do local e informe o CCI.</td></tr>
+  </table></div>
+</section>
+
+<section class="chapter" id="quiz" data-title="Teste rápido">
+  <span class="chapter-num">Seção 8</span>
+  <h2>Teste rápido</h2>
+  <script type="application/json" class="quiz-data">[
+    {"q":"O relógio do SLA para durante o deslocamento?","o":["Sim, sempre","Não, continua correndo","Só à noite"],"a":1,"e":"O deslocamento consome o prazo. Por isso o contrato prevê +1 h a cada 100 km."},
+    {"q":"Site a 250 km do CM. Quanto tempo é acrescido ao SLA?","o":["+1 h","+2 h","+3 h"],"a":1,"e":"1 h a cada 100 km completos: 250 km = 2 h."},
+    {"q":"O pneu furou a caminho de um P1. Isso pode ser abonado?","o":["Sim","Não, problema no veículo é responsabilidade da TLP","Só com foto"],"a":1,"e":"Veículo é falha operacional TLP. Avise o CCI para avaliar outro técnico."},
+    {"q":"Qual a melhor fonte para achar um site rural?","o":["Endereço postal","Coordenadas do InfoSite/TAIS","Perguntar na cidade"],"a":1,"e":"Endereço de site rural costuma ser impreciso."},
+    {"q":"Em quanto tempo abrir a CA após chegar ao site?","o":["15 min","1 h","Só no fim"],"a":0,"e":"Tolerância máxima de 15 minutos."},
+    {"q":"Estrada bloqueada às 10h. Quando registrar?","o":["No fim do dia","Na hora, com evidência","Não precisa"],"a":1,"e":"Só registro feito no momento sustenta pleito."},
+    {"q":"Para que anotar o KM inicial e final?","o":["Controle pessoal","Base do faturamento de deslocamento (ex.: GMG)","Exigência do seguro"],"a":1,"e":"KM de ida e volta entra no carimbo padrão."},
+    {"q":"Precisa responder o CCI enquanto dirige. O que fazer?","o":["Responder rápido no semáforo","Parar em local seguro","Ligar no viva-voz digitando"],"a":1,"e":"Segurança vem antes do prazo."}
+  ]</script>
+</section>
+
+<section class="chapter" id="fim" data-title="Conclusão">
+  <div class="finish">
+    <span class="signal" data-signal="desl" role="img"><i></i><i></i><i></i><i></i></span>
+    <div><h2>Guia concluído</h2><p>Chegar rápido começa antes de sair. O próximo passo é chegar e trabalhar com segurança.</p>
+      <div class="cta"><a class="btn btn-primary" href="sst.html">Saúde e Segurança</a><a class="btn btn-ghost" href="../index.html#campo">Voltar ao Campo</a></div></div>
+  </div>
+</section>
+
+</main>
+</div>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/sap.js"></script>
+</body>
+</html>

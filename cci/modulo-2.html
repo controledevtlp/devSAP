@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 2 — Falhas, tickets e SLA · Portal SAP TLP</title>
+<script>try{var t=localStorage.getItem('sap2-theme');t=t?JSON.parse(t):(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/sap.css">
+</head>
+<body data-root="../" data-page="cci" data-mod="m2">
+
+<section class="mod-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Início</a> / <a href="../index.html#cci">CCI</a> / Módulo 2</div>
+    <h1>Operação: falhas, tickets e SLA</h1>
+    <p class="lede">O núcleo do trabalho no CCI: reconhecer o tipo de falha, definir a prioridade, tratar o chamado do jeito certo e saber quando escalar.</p>
+    <div class="mod-facts"><span><b>Etapa 3</b> de 4 da trilha CCI</span><span><b>~30 min</b> de leitura</span><span><b>10</b> perguntas no final</span><span data-signal-text="m2"></span></div>
+  </div>
+</section>
+
+<div class="wrap mod" id="conteudo">
+<aside class="toc" id="toc" aria-label="Índice do módulo"></aside>
+<main>
+
+<section class="chapter" id="falhas" data-title="Tipos de falha">
+  <span class="chapter-num">Capítulo 1</span>
+  <h2>O que pode dar errado num site</h2>
+  <p>O tipo de falha define o caminho: quem acionar, com que urgência e o que verificar primeiro.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Categoria</th><th>Causas típicas</th><th>O que verificar primeiro</th></tr>
+    <tr><td>Energia</td><td>Queda da rede elétrica, retificador com falha, bateria descarregada, gerador que não partiu</td><td>Protocolo com a concessionária, autonomia da bateria, flag de GMG no ticket</td></tr>
+    <tr><td>Transmissão</td><td>Fibra rompida, rádio MW com defeito, antena MW desalinhada</td><td>Se o site está energizado; se há outros sites no mesmo anel ou concentrador</td></tr>
+    <tr><td>Rádio / RF</td><td>Módulo danificado, perda de portadora, interferência</td><td>Setores afetados (falha total ou parcial)</td></tr>
+    <tr><td>Hardware</td><td>Placa queimada, BBU ou RRU com defeito</td><td>Disponibilidade de sobressalente antes de despachar</td></tr>
+    <tr><td>Acesso</td><td>Portão trancado, chave extraviada, segurança que não libera</td><td>Restrição de horário e contato do responsável pelo local</td></tr>
+    <tr><td>Furto / vandalismo</td><td>Cabos de cobre, baterias, equipamentos</td><td>Boletim de ocorrência e acionamento da segurança</td></tr>
+  </table></div>
+  <div class="note warn"><p><strong>Falhas combinam.</strong> Um furto de cabo pode derrubar energia e transmissão ao mesmo tempo. Registre todas as causas identificadas no chamado.</p></div>
+</section>
+
+<section class="chapter" id="prioridade" data-title="Prioridade e SLA">
+  <span class="chapter-num">Capítulo 2</span>
+  <h2>P1 a P5: qual a urgência?</h2>
+  <p>A <strong>prioridade</strong> define o <strong>SLA</strong> — o prazo máximo para resolver. Errar a prioridade significa perder o prazo ou mobilizar gente à toa. Perder SLA gera penalidade contratual, e é exatamente para evitar isso que o CCI existe.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Prioridade</th><th>Quando usar</th><th>SLA</th><th>Acionar em até</th></tr>
+    <tr><td><span class="prio p1">P1 Crítico</span></td><td>Site totalmente fora, sem contingência; concentrador; área grande ou infraestrutura crítica (hospital, rodovia, aeroporto)</td><td>4 h</td><td>48 min</td></tr>
+    <tr><td><span class="prio p2">P2 Alto</span></td><td>Degradação grave: site parcialmente fora ou setor inativo com impacto perceptível</td><td>6 h</td><td>72 min</td></tr>
+    <tr><td><span class="prio p3">P3 Médio</span></td><td>Impacto moderado; site funcional, mas com qualidade degradada</td><td>12 h</td><td>2h24</td></tr>
+    <tr><td><span class="prio p4">P4 Baixo</span></td><td>Falha leve ou preventiva, sem impacto imediato ao usuário</td><td>24 h</td><td>4h48</td></tr>
+    <tr><td><span class="prio p5">P5 Planejado</span></td><td>Alertas, ações programadas de longo prazo, vistorias de rotina</td><td>48 h</td><td>9h36</td></tr>
+  </table></div>
+  <p>Prazos do modelo FMMT, contados a partir da abertura do chamado. Some <strong>+1 h a cada 100 km</strong> entre o CM e o site (cadastro NGNIS TIM). Para calcular com hora de abertura e pausas, use a <a href="../consulta/calculadora-sla.html">Calculadora de SLA</a>.</p>
+  <div class="note alarm"><p><strong>Regra de ouro:</strong> na dúvida entre P1 e P2, trate como P1 e acione. P4 e P5 nunca servem para falha com impacto real ao usuário. É melhor acionar cedo e reclassificar depois do que estourar o prazo.</p></div>
+</section>
+
+<section class="chapter" id="chamado" data-title="Tratando o chamado">
+  <span class="chapter-num">Capítulo 3</span>
+  <h2>Como tratar um chamado do jeito certo</h2>
+  <p>Quem abre o chamado (TA — Tíquete de Anormalidade) é a <strong>TIM</strong>, não o CCI. Nosso trabalho começa quando ele chega. Cada passo abaixo é obrigatório e nessa ordem:</p>
+  <ol class="steps">
+    <li><h4>Receber e validar o TA</h4><p>Confira ID do site, tipo de falha, prioridade e horário do alarme. Se algo estiver errado, devolva o TA à origem para correção antes de acionar.</p></li>
+    <li><h4>Confirmar o impacto</h4><p>No Gênesis, veja se o site está totalmente fora (SI) ou degradado (SD), qual equipamento foi afetado e se há concentrador envolvido.</p></li>
+    <li><h4>Acionar a equipe certa</h4><p>Acione campo pelo WFM e envie o carimbo de acionamento no grupo de WhatsApp. A escolha da equipe é feita com a supervisão de campo, pesando distância e habilidade.</p></li>
+    <li><h4>Acompanhar</h4><p>Registre cada marco no chamado: acionamento, deslocamento, chegada ao site. Esses registros são a prova de que o SLA foi respeitado.</p></li>
+    <li><h4>Escalar quando preciso</h4><p>Desvio de prazo, rota a corrigir ou atendimento de alto impacto: acione o escalonamento para as áreas envolvidas agirem rápido.</p></li>
+  </ol>
+  <div class="note ok"><p><strong>Hábito que salva:</strong> anote sempre o horário exato do acionamento. Se alguém questionar depois, o registro responde por você.</p></div>
+</section>
+
+<section class="chapter" id="regional" data-title="Estrutura regional">
+  <span class="chapter-num">Capítulo 4</span>
+  <h2>ANF e CM: quem cuida de qual região</h2>
+  <p>A TLP organiza os contratos por região. Cada região tem um <strong>Gerente de Contrato (CM)</strong> e várias <strong>ANFs</strong> (Áreas de Negócio de Field) — a menor unidade de gestão de campo, com sites e time técnico próprios.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Contrato</th><th>ANFs</th><th>Estados</th><th>Observação</th></tr>
+    <tr><td>TRJ</td><td>ANF-RJ, ANF-ES</td><td>Rio de Janeiro, Espírito Santo</td><td>Controlado pelo CCI RJ</td></tr>
+    <tr><td>TMG</td><td>ANF31 a ANF38</td><td>Minas Gerais</td><td>~880 municípios</td></tr>
+    <tr><td>TNE</td><td>ANF-NE01 a ANF-NE08</td><td>8 estados do Nordeste</td><td>~1.521 municípios</td></tr>
+    <tr><td>Sul / SP</td><td>A definir</td><td>SP, PR, SC, RS</td><td>Contratos em expansão</td></tr>
+  </table></div>
+  <p>Saber a ANF do site define o time de campo e o CM a notificar.</p>
+  <div class="note alarm"><p><strong>P1 fora do horário comercial</strong> (noite, fim de semana, feriado): notifique o CM da região, mesmo que o técnico já tenha sido acionado. É protocolo previsto em contrato.</p></div>
+</section>
+
+<section class="chapter" id="reincidencia" data-title="Reincidência e RCA">
+  <span class="chapter-num">Capítulo 5</span>
+  <h2>Quando o problema volta</h2>
+  <p>Site atendido que volta a cair pouco depois é <strong>reincidência</strong>: sinal de que a causa raiz não foi tratada.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Situação</th><th>Ação</th></tr>
+    <tr><td>2ª ocorrência em menos de 24 h no mesmo site</td><td>Marcar reincidência no chamado e escalar ao supervisor da ANF</td></tr>
+    <tr><td>3ª ocorrência na mesma semana</td><td>Pedir análise de causa raiz (RCA) ao CM</td></tr>
+    <tr><td>Alarmes crônicos semanais</td><td>Abrir demanda de engenharia e comunicar o cliente</td></tr>
+    <tr><td>SLA estourado ou prestes a estourar</td><td>Escalar ao CM na hora — nunca deixar estourar sem aviso</td></tr>
+  </table></div>
+  <p><strong>RCA (Root Cause Analysis)</strong> investiga o porquê, não só o sintoma. Trocar a bateria apaga o alarme; a RCA pode mostrar que o retificador tem defeito crônico e precisa sair.</p>
+  <div class="note"><p><strong>Não confunda com a franquia:</strong> para o indicador de SLA de campo, falha repetida até <strong>72 h</strong> após o atendimento anterior é classificada como “Repetida Campo 72h” e sai da franquia. Veja o <a href="../campo/sla-atendimento.html#franquia">guia de SLA de Campo</a>.</p></div>
+</section>
+
+<section class="chapter" id="erros" data-title="Erros comuns">
+  <span class="chapter-num">Capítulo extra</span>
+  <h2>Erros comuns de quem está começando</h2>
+  <div class="tbl-wrap"><table>
+    <tr><th>Erro</th><th>Consequência</th><th>Como evitar</th></tr>
+    <tr><td>Classificar concentrador como P2</td><td>Acionamento tardio, cascata de sites fora</td><td>Sempre checar a flag de concentrador no Gênesis</td></tr>
+    <tr><td>Esperar o alarme “normalizar sozinho”</td><td>Janela dos 20% perdida</td><td>Acionar no prazo; se normalizar, cancela-se depois</td></tr>
+    <tr><td>Não anotar o horário do acionamento</td><td>Sem prova de SLA na auditoria</td><td>Carimbo de acionamento com horário em todo chamado</td></tr>
+    <tr><td>Suspender quando deveria tramitar</td><td>SLA correndo para a TLP sem motivo</td><td>Perguntar: quem é o próximo responsável?</td></tr>
+    <tr><td>Não marcar reincidência</td><td>Causa raiz nunca tratada</td><td>Consultar o histórico do site antes de acionar</td></tr>
+  </table></div>
+</section>
+
+<section class="chapter" id="quiz" data-title="Teste rápido">
+  <span class="chapter-num">Capítulo 6</span>
+  <h2>Teste rápido</h2>
+  <p>Acerte 7 de 10 para concluir.</p>
+  <script type="application/json" class="quiz-data">[
+    {"q":"O site perdeu energia e o gerador não partiu. Que categoria de falha é essa?","o":["Transmissão","Energia","Acesso"],"a":1,"e":"Falha de energia inclui rede elétrica, retificador, bateria e gerador."},
+    {"q":"Site totalmente fora do ar perto de um hospital. Prioridade e prazo de acionamento?","o":["P2, 72 min","P1, 48 min","P3, programar em 12 h"],"a":1,"e":"Infraestrutura crítica sem cobertura = P1 (SLA 4 h, acionar em 48 min)."},
+    {"q":"O que significa marcar um chamado como reincidência?","o":["Que foi aberto duas vezes por engano","Que o site teve nova ocorrência logo após a anterior — causa raiz não resolvida","Que o técnico voltou ao site por outro motivo"],"a":1,"e":"Reincidência é alerta de causa raiz."},
+    {"q":"Para que serve a RCA?","o":["Calcular o custo do atendimento","Registrar quem resolveu","Investigar a causa raiz para o problema não voltar"],"a":2,"e":"RCA trata a origem, não só o sintoma."},
+    {"q":"P1 num site do TMG às 23h de sábado. Além de acionar o técnico, o que você deve fazer?","o":["Avisar o CM na segunda","Notificar o CM do TMG imediatamente","Reclassificar para P2 para não incomodar"],"a":1,"e":"P1 fora do horário comercial exige notificação do CM — é protocolo."},
+    {"q":"Qual informação é mais crítica num chamado P1?","o":["O nome de quem abriu","Horário exato do alarme e do acionamento","O modelo do equipamento"],"a":1,"e":"Os horários provam o cumprimento do SLA."},
+    {"q":"Vistoria de rotina programada, sem impacto ao usuário. Qual prioridade?","o":["P2","P3","P5"],"a":2,"e":"P5 é para ações planejadas sem impacto."},
+    {"q":"Site degradado, ainda funcionando, SLA de 12 h. Em quanto tempo acionar?","o":["48 min","72 min","2h24"],"a":2,"e":"20% de 12 h = 2h24 (P3)."},
+    {"q":"Site voltou a cair 2 horas depois da manutenção, mesma causa. Como tratar?","o":["Ocorrência independente","Reincidência, indicando a causa raiz não resolvida","Cancelar o anterior e reabrir"],"a":1,"e":"Mesma causa em menos de 24 h é reincidência."},
+    {"q":"Um TA chegou com o ID do site errado. O que fazer?","o":["Acionar assim mesmo e corrigir depois","Devolver o TA à origem para correção antes de acionar","Fechar o TA"],"a":1,"e":"Validar o TA é o primeiro passo; inconformidade volta para a origem."}
+  ]</script>
+</section>
+
+<section class="chapter" id="fim" data-title="Próxima etapa">
+  <div class="finish">
+    <span class="signal" data-signal="m2" role="img"><i></i><i></i><i></i><i></i></span>
+    <div>
+      <h2>Operação dominada</h2>
+      <p>Você sabe classificar, tratar e escalar. Falta o processo que mais mexe com faturamento: os atendimentos de GMG.</p>
+      <div class="cta"><a class="btn btn-primary" href="modulo-3.html">Ir para o Módulo 3</a><a class="btn btn-ghost" href="../index.html#cci">Voltar à trilha</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/sap.js"></script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Módulo 1 — Introdução a Telecomunicações · Portal SAP TLP</title>
+<script>try{var t=localStorage.getItem('sap2-theme');t=t?JSON.parse(t):(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="stylesheet" href="../assets/sap.css">
+</head>
+<body data-root="../" data-page="cci" data-mod="m1">
+
+<section class="mod-hero">
+  <div class="wrap">
+    <div class="crumbs"><a href="../index.html">Início</a> / <a href="../index.html#cci">CCI</a> / Módulo 1</div>
+    <h1>Introdução a Telecomunicações</h1>
+    <p class="lede">A infraestrutura por trás do sinal: ERBs, meios de transmissão, dB e dBm, centrais de comutação, fibra óptica e satélites.</p>
+    <div class="mod-facts"><span><b>Etapa 2</b> de 4 da trilha CCI</span><span><b>~35 min</b> de leitura</span><span><b>8</b> perguntas no final</span><span data-signal-text="m1"></span></div>
+  </div>
+</section>
+
+<div class="wrap mod" id="conteudo">
+<aside class="toc" id="toc" aria-label="Índice do módulo"></aside>
+<main>
+
+<section class="chapter" id="conceitos" data-title="Conceitos gerais">
+  <span class="chapter-num">Capítulo 1</span>
+  <h2>O que é telecomunicação</h2>
+  <p>Telecomunicação é toda <strong>transmissão, emissão ou recepção de sinais, textos, imagens, sons ou informações</strong> por fio, rádio, meios ópticos ou outros sistemas eletromagnéticos. Em outras palavras: levar informação à distância.</p>
+  <h3>Linha do tempo</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>Marco</th><th>Época</th><th>O que mudou</th></tr>
+    <tr><td>Telégrafo</td><td>Século XIX</td><td>Primeira comunicação elétrica à distância (código Morse)</td></tr>
+    <tr><td>Telefone</td><td>1876</td><td>Voz transmitida por fios</td></tr>
+    <tr><td>Rádio</td><td>Fim do século XIX</td><td>Comunicação sem fio por ondas eletromagnéticas</td></tr>
+    <tr><td>Telefonia celular</td><td>Anos 1970</td><td>Mobilidade: o usuário se move e a chamada continua</td></tr>
+    <tr><td>Internet e banda larga</td><td>Anos 1990 em diante</td><td>Dados, vídeo e serviços em rede global</td></tr>
+  </table></div>
+  <h3>Elementos de um sistema de comunicação</h3>
+  <ol class="steps">
+    <li><h4>Emissor</h4><p>Origem da informação: voz, dados ou imagem.</p></li>
+    <li><h4>Transmissor</h4><p>Converte a informação num sinal adequado ao meio.</p></li>
+    <li><h4>Canal (meio)</h4><p>Caminho por onde o sinal viaja. Aqui atua o <strong>ruído</strong>, que degrada o sinal.</p></li>
+    <li><h4>Receptor</h4><p>Recupera a informação original.</p></li>
+  </ol>
+</section>
+
+<section class="chapter" id="celular" data-title="Evolução celular">
+  <span class="chapter-num">Capítulo 2</span>
+  <h2>Evolução da rede celular</h2>
+  <div class="tbl-wrap"><table>
+    <tr><th>Geração</th><th>Tecnologia</th><th>Características</th><th>Velocidade típica</th></tr>
+    <tr><td>1G</td><td>AMPS</td><td>Voz analógica</td><td>~10 kbps</td></tr>
+    <tr><td>2G</td><td>GSM / CDMA</td><td>Voz digital, SMS, dados básicos</td><td>~64–300 kbps</td></tr>
+    <tr><td>3G</td><td>UMTS / WCDMA</td><td>Dados móveis, videochamada</td><td>~3–7 Mbps</td></tr>
+    <tr><td>4G</td><td>LTE</td><td>Alta velocidade, streaming</td><td>~100 Mbps</td></tr>
+    <tr><td>5G</td><td>NR (New Radio)</td><td>Latência ultrabaixa, IoT massivo</td><td>10–20 Gbps (pico teórico)</td></tr>
+  </table></div>
+  <h3>Os três pilares do 5G</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>Sigla</th><th>Nome</th><th>Foco</th><th>Exemplo</th></tr>
+    <tr><td>eMBB</td><td>Banda larga móvel avançada</td><td>Velocidade e capacidade</td><td>Vídeo 4K, realidade aumentada</td></tr>
+    <tr><td>URLLC</td><td>Comunicação ultraconfiável e de baixa latência</td><td>Resposta quase instantânea</td><td>Cirurgia remota, veículos autônomos</td></tr>
+    <tr><td>mMTC</td><td>IoT massivo</td><td>Muitos dispositivos por área</td><td>Sensores urbanos, medidores inteligentes</td></tr>
+  </table></div>
+  <div class="note"><p><strong>Handover</strong> é a troca de célula durante uma chamada ou sessão de dados, sem o usuário perceber. Depende de ERBs vizinhas bem configuradas e com cobertura sobreposta — por isso uma ERB fora também prejudica o handover das vizinhas.</p></div>
+</section>
+
+<section class="chapter" id="erb" data-title="Estações Rádio Base">
+  <span class="chapter-num">Capítulo 3</span>
+  <h2>Estações Rádio Base (ERBs)</h2>
+  <p>A ERB é o elo entre o celular do usuário e o núcleo (core) da rede da operadora. Fica em torres, prédios ou postes e cobre uma área chamada <strong>célula</strong>. Dividir o território em células permite reutilizar frequências e aumentar a capacidade total.</p>
+  <figure>
+    <svg viewBox="0 0 660 210" role="img" aria-label="Fluxo do sinal: celular, antena, RRU, BBU, backhaul e core">
+      <g style="font:700 13px var(--body);fill:var(--ink)" text-anchor="middle">
+        <g style="fill:var(--surface);stroke:var(--ink)" stroke-width="2"><rect x="10" y="80" width="80" height="50" rx="10"/><rect x="120" y="80" width="90" height="50" rx="10"/><rect x="240" y="80" width="90" height="50" rx="10"/><rect x="360" y="80" width="90" height="50" rx="10"/><rect x="560" y="80" width="90" height="50" rx="10"/></g>
+        <rect x="470" y="96" width="70" height="18" rx="9" style="fill:var(--sun)"/>
+        <text x="50" y="110">Celular</text><text x="165" y="110">Antena</text><text x="285" y="110">RRU/RRH</text><text x="405" y="110">BBU</text><text x="605" y="110">Core</text><text x="505" y="150">Backhaul</text>
+      </g>
+      <g style="stroke:var(--ink-3)" stroke-width="2" marker-end="url(#ar)"><line x1="90" y1="105" x2="118" y2="105"/><line x1="210" y1="105" x2="238" y2="105"/><line x1="330" y1="105" x2="358" y2="105"/><line x1="450" y1="105" x2="468" y2="105"/><line x1="540" y1="105" x2="558" y2="105"/></g>
+      <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" style="fill:var(--ink-3)"/></marker></defs>
+      <g style="font:400 12px var(--body);fill:var(--ink-3)" text-anchor="middle"><text x="165" y="60">rádio</text><text x="285" y="60">converte e amplifica</text><text x="405" y="60">processa dados</text><text x="605" y="60">roteia e controla</text></g>
+    </svg>
+    <figcaption>Caminho do sinal dentro de uma ERB até o core da operadora.</figcaption>
+  </figure>
+  <h3>Componentes</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>Componente</th><th>Função</th></tr>
+    <tr><td>Antenas</td><td>Cobertura de rádio de cada setor</td></tr>
+    <tr><td>RRU / RRH</td><td>Unidade de rádio remota, perto das antenas: converte e amplifica o sinal</td></tr>
+    <tr><td>BBU</td><td>Unidade de banda base: processa os dados digitais</td></tr>
+    <tr><td>Backhaul</td><td>Link da ERB até o core (fibra, rádio ou satélite)</td></tr>
+    <tr><td>Energia</td><td>Retificadores, baterias e grupo motor gerador (GMG)</td></tr>
+  </table></div>
+  <h3>Setorização</h3>
+  <p>Uma ERB costuma ser dividida em <strong>3 setores de 120°</strong>, cada um com suas antenas. Isso aumenta a capacidade e reduz a interferência. Um “setor inativo” é uma falha parcial: o site está no ar, mas uma fatia da área ficou sem cobertura.</p>
+  <h3>Tipos de site</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>Tipo</th><th>Onde fica</th><th>O que importa para a operação</th></tr>
+    <tr><td>Greenfield</td><td>Terreno com torre própria</td><td>Maior alcance; estrutura e energia completas. Acesso costuma depender de chave e portão.</td></tr>
+    <tr><td>Rooftop</td><td>Topo de prédio</td><td>Comum em áreas urbanas densas; acesso depende do condomínio e do horário.</td></tr>
+    <tr><td>Poste / small cell</td><td>Mobiliário urbano</td><td>Cobertura localizada e reforço de capacidade.</td></tr>
+  </table></div>
+  <div class="note warn"><p><strong>Na prática:</strong> rooftop e greenfield com restrição de horário são causas frequentes de “problema de acesso”. Registre a restrição no ticket assim que souber dela.</p></div>
+</section>
+
+<section class="chapter" id="meios" data-title="Meios de transmissão">
+  <span class="chapter-num">Capítulo 4</span>
+  <h2>Meios de transmissão</h2>
+  <p>É o suporte físico — ou o espaço — por onde o sinal viaja. Os meios se dividem em <strong>guiados</strong> (o sinal segue um cabo) e <strong>não guiados</strong> (o sinal vai pelo ar).</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Meio</th><th>Tipo</th><th>Vantagem</th><th>Limitação</th><th>Uso típico</th></tr>
+    <tr><td>Fibra óptica</td><td>Guiado</td><td>Altíssima capacidade, baixa perda, imune a interferência</td><td>Emendas exigem técnica e equipamento</td><td>Backbone, backhaul, cabos submarinos</td></tr>
+    <tr><td>Rádio / micro-ondas</td><td>Não guiado</td><td>Implantação rápida, sem obra</td><td>Exige visada direta; sofre com chuva e obstáculos</td><td>Backhaul de ERBs</td></tr>
+    <tr><td>Satélite</td><td>Não guiado</td><td>Cobre áreas remotas</td><td>Latência maior (sobretudo GEO) e custo</td><td>Locais sem infraestrutura</td></tr>
+    <tr><td>Cabo coaxial</td><td>Guiado</td><td>Boa blindagem</td><td>Capacidade menor que fibra</td><td>TV a cabo</td></tr>
+    <tr><td>Par trançado</td><td>Guiado</td><td>Barato e simples</td><td>Perde muito com a distância</td><td>Redes locais (LAN)</td></tr>
+  </table></div>
+  <h3>Conceitos-base</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>Conceito</th><th>Definição</th></tr>
+    <tr><td>Backbone</td><td>Infraestrutura central de longa distância e alta capacidade</td></tr>
+    <tr><td>Largura de banda</td><td>Quantidade de dados por segundo (Mbps, Gbps)</td></tr>
+    <tr><td>Latência</td><td>Atraso entre envio e chegada do sinal</td></tr>
+    <tr><td>Atenuação</td><td>Perda de potência ao longo do caminho</td></tr>
+  </table></div>
+  <div class="note"><p><strong>Ligando com a operação:</strong> “falha de transmissão” é quase sempre um problema no backhaul — fibra rompida, rádio MW com defeito ou antena MW desalinhada. O site pode estar energizado e mesmo assim fora do ar.</p></div>
+</section>
+
+<section class="chapter" id="db" data-title="dB e dBm">
+  <span class="chapter-num">Capítulo 5</span>
+  <h2>dB e dBm</h2>
+  <p><strong>dB (decibel)</strong> compara duas potências e indica ganho ou perda: <strong>dB = 10 × log₁₀(P₂ / P₁)</strong>. Positivo é ganho, negativo é perda. Num enlace, ganhos e perdas em dB simplesmente se somam.</p>
+  <p><strong>dBm</strong> é potência absoluta, tendo <strong>1 mW</strong> como referência (0 dBm = 1 mW).</p>
+  <div class="compare">
+    <div class="card"><h4>Regras práticas</h4><ul><li>+3 dB ≈ potência dobra</li><li>−3 dB ≈ cai pela metade</li><li>+10 dB = ×10</li><li>−10 dB = ÷10</li><li>30 dBm = 1 W</li></ul></div>
+    <div class="card"><h4>Exemplo</h4><p>Um sinal de 0 dBm passa por um cabo com 3 dB de perda e chega com −3 dBm: cerca de metade da potência.</p></div>
+  </div>
+  <h3>Qualidade do sinal recebido</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>Valor</th><th>Interpretação</th><th>Situação</th></tr>
+    <tr><td>−50 dBm</td><td><span class="prio" style="color:var(--ok)">Excelente</span></td><td>Perto da antena</td></tr>
+    <tr><td>−70 dBm</td><td><span class="prio" style="color:var(--ok)">Bom</span></td><td>Cobertura normal</td></tr>
+    <tr><td>−85 dBm</td><td><span class="prio p3">Fraco</span></td><td>Borda da cobertura</td></tr>
+    <tr><td>−100 dBm</td><td><span class="prio p1">Crítico</span></td><td>Sem cobertura efetiva</td></tr>
+  </table></div>
+  <div class="recap"><b>Para lembrar</b>Quanto mais negativo o dBm, mais fraco o sinal.</div>
+</section>
+
+<section class="chapter" id="comutacao" data-title="Central de comutação">
+  <span class="chapter-num">Capítulo 6</span>
+  <h2>Central de comutação</h2>
+  <p>A central interliga assinantes criando caminhos sob demanda, sem precisar de um fio direto entre cada par de pessoas.</p>
+  <p>Sem central, ligar <em>N</em> assinantes todos entre si exige <strong>L = N × (N − 1) / 2</strong> pares de fio. Para 1.000 assinantes, isso dá <strong>499.500 pares</strong>. Com central, centenas bastam.</p>
+  <p>A primeira central telefônica foi instalada em Estocolmo (1883); no Brasil, em 1884.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Comutação</th><th>Como funciona</th><th>Característica</th></tr>
+    <tr><td>Por circuito</td><td>Reserva um caminho dedicado durante toda a chamada</td><td>Qualidade constante; recurso fica ocupado mesmo em silêncio</td></tr>
+    <tr><td>Por pacotes</td><td>Divide a informação em pacotes por caminhos diversos</td><td>Uso eficiente da rede; base da internet e do 4G/5G</td></tr>
+  </table></div>
+</section>
+
+<section class="chapter" id="fibra" data-title="Fibra óptica">
+  <span class="chapter-num">Capítulo 7</span>
+  <h2>Fibra óptica</h2>
+  <p>A fibra transmite <strong>pulsos de luz</strong> em filamentos de vidro, usando a <strong>reflexão total interna</strong>: a casca, com índice de refração menor, mantém a luz presa no núcleo.</p>
+  <h3>Estrutura, de dentro para fora</h3>
+  <p><strong>Núcleo</strong> (onde a luz passa) → <strong>casca</strong> (confina a luz) → <strong>revestimento</strong> (proteção mecânica) → <strong>capa externa</strong> (umidade, tração, roedores).</p>
+  <h3>Tipos de fibra</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>Tipo</th><th>Núcleo</th><th>Alcance típico</th><th>Uso</th></tr>
+    <tr><td>Multimodo índice degrau</td><td>~62,5 µm</td><td>100 Mbps até ~2 km; alta dispersão</td><td>Primeira geração, simples de fabricar</td></tr>
+    <tr><td>Multimodo índice gradual</td><td>~50 µm</td><td>1 Gbps até 550 m; 10 Gbps até 300 m</td><td>Redes locais</td></tr>
+    <tr><td>Monomodo</td><td>~9 µm</td><td>10+ Gbps por 100+ km</td><td>Backbone, backhaul, cabos submarinos</td></tr>
+  </table></div>
+  <h3>Conectores e emendas</h3>
+  <ul>
+    <li><strong>Conectores SC, LC e FC</strong> — em DIOs, switches e equipamentos de transmissão.</li>
+    <li><strong>Emenda por fusão</strong> — arco elétrico, perda mínima.</li>
+    <li><strong>Emenda mecânica</strong> — encaixe, mais rápida, perda um pouco maior.</li>
+  </ul>
+  <div class="note alarm"><p><strong>Segurança em campo:</strong> nunca olhe direto para a ponta de uma fibra ativa — o laser é invisível e fere a vista. Respeite o raio mínimo de curvatura e mantenha conectores limpos e tampados. Sujeira e dobras fechadas aumentam a atenuação.</p></div>
+</section>
+
+<section class="chapter" id="satelites" data-title="Satélites">
+  <span class="chapter-num">Capítulo 8</span>
+  <h2>Satélites</h2>
+  <p>Satélites superam barreiras geográficas. São classificados pela altitude da órbita — e quanto mais alto, maior a latência.</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Órbita</th><th>Altitude</th><th>Latência</th><th>Uso</th></tr>
+    <tr><td>LEO (baixa)</td><td>160 – 2.000 km</td><td>~20–40 ms</td><td>Internet (Starlink), imagens</td></tr>
+    <tr><td>MEO (média)</td><td>2.000 – 35.000 km</td><td>~80–140 ms</td><td>Navegação GPS / GNSS</td></tr>
+    <tr><td>GEO (geoestacionária)</td><td>~35.786 km</td><td>~600 ms (ida e volta)</td><td>TV, telefonia, internet rural</td></tr>
+  </table></div>
+  <p>Bases próximas ao Equador — como <strong>Alcântara (MA)</strong> e <strong>Kourou (Guiana Francesa)</strong> — aproveitam a rotação da Terra (~1.670 km/h) e economizam combustível. Outras bases conhecidas: Cabo Canaveral (EUA) e Baikonur (Cazaquistão).</p>
+</section>
+
+<section class="chapter" id="pratica" data-title="Da teoria ao alarme">
+  <span class="chapter-num">Capítulo extra</span>
+  <h2>Da teoria ao alarme</h2>
+  <p>Como o conteúdo deste módulo aparece no seu turno:</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>Você vê no alarme</th><th>Conceito por trás</th><th>Primeira pergunta</th></tr>
+    <tr><td>Vários sites caíram ao mesmo tempo</td><td>Concentrador ou rota de backhaul em comum</td><td>Eles compartilham transmissão?</td></tr>
+    <tr><td>Site energizado, mas fora</td><td>Falha de transmissão (fibra ou MW)</td><td>O link de backhaul está ativo?</td></tr>
+    <tr><td>Um setor inativo</td><td>Setorização: RRU/antena de um setor</td><td>É falha parcial (P2/P3)?</td></tr>
+    <tr><td>Queda após chuva forte</td><td>Rádio MW sensível a chuva; energia</td><td>Qual alarme veio primeiro?</td></tr>
+    <tr><td>Nível de sinal ruim na região</td><td>dBm baixo, borda de cobertura</td><td>Site vizinho fora prejudicando o handover?</td></tr>
+  </table></div>
+</section>
+
+<section class="chapter" id="quiz" data-title="Teste rápido">
+  <span class="chapter-num">Capítulo 9</span>
+  <h2>Teste rápido</h2>
+  <p>Acerte 6 de 8 para concluir. O glossário completo está em <a href="../consulta/glossario.html">Consulta › Glossário</a>.</p>
+  <script type="application/json" class="quiz-data">[
+    {"q":"Para que serve o backhaul?","o":["Amplificar o sinal na antena","Conectar a ERB ao core da rede","Fornecer energia ao site","Definir a área da célula"],"a":1,"e":"Backhaul é o link da ERB até o núcleo da operadora — fibra, rádio ou satélite."},
+    {"q":"O que indica um sinal de −85 dBm?","o":["Excelente","Potência de referência (1 mW)","Fraco, borda de cobertura","Cobertura inexistente"],"a":2,"e":"−85 dBm é borda de cobertura; −100 dBm já é crítico."},
+    {"q":"Qual fibra é usada em backbones e cabos submarinos?","o":["Multimodo índice degrau","Multimodo índice gradual","Monomodo","Par trançado"],"a":2,"e":"A monomodo (~9 µm) alcança centenas de km com alta capacidade."},
+    {"q":"Qual órbita é usada pelo GPS?","o":["LEO","MEO","GEO","Nenhuma, é terrestre"],"a":1,"e":"GPS/GNSS fica em órbita média (MEO)."},
+    {"q":"Quantos pares de fio seriam necessários para ligar 1.000 assinantes sem central?","o":["1.000","10.000","499.500","999.000"],"a":2,"e":"1.000 × 999 / 2 = 499.500."},
+    {"q":"Um sinal perde 3 dB num cabo. O que aconteceu com a potência?","o":["Dobrou","Caiu pela metade, aproximadamente","Caiu para um décimo","Não mudou"],"a":1,"e":"−3 dB ≈ metade da potência."},
+    {"q":"Um site está energizado, mas fora do ar, e o alarme aponta o link de rádio MW. Que tipo de falha é?","o":["Energia","Transmissão","Acesso","Hardware de energia"],"a":1,"e":"Problema no backhaul (fibra ou rádio MW) é falha de transmissão."},
+    {"q":"O que faz a BBU?","o":["Amplifica o sinal de rádio perto da antena","Processa os dados digitais em banda base","Fornece energia de contingência","Liga a ERB ao core"],"a":1,"e":"A RRU cuida do rádio; a BBU processa os dados digitais."}
+  ]</script>
+</section>
+
+<section class="chapter" id="fim" data-title="Próxima etapa">
+  <div class="finish">
+    <span class="signal" data-signal="m1" role="img"><i></i><i></i><i></i><i></i></span>
+    <div>
+      <h2>Infraestrutura entendida</h2>
+      <p>Agora você conhece o caminho do sinal. No Módulo 2, entramos na operação: tipos de falha, prioridades, chamados e escalação.</p>
+      <div class="cta"><a class="btn btn-primary" href="modulo-2.html">Ir para o Módulo 2</a><a class="btn btn-ghost" href="../index.html#cci">Voltar à trilha</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+<script src="../assets/search-index.js"></script>
+<script src="../assets/sap.js"></script>
+</body>
+</html>
